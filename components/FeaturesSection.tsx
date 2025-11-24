@@ -83,7 +83,7 @@ export default function FeaturesSection() {
                   y: -15,
                   rotateY: 5,
                 }}
-                className="bg-white border-2 border-gray-200 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full hover:border-gray-400 transition-colors"
+                className="bg-white border-2 border-gray-200 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full hover:border-gray-400 transition-all duration-300 premium-border"
               >
                 {/* Hover Effect */}
                 <motion.div

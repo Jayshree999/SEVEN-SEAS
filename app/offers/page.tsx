@@ -168,11 +168,12 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
 
         <Link href={offer.link}>
           <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 15px 40px rgba(0, 0, 0, 0.3)' }}
             whileTap={{ scale: 0.98 }}
-            className="w-full px-6 py-3 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-800 transition-colors"
+            className="w-full px-6 py-3 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 relative overflow-hidden premium-border luxury-glow group"
           >
-            Book Now
+            <span className="relative z-10">Book Now</span>
+            <span className="absolute inset-0 luxury-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
           </motion.button>
         </Link>
       </div>

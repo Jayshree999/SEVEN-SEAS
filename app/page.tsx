@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
@@ -17,6 +18,8 @@ import ParallaxBanner from '@/components/ParallaxBanner'
 import VideoBanner from '@/components/VideoBanner'
 import VideoSection from '@/components/VideoSection'
 import BackgroundVideo from '@/components/BackgroundVideo'
+import LuxuryBadge from '@/components/LuxuryBadge'
+import AnimatedCounter from '@/components/AnimatedCounter'
 
 // Dynamically import 3D components to avoid SSR issues
 const Scene3D = dynamic(() => import('@/components/Scene3D'), {
@@ -29,6 +32,58 @@ export default function Home() {
       <ParticleBackground />
       <Navigation />
       <HeroSection />
+      
+      {/* Luxury Stats Banner */}
+      <section className="py-16 px-6 bg-black text-white">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="text-4xl md:text-6xl font-bold mb-2">
+                <AnimatedCounter value={150} suffix="+" />
+              </div>
+              <div className="text-sm md:text-base text-gray-400 uppercase tracking-wider">Luxury Rooms</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="text-4xl md:text-6xl font-bold mb-2">
+                <AnimatedCounter value={10} suffix="+" />
+              </div>
+              <div className="text-sm md:text-base text-gray-400 uppercase tracking-wider">Years Excellence</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="text-4xl md:text-6xl font-bold mb-2">
+                <AnimatedCounter value={50} suffix="K+" />
+              </div>
+              <div className="text-sm md:text-base text-gray-400 uppercase tracking-wider">Happy Guests</div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="text-4xl md:text-6xl font-bold mb-2">
+                <AnimatedCounter value={4.8} suffix="" />
+              </div>
+              <div className="text-sm md:text-base text-gray-400 uppercase tracking-wider">Average Rating</div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
       
       {/* Luxury Video Banner Section */}
       <VideoBanner

@@ -336,11 +336,14 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
       <motion.button
         type="submit"
         disabled={isSubmitting || nights === 0}
-        whileHover={{ scale: nights > 0 && !isSubmitting ? 1.02 : 1 }}
+        whileHover={{ scale: nights > 0 && !isSubmitting ? 1.05 : 1, boxShadow: nights > 0 && !isSubmitting ? '0 15px 40px rgba(0, 0, 0, 0.3)' : 'none' }}
         whileTap={{ scale: nights > 0 && !isSubmitting ? 0.98 : 1 }}
-        className="w-full px-6 py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full px-6 py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden premium-border luxury-glow group"
       >
-        {isSubmitting ? 'Processing...' : nights === 0 ? 'Select Dates to Continue' : 'Confirm Booking'}
+        <span className="relative z-10">{isSubmitting ? 'Processing...' : nights === 0 ? 'Select Dates to Continue' : 'Confirm Booking'}</span>
+        {!isSubmitting && nights > 0 && (
+          <span className="absolute inset-0 luxury-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+        )}
       </motion.button>
 
       <p className="text-xs text-gray-500 text-center">

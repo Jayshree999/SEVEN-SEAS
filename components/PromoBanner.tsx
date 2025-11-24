@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import ImageBanner from './ImageBanner'
+import LuxuryBadge from './LuxuryBadge'
 
 export default function PromoBanner() {
   const [ref, inView] = useInView({
@@ -30,6 +31,12 @@ export default function PromoBanner() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
+            <div className="flex flex-wrap justify-center gap-4 mb-6">
+              <LuxuryBadge text="Premium Location" variant="black" size="md" />
+              <LuxuryBadge text="World-Class Service" variant="black" size="md" />
+              <LuxuryBadge text="Modern Amenities" variant="black" size="md" />
+              <LuxuryBadge text="Award-Winning Dining" variant="black" size="md" />
+            </div>
             <div className="flex flex-wrap justify-center gap-6 text-base text-gray-700">
               <span className="flex items-center gap-2">
                 <span className="text-2xl">✓</span>

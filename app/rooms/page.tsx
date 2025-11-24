@@ -125,8 +125,8 @@ function RoomCard({ room, index }: { room: typeof rooms[0], index: number }) {
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ scale: 1.02, y: -5 }}
-      className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden group cursor-pointer hover:border-gray-400 transition-colors"
+      whileHover={{ scale: 1.05, y: -10, boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)' }}
+      className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden group cursor-pointer hover:border-gray-400 transition-all duration-300 premium-border luxury-glow"
     >
       {/* 3D Room Preview */}
       <div className="h-96 relative overflow-hidden">

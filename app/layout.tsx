@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
+import LoadingScreen from '@/components/LoadingScreen'
+import ScrollToTop from '@/components/ScrollToTop'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -39,7 +41,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <LoadingScreen />
+        {children}
+        <ScrollToTop />
+      </body>
     </html>
   )
 }

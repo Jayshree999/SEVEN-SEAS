@@ -81,9 +81,12 @@ export default function OffersSection() {
                 className="bg-white border-2 border-black rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full premium-border luxury-glow"
               >
                 {/* Discount Badge */}
-                <div className="absolute top-4 right-4 bg-black text-white px-4 py-2 font-bold text-lg">
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  className="absolute top-4 right-4 bg-black text-white px-4 py-2 font-bold text-lg rounded-full luxury-glow"
+                >
                   {offer.discount}
-                </div>
+                </motion.div>
 
                 {/* Content */}
                 <div className="mt-8">

@@ -44,9 +44,9 @@ export default function Navigation() {
           {/* Logo */}
           <Link href="/">
             <motion.div
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.1, rotate: 2 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-3 cursor-pointer"
+              className="flex items-center space-x-3 cursor-pointer group"
             >
               <div className="w-12 h-12 border-2 border-black rounded-full flex items-center justify-center">
                 <span className="text-black text-xl font-bold">7</span>
