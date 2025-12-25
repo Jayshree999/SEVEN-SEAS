@@ -75,11 +75,22 @@ export default function Footer() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span>📞</span>
-                  <span>+971 4 XXX XXXX</span>
+                  <a href="tel:+971423456789" className="hover:text-amber-400 transition-colors">+971 4 234 5678</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>✉️</span>
                   <span>info@sevenseasdubai.com</span>
+                </div>
+                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-gray-800">
+                  <span>🔗</span>
+                  <a 
+                    href="https://api.dubaibooking.io/api/v1/property/property?limit=100&filters[address]=&filters[city]=&filters[bedrooms]=&filters[category]=&filters[area]=&page=1&activeStatus=true" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-amber-400 hover:text-amber-300 transition-colors break-all text-xs"
+                  >
+                    API Endpoint
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -248,6 +259,10 @@ export default function Footer() {
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
             <p>© {currentYear} Seven Seas Hotel Dubai. All rights reserved.</p>
             <p className="mt-2">Designed with luxury in mind</p>
+            <div className="mt-4 text-xs text-gray-600">
+              <p>Powered by <a href="https://api.dubaibooking.io" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 transition-colors">Dubai Booking API</a></p>
+              <p className="mt-1">API: <code className="text-gray-500">x-organisation: sevenseas</code></p>
+            </div>
           </div>
         </div>
       </div>

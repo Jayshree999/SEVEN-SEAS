@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState } from 'react'
+import { use, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
@@ -12,166 +12,121 @@ import VideoSection from '@/components/VideoSection'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { useInView } from 'react-intersection-observer'
+import { fetchPropertyById, fetchProperties, Property } from '@/lib/api'
 
 const Room3DPreview = dynamic(() => import('@/components/Room3DPreview'), { ssr: false })
 
-const roomDetails: Record<string, any> = {
-  '1': {
-    name: 'Deluxe Room',
-    price: 450,
-    size: '35 sqm',
-    guests: 2,
-    beds: '1 King Bed',
-    view: 'City View',
-    floor: '3rd - 8th Floor',
-    description: 'Our Deluxe Rooms offer a perfect blend of comfort and style, featuring modern amenities and elegant furnishings. Ideal for business travelers and couples seeking a luxurious stay in Dubai. The room features floor-to-ceiling windows offering stunning city views, a comfortable king-size bed, and a well-appointed bathroom with premium toiletries.',
-    longDescription: 'Step into a world of refined elegance with our Deluxe Rooms. Each room is thoughtfully designed with contemporary decor and luxurious touches. The spacious layout includes a comfortable seating area, a work desk perfect for business travelers, and modern technology throughout. Wake up to breathtaking views of Dubai\'s skyline and enjoy the convenience of being in the heart of the city.',
-    amenities: [
-      { category: 'Room Features', items: ['Free WiFi', 'Air Conditioning', 'Flat Screen TV (55")', 'Work Desk', 'Seating Area', 'City View', 'Floor-to-Ceiling Windows'] },
-      { category: 'Bathroom', items: ['Rain Shower', 'Premium Toiletries', 'Hair Dryer', 'Bathrobes', 'Slippers'] },
-      { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service'] },
-      { category: 'Entertainment', items: ['Smart TV', 'Cable Channels', 'Streaming Services', 'Bluetooth Speaker'] },
-      { category: 'Comfort', items: ['Mini Bar', 'Coffee/Tea Maker', 'Safe', 'Iron & Ironing Board', 'Blackout Curtains'] },
+interface RoomDetail {
+  name: string
+  price: number
+  size: string
+  guests: number
+  beds: string
+  view: string
+  floor: string
+  description: string
+  longDescription: string
+  amenities: Array<{ category: string; items: string[] }>
+  images: Array<{ id: number; url: string; alt: string }>
+  highlights: string[]
+  policies: {
+    checkIn: string
+    checkOut: string
+    cancellation: string
+    children: string
+    pets: string
+    smoking: string
+  }
+}
+
+function mapPropertyToRoomDetail(property: Property | null): RoomDetail | null {
+  if (!property) return null
+
+  const bedrooms = typeof property.bedrooms === 'string' ? parseInt(property.bedrooms) || 1 : property.bedrooms || 1
+  const guests = parseInt(property.guest_no as string) || bedrooms * 2
+  const size = property.size || property.area || 0
+  
+  // Determine bed type and view based on property data
+  let beds = '1 King Bed'
+  if (property.title?.toLowerCase().includes('twin') || property.title?.toLowerCase().includes('queen')) {
+    beds = bedrooms > 1 ? `${bedrooms} Queen Beds` : '2 Queen Beds'
+  } else if (property.title?.toLowerCase().includes('suite')) {
+    beds = '1 King Bed + Sofa Bed'
+  }
+
+  const view = property.description?.includes('view') 
+    ? (property.description.match(/view/i)?.[0] || 'City View')
+    : 'City View'
+
+  // Organize amenities by category
+  const amenitiesList = property.amenities || []
+  const amenities = [
+    { category: 'Room Features', items: amenitiesList.filter(a => 
+      ['WiFi', 'Air Conditioning', 'TV', 'Desk', 'View', 'Windows'].some(keyword => 
+        a.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ) },
+    { category: 'Bathroom', items: amenitiesList.filter(a => 
+      ['Bath', 'Shower', 'Toiletries', 'Hair', 'Bathrobe'].some(keyword => 
+        a.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ) },
+    { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service'] },
+    { category: 'Entertainment', items: amenitiesList.filter(a => 
+      ['TV', 'Entertainment', 'Streaming'].some(keyword => 
+        a.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ) },
+    { category: 'Comfort', items: amenitiesList.filter(a => 
+      ['Mini Bar', 'Coffee', 'Safe', 'Iron', 'Curtains'].some(keyword => 
+        a.toLowerCase().includes(keyword.toLowerCase())
+      )
+    ) },
+  ].filter(cat => cat.items.length > 0)
+
+  // Create images from photos or use placeholders
+  const images = property.photos && property.photos.length > 0
+    ? property.photos.map((photo, index) => ({
+        id: index + 1,
+        url: photo,
+        alt: `${property.title || property.name} - Image ${index + 1}`
+      }))
+    : [
+        { id: 1, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Main View` },
+        { id: 2, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bed Area` },
+        { id: 3, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bathroom` },
+        { id: 4, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - View` },
+      ]
+
+  return {
+    name: property.title || property.name || property.nickname || 'Untitled Room',
+    price: property.price || 0,
+    size: `${size} sqm`,
+    guests: guests,
+    beds: beds,
+    view: view,
+    floor: property.totalFloor ? `${property.totalFloor} Floor` : 'Various Floors',
+    description: property.description || 'A luxurious accommodation offering comfort and style.',
+    longDescription: property.description || 'Experience the ultimate in comfort and sophistication with our thoughtfully designed accommodations.',
+    amenities: amenities.length > 0 ? amenities : [
+      { category: 'Room Features', items: amenitiesList.slice(0, 5) }
     ],
-    images: [
-      { id: 1, url: '/room-deluxe-1.jpg', alt: 'Deluxe Room Main View' },
-      { id: 2, url: '/room-deluxe-2.jpg', alt: 'Deluxe Room Bed Area' },
-      { id: 3, url: '/room-deluxe-3.jpg', alt: 'Deluxe Room Bathroom' },
-      { id: 4, url: '/room-deluxe-4.jpg', alt: 'Deluxe Room City View' },
-    ],
+    images: images,
     highlights: [
-      'Spacious 35 sqm room with modern design',
-      'Stunning city views from floor-to-ceiling windows',
-      'Premium king-size bed with luxury linens',
-      'Fully equipped work space for business travelers',
-      '24/7 room service available',
+      `Spacious ${size} sqm ${property.title?.toLowerCase().includes('suite') ? 'suite' : 'room'}`,
+      ...(amenitiesList.slice(0, 3).map(a => `Includes ${a}`)),
+      'Premium amenities and services',
+      'Modern design and comfort',
     ],
     policies: {
-      checkIn: '3:00 PM',
-      checkOut: '12:00 PM',
+      checkIn: property.Check_in_time || '3:00 PM',
+      checkOut: property.Check_out_time || '12:00 PM',
       cancellation: 'Free cancellation up to 48 hours before arrival',
-      children: 'Children under 12 stay free when using existing beds',
-      pets: 'Pets are not allowed',
-      smoking: 'Non-smoking rooms',
+      children: property.term?.children ? 'Children welcome' : 'Children under 12 stay free when using existing beds',
+      pets: property.term?.pets ? 'Pets are welcome' : 'Pets are not allowed',
+      smoking: property.term?.smoking ? 'Smoking rooms available' : 'Non-smoking rooms',
     },
-  },
-  '2': {
-    name: 'Executive Suite',
-    price: 750,
-    size: '55 sqm',
-    guests: 2,
-    beds: '1 King Bed',
-    view: 'Premium City View',
-    floor: '9th - 15th Floor',
-    description: 'Spacious Executive Suites provide a separate living area and premium amenities. Perfect for extended stays or guests who appreciate extra space and luxury. The suite features a private balcony, separate living room, and enhanced business facilities.',
-    longDescription: 'Experience the ultimate in comfort and sophistication with our Executive Suites. These expansive accommodations feature a separate living area, perfect for entertaining or relaxing after a long day. The private balcony offers panoramic views of Dubai, while the enhanced business amenities make it ideal for corporate travelers. The suite includes a luxurious king-size bed, a spacious bathroom with separate bathtub and shower, and premium furnishings throughout.',
-    amenities: [
-      { category: 'Room Features', items: ['Free WiFi', 'Air Conditioning', 'Flat Screen TV (65")', 'Separate Living Room', 'Private Balcony', 'Premium City View', 'Work Desk'] },
-      { category: 'Bathroom', items: ['Separate Bathtub & Shower', 'Premium Toiletries', 'Hair Dryer', 'Bathrobes', 'Slippers', 'Bathroom TV'] },
-      { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service', 'Priority Check-in'] },
-      { category: 'Entertainment', items: ['Smart TV', 'Cable Channels', 'Streaming Services', 'Premium Sound System'] },
-      { category: 'Comfort', items: ['Mini Bar (Premium)', 'Nespresso Machine', 'Safe', 'Iron & Ironing Board', 'Blackout Curtains', 'Separate Seating Area'] },
-    ],
-    images: [
-      { id: 1, url: '/room-executive-1.jpg', alt: 'Executive Suite Living Area' },
-      { id: 2, url: '/room-executive-2.jpg', alt: 'Executive Suite Bedroom' },
-      { id: 3, url: '/room-executive-3.jpg', alt: 'Executive Suite Balcony' },
-      { id: 4, url: '/room-executive-4.jpg', alt: 'Executive Suite Bathroom' },
-    ],
-    highlights: [
-      'Spacious 55 sqm suite with separate living area',
-      'Private balcony with premium city views',
-      'Enhanced business amenities and workspace',
-      'Premium mini bar and Nespresso machine',
-      'Priority check-in and personalized service',
-    ],
-    policies: {
-      checkIn: '2:00 PM',
-      checkOut: '12:00 PM',
-      cancellation: 'Free cancellation up to 72 hours before arrival',
-      children: 'Children under 12 stay free when using existing beds',
-      pets: 'Pets are not allowed',
-      smoking: 'Non-smoking rooms',
-    },
-  },
-  '3': {
-    name: 'Presidential Suite',
-    price: 1200,
-    size: '85 sqm',
-    guests: 4,
-    beds: '1 King Bed + Sofa Bed',
-    view: 'Panoramic City View',
-    floor: '16th - 20th Floor',
-    description: 'Our most luxurious accommodation, the Presidential Suite offers unparalleled elegance with separate living and dining areas, premium furnishings, and exclusive services. Perfect for VIP guests and special occasions.',
-    longDescription: 'Indulge in the epitome of luxury with our Presidential Suite. This magnificent accommodation spans 85 square meters and features a grand living room, separate dining area, and a master bedroom with a king-size bed. The suite includes a private jacuzzi, a fully equipped kitchenette, and exclusive butler service. Floor-to-ceiling windows provide breathtaking panoramic views of Dubai, while the premium furnishings and artwork create an atmosphere of refined elegance.',
-    amenities: [
-      { category: 'Room Features', items: ['Free WiFi', 'Air Conditioning', 'Flat Screen TV (75")', 'Separate Living & Dining Room', 'Private Balcony', 'Panoramic City View', 'Kitchenette'] },
-      { category: 'Bathroom', items: ['Jacuzzi', 'Separate Shower', 'Premium Toiletries', 'Hair Dryer', 'Bathrobes', 'Slippers', 'Bathroom TV', 'Separate Powder Room'] },
-      { category: 'Services', items: ['Butler Service', 'Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service', 'Priority Check-in/out', 'Airport Transfer (Complimentary)'] },
-      { category: 'Entertainment', items: ['Smart TV', 'Premium Sound System', 'Gaming Console', 'Streaming Services'] },
-      { category: 'Comfort', items: ['Premium Mini Bar', 'Nespresso Machine', 'Wine Selection', 'Safe', 'Iron & Ironing Board', 'Blackout Curtains', 'Separate Seating Areas'] },
-    ],
-    images: [
-      { id: 1, url: '/room-presidential-1.jpg', alt: 'Presidential Suite Living Room' },
-      { id: 2, url: '/room-presidential-2.jpg', alt: 'Presidential Suite Bedroom' },
-      { id: 3, url: '/room-presidential-3.jpg', alt: 'Presidential Suite Jacuzzi' },
-      { id: 4, url: '/room-presidential-4.jpg', alt: 'Presidential Suite Dining Area' },
-    ],
-    highlights: [
-      'Luxurious 85 sqm suite with multiple rooms',
-      'Private jacuzzi and premium bathroom',
-      'Exclusive butler service',
-      'Panoramic views from high floors',
-      'Complimentary airport transfer',
-    ],
-    policies: {
-      checkIn: '2:00 PM',
-      checkOut: '2:00 PM',
-      cancellation: 'Free cancellation up to 7 days before arrival',
-      children: 'Children under 12 stay free when using existing beds',
-      pets: 'Pets are not allowed',
-      smoking: 'Non-smoking rooms',
-    },
-  },
-  '4': {
-    name: 'Family Suite',
-    price: 950,
-    size: '70 sqm',
-    guests: 4,
-    beds: '2 Queen Beds',
-    view: 'City View',
-    floor: '5th - 12th Floor',
-    description: 'Designed with families in mind, our Family Suites provide ample space, separate sleeping areas, and family-friendly amenities for a comfortable stay. Perfect for families traveling with children.',
-    longDescription: 'Create lasting memories with your family in our spacious Family Suites. These thoughtfully designed accommodations feature two separate bedrooms with queen-size beds, a comfortable living area, and family-friendly amenities. The suite includes a kitchenette for preparing snacks, a dining area, and plenty of space for children to play. Special amenities for kids include welcome gifts, children\'s bathrobes, and age-appropriate entertainment options.',
-    amenities: [
-      { category: 'Room Features', items: ['Free WiFi', 'Air Conditioning', 'Flat Screen TV (55")', 'Separate Bedrooms', 'Living Area', 'City View', 'Kitchenette'] },
-      { category: 'Bathroom', items: ['Bathtub & Shower', 'Premium Toiletries', 'Hair Dryer', 'Bathrobes (Adult & Kids)', 'Slippers'] },
-      { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service', 'Kids Welcome Amenities'] },
-      { category: 'Entertainment', items: ['Smart TV', 'Cable Channels', 'Kids Channels', 'Streaming Services', 'Board Games'] },
-      { category: 'Comfort', items: ['Mini Bar', 'Coffee/Tea Maker', 'Safe', 'Iron & Ironing Board', 'Blackout Curtains', 'Extra Beds Available'] },
-    ],
-    images: [
-      { id: 1, url: '/room-family-1.jpg', alt: 'Family Suite Main Room' },
-      { id: 2, url: '/room-family-2.jpg', alt: 'Family Suite Bedroom' },
-      { id: 3, url: '/room-family-3.jpg', alt: 'Family Suite Living Area' },
-      { id: 4, url: '/room-family-4.jpg', alt: 'Family Suite Kitchenette' },
-    ],
-    highlights: [
-      'Spacious 70 sqm suite with separate bedrooms',
-      'Family-friendly amenities and services',
-      'Kitchenette for preparing snacks',
-      'Kids welcome amenities included',
-      'Extra beds available upon request',
-    ],
-    policies: {
-      checkIn: '3:00 PM',
-      checkOut: '12:00 PM',
-      cancellation: 'Free cancellation up to 48 hours before arrival',
-      children: 'Children under 12 stay free when using existing beds',
-      pets: 'Pets are not allowed',
-      smoking: 'Non-smoking rooms',
-    },
-  },
+  }
 }
 
 export default function RoomDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
@@ -184,10 +139,69 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
     // It's already resolved
     resolvedParams = params as { id: string }
   }
-  const room = roomDetails[resolvedParams.id] || roomDetails['1']
+
+  const [property, setProperty] = useState<Property | null>(null)
+  const [relatedProperties, setRelatedProperties] = useState<Property[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [selectedImage, setSelectedImage] = useState(0)
   const [showBooking, setShowBooking] = useState(false)
   const [activeTab, setActiveTab] = useState<'overview' | 'amenities' | 'policies'>('overview')
+  const [expandedCategories, setExpandedCategories] = useState<Record<number, boolean>>({})
+
+  useEffect(() => {
+    const loadProperty = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const fetchedProperty = await fetchPropertyById(resolvedParams.id)
+        setProperty(fetchedProperty)
+
+        // Load related properties
+        const response = await fetchProperties({
+          limit: 100,
+          page: 1,
+          activeStatus: true,
+        })
+        const allProperties = response.data?.properties || []
+        const related = allProperties
+          .filter(p => (p._id || p.id) !== resolvedParams.id)
+          .slice(0, 3)
+        setRelatedProperties(related)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load room details')
+        console.error('Error loading property:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadProperty()
+  }, [resolvedParams.id])
+
+  const room = mapPropertyToRoomDetail(property)
+
+  if (loading) {
+    return (
+      <main className="min-h-screen bg-white">
+        <Navigation />
+        <div className="flex items-center justify-center py-40">
+          <div className="text-gray-600 text-lg">Loading room details...</div>
+        </div>
+      </main>
+    )
+  }
+
+  if (error || !room) {
+    return (
+      <main className="min-h-screen bg-white">
+        <Navigation />
+        <div className="flex items-center justify-center py-40">
+          <div className="text-red-600 text-lg">Error: {error || 'Room not found'}</div>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-white">
@@ -395,20 +409,57 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
                     exit={{ opacity: 0, y: -20 }}
                     className="space-y-8"
                   >
-                    <h2 className="text-3xl font-bold text-black mb-6">Amenities & Services</h2>
-                    {room.amenities.map((category: any, index: number) => (
-                      <div key={index}>
-                        <h3 className="text-xl font-bold text-black mb-4">{category.category}</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {category.items.map((item: string) => (
-                            <div key={item} className="flex items-center gap-3">
-                              <span className="text-black">✓</span>
-                              <span className="text-gray-700">{item}</span>
-                            </div>
-                          ))}
+                    <h2 className="text-3xl font-bold text-black mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>Amenities & Services</h2>
+                    {room.amenities.map((category: any, index: number) => {
+                      const isExpanded = expandedCategories[index] || false
+                      const displayedItems = isExpanded ? category.items : category.items.slice(0, 4)
+                      const hasMoreItems = category.items.length > 4
+                      
+                      return (
+                        <div key={index} className="bg-gradient-to-br from-amber-50/30 to-yellow-50/30 p-6 rounded-lg border border-amber-100">
+                          <h3 className="text-xl font-bold text-black mb-5 flex items-center gap-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                            <span className="text-amber-600">✦</span>
+                            {category.category}
+                          </h3>
+                          <div className="flex flex-wrap gap-2.5 mb-3">
+                            {displayedItems.map((item: string) => (
+                              <motion.span
+                                key={item}
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="px-4 py-2 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-amber-900 text-sm rounded-full border border-amber-200 shadow-sm font-medium hover:shadow-md hover:scale-105 transition-all duration-200"
+                                style={{
+                                  background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)',
+                                  boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
+                                }}
+                              >
+                                ✨ {item}
+                              </motion.span>
+                            ))}
+                          </div>
+                          {hasMoreItems && (
+                            <motion.button
+                              onClick={() => setExpandedCategories(prev => ({
+                                ...prev,
+                                [index]: !prev[index]
+                              }))}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="text-amber-700 hover:text-amber-900 font-semibold text-sm flex items-center gap-2 transition-colors group mt-2"
+                            >
+                              <span>{isExpanded ? 'Show Less' : 'Show More'}</span>
+                              <motion.span
+                                animate={{ rotate: isExpanded ? 180 : 0 }}
+                                transition={{ duration: 0.3 }}
+                                className="text-amber-700 group-hover:text-amber-900"
+                              >
+                                ▼
+                              </motion.span>
+                            </motion.button>
+                          )}
                         </div>
-                      </div>
-                    ))}
+                      )
+                    })}
                   </motion.div>
                 )}
 
@@ -494,7 +545,7 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
                         exit={{ opacity: 0, height: 0 }}
                         className="overflow-hidden"
                       >
-                        <BookingForm roomId={resolvedParams.id} roomName={room.name} price={room.price} />
+                        <BookingForm roomId={property?._id || property?.id || resolvedParams.id} roomName={room.name} price={room.price} />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -541,40 +592,44 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
       </section>
 
       {/* Related Rooms */}
-      <section className="py-12 px-6 bg-gray-50">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-3xl font-bold text-black mb-8">You May Also Like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {Object.entries(roomDetails)
-              .filter(([id]) => id !== resolvedParams.id)
-              .slice(0, 3)
-              .map(([id, relatedRoom]: [string, any]) => (
-                <Link key={id} href={`/rooms/${id}`}>
-                  <motion.div
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden cursor-pointer"
-                  >
-                    <div className="h-48 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white text-4xl">
-                      {relatedRoom.name.charAt(0)}
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-black mb-2">{relatedRoom.name}</h3>
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-2xl font-bold text-black">${relatedRoom.price}</span>
-                        <span className="text-gray-600 text-sm">per night</span>
+      {relatedProperties.length > 0 && (
+        <section className="py-12 px-6 bg-gray-50">
+          <div className="container mx-auto max-w-7xl">
+            <h2 className="text-3xl font-bold text-black mb-8">You May Also Like</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedProperties.map((relatedProperty) => {
+                const relatedRoom = mapPropertyToRoomDetail(relatedProperty)
+                if (!relatedRoom) return null
+                const propertyId = relatedProperty._id || relatedProperty.id || ''
+                return (
+                  <Link key={propertyId} href={`/rooms/${propertyId}`}>
+                    <motion.div
+                      whileHover={{ scale: 1.02, y: -5 }}
+                      className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden cursor-pointer"
+                    >
+                      <div className="h-48 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white text-4xl">
+                        {relatedRoom.name.charAt(0)}
                       </div>
-                      <div className="flex flex-wrap gap-2 text-sm text-gray-600">
-                        <span>{relatedRoom.size}</span>
-                        <span>•</span>
-                        <span>{relatedRoom.guests} Guests</span>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-black mb-2">{relatedRoom.name}</h3>
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="text-2xl font-bold text-black">${relatedRoom.price}</span>
+                          <span className="text-gray-600 text-sm">per night</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2 text-sm text-gray-600">
+                          <span>{relatedRoom.size}</span>
+                          <span>•</span>
+                          <span>{relatedRoom.guests} Guests</span>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                </Link>
-              ))}
+                    </motion.div>
+                  </Link>
+                )
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
       <Footer />
     </main>
   )

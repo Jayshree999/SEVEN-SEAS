@@ -174,8 +174,8 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-black mb-1">Phone</div>
                       <div className="text-gray-600">
-                        +971 4 XXX XXXX<br />
-                        +971 4 XXX XXXX
+                        <a href="tel:+971423456789" className="hover:text-amber-600 transition-colors">+971 4 234 5678</a><br />
+                        <a href="tel:+971501234567" className="hover:text-amber-600 transition-colors">+971 50 123 4567</a>
                       </div>
                     </div>
                   </div>
