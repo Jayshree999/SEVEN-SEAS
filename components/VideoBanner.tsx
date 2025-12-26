@@ -33,8 +33,10 @@ export default function VideoBanner({
     triggerOnce: true,
     threshold: 0.1,
   })
+  const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  // Optimized: Removed parallax scroll for better performance
 
   useEffect(() => {
     if (videoRef.current && autoplay && inView) {
@@ -60,13 +62,15 @@ export default function VideoBanner({
 
   return (
     <motion.div
-      ref={ref}
+      ref={containerRef}
       initial={{ opacity: 0 }}
       animate={inView ? { opacity: 1 } : {}}
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.6 }}
       className={`relative ${heightClasses[height]} overflow-hidden ${className}`}
     >
-      {/* Video Background */}
+      {/* Removed particles for performance */}
+
+      {/* Video Background - Parallax removed for performance */}
       <div className="absolute inset-0">
         {videoUrl ? (
           <video

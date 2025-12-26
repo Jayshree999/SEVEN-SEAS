@@ -1,31 +1,37 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useMemo } from 'react'
 
+// Optimized: Reduced particles and using CSS animations
 export default function ParticleBackground() {
+  const particles = useMemo(() => {
+    return Array.from({ length: 15 }, (_, i) => ({
+      id: i,
+      size: Math.random() * 1.5 + 0.5,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      duration: Math.random() * 8 + 12,
+      delay: Math.random() * 3,
+      opacity: Math.random() * 0.2 + 0.1,
+    }))
+  }, [])
+
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {[...Array(30)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full bg-black"
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className="absolute rounded-full bg-black particle-float"
           style={{
-            width: Math.random() * 2 + 1,
-            height: Math.random() * 2 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            opacity: Math.random() * 0.3 + 0.1,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            x: [0, Math.random() * 30 - 15, 0],
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.3, 0.1],
-          }}
-          transition={{
-            duration: Math.random() * 8 + 8,
-            repeat: Infinity,
-            delay: Math.random() * 3,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
+            opacity: particle.opacity,
+            animationDuration: `${particle.duration}s`,
+            animationDelay: `${particle.delay}s`,
+            willChange: 'transform, opacity',
+            transform: 'translateZ(0)',
           }}
         />
       ))}

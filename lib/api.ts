@@ -35,7 +35,11 @@ export interface Property {
   size?: number
   area?: number
   price?: number
-  photos?: string[]
+  photos?: Array<{
+    category?: string
+    url: string
+    _id?: string
+  }> | string[]
   amenities?: string[]
   [key: string]: any
 }

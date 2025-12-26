@@ -75,36 +75,22 @@ export default function FeaturesSection() {
           {features.map((feature, index) => (
             <Link key={feature.title} href={feature.link}>
               <motion.div
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.08,
-                  y: -15,
-                  rotateY: 5,
-                }}
-                className="bg-white border-2 border-gray-200 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full hover:border-gray-400 transition-all duration-300 premium-border"
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="bg-white border-2 border-amber-200 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full hover:border-amber-400 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {/* Hover Effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <motion.div
-                    className="text-5xl mb-6"
-                    animate={{
-                      y: [0, -5, 0],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: index * 0.2,
-                    }}
-                  >
+                  <div className="text-5xl mb-6">
                     {feature.icon}
-                  </motion.div>
+                  </div>
                   
                   <h3 className="text-xl font-bold text-black mb-4">
                     {feature.title}

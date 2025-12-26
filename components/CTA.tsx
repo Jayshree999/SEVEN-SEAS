@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import ImageBanner from './ImageBanner'
+import RichButton from './RichButton'
+import FloatingGoldParticles from './FloatingGoldParticles'
 
 export default function CTA() {
   const [ref, inView] = useInView({
@@ -25,6 +27,7 @@ export default function CTA() {
         className="relative py-20 px-6 overflow-hidden bg-white text-black"
         id="contact"
       >
+        {/* Removed particles for performance */}
         <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -55,30 +58,15 @@ export default function CTA() {
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             <Link href="/rooms">
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.15)',
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-5 bg-black text-white font-bold text-xl uppercase tracking-wider hover:bg-gray-800 transition-colors"
-              >
+              <RichButton variant="filled" className="px-12 py-5 text-xl">
                 BOOK NOW
-              </motion.button>
+              </RichButton>
             </Link>
 
             <Link href="/contact">
-              <motion.button
-                whileHover={{ 
-                  scale: 1.05,
-                  borderColor: '#000',
-                  backgroundColor: '#f5f5f5',
-                }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-5 border-2 border-black text-black font-bold text-xl uppercase tracking-wider bg-white hover:bg-black hover:text-white transition-colors"
-              >
+              <RichButton variant="outline" className="px-12 py-5 text-xl">
                 CONTACT US
-              </motion.button>
+              </RichButton>
             </Link>
           </motion.div>
 
@@ -95,11 +83,11 @@ export default function CTA() {
             </div>
             <div className="text-center">
               <div className="text-2xl mb-2">📞</div>
-              <p className="text-sm">+971 4 XXX XXXX</p>
+              <a href="tel:+971551009152" className="text-sm hover:text-amber-400 transition-colors">+971 55 100 9152</a>
             </div>
             <div className="text-center">
               <div className="text-2xl mb-2">✉️</div>
-              <p className="text-sm">info@sevenseasdubai.com</p>
+              <a href="mailto:reservation@sevenseashotel.ae" className="text-sm hover:text-amber-400 transition-colors">reservation@sevenseashotel.ae</a>
             </div>
           </motion.div>
         </motion.div>

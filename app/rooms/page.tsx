@@ -12,6 +12,7 @@ import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 import dynamic from 'next/dynamic'
 import { fetchProperties, Property } from '@/lib/api'
+import RichButton from '@/components/RichButton'
 
 const Room3DPreview = dynamic(() => import('@/components/Room3DPreview'), { ssr: false })
 
@@ -39,6 +40,18 @@ function mapPropertyToRoom(property: Property): RoomDisplay {
     beds = '1 King Bed + Sofa Bed'
   }
 
+  // Extract image URL from photos array
+  let imageUrl: string | undefined
+  if (property.photos && property.photos.length > 0) {
+    if (typeof property.photos[0] === 'object' && 'url' in property.photos[0]) {
+      // Photos are objects with url property
+      imageUrl = (property.photos[0] as { url: string }).url
+    } else if (typeof property.photos[0] === 'string') {
+      // Photos are strings
+      imageUrl = property.photos[0]
+    }
+  }
+
   return {
     id: property._id || property.id || '',
     name: property.title || property.name || property.nickname || 'Untitled Room',
@@ -47,7 +60,7 @@ function mapPropertyToRoom(property: Property): RoomDisplay {
     guests: guests,
     beds: beds,
     amenities: property.amenities || ['Free WiFi', 'Air Conditioning'],
-    image: property.photos?.[0],
+    image: imageUrl,
   }
 }
 
@@ -170,8 +183,8 @@ export default function RoomsPage() {
                   <motion.button
                     onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                     disabled={currentPage === 1}
-                    whileHover={{ scale: currentPage === 1 ? 1 : 1.05 }}
-                    whileTap={{ scale: currentPage === 1 ? 1 : 0.95 }}
+                    whileHover={{ scale: currentPage === 1 ? 1 : 1.02 }}
+                    whileTap={{ scale: currentPage === 1 ? 1 : 0.98 }}
                     className={`px-6 py-3 border-2 font-semibold uppercase tracking-wider transition-all ${
                       currentPage === 1
                         ? 'border-gray-300 text-gray-400 cursor-not-allowed'
@@ -186,8 +199,8 @@ export default function RoomsPage() {
                       <motion.button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         className={`w-10 h-10 font-semibold transition-all ${
                           currentPage === page
                             ? 'bg-black text-white border-2 border-black'
@@ -202,8 +215,8 @@ export default function RoomsPage() {
                   <motion.button
                     onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                     disabled={currentPage === totalPages}
-                    whileHover={{ scale: currentPage === totalPages ? 1 : 1.05 }}
-                    whileTap={{ scale: currentPage === totalPages ? 1 : 0.95 }}
+                    whileHover={{ scale: currentPage === totalPages ? 1 : 1.02 }}
+                    whileTap={{ scale: currentPage === totalPages ? 1 : 0.98 }}
                     className={`px-6 py-3 border-2 font-semibold uppercase tracking-wider transition-all ${
                       currentPage === totalPages
                         ? 'border-gray-300 text-gray-400 cursor-not-allowed'
@@ -230,6 +243,7 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
     threshold: 0.1,
   })
   const [showAllAmenities, setShowAllAmenities] = useState(false)
+  const [imageError, setImageError] = useState(false)
   
   const displayedAmenities = showAllAmenities ? room.amenities : room.amenities.slice(0, 4)
   const hasMoreAmenities = room.amenities.length > 4
@@ -237,22 +251,57 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ scale: 1.05, y: -10, boxShadow: '0 25px 50px rgba(0, 0, 0, 0.15)' }}
-      className="bg-white border-2 border-amber-200 rounded-lg overflow-hidden group cursor-pointer hover:border-amber-400 transition-all duration-300 premium-border luxury-glow shadow-lg hover:shadow-2xl"
-      style={{
-        boxShadow: '0 10px 40px rgba(217, 119, 6, 0.1)',
-      }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      whileHover={{ scale: 1.02, y: -5 }}
+      className="bg-white border-2 border-amber-200 rounded-lg overflow-hidden group cursor-pointer hover:border-amber-400 transition-all duration-200 shadow-lg hover:shadow-xl"
     >
-      {/* 3D Room Preview */}
-      <div className="h-96 relative overflow-hidden">
-        <Room3DPreview roomType={room.name.toLowerCase()} />
-        <div className="absolute top-4 right-4 bg-gradient-to-br from-amber-500 to-yellow-600 text-white px-5 py-2.5 font-bold rounded-lg shadow-xl border-2 border-amber-400 backdrop-blur-sm" style={{ fontFamily: 'var(--font-playfair)' }}>
-          ${room.price}/night
-        </div>
-        <div className="absolute bottom-4 left-4 bg-gradient-to-r from-black/90 to-black/70 backdrop-blur-md text-white px-5 py-2.5 font-semibold rounded-lg border border-amber-400/30 shadow-lg" style={{ fontFamily: 'var(--font-playfair)' }}>
+      {/* Room Image */}
+      <div className="h-96 relative overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+        {room.image && !imageError ? (
+          <>
+            <img
+              src={room.image}
+              alt={room.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              onError={() => setImageError(true)}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+          </>
+        ) : (
+          <>
+            <Room3DPreview roomType={room.name.toLowerCase()} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+          </>
+        )}
+        <motion.div 
+          className="absolute top-4 right-4 bg-gradient-to-br from-amber-500 to-yellow-600 text-white px-5 py-2.5 font-bold rounded-lg shadow-xl border-2 border-amber-400 backdrop-blur-sm z-10 relative overflow-hidden"
+          style={{ fontFamily: 'var(--font-playfair)' }}
+          animate={{
+            backgroundPosition: ['0%', '100%', '0%'],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        >
+          <span className="relative z-10">AED {room.price}/night</span>
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            animate={{
+              x: ['-100%', '100%'],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          />
+        </motion.div>
+        <div className="absolute bottom-4 left-4 bg-gradient-to-r from-black/90 to-black/70 backdrop-blur-md text-white px-5 py-2.5 font-semibold rounded-lg border border-amber-400/30 shadow-lg z-10" style={{ fontFamily: 'var(--font-playfair)' }}>
           {room.name}
         </div>
       </div>
@@ -271,18 +320,16 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
           <h4 className="font-semibold text-black mb-4 text-lg" style={{ fontFamily: 'var(--font-playfair)' }}>Amenities:</h4>
           <div className="flex flex-wrap gap-2.5 mb-3">
             {displayedAmenities.map((amenity) => (
-              <motion.span
+              <span
                 key={amenity}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="px-4 py-2 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-amber-900 text-sm rounded-full border border-amber-200 shadow-sm font-medium hover:shadow-md hover:scale-105 transition-all duration-200"
+                className="px-4 py-2 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-amber-900 text-sm rounded-full border border-amber-200 shadow-sm font-medium hover:shadow-md transition-all duration-200"
                 style={{
                   background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)',
                   boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
                 }}
               >
                 ✨ {amenity}
-              </motion.span>
+              </span>
             ))}
           </div>
           {hasMoreAmenities && (
@@ -306,22 +353,10 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
 
         <div className="flex gap-4">
           <Link href={`/rooms/${room.id}`} className="flex-1">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full px-6 py-3 border-2 border-black text-black font-semibold uppercase tracking-wider hover:bg-black hover:text-white transition-colors"
-            >
-              View Details
-            </motion.button>
+            <RichButton variant="outline" className="w-full">View Details</RichButton>
           </Link>
           <Link href={`/rooms/${room.id}?book=true`} className="flex-1">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full px-6 py-3 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-800 transition-colors"
-            >
-              Book Now
-            </motion.button>
+            <RichButton variant="filled" className="w-full">Book Now</RichButton>
           </Link>
         </div>
       </div>

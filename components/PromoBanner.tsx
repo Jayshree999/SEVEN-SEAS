@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import ImageBanner from './ImageBanner'
 import LuxuryBadge from './LuxuryBadge'
+import FloatingGoldParticles from './FloatingGoldParticles'
 
 export default function PromoBanner() {
   const [ref, inView] = useInView({
@@ -24,7 +25,8 @@ export default function PromoBanner() {
         ref={ref}
         className="relative py-12 px-6 bg-white text-black overflow-hidden"
       >
-        <div className="container mx-auto max-w-6xl">
+        {/* Removed particles for performance */}
+        <div className="container mx-auto max-w-6xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}

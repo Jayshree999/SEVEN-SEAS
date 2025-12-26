@@ -52,10 +52,10 @@ export default function GalleryPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 font-semibold uppercase tracking-wider transition-colors ${
+                className={`px-6 py-2 font-semibold uppercase tracking-wider transition-all duration-300 ${
                   selectedCategory === category
-                    ? 'bg-black text-white'
-                    : 'bg-white text-black border-2 border-black hover:bg-gray-100'
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-600 text-white border-2 border-amber-400 shadow-lg'
+                    : 'bg-white text-black border-2 border-amber-200 hover:border-amber-400 hover:bg-amber-50'
                 }`}
               >
                 {category}
@@ -79,7 +79,7 @@ export default function GalleryPage() {
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   whileHover={{ scale: 1.05, y: -5 }}
                   onClick={() => setSelectedImage(image.id)}
-                  className="relative h-80 bg-gradient-to-br from-gray-900 to-black rounded-lg overflow-hidden cursor-pointer group"
+                  className="relative h-80 bg-gradient-to-br from-gray-900 to-black rounded-lg overflow-hidden cursor-pointer group border-2 border-amber-900/30 hover:border-amber-500/50 transition-all duration-300 shadow-xl hover:shadow-2xl"
                 >
                   <div className="absolute inset-0 flex items-center justify-center text-white text-6xl group-hover:scale-110 transition-transform duration-500">
                     {image.title.charAt(0)}
@@ -91,7 +91,12 @@ export default function GalleryPage() {
                     </div>
                     <div className="text-white text-xl font-bold">{image.title}</div>
                   </div>
-                  <div className="absolute inset-0 border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <motion.div 
+                    className="absolute inset-0 border-2 border-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{
+                      boxShadow: '0 0 30px rgba(217, 119, 6, 0.5)',
+                    }}
+                  />
                 </motion.div>
               ))}
             </AnimatePresence>

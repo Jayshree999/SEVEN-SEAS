@@ -71,7 +71,7 @@ function mapPropertyToRoomDetail(property: Property | null): RoomDetail | null {
         a.toLowerCase().includes(keyword.toLowerCase())
       )
     ) },
-    { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service'] },
+      { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service'] },
     { category: 'Entertainment', items: amenitiesList.filter(a => 
       ['TV', 'Entertainment', 'Streaming'].some(keyword => 
         a.toLowerCase().includes(keyword.toLowerCase())
@@ -85,18 +85,34 @@ function mapPropertyToRoomDetail(property: Property | null): RoomDetail | null {
   ].filter(cat => cat.items.length > 0)
 
   // Create images from photos or use placeholders
-  const images = property.photos && property.photos.length > 0
-    ? property.photos.map((photo, index) => ({
+  let images: Array<{ id: number; url: string; alt: string }> = []
+  
+  if (property.photos && property.photos.length > 0) {
+    // Handle both array of objects and array of strings
+    if (typeof property.photos[0] === 'object' && 'url' in property.photos[0]) {
+      // Photos are objects with url property
+      images = (property.photos as Array<{ url: string; category?: string; _id?: string }>).map((photo, index) => ({
+        id: index + 1,
+        url: photo.url,
+        alt: `${property.title || property.name} - ${photo.category || 'Image'} ${index + 1}`
+      }))
+    } else {
+      // Photos are strings
+      images = (property.photos as string[]).map((photo, index) => ({
         id: index + 1,
         url: photo,
         alt: `${property.title || property.name} - Image ${index + 1}`
       }))
-    : [
-        { id: 1, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Main View` },
-        { id: 2, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bed Area` },
-        { id: 3, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bathroom` },
-        { id: 4, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - View` },
-      ]
+    }
+  } else {
+    // Use placeholders if no photos
+    images = [
+      { id: 1, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Main View` },
+      { id: 2, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bed Area` },
+      { id: 3, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bathroom` },
+      { id: 4, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - View` },
+    ]
+  }
 
   return {
     name: property.title || property.name || property.nickname || 'Untitled Room',
@@ -148,6 +164,8 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
   const [showBooking, setShowBooking] = useState(false)
   const [activeTab, setActiveTab] = useState<'overview' | 'amenities' | 'policies'>('overview')
   const [expandedCategories, setExpandedCategories] = useState<Record<number, boolean>>({})
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
 
   useEffect(() => {
     const loadProperty = async () => {
@@ -207,14 +225,61 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
     <main className="min-h-screen bg-white">
       <Navigation />
       
-      {/* Hero Video Banner */}
+      {/* Hero Banner - Compact Design */}
       <div className="pt-32">
-        <VideoBanner
-          title={room.name}
-          subtitle={`${room.size} • ${room.guests} Guests • ${room.view} • $${room.price} per night`}
-          height="large"
-          textPosition="left"
-        />
+        <div className="relative h-[380px] md:h-[420px] overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-white/5 text-9xl font-bold select-none">
+              {room.name.charAt(0)}
+            </div>
+          </div>
+          
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/50" />
+          
+          {/* Content - Compact Layout */}
+          <div className="relative z-10 h-full flex flex-col justify-end">
+            <div className="container mx-auto max-w-7xl px-6 pb-6 md:pb-10">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="space-y-3"
+              >
+                {/* Room Title */}
+                <h1 
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  {room.name}
+                </h1>
+                
+                {/* Room Details - Compact Badge Layout */}
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white rounded-lg border border-white/20">
+                    <span className="text-amber-400 text-sm">📏</span>
+                    <span className="font-medium text-sm">{room.size}</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white rounded-lg border border-white/20">
+                    <span className="text-amber-400 text-sm">👥</span>
+                    <span className="font-medium text-sm">{room.guests} Guests</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white rounded-lg border border-white/20">
+                    <span className="text-amber-400 text-sm">🏙️</span>
+                    <span className="font-medium text-sm">{room.view}</span>
+                  </div>
+                  <div className="ml-auto flex items-center gap-2">
+                    <span className="px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-bold rounded-lg shadow-xl border border-amber-400/50 text-base md:text-lg">
+                      AED {room.price}
+                    </span>
+                    <span className="text-white/70 text-xs md:text-sm">per night</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Breadcrumb */}
@@ -228,26 +293,40 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
       </section>
 
       {/* Image Gallery Section */}
+      {room.images && room.images.length > 0 && (
       <section className="px-6 py-12 bg-white">
         <div className="container mx-auto max-w-7xl">
           <h2 className="text-3xl font-bold text-black mb-8">Room Gallery</h2>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[600px]">
             {/* Main Image */}
             <div className="lg:col-span-2 relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-900 to-black group">
+                {room.images[selectedImage]?.url ? (
+                  <>
               <AnimatePresence mode="wait">
-                <motion.div
+                      <motion.img
                   key={selectedImage}
+                        src={room.images[selectedImage]?.url}
+                        alt={room.images[selectedImage]?.alt || `${room.name} - Image ${selectedImage + 1}`}
                   initial={{ opacity: 0, scale: 1.1 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute inset-0 flex items-center justify-center text-white text-8xl"
-                >
-                  {room.images[selectedImage]?.title?.charAt(0) || room.name.charAt(0)}
-                </motion.div>
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement
+                          target.style.display = 'none'
+                          if (!target.parentElement?.querySelector('.fallback-placeholder')) {
+                            const fallback = document.createElement('div')
+                            fallback.className = 'fallback-placeholder absolute inset-0 flex items-center justify-center text-white text-8xl bg-gradient-to-br from-gray-900 to-black'
+                            fallback.textContent = room.name.charAt(0)
+                            target.parentElement?.appendChild(fallback)
+                          }
+                        }}
+                      />
               </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 flex gap-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-10">
                 {room.images.map((img: any, index: number) => (
                   <button
                     key={img.id}
@@ -258,9 +337,26 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
                   />
                 ))}
               </div>
-              <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded">
+                    <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded z-10">
                 {room.images[selectedImage]?.alt || `${room.name} - Image ${selectedImage + 1}`}
               </div>
+                    <motion.button
+                      onClick={() => {
+                        setLightboxIndex(selectedImage)
+                        setLightboxOpen(true)
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-lg border border-white/30 hover:bg-white/30 transition-all z-10"
+                    >
+                      🔍 View Fullscreen
+                    </motion.button>
+                  </>
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center text-white text-8xl">
+                    {room.name.charAt(0)}
+                  </div>
+                )}
             </div>
 
             {/* Thumbnail Images */}
@@ -272,22 +368,44 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`relative h-full rounded-lg overflow-hidden bg-gradient-to-br from-gray-900 to-black group ${
-                    selectedImage === index ? 'ring-4 ring-black' : ''
-                  }`}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center text-white text-4xl group-hover:scale-110 transition-transform">
+                      selectedImage === index ? 'ring-4 ring-amber-400' : ''
+                    }`}
+                  >
+                    {img.url ? (
+                      <>
+                        <img
+                          src={img.url}
+                          alt={img.alt || `View ${index + 1}`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            target.style.display = 'none'
+                            if (!target.parentElement?.querySelector('.fallback-thumbnail')) {
+                              const fallback = document.createElement('div')
+                              fallback.className = 'fallback-thumbnail absolute inset-0 flex items-center justify-center text-white text-2xl bg-gradient-to-br from-gray-900 to-black'
+                              fallback.textContent = `${index + 1}`
+                              target.parentElement?.appendChild(fallback)
+                            }
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-2 left-2 right-2 text-white text-xs font-semibold truncate z-10">
+                          {img.alt || `View ${index + 1}`}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-white text-2xl">
                     {index + 1}
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  <div className="absolute bottom-2 left-2 right-2 text-white text-xs font-semibold truncate">
-                    {img.alt || `View ${index + 1}`}
-                  </div>
+                    )}
                 </motion.button>
               ))}
             </div>
           </div>
         </div>
       </section>
+      )}
 
       {/* Additional Room Images */}
       <section className="px-6 py-12 bg-gray-50">
@@ -296,6 +414,7 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
           <ImageGrid
             images={room.images.map((img: any) => ({
               id: img.id,
+              url: img.url,
               title: img.alt || room.name,
               description: `View of ${room.name}`,
             }))}
@@ -436,7 +555,7 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
                                 ✨ {item}
                               </motion.span>
                             ))}
-                          </div>
+                            </div>
                           {hasMoreItems && (
                             <motion.button
                               onClick={() => setExpandedCategories(prev => ({
@@ -522,7 +641,26 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
                   className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-lg"
                 >
                   <div className="mb-6">
-                    <div className="text-4xl font-bold text-black mb-2">${room.price}</div>
+                    <motion.div 
+                      className="text-4xl font-bold text-black mb-2 relative inline-block"
+                      animate={{
+                        backgroundPosition: ['0%', '100%', '0%'],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: 'linear',
+                      }}
+                      style={{
+                        background: 'linear-gradient(90deg, #000 0%, #92400e 50%, #000 100%)',
+                        backgroundSize: '200% 100%',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}
+                    >
+                      AED {room.price}
+                    </motion.div>
                     <div className="text-gray-600">per night</div>
                     <div className="text-sm text-gray-500 mt-2">Taxes and fees included</div>
                   </div>
@@ -593,43 +731,102 @@ export default function RoomDetailPage({ params }: { params: Promise<{ id: strin
 
       {/* Related Rooms */}
       {relatedProperties.length > 0 && (
-        <section className="py-12 px-6 bg-gray-50">
-          <div className="container mx-auto max-w-7xl">
-            <h2 className="text-3xl font-bold text-black mb-8">You May Also Like</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <section className="py-12 px-6 bg-gray-50">
+        <div className="container mx-auto max-w-7xl">
+          <h2 className="text-3xl font-bold text-black mb-8">You May Also Like</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedProperties.map((relatedProperty) => {
                 const relatedRoom = mapPropertyToRoomDetail(relatedProperty)
                 if (!relatedRoom) return null
                 const propertyId = relatedProperty._id || relatedProperty.id || ''
                 return (
                   <Link key={propertyId} href={`/rooms/${propertyId}`}>
-                    <motion.div
-                      whileHover={{ scale: 1.02, y: -5 }}
-                      className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden cursor-pointer"
-                    >
-                      <div className="h-48 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white text-4xl">
-                        {relatedRoom.name.charAt(0)}
+                  <motion.div
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden cursor-pointer"
+                  >
+                    <div className="h-48 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white text-4xl">
+                      {relatedRoom.name.charAt(0)}
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-black mb-2">{relatedRoom.name}</h3>
+                      <div className="flex items-center justify-between mb-4">
+                          <span className="text-2xl font-bold text-black">AED {relatedRoom.price}</span>
+                        <span className="text-gray-600 text-sm">per night</span>
                       </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-black mb-2">{relatedRoom.name}</h3>
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-2xl font-bold text-black">${relatedRoom.price}</span>
-                          <span className="text-gray-600 text-sm">per night</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2 text-sm text-gray-600">
-                          <span>{relatedRoom.size}</span>
-                          <span>•</span>
-                          <span>{relatedRoom.guests} Guests</span>
-                        </div>
+                      <div className="flex flex-wrap gap-2 text-sm text-gray-600">
+                        <span>{relatedRoom.size}</span>
+                        <span>•</span>
+                        <span>{relatedRoom.guests} Guests</span>
                       </div>
-                    </motion.div>
-                  </Link>
+                    </div>
+                  </motion.div>
+                </Link>
                 )
               })}
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
       )}
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setLightboxOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-7xl max-h-[90vh] w-full"
+            >
+              <img
+                src={room.images[lightboxIndex]?.url}
+                alt={room.images[lightboxIndex]?.alt || `${room.name} - Image ${lightboxIndex + 1}`}
+                className="w-full h-full object-contain rounded-lg"
+              />
+              <motion.button
+                onClick={() => setLightboxOpen(false)}
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-all text-2xl"
+              >
+                ✕
+              </motion.button>
+              {lightboxIndex > 0 && (
+                <motion.button
+                  onClick={() => setLightboxIndex(lightboxIndex - 1)}
+                  whileHover={{ scale: 1.1, x: -5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md text-white p-4 rounded-full hover:bg-white/30 transition-all text-xl"
+                >
+                  ←
+                </motion.button>
+              )}
+              {lightboxIndex < room.images.length - 1 && (
+                <motion.button
+                  onClick={() => setLightboxIndex(lightboxIndex + 1)}
+                  whileHover={{ scale: 1.1, x: 5 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md text-white p-4 rounded-full hover:bg-white/30 transition-all text-xl"
+                >
+                  →
+                </motion.button>
+              )}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded">
+                {lightboxIndex + 1} / {room.images.length}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Footer />
     </main>
   )

@@ -43,11 +43,18 @@ export default function BackgroundVideo({
         loop
         muted
         playsInline
-        style={{ opacity }}
+        preload="auto"
+        style={{ 
+          opacity,
+          filter: 'none',
+          transform: 'translateZ(0)',
+          willChange: 'auto',
+          imageRendering: 'auto',
+          WebkitImageRendering: 'auto'
+        }}
       >
         <source src={videoUrl} type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-black/20" />
     </div>
   )
 }

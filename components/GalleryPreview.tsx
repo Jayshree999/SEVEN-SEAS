@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import ImageBanner from './ImageBanner'
+import RichButton from './RichButton'
 
 const galleryItems = [
   { id: 1, title: 'Luxury Suite', category: 'Rooms', gradient: 'from-gray-900 to-black' },
@@ -64,7 +65,7 @@ export default function GalleryPreview() {
                   y: -10,
                   boxShadow: '0 30px 60px rgba(0, 0, 0, 0.4)',
                 }}
-                className="relative h-96 rounded-lg overflow-hidden group cursor-pointer bg-black premium-border"
+                className="relative h-96 rounded-lg overflow-hidden group cursor-pointer bg-black premium-border border-2 border-amber-900/30 hover:border-amber-500/50 transition-all duration-300 shadow-xl hover:shadow-2xl"
               >
                 {/* Gradient Background */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
@@ -101,10 +102,13 @@ export default function GalleryPreview() {
                   </motion.div>
                 </div>
 
-                {/* Border on Hover */}
+                {/* Gold Border on Hover */}
                 <motion.div
-                  className="absolute inset-0 border-2 border-white opacity-0 group-hover:opacity-100"
+                  className="absolute inset-0 border-2 border-amber-400 opacity-0 group-hover:opacity-100"
                   transition={{ duration: 0.3 }}
+                  style={{
+                    boxShadow: '0 0 30px rgba(217, 119, 6, 0.5)',
+                  }}
                 />
               </motion.div>
             </Link>
@@ -118,13 +122,9 @@ export default function GalleryPreview() {
           className="text-center mt-12"
         >
           <Link href="/gallery">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 border-2 border-black text-black font-semibold uppercase tracking-wider bg-white hover:bg-black hover:text-white transition-colors"
-            >
+            <RichButton variant="outline" className="px-8 py-3">
               View Full Gallery
-            </motion.button>
+            </RichButton>
           </Link>
         </motion.div>
       </div>

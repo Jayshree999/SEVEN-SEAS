@@ -2,10 +2,20 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import BackgroundVideo from './BackgroundVideo'
+import { useRef, useEffect } from 'react'
+import Image from 'next/image'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Handle autoplay restrictions
+      })
+    }
+  }, [])
 
   const footerLinks = {
     hotel: [
@@ -42,8 +52,34 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-black text-white relative overflow-hidden">
-      <BackgroundVideo opacity={0.1} />
+    <motion.footer 
+      className="bg-black text-white relative overflow-hidden"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+    >
+      {/* Video Background */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ opacity: 0.4 }}
+          onError={(e) => {
+            console.error('Video failed to load:', e)
+          }}
+        >
+          <source src="/footer.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+      
       {/* Main Footer Content */}
       <div className="container mx-auto px-6 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
@@ -55,14 +91,14 @@ export default function Footer() {
               viewport={{ once: true }}
               className="mb-6"
             >
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 border-2 border-white rounded-full flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">7</span>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold tracking-wider">SEVEN SEAS</div>
-                  <div className="text-sm text-gray-400 tracking-widest">DUBAI</div>
-                </div>
+              <div className="mb-4">
+                <Image
+                  src="/logo.png"
+                  alt="Seven Seas Hotel Dubai"
+                  width={200}
+                  height={70}
+                  className="h-16 w-auto object-contain brightness-0 invert"
+                />
               </div>
               <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
                 Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination. 
@@ -71,26 +107,19 @@ export default function Footer() {
               <div className="space-y-2 text-sm text-gray-400">
                 <div className="flex items-center gap-2">
                   <span>📍</span>
-                  <span>Dubai, United Arab Emirates</span>
+                  <span>Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>📞</span>
-                  <a href="tel:+971423456789" className="hover:text-amber-400 transition-colors">+971 4 234 5678</a>
+                  <a href="tel:+971551009152" className="hover:text-amber-400 transition-colors">+971 55 100 9152</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <span>✉️</span>
-                  <span>info@sevenseasdubai.com</span>
+                  <a href="mailto:reservation@sevenseashotel.ae" className="hover:text-amber-400 transition-colors">reservation@sevenseashotel.ae</a>
                 </div>
-                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-gray-800">
-                  <span>🔗</span>
-                  <a 
-                    href="https://api.dubaibooking.io/api/v1/property/property?limit=100&filters[address]=&filters[city]=&filters[bedrooms]=&filters[category]=&filters[area]=&page=1&activeStatus=true" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-amber-400 hover:text-amber-300 transition-colors break-all text-xs"
-                  >
-                    API Endpoint
-                  </a>
+                <div className="flex items-center gap-2">
+                  <span>🌐</span>
+                  <a href="https://sevenseashotel.ae" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors">www.sevenseashotel.ae</a>
                 </div>
               </div>
             </motion.div>
@@ -232,8 +261,13 @@ export default function Footer() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 + index * 0.1 }}
-                  whileHover={{ scale: 1.2, y: -2 }}
-                  className="text-2xl hover:text-white transition-colors"
+                  whileHover={{ 
+                    scale: 1.3, 
+                    y: -5,
+                    rotate: [0, -10, 10, -10, 0],
+                    filter: 'brightness(1.2) drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))',
+                  }}
+                  className="text-2xl hover:text-amber-400 transition-all duration-300"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -258,15 +292,10 @@ export default function Footer() {
           {/* Copyright */}
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
             <p>© {currentYear} Seven Seas Hotel Dubai. All rights reserved.</p>
-            <p className="mt-2">Designed with luxury in mind</p>
-            <div className="mt-4 text-xs text-gray-600">
-              <p>Powered by <a href="https://api.dubaibooking.io" target="_blank" rel="noopener noreferrer" className="text-amber-400 hover:text-amber-300 transition-colors">Dubai Booking API</a></p>
-              <p className="mt-1">API: <code className="text-gray-500">x-organisation: sevenseas</code></p>
-            </div>
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   )
 }
 

@@ -10,6 +10,7 @@ import VideoBanner from '@/components/VideoBanner'
 import VideoSection from '@/components/VideoSection'
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
+import RichButton from '@/components/RichButton'
 
 const offers = [
   {
@@ -134,14 +135,43 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
       initial={{ opacity: 0, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ scale: 1.05, y: -10 }}
-      className="bg-white border-2 border-black rounded-lg overflow-hidden group cursor-pointer h-full flex flex-col"
+      whileHover={{ 
+        scale: 1.08, 
+        y: -15,
+        boxShadow: '0 25px 50px rgba(217, 119, 6, 0.2)',
+        borderColor: '#d97706',
+      }}
+      className="bg-white border-2 border-amber-200 rounded-lg overflow-hidden group cursor-pointer h-full flex flex-col hover:border-amber-400 transition-all duration-300 shadow-lg hover:shadow-2xl"
     >
       {/* Discount Badge */}
-      <div className="bg-black text-white px-6 py-4 text-center">
-        <div className="text-3xl font-bold mb-1">{offer.discount}</div>
-        <div className="text-sm uppercase tracking-wider">{offer.title}</div>
-      </div>
+      <motion.div 
+        className="bg-gradient-to-r from-amber-500 to-yellow-600 text-white px-6 py-4 text-center relative overflow-hidden"
+        animate={{
+          boxShadow: [
+            '0 0 20px rgba(255, 215, 0, 0.4)',
+            '0 0 30px rgba(255, 215, 0, 0.6)',
+            '0 0 20px rgba(255, 215, 0, 0.4)',
+          ],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+        }}
+      >
+        <div className="text-3xl font-bold mb-1 relative z-10">{offer.discount}</div>
+        <div className="text-sm uppercase tracking-wider relative z-10">{offer.title}</div>
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+          animate={{
+            x: ['-100%', '100%'],
+          }}
+          transition={{
+            duration: 1.5,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        />
+      </motion.div>
 
       {/* Content */}
       <div className="p-6 flex-grow flex flex-col">
@@ -166,15 +196,10 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
           </ul>
         </div>
 
-        <Link href={offer.link}>
-          <motion.button
-            whileHover={{ scale: 1.05, boxShadow: '0 15px 40px rgba(0, 0, 0, 0.3)' }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full px-6 py-3 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 relative overflow-hidden premium-border luxury-glow group"
-          >
-            <span className="relative z-10">Book Now</span>
-            <span className="absolute inset-0 luxury-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
-          </motion.button>
+        <Link href={offer.link} className="w-full">
+          <RichButton variant="filled" className="w-full px-6 py-3">
+            Book Now
+          </RichButton>
         </Link>
       </div>
     </motion.div>

@@ -170,8 +170,13 @@ function ValueCard({ value, index }: { value: typeof values[0], index: number })
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ scale: 1.05, y: -5 }}
-      className="bg-white border-2 border-gray-200 rounded-lg p-6 text-center"
+      whileHover={{ 
+        scale: 1.08, 
+        y: -10,
+        boxShadow: '0 20px 40px rgba(217, 119, 6, 0.15)',
+        borderColor: '#d97706',
+      }}
+      className="bg-white border-2 border-amber-200 rounded-lg p-6 text-center hover:border-amber-400 transition-all duration-300 shadow-lg hover:shadow-2xl"
     >
       <div className="text-5xl mb-4">{value.icon}</div>
       <h3 className="text-xl font-bold text-black mb-3">{value.title}</h3>

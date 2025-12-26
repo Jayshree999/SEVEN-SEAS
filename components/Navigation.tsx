@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -17,7 +18,6 @@ export default function Navigation() {
   }, [])
 
   const navItems = [
-    { name: 'HOME', href: '/' },
     { name: 'ROOMS', href: '/rooms' },
     { name: 'DINE', href: '/restaurant' },
     { name: 'SERVICES', href: '/services' },
@@ -44,21 +44,18 @@ export default function Navigation() {
           {/* Logo */}
           <Link href="/">
             <motion.div
-              whileHover={{ scale: 1.1, rotate: 2 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-3 cursor-pointer group"
+              className="flex items-center cursor-pointer group"
             >
-              <div className="w-12 h-12 border-2 border-black rounded-full flex items-center justify-center">
-                <span className="text-black text-xl font-bold">7</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-black text-xl font-bold tracking-wider">
-                  SEVEN SEAS
-                </span>
-                <span className="text-gray-600 text-xs tracking-widest">
-                  DUBAI
-                </span>
-              </div>
+              <Image
+                src="/logo.png"
+                alt="Seven Seas Hotel Dubai"
+                width={180}
+                height={60}
+                className="h-12 w-auto object-contain"
+                priority
+              />
             </motion.div>
           </Link>
 
@@ -71,11 +68,21 @@ export default function Navigation() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <Link
-                  href={item.href}
-                  className="text-gray-700 text-sm font-medium tracking-wider uppercase cursor-pointer transition-colors hover:text-black underline-animate"
-                >
-                  {item.name}
+                <Link href={item.href}>
+                  <motion.div
+                    className="relative group"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <span className="text-gray-700 text-sm font-medium tracking-wider uppercase cursor-pointer transition-colors group-hover:text-amber-600 relative z-10">
+                      {item.name}
+                    </span>
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-400 to-yellow-500 origin-left"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
                 </Link>
               </motion.div>
             ))}
@@ -85,11 +92,25 @@ export default function Navigation() {
           <div className="hidden lg:flex items-center space-x-4">
             <Link href="/rooms">
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.08,
+                  boxShadow: '0 0 20px rgba(255, 215, 0, 0.6)',
+                }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-2 text-sm font-semibold text-white bg-black hover:bg-gray-800 transition-colors"
+                className="relative px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 transition-all duration-300 rounded-lg overflow-hidden group"
               >
-                BOOK NOW
+                <span className="relative z-10">BOOK NOW</span>
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 opacity-0 group-hover:opacity-100"
+                  animate={{
+                    x: ['-100%', '100%'],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  }}
+                />
               </motion.button>
             </Link>
           </div>

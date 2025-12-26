@@ -164,8 +164,8 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-black mb-1">Address</div>
                       <div className="text-gray-600">
-                        Seven Seas Hotel Dubai<br />
-                        Dubai, United Arab Emirates
+                        Seven Seas Hotel - 231, Al Ittihad Rd<br />
+                        Al Qusais, Al Nahda 1, Dubai, UAE
                       </div>
                     </div>
                   </div>
@@ -174,8 +174,7 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-black mb-1">Phone</div>
                       <div className="text-gray-600">
-                        <a href="tel:+971423456789" className="hover:text-amber-600 transition-colors">+971 4 234 5678</a><br />
-                        <a href="tel:+971501234567" className="hover:text-amber-600 transition-colors">+971 50 123 4567</a>
+                        <a href="tel:+971551009152" className="hover:text-amber-600 transition-colors">+971 55 100 9152</a>
                       </div>
                     </div>
                   </div>
@@ -184,8 +183,16 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-black mb-1">Email</div>
                       <div className="text-gray-600">
-                        info@sevenseasdubai.com<br />
-                        reservations@sevenseasdubai.com
+                        <a href="mailto:reservation@sevenseashotel.ae" className="hover:text-amber-600 transition-colors">reservation@sevenseashotel.ae</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="text-2xl">🌐</div>
+                    <div>
+                      <div className="font-semibold text-black mb-1">Website</div>
+                      <div className="text-gray-600">
+                        <a href="https://sevenseashotel.ae" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">www.sevenseashotel.ae</a>
                       </div>
                     </div>
                   </div>

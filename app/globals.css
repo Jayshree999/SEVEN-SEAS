@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Optimized Particle Animation - GPU accelerated */
+@keyframes particle-float {
+  0% {
+    transform: translate(0, 0) translateZ(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(0, -80px) translateZ(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(0, 0) translateZ(0);
+    opacity: 0.3;
+  }
+}
+
+.particle-float {
+  animation: particle-float infinite ease-in-out;
+  will-change: transform, opacity;
+}
+
 /* Luxury Animations */
 @keyframes luxury-shimmer {
   0% {
@@ -300,5 +321,32 @@ html {
 .premium-hover:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Gradient X Animation for Shimmering */
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
+
+/* Shimmer Block for Buttons */
+.shimmer-block {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 

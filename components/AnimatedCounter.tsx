@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import { useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { useMotionValue, useSpring, useTransform, motion } from 'framer-motion'
 
 interface AnimatedCounterProps {
   value: number
@@ -31,9 +31,19 @@ export default function AnimatedCounter({ value, suffix = '', duration = 2 }: An
   }, [spring])
 
   return (
-    <span ref={ref} className="inline-block">
+    <motion.span 
+      ref={ref} 
+      className="inline-block"
+      animate={inView ? {
+        scale: [1, 1.1, 1],
+      } : {}}
+      transition={{
+        duration: 0.5,
+        delay: 0.3,
+      }}
+    >
       {displayValue}{suffix}
-    </span>
+    </motion.span>
   )
 }
 

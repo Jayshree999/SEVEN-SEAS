@@ -229,7 +229,7 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
             />
             <div className="flex-1">
               <span className="font-medium text-black">Extra Bed</span>
-              <span className="text-gray-600 text-sm ml-2">$50 per night</span>
+              <span className="text-gray-600 text-sm ml-2">AED 50 per night</span>
             </div>
           </label>
           <label className="flex items-center gap-3 cursor-pointer">
@@ -242,7 +242,7 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
             />
             <div className="flex-1">
               <span className="font-medium text-black">Airport Transfer</span>
-              <span className="text-gray-600 text-sm ml-2">$75 one-way</span>
+              <span className="text-gray-600 text-sm ml-2">AED 75 one-way</span>
             </div>
           </label>
           <label className="flex items-center gap-3 cursor-pointer">
@@ -255,7 +255,7 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
             />
             <div className="flex-1">
               <span className="font-medium text-black">Early Check-in (Before 2 PM)</span>
-              <span className="text-gray-600 text-sm ml-2">$50</span>
+              <span className="text-gray-600 text-sm ml-2">AED 50</span>
             </div>
           </label>
           <label className="flex items-center gap-3 cursor-pointer">
@@ -268,7 +268,7 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
             />
             <div className="flex-1">
               <span className="font-medium text-black">Late Check-out (After 12 PM)</span>
-              <span className="text-gray-600 text-sm ml-2">$50</span>
+              <span className="text-gray-600 text-sm ml-2">AED 50</span>
             </div>
           </label>
         </div>
@@ -292,43 +292,43 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
         <div className="border-t-2 border-gray-200 pt-4 space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Room ({nights} {nights === 1 ? 'night' : 'nights'})</span>
-            <span className="font-semibold">${roomTotal.toFixed(2)}</span>
+            <span className="font-semibold">AED {roomTotal.toFixed(2)}</span>
           </div>
           {extraBedCost > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Extra Bed</span>
-              <span className="font-semibold">${extraBedCost.toFixed(2)}</span>
+              <span className="font-semibold">AED {extraBedCost.toFixed(2)}</span>
             </div>
           )}
           {airportTransferCost > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Airport Transfer</span>
-              <span className="font-semibold">${airportTransferCost.toFixed(2)}</span>
+              <span className="font-semibold">AED {airportTransferCost.toFixed(2)}</span>
             </div>
           )}
           {earlyCheckInCost > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Early Check-in</span>
-              <span className="font-semibold">${earlyCheckInCost.toFixed(2)}</span>
+              <span className="font-semibold">AED {earlyCheckInCost.toFixed(2)}</span>
             </div>
           )}
           {lateCheckOutCost > 0 && (
             <div className="flex justify-between text-sm">
               <span className="text-gray-600">Late Check-out</span>
-              <span className="font-semibold">${lateCheckOutCost.toFixed(2)}</span>
+              <span className="font-semibold">AED {lateCheckOutCost.toFixed(2)}</span>
             </div>
           )}
           <div className="flex justify-between text-sm pt-2 border-t border-gray-200">
             <span className="text-gray-600">Subtotal</span>
-            <span className="font-semibold">${subtotal.toFixed(2)}</span>
+            <span className="font-semibold">AED {subtotal.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Taxes & Fees (10%)</span>
-            <span className="font-semibold">${tax.toFixed(2)}</span>
+            <span className="font-semibold">AED {tax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-lg font-bold pt-2 border-t-2 border-gray-200">
             <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>AED {total.toFixed(2)}</span>
           </div>
         </div>
       )}

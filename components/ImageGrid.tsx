@@ -47,7 +47,7 @@ export default function ImageGrid({ images, columns = 3, gap = 'medium' }: Image
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
             whileHover={{ scale: 1.05, y: -10, boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)' }}
             onClick={() => setSelectedImage(image.id)}
-            className="relative h-64 md:h-80 rounded-lg overflow-hidden cursor-pointer group premium-border"
+            className="relative h-64 md:h-80 rounded-lg overflow-hidden cursor-pointer group premium-border border-2 border-amber-900/20 hover:border-amber-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black">
               {image.url ? (

@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
@@ -105,14 +105,26 @@ export default function Home() {
       <Scene3D />
 
       {/* Image Showcase */}
-      <section className="py-20 px-6 bg-white">
+      <motion.section 
+        className="py-20 px-6 bg-white relative"
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-12">
+          <motion.div 
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <h2 className="text-4xl md:text-6xl font-bold text-black mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
               DISCOVER OUR WORLD
             </h2>
             <p className="text-xl text-gray-600">A glimpse into the Seven Seas experience</p>
-          </div>
+          </motion.div>
           <ImageGrid
             images={[
               { id: 1, title: 'Luxury Lobby', description: 'Grand entrance with elegant design' },
@@ -125,7 +137,7 @@ export default function Home() {
             columns={3}
           />
         </div>
-      </section>
+      </motion.section>
 
       <FeaturesSection />
 

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import FloatingGoldParticles from './FloatingGoldParticles'
 
 interface ParallaxBannerProps {
   imageUrl?: string
@@ -12,20 +13,17 @@ interface ParallaxBannerProps {
 
 export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500 }: ParallaxBannerProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0])
+  // Optimized: Removed parallax scroll effect for better performance
+  // const { scrollYProgress } = useScroll({
+  //   target: ref,
+  //   offset: ['start end', 'end start'],
+  // })
+  // const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
+  // const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1, 0])
 
   return (
     <div ref={ref} className={`relative h-[${height}px] overflow-hidden`} style={{ height: `${height}px` }}>
-      <motion.div
-        style={{ y, opacity }}
-        className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black"
-      >
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black">
         {imageUrl ? (
           <div 
             className="absolute inset-0 bg-cover bg-center"
@@ -38,8 +36,9 @@ export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500
             </div>
           </div>
         )}
-      </motion.div>
+      </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      {/* Removed particles for performance */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-8">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}

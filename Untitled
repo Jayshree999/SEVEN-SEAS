@@ -1,0 +1,19 @@
+Failed to compile
+
+Next.js (14.2.33) is outdated (learn more)
+./app/rooms/page.tsx
+Error: 
+  × Unexpected token `motion`. Expected jsx identifier
+     ╭─[/Users/affworld/SEVEN-SEAS-1/app/rooms/page.tsx:249:1]
+ 249 │   const hasMoreAmenities = room.amenities.length > 4
+ 250 │ 
+ 251 │   return (
+ 252 │     <motion.div
+     ·      ──────
+ 253 │       ref={ref}
+ 254 │       initial={{ opacity: 0, y: 30 }}
+ 255 │       animate={inView ? { opacity: 1, y: 0 } : {}}
+     ╰────
+
+Caused by:
+    Syntax Error

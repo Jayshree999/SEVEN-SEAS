@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true)
@@ -26,25 +27,20 @@ export default function LoadingScreen() {
     >
       <div className="text-center">
         <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="w-20 h-20 border-4 border-black border-t-transparent rounded-full mx-auto mb-8"
-        />
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-3xl font-bold text-black mb-2"
-          style={{ fontFamily: 'var(--font-playfair)' }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8"
         >
-          SEVEN SEAS
-        </motion.h2>
+          <Image
+            src="/logo.png"
+            alt="Seven Seas Hotel Dubai"
+            width={250}
+            height={80}
+            className="h-20 w-auto object-contain mx-auto"
+            priority
+          />
+        </motion.div>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -114,16 +114,16 @@ export default function Testimonials() {
 function TestimonialCard({ testimonial, index, inView }: { testimonial: typeof testimonials[0], index: number, inView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ scale: 1.02, y: -5 }}
-      className="bg-white border-2 border-gray-200 rounded-lg p-8 hover:border-gray-400 transition-colors"
+      className="bg-white border-2 border-amber-200 rounded-lg p-8 hover:border-amber-400 transition-all duration-200 shadow-lg hover:shadow-xl"
     >
       {/* Rating */}
       <div className="flex gap-1 mb-4">
         {[...Array(testimonial.rating)].map((_, i) => (
-          <span key={i} className="text-yellow-400">⭐</span>
+          <span key={i} className="text-amber-500">⭐</span>
         ))}
       </div>
 

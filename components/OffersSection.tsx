@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Link from 'next/link'
 import ImageBanner from './ImageBanner'
+import RichButton from './RichButton'
 
 const offers = [
   {
@@ -70,23 +71,16 @@ export default function OffersSection() {
           {offers.map((offer, index) => (
             <Link key={offer.title} href={offer.link}>
               <motion.div
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ 
-                  scale: 1.08,
-                  y: -15,
-                  boxShadow: '0 25px 50px rgba(0, 0, 0, 0.2)',
-                }}
-                className="bg-white border-2 border-black rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full premium-border luxury-glow"
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="bg-white border-2 border-black rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full shadow-lg hover:shadow-xl transition-all duration-200"
               >
-                {/* Discount Badge */}
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="absolute top-4 right-4 bg-black text-white px-4 py-2 font-bold text-lg rounded-full luxury-glow"
-                >
-                  {offer.discount}
-                </motion.div>
+                {/* Discount Badge - Optimized */}
+                <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white px-4 py-2 font-bold text-lg rounded-full shadow-xl border-2 border-amber-400 relative overflow-hidden">
+                  <span className="relative z-10">{offer.discount}</span>
+                </div>
 
                 {/* Content */}
                 <div className="mt-8">
@@ -123,14 +117,10 @@ export default function OffersSection() {
           transition={{ delay: 0.4 }}
           className="text-center mt-12"
         >
-          <Link href="/offers">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-800 transition-colors"
-            >
+            <Link href="/offers">
+            <RichButton variant="filled" className="px-8 py-3">
               View All Offers
-            </motion.button>
+            </RichButton>
           </Link>
         </motion.div>
       </div>
