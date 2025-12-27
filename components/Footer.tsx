@@ -30,17 +30,28 @@ export default function Footer() {
       { name: 'Events', href: '/services' },
       { name: 'Concierge', href: '/contact' },
     ],
-    information: [
-      { name: 'Special Offers', href: '/offers' },
-      { name: 'Contact Us', href: '/contact' },
-      { name: 'Location', href: '/contact' },
+    support: [
+      { name: 'Support', href: '/support' },
+      { name: 'Help Center', href: '/support/help-center' },
+      { name: 'Safety', href: '/support/safety' },
+      { name: 'Cancellation', href: '/support/cancellation' },
       { name: 'FAQ', href: '/faq' },
     ],
+    company: [
+      { name: 'Company', href: '/company' },
+      { name: 'About', href: '/about' },
+      { name: 'Our Apps', href: '/company/apps' },
+      { name: 'Contact', href: '/contact' },
+      { name: 'Corporate Contact', href: '/company/corporate' },
+      { name: 'Press', href: '/company/press' },
+    ],
     legal: [
+      { name: 'Legal', href: '/legal' },
       { name: 'Terms & Conditions', href: '/terms' },
       { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Cancellation Policy', href: '/terms' },
-      { name: 'Accessibility', href: '/terms' },
+      { name: 'Cookie Policy', href: '/legal/cookies' },
+      { name: 'Guidelines', href: '/legal/guidelines' },
+      { name: 'Host Terms', href: '/legal/host-terms' },
     ],
   }
 
@@ -81,30 +92,29 @@ export default function Footer() {
       </div>
       
       {/* Main Footer Content */}
-      <div className="container mx-auto px-6 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+      <div className="container mx-auto px-6 py-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
           {/* Brand Section */}
-          <div className="lg:col-span-2">
+          <div className="md:col-span-2 lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-6"
+              className="mb-0"
             >
-              <div className="mb-4">
+              <div className="mb-2">
                 <Image
                   src="/logo.png"
                   alt="Seven Seas Hotel Dubai"
-                  width={200}
-                  height={70}
-                  className="h-16 w-auto object-contain brightness-0 invert"
+                  width={150}
+                  height={50}
+                  className="h-10 w-auto object-contain brightness-0 invert"
                 />
               </div>
-              <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
-                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination. 
-                Where modern elegance meets authentic Arabian hospitality.
+              <p className="text-gray-400 leading-relaxed mb-3 max-w-md text-xs">
+                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination.
               </p>
-              <div className="space-y-2 text-sm text-gray-400">
+              <div className="space-y-1 text-xs text-gray-400">
                 <div className="flex items-center gap-2">
                   <span>📍</span>
                   <span>Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE</span>
@@ -132,11 +142,11 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-lg font-bold mb-6 uppercase tracking-wider"
+              className="text-sm font-bold mb-2 uppercase tracking-wider"
             >
               Hotel
             </motion.h3>
-            <ul className="space-y-3">
+            <ul className="space-y-1.5">
               {footerLinks.hotel.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -163,11 +173,11 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-lg font-bold mb-6 uppercase tracking-wider"
+              className="text-sm font-bold mb-2 uppercase tracking-wider"
             >
               Services
             </motion.h3>
-            <ul className="space-y-3">
+            <ul className="space-y-1.5">
               {footerLinks.services.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -187,25 +197,87 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Information Links */}
+          {/* Support Links */}
           <div>
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-lg font-bold mb-6 uppercase tracking-wider"
+              className="text-sm font-bold mb-2 uppercase tracking-wider"
             >
-              Information
+              Support
             </motion.h3>
-            <ul className="space-y-3">
-              {footerLinks.information.map((link, index) => (
+            <ul className="space-y-1.5">
+              {footerLinks.support.map((link, index) => (
                 <motion.li
                   key={link.name}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 + index * 0.05 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="text-sm font-bold mb-2 uppercase tracking-wider"
+            >
+              Company
+            </motion.h3>
+            <ul className="space-y-1.5">
+              {footerLinks.company.map((link, index) => (
+                <motion.li
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + index * 0.05 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal Links */}
+          <div>
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="text-sm font-bold mb-2 uppercase tracking-wider"
+            >
+              Legal
+            </motion.h3>
+            <ul className="space-y-1.5">
+              {footerLinks.legal.map((link, index) => (
+                <motion.li
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + index * 0.05 }}
                 >
                   <Link
                     href={link.href}
@@ -224,22 +296,22 @@ export default function Footer() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 pt-12 border-t border-gray-800"
+          className="mt-4 pt-4 border-t border-gray-800"
         >
           <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4">Stay Connected</h3>
-            <p className="text-gray-400 mb-6">Subscribe to receive exclusive offers and updates</p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <h3 className="text-lg font-bold mb-1">Stay Connected</h3>
+            <p className="text-gray-400 mb-3 text-xs">Subscribe to receive exclusive offers and updates</p>
+            <form className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-6 py-3 bg-gray-900 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-white"
+                className="flex-1 px-3 py-1.5 bg-gray-900 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-white text-xs"
               />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="px-8 py-3 bg-white text-black font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors"
+                className="px-4 py-1.5 bg-white text-black font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors text-xs"
               >
                 Subscribe
               </motion.button>
@@ -248,7 +320,7 @@ export default function Footer() {
         </motion.div>
 
         {/* Social Media & Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
+        <div className="mt-4 pt-4 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Social Links */}
             <div className="flex items-center gap-6">
@@ -275,22 +347,22 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Legal Links */}
+            {/* Quick Legal Links */}
             <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
-              {footerLinks.legal.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="hover:text-white transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
+              <Link href="/terms" className="hover:text-white transition-colors">
+                Terms
+              </Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">
+                Privacy
+              </Link>
+              <Link href="/legal/cookies" className="hover:text-white transition-colors">
+                Cookies
+              </Link>
             </div>
           </div>
 
           {/* Copyright */}
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
+          <div className="mt-3 pt-3 border-t border-gray-800 text-center text-xs text-gray-500">
             <p>© {currentYear} Seven Seas Hotel Dubai. All rights reserved.</p>
           </div>
         </div>

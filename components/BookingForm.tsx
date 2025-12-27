@@ -1,56 +1,82 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import DatePicker from './DatePicker'
+import { getMonthlyRent, getYearlyRent, createBookingWithPayment } from '@/lib/booking'
+import { useAuth } from '@/contexts/AuthContext'
+import { useRouter } from 'next/navigation'
+
+import { Property } from '@/lib/api'
 
 interface BookingFormProps {
   roomId: string
   roomName: string
   price: number
+  monthlyRent?: number
+  yearlyRent?: number
+  property?: Property | null
+  onBookingSuccess?: () => void
 }
 
-export default function BookingForm({ roomId, roomName, price }: BookingFormProps) {
+type BookingType = 'day' | 'month' | 'year' | null
+
+export default function BookingForm({ roomId, roomName, price, monthlyRent: propMonthlyRent, yearlyRent: propYearlyRent, property, onBookingSuccess }: BookingFormProps) {
+  const { isAuth, user } = useAuth()
+  const router = useRouter()
   const [formData, setFormData] = useState({
     checkIn: '',
     checkOut: '',
     guests: 1,
-    adults: 1,
-    children: 0,
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    country: '',
-    specialRequests: '',
-    extraBed: false,
-    airportTransfer: false,
-    earlyCheckIn: false,
-    lateCheckOut: false,
   })
-
+  const [bookingType, setBookingType] = useState<BookingType>(null)
+  const [monthlyRent, setMonthlyRent] = useState(propMonthlyRent || 0)
+  const [yearlyRent, setYearlyRent] = useState(propYearlyRent || 0)
+  const [loadingPrices, setLoadingPrices] = useState(!propMonthlyRent && !propYearlyRent)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showGuestDropdown, setShowGuestDropdown] = useState(false)
+  const [showTotalDetails, setShowTotalDetails] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    alert('Booking request submitted successfully! We will send a confirmation email shortly.')
-    setIsSubmitting(false)
-  }
+  // Close guest dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element
+      if (showGuestDropdown && !target.closest('.guest-dropdown-container')) {
+        setShowGuestDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [showGuestDropdown])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value, type } = e.target
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
-    })
-  }
+  useEffect(() => {
+    // If prices are provided as props, use them. Otherwise, fetch from API
+    if (propMonthlyRent || propYearlyRent) {
+      setMonthlyRent(propMonthlyRent || 0)
+      setYearlyRent(propYearlyRent || 0)
+      setLoadingPrices(false)
+    } else {
+      const loadPrices = async () => {
+        try {
+          setLoadingPrices(true)
+          const [monthly, yearly] = await Promise.all([
+            getMonthlyRent(roomId),
+            getYearlyRent(roomId),
+          ])
+          setMonthlyRent(monthly)
+          setYearlyRent(yearly)
+        } catch (error) {
+          console.error('Error loading prices:', error)
+        } finally {
+          setLoadingPrices(false)
+        }
+      }
+      loadPrices()
+    }
+  }, [roomId, propMonthlyRent, propYearlyRent])
 
   const calculateNights = () => {
-    if (formData.checkIn && formData.checkOut) {
+    if (formData.checkIn && formData.checkOut && bookingType === 'day') {
       const checkIn = new Date(formData.checkIn)
       const checkOut = new Date(formData.checkOut)
       const diffTime = Math.abs(checkOut.getTime() - checkIn.getTime())
@@ -61,289 +87,351 @@ export default function BookingForm({ roomId, roomName, price }: BookingFormProp
   }
 
   const nights = calculateNights()
-  const roomTotal = nights * price
-  const taxRate = 0.10 // 10% tax
-  const tax = roomTotal * taxRate
-  const extraBedCost = formData.extraBed ? nights * 50 : 0
-  const airportTransferCost = formData.airportTransfer ? 75 : 0
-  const earlyCheckInCost = formData.earlyCheckIn ? 50 : 0
-  const lateCheckOutCost = formData.lateCheckOut ? 50 : 0
-  const subtotal = roomTotal + extraBedCost + airportTransferCost + earlyCheckInCost + lateCheckOutCost
-  const total = subtotal + tax
+
+  const calculateTotal = () => {
+    if (bookingType === 'month') {
+      return monthlyRent || 0
+    } else if (bookingType === 'year') {
+      return yearlyRent || 0
+    } else {
+      return nights * price
+    }
+  }
+
+  const total = calculateTotal()
+
+  // Get blocked dates from property bookings
+  const getBlockedDates = (): string[] => {
+    const blocked: string[] = []
+    
+    if (!property) return blocked
+
+    // Get dates from blockedDates array
+    if (property.blockedDates && Array.isArray(property.blockedDates)) {
+      property.blockedDates.forEach((blockedDate: any) => {
+        if (blockedDate.start && blockedDate.end) {
+          const start = new Date(blockedDate.start)
+          const end = new Date(blockedDate.end)
+          const current = new Date(start)
+          
+          while (current <= end) {
+            blocked.push(current.toISOString().split('T')[0])
+            current.setDate(current.getDate() + 1)
+          }
+        } else if (blockedDate.date) {
+          blocked.push(new Date(blockedDate.date).toISOString().split('T')[0])
+        }
+      })
+    }
+
+    // Get dates from bookings
+    if (property.bookingInfo?.allBookings && Array.isArray(property.bookingInfo.allBookings)) {
+      property.bookingInfo.allBookings.forEach((booking: any) => {
+        if (booking.checkIn && booking.checkOut && booking.status !== 'Cancelled' && booking.status !== 'Fail') {
+          const checkIn = new Date(booking.checkIn)
+          const checkOut = new Date(booking.checkOut)
+          const current = new Date(checkIn)
+          
+          // Block dates from check-in to check-out (excluding check-out day)
+          while (current < checkOut) {
+            blocked.push(current.toISOString().split('T')[0])
+            current.setDate(current.getDate() + 1)
+          }
+        }
+      })
+    }
+
+    // Get dates from availabilityCalendar
+    if (property.bookingInfo?.availabilityCalendar?.bookedDates) {
+      property.bookingInfo.availabilityCalendar.bookedDates.forEach((booking: any) => {
+        if (booking.checkIn && booking.checkOut) {
+          const checkIn = new Date(booking.checkIn)
+          const checkOut = new Date(booking.checkOut)
+          const current = new Date(checkIn)
+          
+          while (current < checkOut) {
+            blocked.push(current.toISOString().split('T')[0])
+            current.setDate(current.getDate() + 1)
+          }
+        }
+      })
+    }
+
+    return Array.from(new Set(blocked)) // Remove duplicates
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!isAuth) {
+      router.push('/login?redirect=/rooms/' + roomId)
+      return
+    }
+
+    if (!formData.checkIn || !formData.checkOut) {
+      alert('Please select check-in and check-out dates')
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      // Calculate nights based on booking type
+      const calculatedNights = bookingType === 'day' 
+        ? nights 
+        : bookingType === 'month' 
+        ? 30 
+        : bookingType === 'year' 
+        ? 365 
+        : nights
+
+      // Calculate subtotal (base rent before fees)
+      const subtotal = total
+
+      // Calculate management fees (10% of rent, or use default)
+      const manageMentFees = total * 0.1
+
+      // Calculate income (rent - management fees)
+      const income = total - manageMentFees
+
+      if (!user?._id) {
+        throw new Error('User not found. Please log in again.')
+      }
+
+      const bookingData: any = {
+        userId: user._id,
+        checkIn: formData.checkIn,
+        checkOut: formData.checkOut,
+        guest: formData.guests.toString(),
+        property: roomId,
+        nights: calculatedNights,
+        rent: total,
+        subtotal: subtotal,
+        totalAmount: total,
+        isMonthlyBooking: bookingType === 'month',
+        isYearlyBooking: bookingType === 'year',
+        monthlyPrice: bookingType === 'month' ? monthlyRent : undefined,
+        yearlyPrice: bookingType === 'year' ? yearlyRent : undefined,
+        bookingType: bookingType || 'day',
+      }
+
+      // Create payment session
+      const paymentData = await createBookingWithPayment(bookingData)
+      
+      if (paymentData?.checkoutUrl) {
+        // Redirect to payment gateway
+        window.location.href = paymentData.checkoutUrl
+      } else {
+        throw new Error('Payment gateway error: No checkout URL received')
+      }
+    } catch (error: any) {
+      alert(error.message || 'Failed to create booking. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleBookingTypeSelect = (type: 'month' | 'year') => {
+    setBookingType(type)
+    // Set dates for monthly (30 days) or yearly (365 days)
+    const today = new Date()
+    const checkIn = today.toISOString().split('T')[0]
+    const checkOut = new Date(today)
+    if (type === 'month') {
+      checkOut.setDate(checkOut.getDate() + 30)
+    } else {
+      checkOut.setDate(checkOut.getDate() + 365)
+    }
+    setFormData({
+      ...formData,
+      checkIn,
+      checkOut: checkOut.toISOString().split('T')[0],
+    })
+  }
 
   const minCheckOutDate = formData.checkIn 
     ? new Date(new Date(formData.checkIn).getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-    : new Date().toISOString().split('T')[0]
+    : undefined
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Dates */}
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Date Selection */}
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-semibold text-black mb-2">Check In *</label>
-          <input
-            type="date"
-            name="checkIn"
+        <DatePicker
+          label="Check-in"
             value={formData.checkIn}
-            onChange={handleChange}
-            min={new Date().toISOString().split('T')[0]}
-            required
-            className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-semibold text-black mb-2">Check Out *</label>
-          <input
-            type="date"
-            name="checkOut"
+          onChange={(date) => {
+            setFormData({ ...formData, checkIn: date })
+            setBookingType(bookingType === 'month' || bookingType === 'year' ? bookingType : 'day')
+          }}
+          minDate={new Date().toISOString().split('T')[0]}
+          pricePerNight={price}
+          blockedDates={getBlockedDates()}
+          dailyPrices={property?.dailyPrices || []}
+          propertyId={roomId}
+        />
+        <DatePicker
+          label="Check-out"
             value={formData.checkOut}
-            onChange={handleChange}
-            min={minCheckOutDate}
-            required
-            className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-          />
-        </div>
-      </div>
-
-      {/* Guests */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-semibold text-black mb-2">Adults *</label>
-          <select
-            name="adults"
-            value={formData.adults}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-          >
-            {[1, 2, 3, 4, 5, 6].map(num => (
-              <option key={num} value={num}>{num} {num === 1 ? 'Adult' : 'Adults'}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-semibold text-black mb-2">Children</label>
-          <select
-            name="children"
-            value={formData.children}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-          >
-            {[0, 1, 2, 3, 4].map(num => (
-              <option key={num} value={num}>{num} {num === 1 ? 'Child' : 'Children'}</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Guest Information */}
-      <div className="border-t-2 border-gray-200 pt-4">
-        <h3 className="font-semibold text-black mb-4">Guest Information</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-black mb-2">First Name *</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-black mb-2">Last Name *</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-            />
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-sm font-semibold text-black mb-2">Email *</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-          />
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-black mb-2">Phone *</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-black mb-2">Country *</label>
-            <select
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
-            >
-              <option value="">Select Country</option>
-              <option value="AE">United Arab Emirates</option>
-              <option value="US">United States</option>
-              <option value="GB">United Kingdom</option>
-              <option value="IN">India</option>
-              <option value="SA">Saudi Arabia</option>
-              <option value="CA">Canada</option>
-              <option value="AU">Australia</option>
-              <option value="DE">Germany</option>
-              <option value="FR">France</option>
-              <option value="IT">Italy</option>
-              <option value="ES">Spain</option>
-              <option value="OTHER">Other</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Services */}
-      <div className="border-t-2 border-gray-200 pt-4">
-        <h3 className="font-semibold text-black mb-4">Additional Services</h3>
-        <div className="space-y-3">
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              name="extraBed"
-              checked={formData.extraBed}
-              onChange={handleChange}
-              className="w-5 h-5 border-2 border-gray-300 rounded focus:ring-2 focus:ring-black"
-            />
-            <div className="flex-1">
-              <span className="font-medium text-black">Extra Bed</span>
-              <span className="text-gray-600 text-sm ml-2">AED 50 per night</span>
-            </div>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              name="airportTransfer"
-              checked={formData.airportTransfer}
-              onChange={handleChange}
-              className="w-5 h-5 border-2 border-gray-300 rounded focus:ring-2 focus:ring-black"
-            />
-            <div className="flex-1">
-              <span className="font-medium text-black">Airport Transfer</span>
-              <span className="text-gray-600 text-sm ml-2">AED 75 one-way</span>
-            </div>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              name="earlyCheckIn"
-              checked={formData.earlyCheckIn}
-              onChange={handleChange}
-              className="w-5 h-5 border-2 border-gray-300 rounded focus:ring-2 focus:ring-black"
-            />
-            <div className="flex-1">
-              <span className="font-medium text-black">Early Check-in (Before 2 PM)</span>
-              <span className="text-gray-600 text-sm ml-2">AED 50</span>
-            </div>
-          </label>
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              name="lateCheckOut"
-              checked={formData.lateCheckOut}
-              onChange={handleChange}
-              className="w-5 h-5 border-2 border-gray-300 rounded focus:ring-2 focus:ring-black"
-            />
-            <div className="flex-1">
-              <span className="font-medium text-black">Late Check-out (After 12 PM)</span>
-              <span className="text-gray-600 text-sm ml-2">AED 50</span>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      {/* Special Requests */}
-      <div>
-        <label className="block text-sm font-semibold text-black mb-2">Special Requests</label>
-        <textarea
-          name="specialRequests"
-          value={formData.specialRequests}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Any special requests or preferences..."
-          className="w-full px-4 py-2 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
+          onChange={(date) => {
+            setFormData({ ...formData, checkOut: date })
+            setBookingType(bookingType === 'month' || bookingType === 'year' ? bookingType : 'day')
+          }}
+          minDate={minCheckOutDate}
+          pricePerNight={price}
+          blockedDates={getBlockedDates()}
+          dailyPrices={property?.dailyPrices || []}
+          propertyId={roomId}
         />
       </div>
 
-      {/* Price Summary */}
-      {nights > 0 && (
-        <div className="border-t-2 border-gray-200 pt-4 space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Room ({nights} {nights === 1 ? 'night' : 'nights'})</span>
-            <span className="font-semibold">AED {roomTotal.toFixed(2)}</span>
+      {/* Guest Count */}
+      <div className="relative guest-dropdown-container">
+        <label className="block text-sm font-semibold text-gray-700 mb-2">Guests</label>
+        <button
+          type="button"
+          onClick={() => setShowGuestDropdown(!showGuestDropdown)}
+          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-left flex items-center justify-between hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+        >
+          <span className="text-gray-900">{formData.guests} {formData.guests === 1 ? 'guest' : 'guests'}</span>
+          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <AnimatePresence>
+          {showGuestDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute z-10 mt-2 w-full bg-white border-2 border-gray-200 rounded-lg shadow-lg overflow-hidden"
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                <button
+                  key={num}
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, guests: num })
+                    setShowGuestDropdown(false)
+                  }}
+                  className={`w-full px-4 py-3 text-left hover:bg-amber-50 transition-colors ${
+                    formData.guests === num ? 'bg-amber-50 font-semibold' : ''
+                  }`}
+                >
+                  {num} {num === 1 ? 'guest' : 'guests'}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Total Before Taxes */}
+      {(formData.checkIn && formData.checkOut) && (
+      <div className="border-t-2 border-gray-200 pt-4">
+          <button
+            type="button"
+            onClick={() => setShowTotalDetails(!showTotalDetails)}
+            className="w-full flex items-center justify-between text-left"
+          >
+            <span className="text-sm font-semibold text-gray-700">Total before taxes</span>
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-gray-900">{total.toLocaleString()} AED</span>
+              <svg 
+                className={`w-5 h-5 text-gray-400 transition-transform ${showTotalDetails ? 'rotate-180' : ''}`}
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </button>
+          {showTotalDetails && bookingType === 'day' && (
+            <div className="mt-3 space-y-2 text-sm text-gray-600">
+              <div className="flex justify-between">
+                <span>{nights} {nights === 1 ? 'night' : 'nights'} × {price.toLocaleString()} AED</span>
+                <span>{(nights * price).toLocaleString()} AED</span>
           </div>
-          {extraBedCost > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Extra Bed</span>
-              <span className="font-semibold">AED {extraBedCost.toFixed(2)}</span>
             </div>
           )}
-          {airportTransferCost > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Airport Transfer</span>
-              <span className="font-semibold">AED {airportTransferCost.toFixed(2)}</span>
             </div>
           )}
-          {earlyCheckInCost > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Early Check-in</span>
-              <span className="font-semibold">AED {earlyCheckInCost.toFixed(2)}</span>
+
+      {/* Monthly and Yearly Stay Options */}
+      {(monthlyRent > 0 || yearlyRent > 0) && (
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Looking for a longer stay?</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {monthlyRent > 0 && (
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                  bookingType === 'month' 
+                    ? 'border-blue-500 bg-blue-50' 
+                    : 'border-gray-200 hover:border-blue-300'
+                }`}
+                onClick={() => handleBookingTypeSelect('month')}
+              >
+                <h4 className="font-bold text-gray-900 mb-1">Monthly Stay</h4>
+                <p className="text-sm text-gray-600 mb-3">30-day booking at special rate</p>
+                <div className="text-2xl font-bold text-blue-600 mb-3">
+                  {monthlyRent.toLocaleString()} AED
             </div>
-          )}
-          {lateCheckOutCost > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-600">Late Check-out</span>
-              <span className="font-semibold">AED {lateCheckOutCost.toFixed(2)}</span>
+                <button
+                  type="button"
+                  className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                    bookingType === 'month'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  {bookingType === 'month' ? 'Selected' : 'Select'}
+                </button>
+              </motion.div>
+            )}
+
+            {yearlyRent > 0 && (
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                  bookingType === 'year' 
+                    ? 'border-green-500 bg-green-50' 
+                    : 'border-gray-200 hover:border-green-300'
+                }`}
+                onClick={() => handleBookingTypeSelect('year')}
+              >
+                <h4 className="font-bold text-gray-900 mb-1">Yearly Stay</h4>
+                <p className="text-sm text-gray-600 mb-1">365-day booking at special rate</p>
+                <p className="text-xs text-gray-500 mb-3">Split into 4 easy installments</p>
+                <div className="text-2xl font-bold text-green-600 mb-3">
+                  {yearlyRent.toLocaleString()} AED
             </div>
-          )}
-          <div className="flex justify-between text-sm pt-2 border-t border-gray-200">
-            <span className="text-gray-600">Subtotal</span>
-            <span className="font-semibold">AED {subtotal.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Taxes & Fees (10%)</span>
-            <span className="font-semibold">AED {tax.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between text-lg font-bold pt-2 border-t-2 border-gray-200">
-            <span>Total</span>
-            <span>AED {total.toFixed(2)}</span>
+                <button
+                  type="button"
+                  className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                    bookingType === 'year'
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+                >
+                  {bookingType === 'year' ? 'Selected' : 'Select'}
+                </button>
+              </motion.div>
+            )}
           </div>
         </div>
       )}
 
+      {/* Submit Button */}
       <motion.button
         type="submit"
-        disabled={isSubmitting || nights === 0}
-        whileHover={{ scale: nights > 0 && !isSubmitting ? 1.05 : 1, boxShadow: nights > 0 && !isSubmitting ? '0 15px 40px rgba(0, 0, 0, 0.3)' : 'none' }}
-        whileTap={{ scale: nights > 0 && !isSubmitting ? 0.98 : 1 }}
-        className="w-full px-6 py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden premium-border luxury-glow group"
+        disabled={isSubmitting || !formData.checkIn || !formData.checkOut}
+        whileHover={{ scale: isSubmitting || !formData.checkIn || !formData.checkOut ? 1 : 1.02 }}
+        whileTap={{ scale: isSubmitting || !formData.checkIn || !formData.checkOut ? 1 : 0.98 }}
+        className="w-full px-6 py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg"
       >
-        <span className="relative z-10">{isSubmitting ? 'Processing...' : nights === 0 ? 'Select Dates to Continue' : 'Confirm Booking'}</span>
-        {!isSubmitting && nights > 0 && (
-          <span className="absolute inset-0 luxury-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
-        )}
+        {isSubmitting ? 'Processing...' : !isAuth ? 'Sign In to Book' : 'Book Now'}
       </motion.button>
 
       <p className="text-xs text-gray-500 text-center">

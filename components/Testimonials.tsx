@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import BackgroundVideo from './BackgroundVideo'
+import GoogleReviews from './GoogleReviews'
 
 const testimonials = [
   {
@@ -83,27 +84,29 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} inView={inView} />
-          ))}
-        </div>
-
-        {/* Rating Summary */}
+        {/* Google Reviews Integration */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-16 text-center"
+          transition={{ delay: 0.3, duration: 0.8 }}
         >
-          <div className="inline-block bg-gray-50 rounded-lg px-12 py-8">
-            <div className="text-5xl font-bold text-black mb-2">4.9</div>
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-2xl">⭐</span>
-              ))}
-            </div>
-            <p className="text-gray-600">Based on 1,247 guest reviews</p>
+          <GoogleReviews />
+        </motion.div>
+
+        {/* Fallback Testimonials (shown if Google Reviews fail) */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="mt-12"
+        >
+          <h3 className="text-2xl font-bold text-black mb-6 text-center" style={{ fontFamily: 'var(--font-playfair)' }}>
+            More Guest Experiences
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.slice(0, 3).map((testimonial, index) => (
+              <TestimonialCard key={testimonial.id} testimonial={testimonial} index={index} inView={inView} />
+            ))}
           </div>
         </motion.div>
       </div>

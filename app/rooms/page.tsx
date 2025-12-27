@@ -4,33 +4,33 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import ImageBanner from '@/components/ImageBanner'
-import ImageGrid from '@/components/ImageGrid'
-import VideoBanner from '@/components/VideoBanner'
-import VideoSection from '@/components/VideoSection'
 import Link from 'next/link'
-import { useInView } from 'react-intersection-observer'
-import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { fetchProperties, Property } from '@/lib/api'
-import RichButton from '@/components/RichButton'
-
-const Room3DPreview = dynamic(() => import('@/components/Room3DPreview'), { ssr: false })
+import { Star, MapPin, Home, Users, Bed, Bath, Heart, TrendingUp, Sparkles } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
+import { toggleWatchlist, getCurrentUserProfile } from '@/lib/user'
+import { toast } from 'sonner'
 
 interface RoomDisplay {
   id: string
   name: string
   price: number
-  size: string
+  size: number
   guests: number
   beds: string
+  baths: number
+  bedrooms: number
   amenities: string[]
   image?: string
+  property: Property
 }
 
 function mapPropertyToRoom(property: Property): RoomDisplay {
   const bedrooms = typeof property.bedrooms === 'string' ? parseInt(property.bedrooms) || 1 : property.bedrooms || 1
   const guests = parseInt(property.guest_no as string) || bedrooms * 2
   const size = property.size || property.area || 0
+  const baths = typeof property.washRoom === 'string' ? parseInt(property.washRoom) || 1 : property.washRoom || 1
   
   // Determine bed type based on room name or default
   let beds = '1 King Bed'
@@ -44,10 +44,8 @@ function mapPropertyToRoom(property: Property): RoomDisplay {
   let imageUrl: string | undefined
   if (property.photos && property.photos.length > 0) {
     if (typeof property.photos[0] === 'object' && 'url' in property.photos[0]) {
-      // Photos are objects with url property
       imageUrl = (property.photos[0] as { url: string }).url
     } else if (typeof property.photos[0] === 'string') {
-      // Photos are strings
       imageUrl = property.photos[0]
     }
   }
@@ -56,21 +54,46 @@ function mapPropertyToRoom(property: Property): RoomDisplay {
     id: property._id || property.id || '',
     name: property.title || property.name || property.nickname || 'Untitled Room',
     price: property.price || 0,
-    size: `${size} sqm`,
+    size: size,
     guests: guests,
     beds: beds,
+    baths: baths,
+    bedrooms: bedrooms,
     amenities: property.amenities || ['Free WiFi', 'Air Conditioning'],
     image: imageUrl,
+    property: property,
   }
+}
+
+const formatPrice = (price: number) => {
+  // Validate price - if it's unreasonably high, it might be in a different currency unit
+  // For a 4-star hotel in Dubai, reasonable prices are typically 150-2000 AED per night
+  let adjustedPrice = price
+  
+  // If price seems too high (likely in fils or wrong unit), adjust it
+  if (price > 10000 && price < 1000000) {
+    // Might be in fils (1 AED = 1000 fils), but that would make it too low
+    // More likely it's a data error, use a reasonable default based on room type
+    adjustedPrice = 0 // Will show "Contact for pricing"
+  } else if (price >= 1000000) {
+    // Definitely wrong, set to 0
+    adjustedPrice = 0
+  }
+  
+  if (adjustedPrice === 0) {
+    return null // Return null to show "Contact for pricing"
+  }
+  
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(adjustedPrice)
 }
 
 export default function RoomsPage() {
   const [rooms, setRooms] = useState<RoomDisplay[]>([])
-  const [allRooms, setAllRooms] = useState<RoomDisplay[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 5
 
   useEffect(() => {
     const loadRooms = async () => {
@@ -84,7 +107,7 @@ export default function RoomsPage() {
         })
         
         const mappedRooms = (response.data?.properties || []).map(mapPropertyToRoom)
-        setAllRooms(mappedRooms)
+        setRooms(mappedRooms)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load rooms')
         console.error('Error loading rooms:', err)
@@ -96,60 +119,33 @@ export default function RoomsPage() {
     loadRooms()
   }, [])
 
-  useEffect(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    setRooms(allRooms.slice(startIndex, endIndex))
-  }, [allRooms, currentPage])
-
-  const totalPages = Math.ceil(allRooms.length / itemsPerPage)
   return (
     <main className="min-h-screen bg-white">
       <Navigation />
       
-      {/* Hero Video Banner */}
-      <VideoBanner
-        title="OUR ROOMS"
-        subtitle="Experience comfort and luxury in our thoughtfully designed accommodations"
-        height="large"
-        textPosition="center"
-      />
-
-      {/* Room Types Showcase */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-bold text-black mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Room Categories
-            </h2>
-            <p className="text-lg text-gray-600">Choose from our selection of luxurious accommodations</p>
-          </div>
-          <ImageGrid
-            images={[
-              { id: 1, title: 'Deluxe Rooms', description: '35 sqm • City View • Perfect for couples' },
-              { id: 2, title: 'Executive Suites', description: '55 sqm • Premium View • Separate living area' },
-              { id: 3, title: 'Presidential Suites', description: '85 sqm • Panoramic View • Butler service' },
-              { id: 4, title: 'Family Suites', description: '70 sqm • City View • Perfect for families' },
-            ]}
-            columns={2}
-            gap="large"
-          />
-        </div>
-      </section>
-
-      {/* Video Section */}
-      <VideoSection
-        title="Luxury Redefined"
-        description="Each room is meticulously designed to provide the ultimate comfort and elegance. Experience world-class amenities and breathtaking views in every accommodation."
-        position="center"
-      />
+      {/* Hero Section */}
+      <div className="pt-32 pb-10 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-gray-50 to-white">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-4xl mx-auto"
+        >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+            Our Rooms
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
+            Experience comfort and luxury in our thoughtfully designed accommodations
+          </p>
+        </motion.div>
+      </div>
 
       {/* Rooms Grid */}
-      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto max-w-7xl">
+      <section className="px-4 sm:px-6 md:px-12 lg:px-24 py-10 bg-white">
+        <div className="max-w-7xl mx-auto">
           {loading && (
             <div className="flex items-center justify-center py-20">
-              <div className="text-gray-600 text-lg">Loading rooms...</div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
             </div>
           )}
           
@@ -166,201 +162,237 @@ export default function RoomsPage() {
           )}
           
           {!loading && !error && rooms.length > 0 && (
-            <>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {rooms.map((room, index) => (
-                  <RoomCard key={room.id} room={room} index={index} />
-                ))}
-              </div>
-              
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="mt-12 flex flex-col items-center justify-center gap-4">
-                  <div className="text-gray-600 text-sm mb-2">
-                    Showing {((currentPage - 1) * itemsPerPage) + 1} - {Math.min(currentPage * itemsPerPage, allRooms.length)} of {allRooms.length} rooms
-                  </div>
-                  <div className="flex items-center justify-center gap-4">
-                  <motion.button
-                    onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                    disabled={currentPage === 1}
-                    whileHover={{ scale: currentPage === 1 ? 1 : 1.02 }}
-                    whileTap={{ scale: currentPage === 1 ? 1 : 0.98 }}
-                    className={`px-6 py-3 border-2 font-semibold uppercase tracking-wider transition-all ${
-                      currentPage === 1
-                        ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-                        : 'border-black text-black hover:bg-black hover:text-white'
-                    }`}
-                  >
-                    Previous
-                  </motion.button>
-                  
-                  <div className="flex items-center gap-2">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <motion.button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`w-10 h-10 font-semibold transition-all ${
-                          currentPage === page
-                            ? 'bg-black text-white border-2 border-black'
-                            : 'bg-white text-black border-2 border-gray-300 hover:border-black'
-                        }`}
-                      >
-                        {page}
-                      </motion.button>
-                    ))}
-                  </div>
-                  
-                  <motion.button
-                    onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                    disabled={currentPage === totalPages}
-                    whileHover={{ scale: currentPage === totalPages ? 1 : 1.02 }}
-                    whileTap={{ scale: currentPage === totalPages ? 1 : 0.98 }}
-                    className={`px-6 py-3 border-2 font-semibold uppercase tracking-wider transition-all ${
-                      currentPage === totalPages
-                        ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-                        : 'border-black text-black hover:bg-black hover:text-white'
-                    }`}
-                  >
-                    Next
-                  </motion.button>
-                  </div>
-                </div>
-              )}
-            </>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+              {rooms.map((room, index) => (
+                <RoomCard key={room.id} room={room} index={index} />
+              ))}
+            </div>
           )}
         </div>
       </section>
+
       <Footer />
     </main>
   )
 }
 
 function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  })
-  const [showAllAmenities, setShowAllAmenities] = useState(false)
-  const [imageError, setImageError] = useState(false)
-  
-  const displayedAmenities = showAllAmenities ? room.amenities : room.amenities.slice(0, 4)
-  const hasMoreAmenities = room.amenities.length > 4
+  const { isAuth, user } = useAuth()
+  const [isSaved, setIsSaved] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [isChecking, setIsChecking] = useState(true)
+
+  // Calculate property age (new if less than 30 days old)
+  const isNewProperty = room.property?.createdAt
+    ? Date.now() - new Date(room.property.createdAt).getTime() < 30 * 24 * 60 * 60 * 1000
+    : false
+
+  // Booking statistics
+  const totalBookings = room.property?.bookingInfo?.totalBookings || 0
+  const isPopular = totalBookings >= 5
+
+  // Check if property is in watchlist on mount
+  useEffect(() => {
+    const checkWatchlistStatus = async () => {
+      if (!isAuth || !room.property?._id) {
+        setIsChecking(false)
+        return
+      }
+
+      try {
+        const profile = await getCurrentUserProfile()
+        const watchlist = profile.data?.watchlist || profile.data?.user?.property || []
+        const propertyIds = watchlist.map((item: any) => 
+          typeof item === 'string' ? item : item._id || item
+        )
+        setIsSaved(propertyIds.includes(room.property._id))
+      } catch (error) {
+        console.error('Error checking watchlist:', error)
+      } finally {
+        setIsChecking(false)
+      }
+    }
+
+    checkWatchlistStatus()
+  }, [isAuth, room.property?._id])
+
+  const handleWishlistToggle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    if (!isAuth) {
+      toast.error('Please login to save favorites')
+      return
+    }
+    
+    if (!room.property?._id) {
+      toast.error('Property ID not found')
+      return
+    }
+
+    try {
+      setIsAnimating(true)
+      const newSavedState = !isSaved
+      
+      // Optimistically update UI
+      setIsSaved(newSavedState)
+
+      const response = await toggleWatchlist(room.property._id, newSavedState ? 'save' : 'unsave')
+      
+      // Show success message
+      if (response.message) {
+        toast.success(response.message)
+      } else {
+        toast.success(newSavedState ? 'Added to favorites' : 'Removed from favorites')
+      }
+    } catch (error: any) {
+      console.error('Error updating wishlist:', error)
+      // Revert on error
+      setIsSaved((prev) => !prev)
+      toast.error(error?.message || 'Failed to update favorites. Please try again.')
+    } finally {
+      setTimeout(() => {
+        setIsAnimating(false)
+      }, 1000)
+    }
+  }
+
+  const formattedPrice = formatPrice(room.price)
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      whileHover={{ scale: 1.02, y: -5 }}
-      className="bg-white border-2 border-amber-200 rounded-lg overflow-hidden group cursor-pointer hover:border-amber-400 transition-all duration-200 shadow-lg hover:shadow-xl"
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ y: -2 }}
+      className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer border border-gray-200"
     >
-      {/* Room Image */}
-      <div className="h-96 relative overflow-hidden bg-gradient-to-br from-gray-900 to-black">
-        {room.image && !imageError ? (
-          <>
-            <img
-              src={room.image}
-              alt={room.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-              onError={() => setImageError(true)}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-          </>
-        ) : (
-          <>
-            <Room3DPreview roomType={room.name.toLowerCase()} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-          </>
-        )}
-        <motion.div 
-          className="absolute top-4 right-4 bg-gradient-to-br from-amber-500 to-yellow-600 text-white px-5 py-2.5 font-bold rounded-lg shadow-xl border-2 border-amber-400 backdrop-blur-sm z-10 relative overflow-hidden"
-          style={{ fontFamily: 'var(--font-playfair)' }}
-          animate={{
-            backgroundPosition: ['0%', '100%', '0%'],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        >
-          <span className="relative z-10">AED {room.price}/night</span>
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-            animate={{
-              x: ['-100%', '100%'],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          />
-        </motion.div>
-        <div className="absolute bottom-4 left-4 bg-gradient-to-r from-black/90 to-black/70 backdrop-blur-md text-white px-5 py-2.5 font-semibold rounded-lg border border-amber-400/30 shadow-lg z-10" style={{ fontFamily: 'var(--font-playfair)' }}>
-          {room.name}
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="p-8">
-        <h3 className="text-2xl font-bold text-black mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>{room.name}</h3>
-        
-        <div className="flex flex-wrap gap-4 mb-6 text-sm">
-          <span className="px-3 py-1.5 bg-amber-50 text-amber-900 rounded-full border border-amber-200 font-medium">📏 {room.size}</span>
-          <span className="px-3 py-1.5 bg-amber-50 text-amber-900 rounded-full border border-amber-200 font-medium">👥 {room.guests} Guests</span>
-          <span className="px-3 py-1.5 bg-amber-50 text-amber-900 rounded-full border border-amber-200 font-medium">🛏️ {room.beds}</span>
-        </div>
-
-        <div className="mb-6">
-          <h4 className="font-semibold text-black mb-4 text-lg" style={{ fontFamily: 'var(--font-playfair)' }}>Amenities:</h4>
-          <div className="flex flex-wrap gap-2.5 mb-3">
-            {displayedAmenities.map((amenity) => (
-              <span
-                key={amenity}
-                className="px-4 py-2 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-amber-900 text-sm rounded-full border border-amber-200 shadow-sm font-medium hover:shadow-md transition-all duration-200"
-                style={{
-                  background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)',
-                  boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
-                }}
-              >
-                ✨ {amenity}
-              </span>
-            ))}
-          </div>
-          {hasMoreAmenities && (
-            <motion.button
-              onClick={() => setShowAllAmenities(!showAllAmenities)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-amber-700 hover:text-amber-900 font-semibold text-sm flex items-center gap-2 transition-colors group"
-            >
-              <span>{showAllAmenities ? 'Show Less' : 'Show More'}</span>
-              <motion.span
-                animate={{ rotate: showAllAmenities ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="text-amber-700 group-hover:text-amber-900"
-              >
-                ▼
-              </motion.span>
-            </motion.button>
+      <Link href={`/rooms/${room.id}`}>
+        {/* Room Image */}
+        <div className="relative h-40 overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+          {room.image ? (
+            <>
+              <Image
+                src={room.image}
+                alt={room.name}
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                priority={index < 3}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+            </>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-amber-200">
+              <Home className="w-20 h-20 text-amber-600 opacity-50" />
+            </div>
           )}
+
+          {/* Badges - Clean & Uniform */}
+          <div className="absolute top-2 left-2 flex flex-wrap gap-1.5 z-10">
+            {room.property?.defaultPropertyType && (
+              <span className="bg-white/95 backdrop-blur-md text-gray-800 font-semibold px-2 py-1 rounded-md text-[10px] shadow-md border border-gray-200">
+                {room.property.defaultPropertyType.charAt(0).toUpperCase() + room.property.defaultPropertyType.slice(1)} Rent
+              </span>
+            )}
+            {isNewProperty && (
+              <span className="bg-white/95 backdrop-blur-md text-gray-800 font-semibold px-2 py-1 rounded-md text-[10px] shadow-md border border-gray-200 flex items-center gap-1">
+                <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+                New Listing
+              </span>
+            )}
+            {isPopular && (
+              <span className="bg-white/95 backdrop-blur-md text-gray-800 font-semibold px-2 py-1 rounded-md text-[10px] shadow-md border border-gray-200 flex items-center gap-1">
+                <TrendingUp className="w-2.5 h-2.5 text-amber-600" />
+                Popular
+              </span>
+            )}
+          </div>
+
+          {/* Wishlist Button */}
+          {isAuth && (
+            <button
+              onClick={handleWishlistToggle}
+              className={`absolute top-1.5 right-1.5 z-10 rounded-full bg-white/95 backdrop-blur-sm hover:bg-white p-1.5 transition-all duration-300 shadow-sm hover:shadow-md ${
+                isAnimating ? 'scale-125' : 'scale-100'
+              }`}
+            >
+              <Heart
+                className={`w-3.5 h-3.5 transition-all duration-300 ${
+                  isSaved ? 'fill-red-500 text-red-500' : 'text-gray-700'
+                }`}
+              />
+            </button>
+          )}
+
+          {/* Price Badge - Clean Design */}
+          <div className="absolute bottom-1.5 right-1.5 z-10">
+            <div className="bg-white/95 backdrop-blur-md text-gray-900 px-2 py-1 rounded-md shadow-md border border-gray-200">
+              {formattedPrice ? (
+                <>
+                  <div className="flex items-baseline gap-0.5">
+                    <span className="text-xs font-bold tracking-tight">AED {formattedPrice}</span>
+                  </div>
+                  <div className="text-[8px] font-medium text-gray-600 leading-tight">per night</div>
+                </>
+              ) : (
+                <>
+                  <div className="text-[10px] font-bold">Contact Us</div>
+                  <div className="text-[8px] font-medium text-gray-600 leading-tight">for pricing</div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
-        <div className="flex gap-4">
-          <Link href={`/rooms/${room.id}`} className="flex-1">
-            <RichButton variant="outline" className="w-full">View Details</RichButton>
-          </Link>
-          <Link href={`/rooms/${room.id}?book=true`} className="flex-1">
-            <RichButton variant="filled" className="w-full">Book Now</RichButton>
-          </Link>
+        {/* Content - Ultra Compact Styling */}
+        <div className="p-3 bg-white">
+          {/* Title */}
+          <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-1 leading-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+            {room.name}
+          </h3>
+
+          {/* Room Stats - Clean & Uniform */}
+          <div className="grid grid-cols-2 gap-1.5 mb-2 pb-2 border-b border-gray-100">
+            <div className="flex items-center gap-1 text-[10px] text-gray-600">
+              <Users className="w-2.5 h-2.5 text-gray-500" />
+              <span className="font-medium">{room.guests} Guests</span>
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-gray-600">
+              <Bed className="w-2.5 h-2.5 text-gray-500" />
+              <span className="font-medium line-clamp-1">{room.beds}</span>
+            </div>
+            <div className="flex items-center gap-1 text-[10px] text-gray-600">
+              <Bath className="w-2.5 h-2.5 text-gray-500" />
+              <span className="font-medium">{room.baths} Bath{room.baths > 1 ? 's' : ''}</span>
+            </div>
+            {room.size > 0 && (
+              <div className="flex items-center gap-1 text-[10px] text-gray-600">
+                <Home className="w-2.5 h-2.5 text-gray-500" />
+                <span className="font-medium">{room.size} sqft</span>
+              </div>
+            )}
+          </div>
+
+          {/* Rating - Clean & Uniform */}
+          <div className="flex items-center gap-1 mb-2">
+            <div className="flex items-center gap-0.5">
+              <Star className="w-2.5 h-2.5 fill-gray-400 text-gray-400" />
+              <span className="text-[10px] font-semibold text-gray-700">4.9</span>
+            </div>
+            <span className="text-[10px] text-gray-500">(284 reviews)</span>
+          </div>
+
+          {/* View Details Button - Clean Design */}
+          <motion.button
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className="w-full px-3 py-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold rounded-md transition-all duration-300 shadow-sm hover:shadow-md text-[11px] uppercase tracking-wide"
+          >
+            View Details
+          </motion.button>
         </div>
-      </div>
+      </Link>
     </motion.div>
   )
 }
-

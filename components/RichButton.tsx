@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-interface RichButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface RichButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onAnimationEnd' | 'onAnimationIteration' | 'onDragStart' | 'onDrag' | 'onDragEnd'> {
   children: React.ReactNode;
   variant?: 'filled' | 'outline';
   className?: string;

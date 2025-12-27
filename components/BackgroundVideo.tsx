@@ -50,7 +50,7 @@ export default function BackgroundVideo({
           transform: 'translateZ(0)',
           willChange: 'auto',
           imageRendering: 'auto',
-          WebkitImageRendering: 'auto'
+          ...({ WebkitImageRendering: 'auto' } as React.CSSProperties)
         }}
       >
         <source src={videoUrl} type="video/mp4" />

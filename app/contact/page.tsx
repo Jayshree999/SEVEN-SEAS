@@ -8,6 +8,9 @@ import ImageBanner from '@/components/ImageBanner'
 import ImageGrid from '@/components/ImageGrid'
 import VideoBanner from '@/components/VideoBanner'
 import VideoSection from '@/components/VideoSection'
+import GoogleMap from '@/components/GoogleMap'
+import { config } from '@/lib/config'
+import { MapPin, ExternalLink } from 'lucide-react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -65,58 +68,89 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="py-20 px-6">
-        <div className="container mx-auto max-w-6xl">
+      {/* Contact Section - Premium Enhanced */}
+      <section className="py-20 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-tl from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
+            {/* Contact Form - Premium Design */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
+              className="bg-white rounded-2xl shadow-2xl p-8 md:p-10 border border-gray-200/50"
             >
-              <h2 className="text-3xl font-bold text-black mb-6">Send us a Message</h2>
+              <div className="mb-8">
+                <h2 
+                  className="text-3xl md:text-4xl font-bold text-gray-900 mb-3"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  Send us a Message
+                </h2>
+                <p className="text-gray-600">We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.</p>
+              </div>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-2">Name</label>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Name</label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
+                    className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-all duration-300 bg-white"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-2">Email</label>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Email</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
+                    className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-all duration-300 bg-white"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-2">Phone</label>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Phone</label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
+                    className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-all duration-300 bg-white"
                   />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-2">Subject</label>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Subject</label>
                   <select
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
+                    className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-all duration-300 bg-white"
                   >
                     <option value="">Select a subject</option>
                     <option value="booking">Booking Inquiry</option>
@@ -125,103 +159,162 @@ export default function ContactPage() {
                     <option value="feedback">Feedback</option>
                     <option value="other">Other</option>
                   </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-black mb-2">Message</label>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <label className="block text-sm font-semibold text-gray-900 mb-2">Message</label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded focus:border-black focus:outline-none"
+                    className="w-full px-4 py-3.5 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 focus:outline-none transition-all duration-300 bg-white resize-none"
                   />
-                </div>
+                </motion.div>
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  whileHover={{ scale: 1.02 }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(217, 119, 6, 0.3)' }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full px-6 py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-800 transition-colors disabled:opacity-50"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold uppercase tracking-wider rounded-lg transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-xl"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </motion.button>
               </form>
             </motion.div>
 
-            {/* Contact Info & Map */}
+            {/* Contact Info & Map - Premium Design */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               className="space-y-8"
             >
-              <div>
-                <h2 className="text-3xl font-bold text-black mb-6">Get in Touch</h2>
+              {/* Contact Info Card */}
+              <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-10 border border-gray-200/50">
+                <h2 
+                  className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  Get in Touch
+                </h2>
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="text-2xl">📍</div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-amber-50/50 transition-colors duration-300"
+                  >
+                    <div className="text-3xl flex-shrink-0">📍</div>
                     <div>
-                      <div className="font-semibold text-black mb-1">Address</div>
-                      <div className="text-gray-600">
+                      <div className="font-semibold text-gray-900 mb-1">Address</div>
+                      <div className="text-gray-600 leading-relaxed">
                         Seven Seas Hotel - 231, Al Ittihad Rd<br />
                         Al Qusais, Al Nahda 1, Dubai, UAE
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="text-2xl">📞</div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-amber-50/50 transition-colors duration-300"
+                  >
+                    <div className="text-3xl flex-shrink-0">📞</div>
                     <div>
-                      <div className="font-semibold text-black mb-1">Phone</div>
+                      <div className="font-semibold text-gray-900 mb-1">Phone</div>
                       <div className="text-gray-600">
-                        <a href="tel:+971551009152" className="hover:text-amber-600 transition-colors">+971 55 100 9152</a>
+                        <a href="tel:+971551009152" className="hover:text-amber-600 transition-colors font-medium">+971 55 100 9152</a>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="text-2xl">✉️</div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.4 }}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-amber-50/50 transition-colors duration-300"
+                  >
+                    <div className="text-3xl flex-shrink-0">✉️</div>
                     <div>
-                      <div className="font-semibold text-black mb-1">Email</div>
+                      <div className="font-semibold text-gray-900 mb-1">Email</div>
                       <div className="text-gray-600">
-                        <a href="mailto:reservation@sevenseashotel.ae" className="hover:text-amber-600 transition-colors">reservation@sevenseashotel.ae</a>
+                        <a href="mailto:reservation@sevenseashotel.ae" className="hover:text-amber-600 transition-colors font-medium break-all">reservation@sevenseashotel.ae</a>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="text-2xl">🌐</div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5 }}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-amber-50/50 transition-colors duration-300"
+                  >
+                    <div className="text-3xl flex-shrink-0">🌐</div>
                     <div>
-                      <div className="font-semibold text-black mb-1">Website</div>
+                      <div className="font-semibold text-gray-900 mb-1">Website</div>
                       <div className="text-gray-600">
-                        <a href="https://sevenseashotel.ae" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors">www.sevenseashotel.ae</a>
+                        <a href="https://sevenseashotel.ae" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors font-medium">www.sevenseashotel.ae</a>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="text-2xl">🕒</div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6 }}
+                    whileHover={{ x: 5 }}
+                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-amber-50/50 transition-colors duration-300"
+                  >
+                    <div className="text-3xl flex-shrink-0">🕒</div>
                     <div>
-                      <div className="font-semibold text-black mb-1">Reception Hours</div>
-                      <div className="text-gray-600">
+                      <div className="font-semibold text-gray-900 mb-1">Reception Hours</div>
+                      <div className="text-gray-600 font-medium">
                         24/7 Available
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
 
-              {/* Google Map Placeholder */}
-              <div>
-                <h3 className="text-xl font-bold text-black mb-4">Location</h3>
-                <div className="h-64 bg-gray-200 rounded-lg flex items-center justify-center border-2 border-gray-300">
-                  <div className="text-center">
-                    <div className="text-4xl mb-2">🗺️</div>
-                    <p className="text-gray-600">Google Map Integration</p>
-                    <p className="text-sm text-gray-500 mt-2">
-                      Add your Google Maps API key to display the map
-                    </p>
-                  </div>
+              {/* Google Map - Premium */}
+              <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200/50">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 
+                    className="text-xl md:text-2xl font-bold text-gray-900"
+                    style={{ fontFamily: 'var(--font-playfair)' }}
+                  >
+                    Location
+                  </h3>
+                  <a
+                    href={config.googleMapsLocationLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    <span className="text-sm">View on Google Maps</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
-                <p className="text-sm text-gray-600 mt-4">
-                  To integrate Google Maps, add your API key in the component and use the Google Maps React library.
+                <GoogleMap
+                  latitude={25.197197}
+                  longitude={55.2707828}
+                  address="Seven Seas Hotel, Dubai, UAE"
+                  zoom={16}
+                  height="400px"
+                  className="w-full"
+                />
+                <p className="text-sm text-gray-600 mt-4 leading-relaxed">
+                  Visit us at Seven Seas Hotel in the heart of Dubai. Click on the marker for directions or use the button above to open in Google Maps.
                 </p>
               </div>
             </motion.div>

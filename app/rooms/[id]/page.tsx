@@ -1,833 +1,675 @@
 'use client'
 
 import { use, useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import BookingForm from '@/components/BookingForm'
-import ImageBanner from '@/components/ImageBanner'
-import ImageGrid from '@/components/ImageGrid'
-import VideoBanner from '@/components/VideoBanner'
-import VideoSection from '@/components/VideoSection'
+import BookingModal from '@/components/BookingModal'
+import { PropertyGallery } from '@/components/property/PropertyGallery'
+import { PropertyInfo } from '@/components/property/PropertyInfo'
+import { PropertyAmenities } from '@/components/property/PropertyAmenities'
+import { PropertyPolicies } from '@/components/property/PropertyPolicies'
+import { PropertyReviews } from '@/components/property/PropertyReviews'
+import { fetchPropertyById, Property } from '@/lib/api'
+import { getMonthlyRent, getYearlyRent } from '@/lib/booking'
+import { MapPin, Star, TrendingUp, Sparkles, Home, Users, Car, Clock, Shield, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import { useInView } from 'react-intersection-observer'
-import { fetchPropertyById, fetchProperties, Property } from '@/lib/api'
 
-const Room3DPreview = dynamic(() => import('@/components/Room3DPreview'), { ssr: false })
-
-interface RoomDetail {
-  name: string
-  price: number
-  size: string
-  guests: number
-  beds: string
-  view: string
-  floor: string
-  description: string
-  longDescription: string
-  amenities: Array<{ category: string; items: string[] }>
-  images: Array<{ id: number; url: string; alt: string }>
-  highlights: string[]
-  policies: {
-    checkIn: string
-    checkOut: string
-    cancellation: string
-    children: string
-    pets: string
-    smoking: string
-  }
+interface PageProps {
+  params: Promise<{ id: string }> | { id: string }
 }
 
-function mapPropertyToRoomDetail(property: Property | null): RoomDetail | null {
-  if (!property) return null
-
-  const bedrooms = typeof property.bedrooms === 'string' ? parseInt(property.bedrooms) || 1 : property.bedrooms || 1
-  const guests = parseInt(property.guest_no as string) || bedrooms * 2
-  const size = property.size || property.area || 0
-  
-  // Determine bed type and view based on property data
-  let beds = '1 King Bed'
-  if (property.title?.toLowerCase().includes('twin') || property.title?.toLowerCase().includes('queen')) {
-    beds = bedrooms > 1 ? `${bedrooms} Queen Beds` : '2 Queen Beds'
-  } else if (property.title?.toLowerCase().includes('suite')) {
-    beds = '1 King Bed + Sofa Bed'
-  }
-
-  const view = property.description?.includes('view') 
-    ? (property.description.match(/view/i)?.[0] || 'City View')
-    : 'City View'
-
-  // Organize amenities by category
-  const amenitiesList = property.amenities || []
-  const amenities = [
-    { category: 'Room Features', items: amenitiesList.filter(a => 
-      ['WiFi', 'Air Conditioning', 'TV', 'Desk', 'View', 'Windows'].some(keyword => 
-        a.toLowerCase().includes(keyword.toLowerCase())
-      )
-    ) },
-    { category: 'Bathroom', items: amenitiesList.filter(a => 
-      ['Bath', 'Shower', 'Toiletries', 'Hair', 'Bathrobe'].some(keyword => 
-        a.toLowerCase().includes(keyword.toLowerCase())
-      )
-    ) },
-      { category: 'Services', items: ['Room Service (24/7)', 'Daily Housekeeping', 'Turndown Service', 'Laundry Service'] },
-    { category: 'Entertainment', items: amenitiesList.filter(a => 
-      ['TV', 'Entertainment', 'Streaming'].some(keyword => 
-        a.toLowerCase().includes(keyword.toLowerCase())
-      )
-    ) },
-    { category: 'Comfort', items: amenitiesList.filter(a => 
-      ['Mini Bar', 'Coffee', 'Safe', 'Iron', 'Curtains'].some(keyword => 
-        a.toLowerCase().includes(keyword.toLowerCase())
-      )
-    ) },
-  ].filter(cat => cat.items.length > 0)
-
-  // Create images from photos or use placeholders
-  let images: Array<{ id: number; url: string; alt: string }> = []
-  
-  if (property.photos && property.photos.length > 0) {
-    // Handle both array of objects and array of strings
-    if (typeof property.photos[0] === 'object' && 'url' in property.photos[0]) {
-      // Photos are objects with url property
-      images = (property.photos as Array<{ url: string; category?: string; _id?: string }>).map((photo, index) => ({
-        id: index + 1,
-        url: photo.url,
-        alt: `${property.title || property.name} - ${photo.category || 'Image'} ${index + 1}`
-      }))
-    } else {
-      // Photos are strings
-      images = (property.photos as string[]).map((photo, index) => ({
-        id: index + 1,
-        url: photo,
-        alt: `${property.title || property.name} - Image ${index + 1}`
-      }))
-    }
-  } else {
-    // Use placeholders if no photos
-    images = [
-      { id: 1, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Main View` },
-      { id: 2, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bed Area` },
-      { id: 3, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - Bathroom` },
-      { id: 4, url: '/room-placeholder.jpg', alt: `${property.title || property.name} - View` },
-    ]
-  }
-
-  return {
-    name: property.title || property.name || property.nickname || 'Untitled Room',
-    price: property.price || 0,
-    size: `${size} sqm`,
-    guests: guests,
-    beds: beds,
-    view: view,
-    floor: property.totalFloor ? `${property.totalFloor} Floor` : 'Various Floors',
-    description: property.description || 'A luxurious accommodation offering comfort and style.',
-    longDescription: property.description || 'Experience the ultimate in comfort and sophistication with our thoughtfully designed accommodations.',
-    amenities: amenities.length > 0 ? amenities : [
-      { category: 'Room Features', items: amenitiesList.slice(0, 5) }
-    ],
-    images: images,
-    highlights: [
-      `Spacious ${size} sqm ${property.title?.toLowerCase().includes('suite') ? 'suite' : 'room'}`,
-      ...(amenitiesList.slice(0, 3).map(a => `Includes ${a}`)),
-      'Premium amenities and services',
-      'Modern design and comfort',
-    ],
-    policies: {
-      checkIn: property.Check_in_time || '3:00 PM',
-      checkOut: property.Check_out_time || '12:00 PM',
-      cancellation: 'Free cancellation up to 48 hours before arrival',
-      children: property.term?.children ? 'Children welcome' : 'Children under 12 stay free when using existing beds',
-      pets: property.term?.pets ? 'Pets are welcome' : 'Pets are not allowed',
-      smoking: property.term?.smoking ? 'Smoking rooms available' : 'Non-smoking rooms',
-    },
-  }
+// Helper function to format price
+const formatPrice = (price: number) => {
+  if (!price || price === 0) return null
+  // Validate price - if unreasonably high, return null
+  if (price > 100000) return null
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price)
 }
 
-export default function RoomDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
-  // Handle both Promise and direct object for compatibility with different Next.js versions
+const PropertyDetailsSkeleton = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Navigation />
+      <div className="space-y-8 pt-24">
+        <div className="h-[65vh] bg-gray-200 animate-pulse" />
+        <div className="max-w-7xl mx-auto px-4 space-y-4">
+          <div className="h-8 w-3/4 bg-gray-200 rounded animate-pulse" />
+          <div className="h-4 w-1/2 bg-gray-200 rounded animate-pulse" />
+          <div className="h-32 w-full bg-gray-200 rounded animate-pulse" />
+        </div>
+      </div>
+      <Footer />
+    </div>
+  )
+}
+
+export default function PropertyPage({ params }: PageProps) {
+  // Handle both Promise and direct object for compatibility
   let resolvedParams: { id: string }
   if (params && typeof params === 'object' && 'then' in params) {
-    // It's a Promise
     resolvedParams = use(params as Promise<{ id: string }>)
   } else {
-    // It's already resolved
     resolvedParams = params as { id: string }
   }
 
   const [property, setProperty] = useState<Property | null>(null)
-  const [relatedProperties, setRelatedProperties] = useState<Property[]>([])
-  const [loading, setLoading] = useState(true)
+  const [monthlyRent, setMonthlyRent] = useState<number>(0)
+  const [yearlyRent, setYearlyRent] = useState<number>(0)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [selectedImage, setSelectedImage] = useState(0)
-  const [showBooking, setShowBooking] = useState(false)
-  const [activeTab, setActiveTab] = useState<'overview' | 'amenities' | 'policies'>('overview')
-  const [expandedCategories, setExpandedCategories] = useState<Record<number, boolean>>({})
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const { scrollYProgress } = useScroll()
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+
+  // Animation refs
+  const [infoRef, infoInView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [statsRef, statsInView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [amenitiesRef, amenitiesInView] = useInView({ triggerOnce: true, threshold: 0.1 })
+  const [bookingRef, bookingInView] = useInView({ triggerOnce: true, threshold: 0.1 })
 
   useEffect(() => {
     const loadProperty = async () => {
       try {
-        setLoading(true)
+        setIsLoading(true)
         setError(null)
         const fetchedProperty = await fetchPropertyById(resolvedParams.id)
         setProperty(fetchedProperty)
 
-        // Load related properties
-        const response = await fetchProperties({
-          limit: 100,
-          page: 1,
-          activeStatus: true,
-        })
-        const allProperties = response.data?.properties || []
-        const related = allProperties
-          .filter(p => (p._id || p.id) !== resolvedParams.id)
-          .slice(0, 3)
-        setRelatedProperties(related)
+        // Load monthly and yearly rent
+        if (fetchedProperty?._id) {
+          try {
+            const monthly = await getMonthlyRent(fetchedProperty._id)
+            const yearly = await getYearlyRent(fetchedProperty._id)
+            setMonthlyRent(monthly > 0 ? monthly : (fetchedProperty?.monthlyRent || 0))
+            setYearlyRent(yearly > 0 ? yearly : (fetchedProperty?.yearlyRent || 0))
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load room details')
+            console.error('Error loading rent prices:', err)
+            setMonthlyRent(fetchedProperty?.monthlyRent || 0)
+            setYearlyRent(fetchedProperty?.yearlyRent || 0)
+          }
+        } else {
+          setMonthlyRent(fetchedProperty?.monthlyRent || 0)
+          setYearlyRent(fetchedProperty?.yearlyRent || 0)
+        }
+      } catch (err: any) {
         console.error('Error loading property:', err)
+        setError(err.message || 'Failed to load property details')
       } finally {
-        setLoading(false)
+        setIsLoading(false)
       }
     }
 
     loadProperty()
   }, [resolvedParams.id])
 
-  const room = mapPropertyToRoomDetail(property)
+  // Show loading state
+  if (isLoading) {
+    return <PropertyDetailsSkeleton />
+  }
 
-  if (loading) {
+  // Show error state
+  if (error) {
     return (
-      <main className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white">
         <Navigation />
-        <div className="flex items-center justify-center py-40">
-          <div className="text-gray-600 text-lg">Loading room details...</div>
+        <div className="min-h-screen flex items-center justify-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center max-w-md"
+          >
+            <h2 className="text-2xl font-semibold text-red-600 mb-4">Error Loading Property</h2>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => window.location.reload()}
+                className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg"
+              >
+                Try Again
+              </motion.button>
+              <Link
+                href="/rooms"
+                className="px-6 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+              >
+                Browse Rooms
+              </Link>
+            </div>
+          </motion.div>
         </div>
-      </main>
+        <Footer />
+      </div>
     )
   }
 
-  if (error || !room) {
+  // Show not found state if property doesn't exist
+  if (!property) {
     return (
-      <main className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white">
         <Navigation />
-        <div className="flex items-center justify-center py-40">
-          <div className="text-red-600 text-lg">Error: {error || 'Room not found'}</div>
+        <div className="min-h-screen flex items-center justify-center px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center max-w-md"
+          >
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Property Not Found</h2>
+            <p className="text-gray-600 mb-4">
+              The property you're looking for doesn't exist or has been removed.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+              <Link
+                href="/rooms"
+                className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg"
+              >
+                Browse Properties
+              </Link>
+              <Link
+                href="/"
+                className="px-6 py-2 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+              >
+                Back to Home
+              </Link>
+            </div>
+          </motion.div>
         </div>
-      </main>
+        <Footer />
+      </div>
     )
   }
+
+  // Calculate property age (new if less than 30 days old)
+  const isNewProperty = property?.createdAt
+    ? Date.now() - new Date(property.createdAt).getTime() < 30 * 24 * 60 * 60 * 1000
+    : false
+
+  // Booking statistics
+  const totalBookings = property?.bookingInfo?.totalBookings || 0
+  const isPopular = totalBookings >= 5
+  const totalRevenue = property?.bookingInfo?.totalRevenue || 0
+
+  const dailyPrice = formatPrice(property?.price || 0)
+  const monthlyPrice = formatPrice(monthlyRent || property?.monthlyRent || 0)
+  const yearlyPrice = formatPrice(yearlyRent || property?.yearlyRent || 0)
 
   return (
-    <main className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       <Navigation />
-      
-      {/* Hero Banner - Compact Design */}
-      <div className="pt-32">
-        <div className="relative h-[380px] md:h-[420px] overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-white/5 text-9xl font-bold select-none">
-              {room.name.charAt(0)}
-            </div>
-          </div>
-          
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/75 to-black/50" />
-          
-          {/* Content - Compact Layout */}
-          <div className="relative z-10 h-full flex flex-col justify-end">
-            <div className="container mx-auto max-w-7xl px-6 pb-6 md:pb-10">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-3"
+      <div className="mx-auto pt-20 sm:pt-24">
+          {/* Gallery Section with Parallax */}
+        <motion.div
+          style={{ opacity }}
+          className="relative"
+        >
+          {/* Property Type Badges Overlay */}
+          <div className="absolute top-3 right-3 sm:top-6 sm:right-6 z-20 flex flex-col gap-2">
+            {property?.defaultPropertyType && (
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className={`text-white font-semibold px-4 py-2 rounded-lg shadow-xl border backdrop-blur-md ${
+                  property.defaultPropertyType === 'daily'
+                    ? 'bg-blue-600/90 border-blue-400/50'
+                    : property.defaultPropertyType === 'monthly'
+                      ? 'bg-green-600/90 border-green-400/50'
+                      : 'bg-purple-600/90 border-purple-400/50'
+                }`}
               >
-                {/* Room Title */}
-                <h1 
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
-                >
-                  {room.name}
-                </h1>
-                
-                {/* Room Details - Compact Badge Layout */}
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white rounded-lg border border-white/20">
-                    <span className="text-amber-400 text-sm">📏</span>
-                    <span className="font-medium text-sm">{room.size}</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white rounded-lg border border-white/20">
-                    <span className="text-amber-400 text-sm">👥</span>
-                    <span className="font-medium text-sm">{room.guests} Guests</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white rounded-lg border border-white/20">
-                    <span className="text-amber-400 text-sm">🏙️</span>
-                    <span className="font-medium text-sm">{room.view}</span>
-                  </div>
-                  <div className="ml-auto flex items-center gap-2">
-                    <span className="px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-bold rounded-lg shadow-xl border border-amber-400/50 text-base md:text-lg">
-                      AED {room.price}
-                    </span>
-                    <span className="text-white/70 text-xs md:text-sm">per night</span>
-                  </div>
-                </div>
+                {property.defaultPropertyType.charAt(0).toUpperCase() + property.defaultPropertyType.slice(1)} Rent
+              </motion.span>
+            )}
+            {isNewProperty && (
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-pink-600/90 backdrop-blur-md text-white font-semibold px-4 py-2 rounded-lg shadow-xl border border-pink-400/50 flex items-center gap-2"
+              >
+                <Sparkles className="w-4 h-4" />
+                New Listing
+              </motion.span>
+            )}
+            {isPopular && (
+              <motion.span
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="bg-orange-600/90 backdrop-blur-md text-white font-semibold px-4 py-2 rounded-lg shadow-xl border border-orange-400/50 flex items-center gap-2"
+              >
+                <TrendingUp className="w-4 h-4" />
+                Popular
+              </motion.span>
+            )}
+          </div>
+          <PropertyGallery images={property?.photos} propertyData={property} />
+        </motion.div>
+
+        {/* Main Content Section */}
+        <div className="mx-auto px-4 sm:px-6 md:px-12 lg:px-24 py-6 sm:py-8 md:py-12 pb-[calc(180px+1rem)] lg:pb-12">
+          <div className="grid gap-6 sm:gap-8 lg:gap-x-16 lg:grid-cols-[1fr,400px]">
+            {/* Left Column - Property Details */}
+            <div className="space-y-6 sm:space-y-8 md:space-y-12">
+              {/* Property Info */}
+              <motion.div
+                ref={infoRef}
+                initial={{ opacity: 0, y: 30 }}
+                animate={infoInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6 }}
+              >
+                <PropertyInfo
+                  title={property?.title || property?.name || 'Property'}
+                  location={
+                    typeof property?.address === 'string'
+                      ? property.address
+                      : property?.address?.address || property?.city || 'Location not available'
+                  }
+                  description={property?.description}
+                  beds={property?.roomType || property?.category}
+                  baths={property?.washRoom}
+                  guests={property?.guest_no}
+                  size={property?.size}
+                  bedrooms={property?.bedrooms}
+                  propertyId={property?._id || ''}
+                  createdAt={property?.createdAt}
+                  price={property?.price}
+                  monthlyRent={monthlyRent || property?.monthlyRent}
+                  yearlyRent={yearlyRent || property?.yearlyRent}
+                  dailyPrices={property?.dailyPrices}
+                />
               </motion.div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Breadcrumb */}
-      <section className="px-6 py-4 bg-white border-b border-gray-200">
-        <div className="container mx-auto max-w-7xl">
-          <Link href="/rooms" className="text-gray-600 hover:text-black inline-flex items-center gap-2">
-            <span>←</span>
-            <span>Back to Rooms</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* Image Gallery Section */}
-      {room.images && room.images.length > 0 && (
-      <section className="px-6 py-12 bg-white">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-3xl font-bold text-black mb-8">Room Gallery</h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[600px]">
-            {/* Main Image */}
-            <div className="lg:col-span-2 relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-900 to-black group">
-                {room.images[selectedImage]?.url ? (
-                  <>
-              <AnimatePresence mode="wait">
-                      <motion.img
-                  key={selectedImage}
-                        src={room.images[selectedImage]?.url}
-                        alt={room.images[selectedImage]?.alt || `${room.name} - Image ${selectedImage + 1}`}
-                  initial={{ opacity: 0, scale: 1.1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5 }}
-                        className="w-full h-full object-cover"
-                        loading="eager"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement
-                          target.style.display = 'none'
-                          if (!target.parentElement?.querySelector('.fallback-placeholder')) {
-                            const fallback = document.createElement('div')
-                            fallback.className = 'fallback-placeholder absolute inset-0 flex items-center justify-center text-white text-8xl bg-gradient-to-br from-gray-900 to-black'
-                            fallback.textContent = room.name.charAt(0)
-                            target.parentElement?.appendChild(fallback)
-                          }
-                        }}
-                      />
-              </AnimatePresence>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-                    <div className="absolute bottom-4 left-4 right-4 flex gap-2 z-10">
-                {room.images.map((img: any, index: number) => (
-                  <button
-                    key={img.id}
-                    onClick={() => setSelectedImage(index)}
-                    className={`flex-1 h-2 rounded-full transition-all ${
-                      selectedImage === index ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
-                    }`}
-                  />
-                ))}
-              </div>
-                    <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded z-10">
-                {room.images[selectedImage]?.alt || `${room.name} - Image ${selectedImage + 1}`}
-              </div>
-                    <motion.button
-                      onClick={() => {
-                        setLightboxIndex(selectedImage)
-                        setLightboxOpen(true)
-                      }}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-lg border border-white/30 hover:bg-white/30 transition-all z-10"
+              {/* Enhanced Property Details Card */}
+              <motion.div
+                ref={statsRef}
+                initial={{ opacity: 0, y: 30 }}
+                animate={statsInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-white border border-gray-200 shadow-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6"
+              >
+                {/* Property Stats Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                  {property?.size && (
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/50 border border-amber-200"
                     >
-                      🔍 View Fullscreen
-                    </motion.button>
-                  </>
-                ) : (
-                  <div className="absolute inset-0 flex items-center justify-center text-white text-8xl">
-                    {room.name.charAt(0)}
+                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-amber-500 shadow-lg flex-shrink-0">
+                        <Home className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
-                )}
+                      <div className="min-w-0">
+                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Size</p>
+                        <p className="text-sm sm:text-base font-bold text-gray-900 truncate">{property.size.toLocaleString()} sqft</p>
             </div>
-
-            {/* Thumbnail Images */}
-            <div className="grid grid-cols-2 gap-4">
-              {room.images.slice(0, 4).map((img: any, index: number) => (
-                <motion.button
-                  key={img.id}
-                  onClick={() => setSelectedImage(index)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`relative h-full rounded-lg overflow-hidden bg-gradient-to-br from-gray-900 to-black group ${
-                      selectedImage === index ? 'ring-4 ring-amber-400' : ''
-                    }`}
-                  >
-                    {img.url ? (
-                      <>
-                        <img
-                          src={img.url}
-                          alt={img.alt || `View ${index + 1}`}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.style.display = 'none'
-                            if (!target.parentElement?.querySelector('.fallback-thumbnail')) {
-                              const fallback = document.createElement('div')
-                              fallback.className = 'fallback-thumbnail absolute inset-0 flex items-center justify-center text-white text-2xl bg-gradient-to-br from-gray-900 to-black'
-                              fallback.textContent = `${index + 1}`
-                              target.parentElement?.appendChild(fallback)
-                            }
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
-                        <div className="absolute bottom-2 left-2 right-2 text-white text-xs font-semibold truncate z-10">
-                          {img.alt || `View ${index + 1}`}
-                        </div>
-                      </>
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-white text-2xl">
-                    {index + 1}
-                  </div>
-                    )}
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* Additional Room Images */}
-      <section className="px-6 py-12 bg-gray-50">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-3xl font-bold text-black mb-8">More Views</h2>
-          <ImageGrid
-            images={room.images.map((img: any) => ({
-              id: img.id,
-              url: img.url,
-              title: img.alt || room.name,
-              description: `View of ${room.name}`,
-            }))}
-            columns={4}
-            gap="medium"
-          />
-        </div>
-      </section>
-
-      {/* Main Content */}
-      <section className="py-12 px-6">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Left Column - Main Content */}
-            <div className="lg:col-span-2 space-y-12">
-              {/* Tabs */}
-              <div className="border-b-2 border-gray-200">
-                <div className="flex gap-8">
-                  {(['overview', 'amenities', 'policies'] as const).map((tab) => (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className={`pb-4 px-2 font-semibold uppercase tracking-wider transition-colors ${
-                        activeTab === tab
-                          ? 'text-black border-b-2 border-black -mb-[2px]'
-                          : 'text-gray-500 hover:text-black'
-                      }`}
+                    </motion.div>
+                  )}
+                  {property?.guest_no && (
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-200"
                     >
-                      {tab}
-                    </button>
-                  ))}
+                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-blue-500 shadow-lg flex-shrink-0">
+                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
+                      <div className="min-w-0">
+                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Guests</p>
+                        <p className="text-sm sm:text-base font-bold text-gray-900">{property.guest_no}</p>
               </div>
-
-              {/* Tab Content */}
-              <AnimatePresence mode="wait">
-                {activeTab === 'overview' && (
+                    </motion.div>
+                  )}
+                  {property?.parking && (
                   <motion.div
-                    key="overview"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="space-y-8"
-                  >
-                    <div>
-                      <h2 className="text-3xl font-bold text-black mb-4">Room Overview</h2>
-                      <p className="text-gray-600 leading-relaxed text-lg mb-6">{room.description}</p>
-                      <p className="text-gray-700 leading-relaxed">{room.longDescription}</p>
-                    </div>
-
-                    {/* Highlights */}
-                    <div>
-                      <h3 className="text-2xl font-bold text-black mb-4">Room Highlights</h3>
-                      <ul className="space-y-3">
-                        {room.highlights.map((highlight: string, index: number) => (
-                          <li key={index} className="flex items-start gap-3">
-                            <span className="text-black mt-1">✓</span>
-                            <span className="text-gray-700">{highlight}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Room Specifications */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                      <div className="p-6 border-2 border-gray-200 rounded-lg text-center">
-                        <div className="text-3xl mb-3">📏</div>
-                        <div className="font-bold text-black text-lg">{room.size}</div>
-                        <div className="text-sm text-gray-600">Size</div>
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 border border-green-200"
+                    >
+                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-green-500 shadow-lg flex-shrink-0">
+                        <Car className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       </div>
-                      <div className="p-6 border-2 border-gray-200 rounded-lg text-center">
-                        <div className="text-3xl mb-3">👥</div>
-                        <div className="font-bold text-black text-lg">{room.guests}</div>
-                        <div className="text-sm text-gray-600">Guests</div>
+                      <div className="min-w-0">
+                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Parking</p>
+                        <p className="text-sm sm:text-base font-bold text-gray-900">{property.parking} spaces</p>
                       </div>
-                      <div className="p-6 border-2 border-gray-200 rounded-lg text-center">
-                        <div className="text-3xl mb-3">🛏️</div>
-                        <div className="font-bold text-black text-sm">{room.beds}</div>
-                        <div className="text-sm text-gray-600">Beds</div>
+                    </motion.div>
+                  )}
+                  {(property?.Check_in_time || property?.Check_out_time) && (
+                    <motion.div
+                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 border border-purple-200"
+                    >
+                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-purple-500 shadow-lg flex-shrink-0">
+                        <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                       </div>
-                      <div className="p-6 border-2 border-gray-200 rounded-lg text-center">
-                        <div className="text-3xl mb-3">🏢</div>
-                        <div className="font-bold text-black text-sm">{room.floor}</div>
-                        <div className="text-sm text-gray-600">Floor</div>
-                      </div>
-                    </div>
-
-                    {/* 3D Preview */}
-                    <div>
-                      <h3 className="text-2xl font-bold text-black mb-4">3D Room Preview</h3>
-                      <Room3DPreview roomType={room.name.toLowerCase()} />
-                    </div>
-
-                    {/* Room Views Banner */}
-                    <div className="mt-12">
-                      <ImageBanner
-                        title={`${room.name} Views`}
-                        subtitle={`Experience ${room.view} from your room`}
-                        height="medium"
-                        textPosition="center"
-                      />
+                      <div className="min-w-0">
+                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Check-in/out</p>
+                        <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
+                          {property.Check_in_time || 'N/A'} / {property.Check_out_time || 'N/A'}
+                        </p>
                     </div>
                   </motion.div>
                 )}
+                </div>
 
-                {activeTab === 'amenities' && (
+                {/* Booking Statistics */}
+                {(isPopular || totalBookings > 0) && (
                   <motion.div
-                    key="amenities"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="space-y-8"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={statsInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ delay: 0.4 }}
+                    className="p-4 sm:p-5 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 rounded-lg sm:rounded-xl border-2 border-amber-200"
                   >
-                    <h2 className="text-3xl font-bold text-black mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>Amenities & Services</h2>
-                    {room.amenities.map((category: any, index: number) => {
-                      const isExpanded = expandedCategories[index] || false
-                      const displayedItems = isExpanded ? category.items : category.items.slice(0, 4)
-                      const hasMoreItems = category.items.length > 4
-                      
-                      return (
-                        <div key={index} className="bg-gradient-to-br from-amber-50/30 to-yellow-50/30 p-6 rounded-lg border border-amber-100">
-                          <h3 className="text-xl font-bold text-black mb-5 flex items-center gap-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-                            <span className="text-amber-600">✦</span>
-                            {category.category}
-                          </h3>
-                          <div className="flex flex-wrap gap-2.5 mb-3">
-                            {displayedItems.map((item: string) => (
-                              <motion.span
-                                key={item}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="px-4 py-2 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 text-amber-900 text-sm rounded-full border border-amber-200 shadow-sm font-medium hover:shadow-md hover:scale-105 transition-all duration-200"
-                                style={{
-                                  background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%)',
-                                  boxShadow: '0 2px 8px rgba(217, 119, 6, 0.15)',
-                                }}
-                              >
-                                ✨ {item}
-                              </motion.span>
-                            ))}
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                        <div className="p-1.5 sm:p-2 bg-amber-500 rounded-lg shadow-lg flex-shrink-0">
+                          <Star className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
                             </div>
-                          {hasMoreItems && (
-                            <motion.button
-                              onClick={() => setExpandedCategories(prev => ({
-                                ...prev,
-                                [index]: !prev[index]
-                              }))}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="text-amber-700 hover:text-amber-900 font-semibold text-sm flex items-center gap-2 transition-colors group mt-2"
-                            >
-                              <span>{isExpanded ? 'Show Less' : 'Show More'}</span>
-                              <motion.span
-                                animate={{ rotate: isExpanded ? 180 : 0 }}
-                                transition={{ duration: 0.3 }}
-                                className="text-amber-700 group-hover:text-amber-900"
-                              >
-                                ▼
-                              </motion.span>
-                            </motion.button>
+                        <div className="min-w-0">
+                          <p className="text-sm sm:text-base font-bold text-gray-900">
+                            {totalBookings} {totalBookings === 1 ? 'booking' : 'bookings'}
+                          </p>
+                          {totalRevenue > 0 && (
+                            <p className="text-xs sm:text-sm text-gray-600 truncate">
+                              Revenue: {totalRevenue.toLocaleString()} AED
+                            </p>
                           )}
                         </div>
-                      )
-                    })}
-                  </motion.div>
-                )}
-
-                {activeTab === 'policies' && (
-                  <motion.div
-                    key="policies"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="space-y-6"
-                  >
-                    <h2 className="text-3xl font-bold text-black mb-6">Policies & Information</h2>
-                    <div className="space-y-6">
-                      <div className="p-6 border-2 border-gray-200 rounded-lg">
-                        <h3 className="font-bold text-black mb-3">Check-in & Check-out</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <div className="text-sm text-gray-600">Check-in</div>
-                            <div className="font-semibold text-black">{room.policies.checkIn}</div>
-                          </div>
-                          <div>
-                            <div className="text-sm text-gray-600">Check-out</div>
-                            <div className="font-semibold text-black">{room.policies.checkOut}</div>
-                          </div>
-                        </div>
                       </div>
-
-                      <div className="p-6 border-2 border-gray-200 rounded-lg">
-                        <h3 className="font-bold text-black mb-3">Cancellation Policy</h3>
-                        <p className="text-gray-700">{room.policies.cancellation}</p>
-                      </div>
-
-                      <div className="p-6 border-2 border-gray-200 rounded-lg">
-                        <h3 className="font-bold text-black mb-3">Children & Extra Beds</h3>
-                        <p className="text-gray-700 mb-2">{room.policies.children}</p>
-                        <p className="text-sm text-gray-600">Extra beds may be available upon request (additional charges apply)</p>
-                      </div>
-
-                      <div className="p-6 border-2 border-gray-200 rounded-lg">
-                        <h3 className="font-bold text-black mb-3">Pets</h3>
-                        <p className="text-gray-700">{room.policies.pets}</p>
-                      </div>
-
-                      <div className="p-6 border-2 border-gray-200 rounded-lg">
-                        <h3 className="font-bold text-black mb-3">Smoking</h3>
-                        <p className="text-gray-700">{room.policies.smoking}</p>
-                      </div>
+                      {isPopular && (
+                        <motion.span
+                          whileHover={{ scale: 1.05 }}
+                          className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 shadow-lg flex-shrink-0"
+                        >
+                          <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                          <span className="hidden xs:inline">Popular</span>
+                        </motion.span>
+                      )}
                     </div>
                   </motion.div>
                 )}
-              </AnimatePresence>
+              </motion.div>
+
+              <div className="border-t border-gray-200"></div>
+
+              {/* Amenities */}
+              <motion.div
+                ref={amenitiesRef}
+                initial={{ opacity: 0, y: 30 }}
+                animate={amenitiesInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6 }}
+              >
+                <PropertyAmenities amenities={property?.amenities || []} />
+              </motion.div>
+
+              {/* Policies */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={amenitiesInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <PropertyPolicies data={property} />
+              </motion.div>
             </div>
 
-            {/* Right Column - Booking Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-24">
+            {/* Right Column - Desktop Booking Card */}
+            <div className="w-full lg:w-[400px] relative hidden lg:block">
+                  <motion.div
+                ref={bookingRef}
+                initial={{ opacity: 0, x: 30 }}
+                animate={bookingInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="sticky top-28"
+              >
+                <div className="bg-white border-2 border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
+                  <div className="p-6 sm:p-8">
+                    {/* Price Section */}
+                    <div className="mb-6 pb-6 border-b border-gray-200">
+                      {dailyPrice ? (
+                        <>
+                          <div className="text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                            AED {dailyPrice}
+                          </div>
+                          <div className="text-gray-600 font-medium mb-4">per night</div>
+                        </>
+                      ) : (
+                        <div className="text-2xl font-bold text-gray-900 mb-2">Contact for Pricing</div>
+                      )}
+                      {(monthlyPrice || yearlyPrice) && (
+                        <div className="space-y-2 text-sm pt-4 border-t border-gray-100">
+                          {monthlyPrice && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-600">Monthly:</span>
+                              <span className="text-gray-900 font-bold">{monthlyPrice} AED</span>
+                            </div>
+                          )}
+                          {yearlyPrice && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-gray-600">Yearly:</span>
+                              <span className="text-gray-900 font-bold">{yearlyPrice} AED</span>
+                          </div>
+                          )}
+                        </div>
+                      )}
+                      </div>
+
+                    <BookingModal
+                      roomId={property?._id || property?.id || resolvedParams.id}
+                      roomName={property?.title || property?.name || 'Property'}
+                      price={property?.price || 0}
+                      monthlyRent={monthlyRent}
+                      yearlyRent={yearlyRent}
+                      property={property}
+                    />
+
+                    {/* Trust Badges */}
+                    <div className="mt-6 pt-6 border-t-2 border-gray-200">
+                      <div className="space-y-3">
+                        {[
+                          { icon: Shield, text: 'Free cancellation' },
+                          { icon: CheckCircle2, text: 'No prepayment needed' },
+                          { icon: Star, text: 'Best price guarantee' },
+                        ].map((item, idx) => (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={bookingInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ delay: 0.5 + idx * 0.1 }}
+                            className="flex items-center gap-3 text-sm text-gray-700"
+                          >
+                            <div className="p-1.5 bg-green-100 rounded-lg">
+                              <item.icon className="w-4 h-4 text-green-600" />
+                      </div>
+                            <span className="font-medium">{item.text}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                      </div>
+                      </div>
+                    </div>
+                  </motion.div>
+            </div>
+          </div>
+
+          {/* Full Width Reviews Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="border-t border-gray-200 my-8 sm:my-12 md:my-16"
+          >
+            <div id="reviews" className="scroll-mt-20 sm:scroll-mt-24">
+              <PropertyReviews propertyId={property?._id} />
+            </div>
+          </motion.div>
+
+          {/* Full Width Map Section */}
                 <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="bg-white border-2 border-gray-200 rounded-lg p-6 shadow-lg"
-                >
-                  <div className="mb-6">
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="border-t border-gray-200 my-8 sm:my-12 md:my-16"
+          >
+            <div className="bg-white border-2 border-gray-200 shadow-xl rounded-xl sm:rounded-2xl overflow-hidden p-4 sm:p-6 md:p-8">
+              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 sm:p-3 bg-amber-100 rounded-lg sm:rounded-xl flex-shrink-0">
+                      <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                        Where you'll be
+                      </h2>
+                      <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-1 line-clamp-2">
+                        {typeof property?.address === 'string'
+                          ? property.address
+                          : property?.address?.address || property?.city || 'Dubai, UAE'}
+                      </p>
+                    </div>
+                  </div>
+                  {typeof property?.address === 'object' &&
+                    property?.address?.latitude &&
+                    property?.address?.longitude && (
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                          const addr = property.address
+                          if (typeof addr === 'object' && addr?.latitude && addr?.longitude) {
+                            window.open(
+                              `https://www.google.com/maps/dir/?api=1&destination=${addr.latitude},${addr.longitude}`,
+                              '_blank',
+                            )
+                          }
+                        }}
+                        className="px-4 sm:px-5 py-2 sm:py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg w-full sm:w-auto"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        Get Directions
+                      </motion.button>
+                    )}
+                </div>
+
+                <div className="aspect-[16/6] w-full rounded-xl overflow-hidden border-2 border-gray-200 relative shadow-lg">
+                  <iframe
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d${
+                      typeof property?.address === 'object' && property?.address?.latitude
+                        ? property.address.latitude
+                        : '3610.178787593566'
+                    }!2d${typeof property?.address === 'object' && property?.address?.longitude ? property.address.longitude : '55.2707828'}!3d${
+                      typeof property?.address === 'object' && property?.address?.latitude
+                        ? property.address.latitude
+                        : '25.197197'
+                    }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x${
+                      typeof property?.address === 'object' && property?.address?.latitude
+                        ? property.address.latitude
+                        : '0'
+                    }%3A0x${
+                      typeof property?.address === 'object' && property?.address?.longitude
+                        ? property.address.longitude
+                        : '0'
+                    }!2s${encodeURIComponent(
+                      typeof property?.address === 'string'
+                        ? property.address
+                        : property?.address?.address || 'Dubai',
+                    )}!5e0!3m2!1sen!2sae!4v1644856015000!5m2!1sen!2sae&markers=color:amber%7C${
+                      typeof property?.address === 'object' && property?.address?.latitude
+                        ? property.address.latitude
+                        : '25.197197'
+                    },${typeof property?.address === 'object' && property?.address?.longitude ? property.address.longitude : '55.2707828'}`}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="rounded-xl"
+                  />
+
+                  {/* Custom Marker Overlay */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10">
                     <motion.div 
-                      className="text-4xl font-bold text-black mb-2 relative inline-block"
                       animate={{
-                        backgroundPosition: ['0%', '100%', '0%'],
+                        scale: [1, 1.2, 1],
+                        opacity: [0.8, 1, 0.8],
                       }}
                       transition={{
-                        duration: 3,
+                        duration: 2,
                         repeat: Infinity,
-                        ease: 'linear',
+                        ease: 'easeInOut',
                       }}
-                      style={{
-                        background: 'linear-gradient(90deg, #000 0%, #92400e 50%, #000 100%)',
-                        backgroundSize: '200% 100%',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        backgroundClip: 'text',
-                      }}
+                      className="relative"
                     >
-                      AED {room.price}
+                      <MapPin className="w-12 h-12 text-amber-600 drop-shadow-2xl" />
+                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2">
+                        <div className="w-4 h-4 bg-amber-600 rounded-full animate-ping" />
+                      </div>
                     </motion.div>
-                    <div className="text-gray-600">per night</div>
-                    <div className="text-sm text-gray-500 mt-2">Taxes and fees included</div>
-                  </div>
-
-                    <motion.button
-                      onClick={() => setShowBooking(!showBooking)}
-                      whileHover={{ scale: 1.05, boxShadow: '0 15px 40px rgba(0, 0, 0, 0.3)' }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full px-6 py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 relative overflow-hidden premium-border luxury-glow group"
-                    >
-                      <span className="relative z-10">{showBooking ? 'Hide Booking Form' : 'Book This Room'}</span>
-                      <span className="absolute inset-0 luxury-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
-                    </motion.button>
-
-                  <AnimatePresence>
-                    {showBooking && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <BookingForm roomId={property?._id || property?.id || resolvedParams.id} roomName={room.name} price={room.price} />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <div className="mt-6 pt-6 border-t-2 border-gray-200">
-                    <div className="space-y-3 text-sm">
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <span>✓</span>
-                        <span>Free cancellation</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <span>✓</span>
-                        <span>No prepayment needed</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <span>✓</span>
-                        <span>Best price guarantee</span>
-                      </div>
                     </div>
                   </div>
-
-                  <Link href="/rooms">
-                    <button className="w-full mt-4 px-6 py-3 border-2 border-black text-black font-semibold uppercase tracking-wider hover:bg-black hover:text-white transition-colors">
-                      View All Rooms
-                    </button>
-                  </Link>
-                </motion.div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
-
-      {/* Related Rooms Banner */}
-      <section className="py-12 px-6 bg-white">
-        <div className="container mx-auto max-w-7xl">
-          <ImageBanner
-            title="Explore More Rooms"
-            subtitle="Discover other luxurious accommodations"
-            height="small"
-            textPosition="center"
-          />
         </div>
-      </section>
 
-      {/* Related Rooms */}
-      {relatedProperties.length > 0 && (
-      <section className="py-12 px-6 bg-gray-50">
-        <div className="container mx-auto max-w-7xl">
-          <h2 className="text-3xl font-bold text-black mb-8">You May Also Like</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {relatedProperties.map((relatedProperty) => {
-                const relatedRoom = mapPropertyToRoomDetail(relatedProperty)
-                if (!relatedRoom) return null
-                const propertyId = relatedProperty._id || relatedProperty.id || ''
-                return (
-                  <Link key={propertyId} href={`/rooms/${propertyId}`}>
+      {/* Mobile Booking Card - Fixed Bottom */}
                   <motion.div
-                    whileHover={{ scale: 1.02, y: -5 }}
-                    className="bg-white border-2 border-gray-200 rounded-lg overflow-hidden cursor-pointer"
-                  >
-                    <div className="h-48 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white text-4xl">
-                      {relatedRoom.name.charAt(0)}
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t-2 border-gray-200 shadow-2xl safe-area-inset-bottom"
+      >
+        <div className="p-3 sm:p-4">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              {dailyPrice ? (
+                <>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xs text-gray-500">AED</span>
+                    <p className="text-xl sm:text-2xl font-bold text-gray-900">{dailyPrice}</p>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold text-black mb-2">{relatedRoom.name}</h3>
-                      <div className="flex items-center justify-between mb-4">
-                          <span className="text-2xl font-bold text-black">AED {relatedRoom.price}</span>
-                        <span className="text-gray-600 text-sm">per night</span>
+                  <p className="text-xs text-gray-500 mb-1">per night</p>
+                </>
+              ) : (
+                <p className="text-base sm:text-lg font-bold text-gray-900">Contact for Pricing</p>
+              )}
+              {(monthlyPrice || yearlyPrice) && (
+                <div className="space-y-0.5 text-[10px] sm:text-xs mt-1">
+                  {monthlyPrice && (
+                    <p className="text-gray-700 font-medium">
+                      {monthlyPrice} AED/month
+                    </p>
+                  )}
+                  {yearlyPrice && (
+                    <p className="text-gray-700 font-medium">
+                      {yearlyPrice} AED/year
+                    </p>
+                  )}
                       </div>
-                      <div className="flex flex-wrap gap-2 text-sm text-gray-600">
-                        <span>{relatedRoom.size}</span>
-                        <span>•</span>
-                        <span>{relatedRoom.guests} Guests</span>
+              )}
                       </div>
-                    </div>
-                  </motion.div>
-                </Link>
-                )
-              })}
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
-            onClick={() => setLightboxOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-7xl max-h-[90vh] w-full"
-            >
-              <img
-                src={room.images[lightboxIndex]?.url}
-                alt={room.images[lightboxIndex]?.alt || `${room.name} - Image ${lightboxIndex + 1}`}
-                className="w-full h-full object-contain rounded-lg"
+            <div className="flex-shrink-0">
+              <BookingModal
+                roomId={property?._id || property?.id || resolvedParams.id}
+                roomName={property?.title || property?.name || 'Property'}
+                price={property?.price || 0}
+                monthlyRent={monthlyRent}
+                yearlyRent={yearlyRent}
+                property={property}
               />
-              <motion.button
-                onClick={() => setLightboxOpen(false)}
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
-                className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white p-3 rounded-full hover:bg-white/30 transition-all text-2xl"
-              >
-                ✕
-              </motion.button>
-              {lightboxIndex > 0 && (
-                <motion.button
-                  onClick={() => setLightboxIndex(lightboxIndex - 1)}
-                  whileHover={{ scale: 1.1, x: -5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md text-white p-4 rounded-full hover:bg-white/30 transition-all text-xl"
-                >
-                  ←
-                </motion.button>
-              )}
-              {lightboxIndex < room.images.length - 1 && (
-                <motion.button
-                  onClick={() => setLightboxIndex(lightboxIndex + 1)}
-                  whileHover={{ scale: 1.1, x: 5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md text-white p-4 rounded-full hover:bg-white/30 transition-all text-xl"
-                >
-                  →
-                </motion.button>
-              )}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-4 py-2 rounded">
-                {lightboxIndex + 1} / {room.images.length}
+                    </div>
+          </div>
               </div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="h-[90px] sm:h-[100px] lg:h-0" />
 
       <Footer />
-    </main>
+    </div>
   )
 }

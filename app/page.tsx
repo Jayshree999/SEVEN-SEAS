@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
 import PromoBanner from '@/components/PromoBanner'
@@ -20,6 +21,13 @@ import VideoSection from '@/components/VideoSection'
 import BackgroundVideo from '@/components/BackgroundVideo'
 import LuxuryBadge from '@/components/LuxuryBadge'
 import AnimatedCounter from '@/components/AnimatedCounter'
+import ExploreMore from '@/components/ExploreMore'
+import SignatureDining from '@/components/SignatureDining'
+import EventsConferences from '@/components/EventsConferences'
+import AmenitiesGallery from '@/components/AmenitiesGallery'
+import RoveeArabicCuisine from '@/components/RoveeArabicCuisine'
+import NightlifeSection from '@/components/NightlifeSection'
+import OasisRooftopPoolbar from '@/components/OasisRooftopPoolbar'
 
 // Dynamically import 3D components to avoid SSR issues
 const Scene3D = dynamic(() => import('@/components/Scene3D'), {
@@ -34,8 +42,22 @@ export default function Home() {
       <HeroSection />
       
       {/* Luxury Stats Banner */}
-      <section className="py-16 px-6 bg-black text-white">
-        <div className="container mx-auto max-w-7xl">
+      <section className="relative py-16 px-6 text-white overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/hero2.jpg"
+            alt="Seven Seas Hotel Lobby"
+            fill
+            className="object-cover"
+            priority
+            quality={90}
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/70"></div>
+        </div>
+        
+        <div className="container mx-auto max-w-7xl relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -84,6 +106,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Explore More Section */}
+      <ExploreMore />
+      
+      {/* Signature Dining Section */}
+      <SignatureDining />
+      
+      {/* Events & Conferences Section */}
+      <EventsConferences />
+      
+      {/* Rovee Arabic Cuisine Section */}
+      <RoveeArabicCuisine />
+      
+      {/* Amenities Gallery Section */}
+      <AmenitiesGallery />
+      
+      {/* Nightlife Section */}
+      <NightlifeSection />
+      
+      {/* Oasis Rooftop Poolbar Section */}
+      <OasisRooftopPoolbar />
       
       {/* Luxury Video Banner Section */}
       <VideoBanner

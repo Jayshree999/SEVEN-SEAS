@@ -4,6 +4,9 @@ import './globals.css'
 import LoadingScreen from '@/components/LoadingScreen'
 import ScrollToTop from '@/components/ScrollToTop'
 import FloatingGoldParticles from '@/components/FloatingGoldParticles'
+import { AuthProvider } from '@/contexts/AuthContext'
+import { LuxuryChatbot } from '@/components/LuxuryChatbot'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -49,10 +52,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
-        <LoadingScreen />
-        {/* Optimized: Only show particles on home page, removed from global layout */}
-        {children}
-        <ScrollToTop />
+        <AuthProvider>
+          <LoadingScreen />
+          {/* Optimized: Only show particles on home page, removed from global layout */}
+          {children}
+          <ScrollToTop />
+          <LuxuryChatbot />
+          <Toaster position="top-right" richColors />
+        </AuthProvider>
       </body>
     </html>
   )

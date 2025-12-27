@@ -145,11 +145,38 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
 
 /**
  * Fetches a single property by ID from the Dubai Booking API
+ * Uses the special endpoint that includes booking information and blocked dates
  * @param propertyId - The ID of the property to fetch
  * @returns Promise with the property data
  */
 export async function fetchPropertyById(propertyId: string): Promise<Property | null> {
   try {
+    // Try the special endpoint first (includes booking info)
+    try {
+      const specialUrl = `https://api.dubaibooking.io/api/v1/property/property/special/${propertyId}`
+      const specialResponse = await fetch(specialUrl, {
+        method: 'GET',
+        headers: {
+          'x-organisation': 'sevenseas',
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (specialResponse.ok) {
+        const specialData = await specialResponse.json()
+        if (specialData.data?.property) {
+          return {
+            ...specialData.data.property,
+            id: specialData.data.property._id || specialData.data.property.id,
+            name: specialData.data.property.title || specialData.data.property.name || specialData.data.property.nickname || 'Untitled Property',
+          }
+        }
+      }
+    } catch (specialError) {
+      console.log('Special endpoint not available, falling back to regular endpoint')
+    }
+
+    // Fallback to regular endpoint
     const response = await fetchProperties({
       limit: 100,
       page: 1,
