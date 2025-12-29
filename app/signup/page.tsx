@@ -14,7 +14,6 @@ export default function SignupPage() {
     fullName: '',
     email: '',
     password: '',
-    confirmPassword: '',
     phone: '',
   })
   const [error, setError] = useState('')
@@ -31,7 +30,7 @@ export default function SignupPage() {
   }
 
   const validateForm = () => {
-    if (!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword || !formData.phone) {
+    if (!formData.fullName || !formData.email || !formData.password || !formData.phone) {
       setError('Please fill in all fields')
       return false
     }
@@ -43,11 +42,6 @@ export default function SignupPage() {
 
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long')
-      return false
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
       return false
     }
 
@@ -195,23 +189,6 @@ export default function SignupPage() {
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
                     placeholder="At least 6 characters"
-                  />
-                </div>
-
-                {/* Confirm Password */}
-                <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                    Confirm Password
-                  </label>
-                  <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
-                    placeholder="Confirm your password"
                   />
                 </div>
 

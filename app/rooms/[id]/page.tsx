@@ -421,7 +421,7 @@ export default function PropertyPage({ params }: PageProps) {
                 initial={{ opacity: 0, x: 30 }}
                 animate={bookingInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="sticky top-28"
+                className="sticky top-20"
               >
                 <div className="bg-white border-2 border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
                   <div className="p-6 sm:p-8">

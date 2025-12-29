@@ -136,3 +136,4 @@ The Google Maps API is currently used in:
 - [Google Places API Documentation](https://developers.google.com/maps/documentation/places)
 - [Next.js Environment Variables](https://nextjs.org/docs/basic-features/environment-variables)
 
+

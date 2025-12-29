@@ -99,7 +99,7 @@ export default function CTA() {
   return (
     <section
       ref={ref}
-      className="relative py-12 md:py-16 px-6 overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white"
+      className="relative py-8 md:py-10 px-6 overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white"
       id="contact"
     >
       {/* Animated Background Elements */}
@@ -143,7 +143,7 @@ export default function CTA() {
           {/* Title */}
           <motion.h2
             variants={titleVariants}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 text-black"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 text-black"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             <motion.span
@@ -175,7 +175,7 @@ export default function CTA() {
           {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="text-base md:text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-base md:text-lg text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed"
           >
             Book your luxury experience today and discover the magic of Dubai
           </motion.p>
@@ -183,7 +183,7 @@ export default function CTA() {
           {/* Buttons */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
           >
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link href="/rooms">

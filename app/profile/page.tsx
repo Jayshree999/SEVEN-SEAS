@@ -12,7 +12,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 
-type TabType = 'bookings' | 'saved' | 'history' | 'installments' | 'preferences'
+type TabType = 'bookings' | 'saved' | 'history'
 
 export default function ProfilePage() {
   const { user: authUser, isAuth, loading: authLoading, logout, refreshUser } = useAuth()
@@ -547,8 +547,6 @@ export default function ProfilePage() {
                   { id: 'bookings' as TabType, label: 'Bookings', icon: '🏨' },
                   { id: 'saved' as TabType, label: 'Saved', icon: '❤️' },
                   { id: 'history' as TabType, label: 'History', icon: '🕐' },
-                  { id: 'installments' as TabType, label: 'Installments', icon: '💳' },
-                  { id: 'preferences' as TabType, label: 'Room Preferences', icon: '⚙️' },
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -776,52 +774,6 @@ export default function ProfilePage() {
                   </motion.div>
                 )}
 
-                {activeTab === 'installments' && (
-                  <motion.div
-                    key="installments"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Installments</h3>
-                    <div className="text-center py-12">
-                      <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                      </svg>
-                      <p className="text-gray-500 text-lg mb-2">No installments</p>
-                      <p className="text-gray-400">Installment plans will appear here when available</p>
-                    </div>
-                  </motion.div>
-                )}
-
-                {activeTab === 'preferences' && (
-                  <motion.div
-                    key="preferences"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="text-xl font-semibold text-gray-800 mb-4">Room Preferences</h3>
-                    <div className="text-center py-12">
-                      <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <p className="text-gray-500 text-lg mb-2">No preferences set</p>
-                      <p className="text-gray-400 mb-4">Set your room preferences to get personalized recommendations</p>
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-6 py-2 bg-amber-600 text-white font-semibold rounded-lg hover:bg-amber-700 transition-colors"
-                        onClick={() => setError('Room preferences feature coming soon!')}
-                      >
-                        Set Preferences
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                )}
               </AnimatePresence>
             </div>
           </motion.div>

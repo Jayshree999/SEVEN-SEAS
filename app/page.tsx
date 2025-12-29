@@ -5,11 +5,9 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import HeroSection from '@/components/HeroSection'
-import PromoBanner from '@/components/PromoBanner'
 import FeaturesSection from '@/components/FeaturesSection'
 import GalleryPreview from '@/components/GalleryPreview'
 import OffersSection from '@/components/OffersSection'
-import Testimonials from '@/components/Testimonials'
 import CTA from '@/components/CTA'
 import Footer from '@/components/Footer'
 import ParticleBackground from '@/components/ParticleBackground'
@@ -136,15 +134,6 @@ export default function Home() {
         textPosition="center"
       />
 
-      <PromoBanner />
-      
-      {/* Video Section */}
-      <VideoSection
-        title="Experience Seven Seas"
-        description="Discover the elegance and sophistication that defines our hotel. From our luxurious accommodations to world-class dining, every moment is crafted to perfection."
-        position="center"
-      />
-
       <Scene3D />
 
       {/* Image Showcase */}
@@ -208,7 +197,6 @@ export default function Home() {
       />
 
       <OffersSection />
-      <Testimonials />
 
       {/* Final Video Banner */}
       <VideoBanner

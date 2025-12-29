@@ -45,8 +45,8 @@ export default function Navigation() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-md py-4'
-          : 'bg-white py-6'
+          ? 'bg-white/95 backdrop-blur-md shadow-md py-2'
+          : 'bg-white py-3'
       }`}
     >
       <div className="container mx-auto px-6 lg:px-12">
@@ -61,16 +61,16 @@ export default function Navigation() {
               <Image
                 src="/logo.png"
                 alt="Seven Seas Hotel Dubai"
-                width={180}
-                height={60}
-                className="h-12 w-auto object-contain"
+                width={150}
+                height={50}
+                className="h-10 w-auto object-contain"
                 priority
               />
             </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -106,9 +106,9 @@ export default function Navigation() {
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-amber-600 transition-colors"
+                  className="flex items-center space-x-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-amber-600 transition-colors"
                 >
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center text-white font-semibold">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center text-white font-semibold text-xs">
                     {user?.fullName?.charAt(0).toUpperCase() || 'U'}
                   </div>
                   <span>{user?.fullName?.split(' ')[0] || 'User'}</span>
@@ -178,7 +178,7 @@ export default function Navigation() {
                   boxShadow: '0 0 20px rgba(255, 215, 0, 0.6)',
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-6 py-2 text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 transition-all duration-300 rounded-lg overflow-hidden group"
+                className="relative px-5 py-1.5 text-sm font-semibold text-white bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 transition-all duration-300 rounded-lg overflow-hidden group"
               >
                 <span className="relative z-10">BOOK NOW</span>
                 <motion.div
@@ -199,7 +199,7 @@ export default function Navigation() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden w-10 h-10 flex items-center justify-center"
+            className="lg:hidden w-8 h-8 flex items-center justify-center"
           >
             <motion.div
               animate={isMenuOpen ? { rotate: 90 } : { rotate: 0 }}
