@@ -50,17 +50,44 @@ export default function ContactPage() {
       <VideoBanner
         title="CONTACT US"
         subtitle="We're here to help"
-        height="large"
+        height="small"
         textPosition="center"
       />
 
-      {/* Location Images */}
-      <section className="py-12 px-6 bg-white">
+      {/* Location Images - Enhanced */}
+      <section className="pt-8 pb-12 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white">
         <div className="container mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10 md:mb-12"
+          >
+            <h2 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Our Location
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Discover our prime location in the heart of Dubai, easily accessible from major attractions and business districts.
+            </p>
+          </motion.div>
           <ImageGrid
             images={[
-              { id: 1, title: 'Hotel Location', description: 'Prime location in Dubai' },
-              { id: 2, title: 'Reception', description: '24/7 concierge service' },
+              { 
+                id: 1, 
+                url: '/hero2.jpg',
+                title: 'Hotel Location', 
+                description: 'Prime location in Dubai with easy access to major attractions' 
+              },
+              { 
+                id: 2, 
+                url: '/DSC02655-scaled.jpg',
+                title: 'Reception', 
+                description: '24/7 concierge service and world-class hospitality' 
+              },
             ]}
             columns={2}
             gap="large"
@@ -69,7 +96,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Section - Premium Enhanced */}
-      <section className="py-20 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
+      <section className="pt-8 pb-20 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>

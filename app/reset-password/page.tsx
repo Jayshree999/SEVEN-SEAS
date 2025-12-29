@@ -1,5 +1,7 @@
-com'use client'
+'use client'
 
+// Reset Password Page - Commented out as not needed
+/*
 import { useState, useEffect, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -116,7 +118,6 @@ function ResetPasswordForm() {
             transition={{ duration: 0.5 }}
             className="bg-white rounded-2xl shadow-xl overflow-hidden"
           >
-            {/* Header */}
             <div className="bg-gradient-to-r from-amber-500 to-yellow-600 px-6 py-8 text-center">
               <motion.div
                 initial={{ scale: 0.9 }}
@@ -136,7 +137,6 @@ function ResetPasswordForm() {
               <p className="text-amber-100 mt-2">Create a new password</p>
             </div>
 
-            {/* Form */}
             <div className="px-6 py-8">
               {success ? (
                 <motion.div
@@ -173,7 +173,6 @@ function ResetPasswordForm() {
                   )}
 
                   <div className="space-y-5">
-                    {/* New Password */}
                     <div>
                       <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                         New Password
@@ -190,7 +189,6 @@ function ResetPasswordForm() {
                       />
                     </div>
 
-                    {/* Confirm Password */}
                     <div>
                       <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
                         Confirm New Password
@@ -207,7 +205,6 @@ function ResetPasswordForm() {
                       />
                     </div>
 
-                    {/* Submit Button */}
                     <motion.button
                       type="submit"
                       disabled={isLoading || !token}
@@ -268,4 +265,31 @@ export default function ResetPasswordPage() {
     </Suspense>
   )
 }
+*/
 
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
+import Link from 'next/link'
+
+export default function ResetPasswordPage() {
+  return (
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <Navigation />
+      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md mx-auto">
+          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Page Not Available</h1>
+            <p className="text-gray-600 mb-6">This page is currently not available.</p>
+            <Link
+              href="/"
+              className="inline-block px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-yellow-700 transition-all"
+            >
+              Go to Homepage
+            </Link>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </main>
+  )
+}
