@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Globe } from 'lucide-react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -19,15 +20,15 @@ export default function Footer() {
 
   const footerLinks = {
     hotel: [
-      { name: 'About Us', href: '/about' },
+      { name: 'About Us', href: '/about-us' },
       { name: 'Our Rooms', href: '/rooms' },
       { name: 'Gallery', href: '/gallery' },
       { name: 'Services', href: '/services' },
     ],
     services: [
-      { name: 'Dining', href: '/restaurant' },
-      { name: 'Spa & Wellness', href: '/services' },
-      { name: 'Events', href: '/services' },
+      { name: 'Dining', href: '/dining' },
+      { name: 'Spa & Wellness', href: '/wellness' },
+      { name: 'Events', href: '/events-3' },
       { name: 'Concierge', href: '/contact' },
     ],
     support: [
@@ -39,7 +40,7 @@ export default function Footer() {
     ],
     company: [
       { name: 'Company', href: '/company' },
-      { name: 'About', href: '/about' },
+      { name: 'About', href: '/about-us' },
       { name: 'Our Apps', href: '/company/apps' },
       { name: 'Contact', href: '/contact' },
       { name: 'Corporate Contact', href: '/company/corporate' },
@@ -56,80 +57,145 @@ export default function Footer() {
   }
 
   const socialLinks = [
-    { name: 'Facebook', icon: '📘', href: '#' },
-    { name: 'Instagram', icon: '📷', href: '#' },
-    { name: 'Twitter', icon: '🐦', href: '#' },
-    { name: 'LinkedIn', icon: '💼', href: '#' },
+    { name: 'Facebook', icon: Facebook, href: '#', color: 'hover:text-blue-500' },
+    { name: 'Instagram', icon: Instagram, href: '#', color: 'hover:text-pink-500' },
+    { name: 'Twitter', icon: Twitter, href: '#', color: 'hover:text-blue-400' },
+    { name: 'LinkedIn', icon: Linkedin, href: '#', color: 'hover:text-blue-600' },
   ]
 
   return (
     <motion.footer 
-      className="bg-black text-white relative overflow-hidden"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      className="bg-gradient-to-b from-black via-gray-900 to-black text-white relative overflow-hidden"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      {/* Video Background */}
+      {/* Animated Background Pattern */}
       <div className="absolute inset-0 overflow-hidden z-0">
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{ opacity: 0.4 }}
-          onError={(e) => {
-            console.error('Video failed to load:', e)
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 via-transparent to-amber-900/5"></div>
+        <motion.div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
-        >
-          <source src="/footer.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/50" />
+          animate={{
+            x: [0, 60, 0],
+            y: [0, 60, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        />
       </div>
       
       {/* Main Footer Content */}
-      <div className="container mx-auto px-6 py-4 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-12 md:py-16 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-10">
           {/* Brand Section */}
           <div className="md:col-span-2 lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="mb-0"
+              transition={{ duration: 0.6 }}
             >
-              <div className="mb-2">
-                <Image
-                  src="/logo.png"
-                  alt="Seven Seas Hotel Dubai"
-                  width={150}
-                  height={50}
-                  className="h-10 w-auto object-contain brightness-0 invert"
-                />
-              </div>
-              <p className="text-gray-400 leading-relaxed mb-3 max-w-md text-xs">
-                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination.
+              <Link href="/" className="inline-block mb-4">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="relative"
+                >
+                  <Image
+                    src="/logo.png"
+                    alt="Seven Seas Hotel Dubai"
+                    width={180}
+                    height={60}
+                    className="h-12 md:h-14 w-auto object-contain brightness-0 invert"
+                  />
+                  <motion.div
+                    className="absolute -inset-2 bg-gradient-to-r from-amber-400/20 via-amber-300/20 to-amber-400/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
+                </motion.div>
+              </Link>
+              
+              <p className="text-gray-300 leading-relaxed mb-6 max-w-md text-sm md:text-base">
+                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination. Your perfect stay awaits.
               </p>
-              <div className="space-y-1 text-xs text-gray-400">
-                <div className="flex items-center gap-2">
-                  <span>📍</span>
-                  <span>Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>📞</span>
-                  <a href="tel:+971551009152" className="hover:text-amber-400 transition-colors">+971 55 100 9152</a>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>✉️</span>
-                  <a href="mailto:reservation@sevenseashotel.ae" className="hover:text-amber-400 transition-colors">reservation@sevenseashotel.ae</a>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>🌐</span>
-                  <a href="https://sevenseashotel.ae" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors">www.sevenseashotel.ae</a>
+              
+              {/* Contact Information */}
+              <div className="space-y-3 text-sm text-gray-400">
+                <motion.a
+                  href="https://maps.google.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 hover:text-amber-400 transition-colors group"
+                  whileHover={{ x: 5 }}
+                >
+                  <MapPin className="w-5 h-5 mt-0.5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span className="leading-relaxed">Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE</span>
+                </motion.a>
+                
+                <motion.a
+                  href="tel:+971551009152"
+                  className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
+                  whileHover={{ x: 5 }}
+                >
+                  <Phone className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>+971 55 100 9152</span>
+                </motion.a>
+                
+                <motion.a
+                  href="mailto:reservation@sevenseashotel.ae"
+                  className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
+                  whileHover={{ x: 5 }}
+                >
+                  <Mail className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>reservation@sevenseashotel.ae</span>
+                </motion.a>
+                
+                <motion.a
+                  href="https://sevenseashotel.ae"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
+                  whileHover={{ x: 5 }}
+                >
+                  <Globe className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>www.sevenseashotel.ae</span>
+                </motion.a>
+              </div>
+
+              {/* Social Media Icons */}
+              <div className="mt-6">
+                <p className="text-sm font-semibold text-gray-300 mb-3">Follow Us</p>
+                <div className="flex items-center gap-4">
+                  {socialLinks.map((social, index) => {
+                    const IconComponent = social.icon
+                    return (
+                      <motion.a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        initial={{ opacity: 0, scale: 0 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1, type: 'spring', stiffness: 200 }}
+                        whileHover={{ 
+                          scale: 1.2, 
+                          y: -5,
+                          rotate: [0, -10, 10, -10, 0],
+                        }}
+                        whileTap={{ scale: 0.9 }}
+                        className={`w-10 h-10 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 flex items-center justify-center text-gray-400 ${social.color} transition-all duration-300 hover:border-amber-500/50 hover:bg-gray-800`}
+                        aria-label={social.name}
+                      >
+                        <IconComponent className="w-5 h-5" />
+                      </motion.a>
+                    )
+                  })}
                 </div>
               </div>
             </motion.div>
@@ -142,11 +208,11 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-sm font-bold mb-2 uppercase tracking-wider"
+              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Hotel
             </motion.h3>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2.5">
               {footerLinks.hotel.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -157,8 +223,9 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.name}
                   </Link>
                 </motion.li>
@@ -173,11 +240,11 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-sm font-bold mb-2 uppercase tracking-wider"
+              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Services
             </motion.h3>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2.5">
               {footerLinks.services.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -188,8 +255,9 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.name}
                   </Link>
                 </motion.li>
@@ -204,11 +272,11 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-sm font-bold mb-2 uppercase tracking-wider"
+              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Support
             </motion.h3>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2.5">
               {footerLinks.support.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -219,8 +287,9 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
                   >
+                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.name}
                   </Link>
                 </motion.li>
@@ -228,18 +297,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Company Links */}
-          <div>
+          {/* Company & Legal Links Combined */}
+          <div className="md:col-span-2 lg:col-span-1">
             <motion.h3
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="text-sm font-bold mb-2 uppercase tracking-wider"
+              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Company
             </motion.h3>
-            <ul className="space-y-1.5">
+            <ul className="space-y-2.5">
               {footerLinks.company.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -250,39 +319,9 @@ export default function Footer() {
                 >
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
+                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
                   >
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal Links */}
-          <div>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="text-sm font-bold mb-2 uppercase tracking-wider"
-            >
-              Legal
-            </motion.h3>
-            <ul className="space-y-1.5">
-              {footerLinks.legal.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 + index * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors text-sm"
-                  >
+                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.name}
                   </Link>
                 </motion.li>
@@ -291,83 +330,76 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Newsletter Section */}
+        {/* Hotel Policies Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-4 pt-4 border-t border-gray-800"
+          transition={{ delay: 0.3 }}
+          className="mt-12 pt-8 border-t border-gray-800/50"
         >
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-lg font-bold mb-1">Stay Connected</h3>
-            <p className="text-gray-400 mb-3 text-xs">Subscribe to receive exclusive offers and updates</p>
-            <form className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-3 py-1.5 bg-gray-900 border border-gray-700 rounded text-white placeholder-gray-500 focus:outline-none focus:border-white text-xs"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                type="submit"
-                className="px-4 py-1.5 bg-white text-black font-semibold uppercase tracking-wider hover:bg-gray-100 transition-colors text-xs"
-              >
-                Subscribe
-              </motion.button>
-            </form>
+          <div className="max-w-5xl mx-auto">
+            <h3 className="text-xl font-bold mb-6 text-center text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Hotel Policy
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-300">
+              <div className="flex items-start gap-2">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>Check-in time is 2:00 PM; check-out time is 12:00 PM.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>A valid ID or passport is required at the time of check-in.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>Pets are not allowed on the premises.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>Smoking inside the room is strictly prohibited; penalties will apply.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>An AED 200 security deposit is required upon check-in.</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>Parking is available at AED 20 per day.</span>
+              </div>
+              <div className="flex items-start gap-2 md:col-span-2 lg:col-span-3">
+                <span className="text-amber-500 mt-1">•</span>
+                <span>Visitors are not permitted in guest rooms after 10:00 PM.</span>
+              </div>
+            </div>
           </div>
         </motion.div>
 
-        {/* Social Media & Bottom Bar */}
-        <div className="mt-4 pt-4 border-t border-gray-800">
+        {/* Bottom Bar */}
+        <div className="mt-10 pt-8 border-t border-gray-800/50">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Social Links */}
-            <div className="flex items-center gap-6">
-              <span className="text-gray-400 text-sm">Follow Us:</span>
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={social.name}
-                  href={social.href}
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.3, 
-                    y: -5,
-                    rotate: [0, -10, 10, -10, 0],
-                    filter: 'brightness(1.2) drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))',
-                  }}
-                  className="text-2xl hover:text-amber-400 transition-all duration-300"
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </motion.a>
-              ))}
-            </div>
-
             {/* Quick Legal Links */}
-            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
-              <Link href="/terms" className="hover:text-white transition-colors">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
+              <Link href="/terms" className="hover:text-amber-400 transition-colors">
                 Terms
               </Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">
+              <span className="text-gray-600">•</span>
+              <Link href="/privacy" className="hover:text-amber-400 transition-colors">
                 Privacy
               </Link>
-              <Link href="/legal/cookies" className="hover:text-white transition-colors">
+              <span className="text-gray-600">•</span>
+              <Link href="/legal/cookies" className="hover:text-amber-400 transition-colors">
                 Cookies
               </Link>
             </div>
-          </div>
 
-          {/* Copyright */}
-          <div className="mt-3 pt-3 border-t border-gray-800 text-center text-xs text-gray-500">
-            <p>© {currentYear} Seven Seas Hotel Dubai. All rights reserved.</p>
+            {/* Copyright */}
+            <div className="text-center md:text-right text-sm text-gray-500">
+              <p>© {currentYear} Seven Seas Hotel Dubai. All rights reserved.</p>
+            </div>
           </div>
         </div>
       </div>
     </motion.footer>
   )
 }
-

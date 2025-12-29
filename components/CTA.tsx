@@ -99,7 +99,7 @@ export default function CTA() {
   return (
     <section
       ref={ref}
-      className="relative py-8 md:py-10 px-6 overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white"
+      className="relative pt-4 md:pt-6 pb-8 md:pb-10 px-6 overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white"
       id="contact"
     >
       {/* Animated Background Elements */}

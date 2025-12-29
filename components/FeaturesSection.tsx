@@ -17,19 +17,19 @@ const features = [
     title: 'WORLD-CLASS DINING',
     description: 'Award-winning restaurants offering international cuisine and authentic local flavors',
     icon: '🍽️',
-    link: '/restaurant',
+    link: '/dining',
   },
   {
     title: 'SPA & WELLNESS',
     description: 'Rejuvenate at our state-of-the-art spa facility with expert therapists',
     icon: '💆',
-    link: '/services',
+    link: '/wellness',
   },
   {
     title: 'EVENT SPACES',
     description: 'Elegant venues for your special occasions, meetings, and celebrations',
     icon: '🎉',
-    link: '/services',
+    link: '/mehfil-ballroom',
   },
 ]
 
@@ -64,6 +64,7 @@ export default function FeaturesSection() {
         {/* Features Banner */}
         <div className="mb-12 max-w-6xl mx-auto">
           <ImageBanner
+            imageUrl="/hero2.jpg"
             title="Unparalleled Experiences"
             subtitle="Every detail crafted for your comfort"
             height="small"
@@ -75,11 +76,11 @@ export default function FeaturesSection() {
           {features.map((feature, index) => (
             <Link key={feature.title} href={feature.link}>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                whileHover={{ scale: 1.03, y: -5 }}
-                className="bg-white border-2 border-amber-200 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full hover:border-amber-400 transition-all duration-200 shadow-lg hover:shadow-xl"
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 100 }}
+                whileHover={{ y: -15, scale: 1.05 }}
+                className="bg-white border-2 border-transparent group-hover:border-amber-400 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full transition-all duration-200 shadow-xl hover:shadow-2xl"
               >
                 {/* Hover Effect */}
                 <motion.div
@@ -88,9 +89,13 @@ export default function FeaturesSection() {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <div className="text-5xl mb-6">
+                  <motion.div 
+                    className="text-5xl mb-6"
+                    animate={{ rotate: [0, 15, -15, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
+                  >
                     {feature.icon}
-                  </div>
+                  </motion.div>
                   
                   <h3 className="text-xl font-bold text-black mb-4">
                     {feature.title}

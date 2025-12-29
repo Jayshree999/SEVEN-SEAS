@@ -13,7 +13,7 @@ export default function OasisRooftopPoolbar() {
   })
 
   return (
-    <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-blue-50/50 via-white to-cyan-50/50 relative overflow-hidden">
+    <section className="pt-12 md:pt-16 pb-0 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-blue-50/50 via-white to-cyan-50/50 relative overflow-hidden" style={{ marginBottom: '-150px', paddingBottom: '0' }}>
       {/* Ultra Premium Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Luxury gradient orbs - Blue/Cyan theme for pool/water */}
@@ -48,7 +48,7 @@ export default function OasisRooftopPoolbar() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-8 md:mb-10 text-center"
+          className="mb-1 md:mb-2 text-center"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="relative">
@@ -78,6 +78,7 @@ export default function OasisRooftopPoolbar() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="group relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden rounded-2xl cursor-pointer shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_80px_-10px_rgba(59,130,246,0.4)] transition-all duration-500 border border-blue-200/30 bg-white backdrop-blur-sm"
+          style={{ marginBottom: 0 }}
         >
           {/* Premium card background glow - Enhanced with blue/cyan */}
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/0 via-cyan-400/30 to-blue-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>

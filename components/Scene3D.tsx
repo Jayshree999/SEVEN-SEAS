@@ -201,6 +201,7 @@ export default function Scene3D() {
       viewport={{ once: true }}
       transition={{ duration: 1 }}
       className="relative h-screen w-full bg-white"
+      style={{ marginTop: 0, marginBottom: 0 }}
     >
       <BackgroundVideo opacity={0.08} />
       <div className="absolute inset-0">

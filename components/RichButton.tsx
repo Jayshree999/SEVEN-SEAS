@@ -18,11 +18,12 @@ export default function RichButton({
       whileHover={{ scale: 1.09, boxShadow: variant === 'filled' ? '0 0 24px 6px #FFD70088' : undefined }}
       whileTap={{ scale: 0.97 }}
       className={`
-        px-6 py-3
-        font-semibold uppercase tracking-wider
+        px-4 sm:px-6 py-3 sm:py-3.5
+        text-sm sm:text-base font-semibold uppercase tracking-wider
         transition-all duration-300
         rounded-lg
         focus:outline-none
+        min-h-[48px]
         ${variant === 'filled' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-white border-2 border-amber-400 shadow-lg' : ''}
         ${variant === 'outline' ? 'bg-transparent border-2 border-amber-400 text-amber-950 hover:bg-amber-50/40' : ''}
         shimmer relative overflow-hidden z-10

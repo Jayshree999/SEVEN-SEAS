@@ -23,6 +23,7 @@ export default function ImageGrid({ images, columns = 3, gap = 'medium' }: Image
   })
 
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const disableLightbox = true // Disable lightbox functionality
 
   const columnClasses = {
     2: 'md:grid-cols-2',
@@ -46,8 +47,8 @@ export default function ImageGrid({ images, columns = 3, gap = 'medium' }: Image
             animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
             whileHover={{ scale: 1.05, y: -10, boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)' }}
-            onClick={() => setSelectedImage(image.id)}
-            className="relative h-64 md:h-80 rounded-lg overflow-hidden cursor-pointer group premium-border border-2 border-amber-900/20 hover:border-amber-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            onClick={disableLightbox ? undefined : () => setSelectedImage(image.id)}
+            className={`relative h-64 md:h-80 rounded-lg overflow-hidden ${disableLightbox ? '' : 'cursor-pointer'} group premium-border border-2 border-amber-900/20 hover:border-amber-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl`}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black">
               {image.url ? (
@@ -73,7 +74,7 @@ export default function ImageGrid({ images, columns = 3, gap = 'medium' }: Image
       </div>
 
       {/* Lightbox */}
-      {selectedImage && (
+      {!disableLightbox && selectedImage && (
         <div
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6"
           onClick={() => setSelectedImage(null)}

@@ -67,6 +67,7 @@ export default function VideoBanner({
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.6 }}
       className={`relative ${heightClasses[height]} overflow-hidden ${className}`}
+      style={{ marginTop: 0, marginBottom: 0 }}
     >
       {/* Removed particles for performance */}
 

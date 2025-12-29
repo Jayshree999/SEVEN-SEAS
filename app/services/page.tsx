@@ -57,12 +57,12 @@ export default function ServicesPage() {
       <VideoBanner
         title="SERVICES"
         subtitle="Comprehensive amenities for your comfort"
-        height="large"
+        height="small"
         textPosition="center"
       />
 
       {/* Services Showcase - Premium Enhanced */}
-      <section className="py-20 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
+      <section className="pt-8 pb-20 px-6 bg-gradient-to-b from-white via-gray-50/30 to-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
@@ -98,6 +98,7 @@ export default function ServicesPage() {
 
       {/* Video Section */}
       <VideoSection
+        videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/01/Lobby-video-converter.com_.mp4"
         title="Experience Excellence"
         description="Watch how we deliver exceptional service and create memorable experiences for our guests."
         position="center"
@@ -114,12 +115,12 @@ export default function ServicesPage() {
           >
             <p className="text-xl text-gray-700 mb-6 leading-relaxed">
               For detailed services information, including our restaurants and dining options, please visit our{' '}
-              <Link href="/restaurant" className="text-amber-600 hover:text-amber-700 font-semibold underline decoration-2 underline-offset-4 transition-colors">
+              <Link href="/dining" className="text-amber-600 hover:text-amber-700 font-semibold underline decoration-2 underline-offset-4 transition-colors">
                 Restaurant & Services
               </Link>{' '}
               page.
             </p>
-            <Link href="/restaurant">
+            <Link href="/dining">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

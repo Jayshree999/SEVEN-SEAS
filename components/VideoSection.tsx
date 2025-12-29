@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 
@@ -24,16 +24,60 @@ export default function VideoSection({
     threshold: 0.1,
   })
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const handlePlay = () => {
-    if (videoRef.current) {
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const handlePlay = () => setIsPlaying(true)
+    const handlePause = () => setIsPlaying(false)
+    const handleEnded = () => setIsPlaying(false)
+    const handleLoadStart = () => setIsLoading(true)
+    const handleCanPlay = () => setIsLoading(false)
+
+    video.addEventListener('play', handlePlay)
+    video.addEventListener('pause', handlePause)
+    video.addEventListener('ended', handleEnded)
+    video.addEventListener('loadstart', handleLoadStart)
+    video.addEventListener('canplay', handleCanPlay)
+
+    return () => {
+      video.removeEventListener('play', handlePlay)
+      video.removeEventListener('pause', handlePause)
+      video.removeEventListener('ended', handleEnded)
+      video.removeEventListener('loadstart', handleLoadStart)
+      video.removeEventListener('canplay', handleCanPlay)
+    }
+  }, [])
+
+  const handlePlay = async () => {
+    if (!videoRef.current) return
+
+    try {
       if (isPlaying) {
         videoRef.current.pause()
       } else {
-        videoRef.current.play()
+        setIsLoading(true)
+        await videoRef.current.play()
+        setIsPlaying(true)
       }
-      setIsPlaying(!isPlaying)
+    } catch (error) {
+      console.error('Error playing video:', error)
+      setIsLoading(false)
+      // Try unmuting and playing again (some browsers require user interaction)
+      if (videoRef.current) {
+        videoRef.current.muted = true
+        try {
+          await videoRef.current.play()
+          setIsPlaying(true)
+        } catch (e) {
+          console.error('Error playing video after unmuting:', e)
+        }
+      }
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -62,26 +106,55 @@ export default function VideoSection({
               <>
                 <video
                   ref={videoRef}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover z-0"
                   loop
                   muted
                   playsInline
+                  preload="metadata"
                   poster={thumbnail}
+                  onClick={handlePlay}
                 >
                   <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
                 </video>
                 {!isPlaying && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <motion.button
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                      onClick={handlePlay}
-                      className="w-24 h-24 rounded-full bg-white/20 backdrop-blur-md border-2 border-white flex items-center justify-center group-hover:bg-white/30 transition-colors"
-                    >
-                      <svg className="w-12 h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
+                  <div 
+                    className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 cursor-pointer"
+                    onClick={handlePlay}
+                  >
+                    {isLoading ? (
+                      <div className="w-24 h-24 rounded-full bg-white/20 backdrop-blur-md border-2 border-white flex items-center justify-center">
+                        <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                      </div>
+                    ) : (
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handlePlay()
+                        }}
+                        className="w-24 h-24 rounded-full bg-white/20 backdrop-blur-md border-2 border-white flex items-center justify-center group-hover:bg-white/30 transition-colors"
+                        aria-label="Play video"
+                      >
+                        <svg className="w-12 h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </motion.button>
+                    )}
+                  </div>
+                )}
+                {isPlaying && (
+                  <div 
+                    className="absolute inset-0 z-10 cursor-pointer"
+                    onClick={handlePlay}
+                    aria-label="Pause video"
+                  >
+                    <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm border-2 border-white/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                       </svg>
-                    </motion.button>
+                    </div>
                   </div>
                 )}
               </>

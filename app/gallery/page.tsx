@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import ImageBanner from '@/components/ImageBanner'
@@ -11,15 +12,24 @@ import VideoBanner from '@/components/VideoBanner'
 import VideoSection from '@/components/VideoSection'
 
 const galleryImages = [
-  { id: 1, category: 'Rooms', title: 'Deluxe Room', image: '/gallery-1.jpg' },
-  { id: 2, category: 'Rooms', title: 'Executive Suite', image: '/gallery-2.jpg' },
-  { id: 3, category: 'Facilities', title: 'Swimming Pool', image: '/gallery-3.jpg' },
-  { id: 4, category: 'Restaurant', title: 'Fine Dining', image: '/gallery-4.jpg' },
-  { id: 5, category: 'Spa', title: 'Wellness Center', image: '/gallery-5.jpg' },
-  { id: 6, category: 'Facilities', title: 'Fitness Center', image: '/gallery-6.jpg' },
-  { id: 7, category: 'Rooms', title: 'Presidential Suite', image: '/gallery-7.jpg' },
-  { id: 8, category: 'Restaurant', title: 'Lounge Bar', image: '/gallery-8.jpg' },
-  { id: 9, category: 'Facilities', title: 'Business Center', image: '/gallery-9.jpg' },
+  { id: 1, category: 'Rooms', title: 'Deluxe Room', image: '/accomodation/delux balcony king.jpg' },
+  { id: 2, category: 'Rooms', title: 'Executive Suite', image: '/accomodation/executive suites.jpg' },
+  { id: 3, category: 'Facilities', title: 'Swimming Pool', image: '/DSC02661-2048x1365.jpg' },
+  { id: 4, category: 'Restaurant', title: 'Fine Dining', image: '/019A3962-Enhanced-NR-1-scaled.jpg' },
+  { id: 5, category: 'Spa', title: 'Wellness Center', image: '/SPA.png' },
+  { id: 6, category: 'Facilities', title: 'Fitness Center', image: '/Gym.png' },
+  { id: 7, category: 'Rooms', title: 'Royal Suite', image: '/accomodation/royal suit.jpg' },
+  { id: 8, category: 'Restaurant', title: 'Lounge Bar', image: '/Salt.webp' },
+  { id: 9, category: 'Facilities', title: 'Business Center', image: '/Meeting-Room.png' },
+  { id: 10, category: 'Rooms', title: 'Premium City King', image: '/accomodation/premium city king.jpg' },
+  { id: 11, category: 'Rooms', title: 'Premium Sea View', image: '/accomodation/premium sea view king.jpg' },
+  { id: 12, category: 'Rooms', title: 'Premium Twin', image: '/accomodation/premium twin.jpg' },
+  { id: 13, category: 'Rooms', title: 'Deluxe Family', image: '/accomodation/delux family 2 queen bed.jpg' },
+  { id: 14, category: 'Restaurant', title: 'Arabic Cuisine', image: '/Nahas-al-Blad.webp' },
+  { id: 15, category: 'Restaurant', title: 'Indian Cuisine', image: '/Delhi-6.png' },
+  { id: 16, category: 'Facilities', title: 'Events & Banquets', image: '/banquet-4.png' },
+  { id: 17, category: 'Facilities', title: 'Weddings', image: '/Wedding.png' },
+  { id: 18, category: 'Restaurant', title: 'Rooftop Poolbar', image: '/DSC02655-scaled.jpg' },
 ]
 
 const categories = ['All', 'Rooms', 'Facilities', 'Restaurant', 'Spa']
@@ -40,12 +50,12 @@ export default function GalleryPage() {
       <VideoBanner
         title="PHOTO GALLERY"
         subtitle="Explore our hotel through stunning visuals"
-        height="large"
+        height="small"
         textPosition="center"
       />
 
       {/* Filter - Premium Enhanced */}
-      <section className="py-12 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      <section className="py-6 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-amber-100/10 via-transparent to-amber-100/10 rounded-full blur-3xl"></div>
@@ -73,7 +83,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Gallery Grid - Premium Enhanced */}
-      <section className="py-20 px-6 bg-white relative overflow-hidden">
+      <section className="py-8 px-6 bg-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-bl from-amber-200/15 via-amber-100/8 to-transparent rounded-full blur-3xl"></div>
@@ -90,15 +100,22 @@ export default function GalleryPage() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: -20 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  whileHover={{ scale: 1.05, y: -8, rotateY: 5 }}
+                  whileHover={{ scale: 1.05, y: -8 }}
                   onClick={() => setSelectedImage(image.id)}
                   className="relative h-80 bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden cursor-pointer group border-2 border-gray-200/50 hover:border-amber-400/70 transition-all duration-500 shadow-xl hover:shadow-2xl"
                 >
                   {/* Premium glow effect */}
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/30 to-amber-400/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
                   
-                  <div className="absolute inset-0 flex items-center justify-center text-white text-6xl group-hover:scale-110 transition-transform duration-700 relative z-10">
-                    {image.title.charAt(0)}
+                  {/* Image */}
+                  <div className="absolute inset-0">
+                    <Image
+                      src={image.image}
+                      alt={image.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-0" />
                   
@@ -153,13 +170,63 @@ export default function GalleryPage() {
             <p className="text-lg text-gray-600">Discover different aspects of our hotel</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {/* Luxury Accommodations - Video Banner with Image Fallback */}
+            <div className="relative rounded-xl overflow-hidden group h-96">
+              {/* Background Image - Always visible */}
+              <div className="absolute inset-0 z-0">
+                <Image
+                  src="/accomodation/royal suit.jpg"
+                  alt="Luxury Accommodations"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+              </div>
+              {/* Video Overlay */}
+              <div className="absolute inset-0 z-10">
+                <VideoBanner
+                  videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/01/Lobby-video-converter.com_.mp4"
+                  title=""
+                  subtitle=""
+                  height="full"
+                  textPosition="center"
+                  autoplay={true}
+                  loop={true}
+                  muted={true}
+                  overlay={false}
+                  className="rounded-xl"
+                />
+              </div>
+              {/* Text Content Overlay */}
+              <div className="absolute inset-0 z-20 flex flex-col justify-end items-center p-8 md:p-12">
+                <div className="text-center">
+                  <motion.h2
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                    className="text-4xl md:text-6xl font-bold text-white mb-4 relative"
+                    style={{ fontFamily: 'var(--font-playfair)' }}
+                  >
+                    <span className="relative z-10">Luxury Accommodations</span>
+                  </motion.h2>
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                    className="text-xl md:text-2xl text-white/90 max-w-2xl"
+                  >
+                    Elegant rooms and suites designed for comfort
+                  </motion.p>
+                </div>
+                {/* Gradient overlay for text readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none -z-10" />
+              </div>
+            </div>
             <ImageBanner
-              title="Luxury Accommodations"
-              subtitle="Elegant rooms and suites designed for comfort"
-              height="medium"
-              textPosition="center"
-            />
-            <ImageBanner
+              imageUrl="/019A3962-Enhanced-NR-1-scaled.jpg"
               title="Dining Excellence"
               subtitle="World-class restaurants and culinary experiences"
               height="medium"
@@ -168,10 +235,10 @@ export default function GalleryPage() {
           </div>
           <ImageGrid
             images={[
-              { id: 10, title: 'Spa & Wellness', description: 'Rejuvenating treatments' },
-              { id: 11, title: 'Event Spaces', description: 'Elegant venues for celebrations' },
-              { id: 12, title: 'Business Facilities', description: 'State-of-the-art meeting rooms' },
-              { id: 13, title: 'Recreation Areas', description: 'Pool, gym, and leisure facilities' },
+              { id: 10, url: '/SPA.png', title: 'Spa & Wellness', description: 'Rejuvenating treatments' },
+              { id: 11, url: '/banquet-4.png', title: 'Event Spaces', description: 'Elegant venues for celebrations' },
+              { id: 12, url: '/Meeting-Room.png', title: 'Business Facilities', description: 'State-of-the-art meeting rooms' },
+              { id: 13, url: '/DSC02661-2048x1365.jpg', title: 'Recreation Areas', description: 'Pool, gym, and leisure facilities' },
             ]}
             columns={2}
             gap="large"
@@ -181,6 +248,7 @@ export default function GalleryPage() {
 
       {/* Video Section */}
       <VideoSection
+        videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/11/Seven-Seas-Hotel-Intro-for-event.mp4"
         title="Hotel Showcase Video"
         description="Watch our comprehensive video tour showcasing the beauty and elegance of Seven Seas Hotel. From our luxurious rooms to world-class facilities, see it all."
         position="center"
@@ -224,22 +292,37 @@ export default function GalleryPage() {
               
               {/* Image Container - Premium */}
               <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10">
-                <div className="h-[60vh] md:h-[70vh] flex items-center justify-center text-white text-8xl relative">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                  <div className="relative z-10">
-                    {galleryImages.find(img => img.id === selectedImage)?.title.charAt(0)}
-                  </div>
-                </div>
+                {(() => {
+                  const selectedImg = galleryImages.find(img => img.id === selectedImage);
+                  return selectedImg ? (
+                    <>
+                      <div className="h-[60vh] md:h-[70vh] relative bg-black flex items-center justify-center">
+                        <div className="relative w-full h-full min-h-[400px]">
+                          <Image
+                            src={selectedImg.image}
+                            alt={selectedImg.title}
+                            fill
+                            className="object-contain"
+                            sizes="(max-width: 768px) 100vw, 90vw"
+                            priority
+                            unoptimized
+                          />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+                      </div>
                 
-                {/* Image Info - Premium */}
-                <div className="p-6 md:p-8 bg-gradient-to-t from-black/80 to-transparent">
-                  <div className="text-white/70 text-sm uppercase tracking-wider mb-2">
-                    {galleryImages.find(img => img.id === selectedImage)?.category}
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white">
-                    {galleryImages.find(img => img.id === selectedImage)?.title}
-                  </h3>
-                </div>
+                      {/* Image Info - Premium */}
+                      <div className="p-6 md:p-8 bg-gradient-to-t from-black/80 to-transparent">
+                        <div className="text-white/70 text-sm uppercase tracking-wider mb-2">
+                          {selectedImg.category}
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-white">
+                          {selectedImg.title}
+                        </h3>
+                      </div>
+                    </>
+                  ) : null;
+                })()}
               </div>
             </motion.div>
           </motion.div>

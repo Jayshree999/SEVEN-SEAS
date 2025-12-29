@@ -12,21 +12,21 @@ const offers = [
     discount: '20% OFF',
     description: 'Book 30 days in advance and save on your stay',
     validUntil: 'Valid until Dec 31, 2024',
-    link: '/offers',
+    link: '/offers-and-more',
   },
   {
     title: 'Weekend Getaway',
     discount: '15% OFF',
     description: 'Perfect weekend escape with complimentary breakfast',
     validUntil: 'Valid until Dec 31, 2024',
-    link: '/offers',
+    link: '/offers-and-more',
   },
   {
     title: 'Extended Stay',
     discount: '25% OFF',
     description: 'Stay 5 nights or more and enjoy exclusive benefits',
     validUntil: 'Valid until Dec 31, 2024',
-    link: '/offers',
+    link: '/offers-and-more',
   },
 ]
 
@@ -60,6 +60,7 @@ export default function OffersSection() {
         {/* Offers Banner */}
         <div className="mb-12 max-w-6xl mx-auto">
           <ImageBanner
+            imageUrl="/019A3962-Enhanced-NR-1-scaled.jpg"
             title="Special Promotions"
             subtitle="Limited time offers available now"
             height="small"
@@ -71,11 +72,11 @@ export default function OffersSection() {
           {offers.map((offer, index) => (
             <Link key={offer.title} href={offer.link}>
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                whileHover={{ scale: 1.03, y: -5 }}
-                className="bg-white border-2 border-black rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full shadow-lg hover:shadow-xl transition-all duration-200"
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 100 }}
+                whileHover={{ y: -15, scale: 1.05 }}
+                className="bg-white border-2 border-black rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full shadow-xl hover:shadow-2xl transition-all duration-200"
               >
                 {/* Discount Badge - Optimized */}
                 <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-yellow-600 text-white px-4 py-2 font-bold text-lg rounded-full shadow-xl border-2 border-amber-400 relative overflow-hidden">
@@ -117,8 +118,8 @@ export default function OffersSection() {
           transition={{ delay: 0.4 }}
           className="text-center mt-12"
         >
-            <Link href="/offers">
-            <RichButton variant="filled" className="px-8 py-3">
+            <Link href="/offers-and-more">
+            <RichButton variant="filled" className="px-8 py-3 !bg-gradient-to-r !from-amber-600 !to-amber-500 hover:!from-amber-700 hover:!to-amber-600 !border-amber-500 shadow-xl text-white">
               View All Offers
             </RichButton>
           </Link>

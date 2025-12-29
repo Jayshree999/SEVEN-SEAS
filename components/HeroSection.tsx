@@ -39,15 +39,15 @@ export default function HeroSection() {
       className="relative h-screen flex items-center justify-center overflow-hidden bg-white"
     >
       {/* Background Video */}
-      <BackgroundVideo videoUrl="/hero.mp4" opacity={1.0} />
+      <BackgroundVideo videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/11/Seven-Seas-Hotel-Intro-for-event.mp4" opacity={1.0} />
       
       {/* Subtle overlay only for text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30 z-[5]" />
 
       {/* Main Content */}
-      <div className="relative z-20 text-center px-6 max-w-6xl mx-auto">
+      <div className="relative z-20 text-center px-4 sm:px-6 max-w-6xl mx-auto">
         <motion.h1
-          className="hero-title text-7xl md:text-9xl font-bold mb-6 text-white relative drop-shadow-2xl"
+          className="hero-title text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-bold mb-4 sm:mb-6 text-white relative drop-shadow-2xl"
           style={{
             fontFamily: 'var(--font-playfair)',
             textShadow: '0 4px 20px rgba(0, 0, 0, 0.8), 0 2px 10px rgba(0, 0, 0, 0.6)',
@@ -60,7 +60,7 @@ export default function HeroSection() {
         </motion.h1>
         
         <motion.p
-          className="hero-subtitle text-2xl md:text-4xl text-white mb-4 font-light tracking-wider drop-shadow-lg"
+          className="hero-subtitle text-base sm:text-xl md:text-2xl lg:text-4xl text-white mb-3 sm:mb-4 font-light tracking-wider drop-shadow-lg px-2"
           style={{
             textShadow: '0 2px 10px rgba(0, 0, 0, 0.7)',
           }}
@@ -69,7 +69,7 @@ export default function HeroSection() {
         </motion.p>
 
         <motion.p
-          className="hero-subtitle text-lg md:text-xl text-white mb-12 max-w-2xl mx-auto drop-shadow-md"
+          className="hero-subtitle text-sm sm:text-base md:text-lg lg:text-xl text-white mb-8 sm:mb-12 max-w-2xl mx-auto drop-shadow-md px-2"
           style={{
             textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)',
           }}
@@ -78,23 +78,23 @@ export default function HeroSection() {
         </motion.p>
 
         <motion.div
-          className="hero-buttons flex flex-col sm:flex-row gap-6 justify-center items-center"
+          className="hero-buttons flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-2"
         >
-          <Link href="/rooms">
+          <Link href="/rooms" className="w-full sm:w-auto">
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="px-12 py-5 bg-black text-white font-bold text-lg uppercase tracking-wider hover:bg-gray-900 transition-all duration-200"
+              className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 bg-black text-white font-bold text-sm sm:text-base md:text-lg uppercase tracking-wider hover:bg-gray-900 transition-all duration-200 min-h-[48px]"
             >
               BOOK YOUR STAY
             </motion.button>
           </Link>
 
-          <Link href="/about">
+          <Link href="/about-us" className="w-full sm:w-auto">
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="px-12 py-5 border-2 border-black text-black font-bold text-lg uppercase tracking-wider bg-white hover:bg-black hover:text-white transition-colors duration-200"
+              className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 border-2 border-black text-black font-bold text-sm sm:text-base md:text-lg uppercase tracking-wider bg-white hover:bg-black hover:text-white transition-colors duration-200 min-h-[48px]"
             >
               EXPLORE
             </motion.button>
