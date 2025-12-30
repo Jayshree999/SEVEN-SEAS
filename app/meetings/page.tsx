@@ -14,28 +14,28 @@ const meetingTypes = [
     title: 'Conferences & Conventions',
     description: 'Elevate engagement levels with state-of-the-art audio-video conferencing, high-speed Wi-Fi, and cutting-edge technology for a truly impactful experience.',
     icon: Video,
-    image: '/019A3970-Enhanced-NR.jpg',
+    image: '/meet1.jpg',
     gradient: 'from-blue-500 to-cyan-500',
   },
   {
     title: 'Small Meetings',
     description: 'Select from our selection of signature suites and elegant rooms that offer impeccable accommodation options for your distinguished associates and guests.',
     icon: Users,
-    image: '/019A3970-Enhanced-NR.jpg',
+    image: '/meet4.jpeg',
     gradient: 'from-purple-500 to-pink-500',
   },
   {
     title: 'Choice of Venues & Budgets',
     description: 'Explore a spectrum of options tailored to suit your preferences from 300+ versatile indoor and outdoor venues, across city hotels, grand palaces and idyllic city resorts.',
     icon: Building2,
-    image: '/019A3970-Enhanced-NR.jpg',
+    image: '/meet3.jpeg',
     gradient: 'from-amber-500 to-orange-500',
   },
   {
     title: 'Food & Drinks',
     description: 'Your personal point of contact ensures swift responses as our expert team delivers solutions aligned with your exact requirements for a truly bespoke business meet.',
     icon: UtensilsCrossed,
-    image: '/019A3970-Enhanced-NR.jpg',
+    image: '/meet2.jpg',
     gradient: 'from-green-500 to-emerald-500',
   },
 ]
@@ -76,7 +76,7 @@ export default function MeetingsPage() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src="/019A3970-Enhanced-NR.jpg"
+            src="/meeting bg.png"
             alt="Meetings & Conferences"
             fill
             className="object-cover scale-110"
@@ -152,7 +152,7 @@ export default function MeetingsPage() {
       </motion.section>
 
       {/* Enhanced Boardrooms Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -161,7 +161,7 @@ export default function MeetingsPage() {
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -178,9 +178,9 @@ export default function MeetingsPage() {
       </section>
 
       {/* Enhanced Plan Your Meetings */}
-      <section className="py-20 md:py-32 px-6 bg-white">
+      <section className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -221,7 +221,7 @@ export default function MeetingsPage() {
               className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl"
             >
               <Image
-                src="/019A3970-Enhanced-NR.jpg"
+                src="/meet5.jpg"
                 alt="Business Meeting"
                 fill
                 className="object-cover"
@@ -232,10 +232,10 @@ export default function MeetingsPage() {
       </section>
 
       {/* Enhanced Business Meetings Section */}
-      <section ref={meetingsRef} className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white">
+      <section ref={meetingsRef} className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto max-w-7xl">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={meetingsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -299,7 +299,7 @@ export default function MeetingsPage() {
       </section>
 
       {/* Enhanced Features Grid */}
-      <section className="py-20 md:py-32 px-6 bg-white">
+      <section className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <motion.div
             className="text-center mb-12"
@@ -348,7 +348,7 @@ export default function MeetingsPage() {
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-600 relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-20"
           animate={{

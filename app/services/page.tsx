@@ -104,7 +104,7 @@ export default function ServicesPage() {
         position="center"
       />
 
-      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50">
         <div className="container mx-auto max-w-6xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

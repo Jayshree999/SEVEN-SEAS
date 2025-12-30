@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 import { Sparkles, Store, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -28,6 +28,21 @@ export default function BrandsOutlets() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const itemsPerView = 4 // Show 4 cards at a time on desktop
+
+  // Auto-play carousel
+  useEffect(() => {
+    const maxIndex = Math.max(0, brands.length - itemsPerView)
+    if (maxIndex <= 0) return // Don't auto-play if all items fit on screen
+
+    const interval = setInterval(() => {
+      setDirection(1)
+      setCurrentIndex((prev) => {
+        return prev >= maxIndex ? 0 : prev + 1
+      })
+    }, 4000) // Change slide every 4 seconds
+
+    return () => clearInterval(interval)
+  }, [brands.length, itemsPerView])
 
   const goToPrevious = () => {
     setDirection(-1)
@@ -216,15 +231,25 @@ export default function BrandsOutlets() {
         </div>
 
         {/* Brands Carousel - 4 Cards Per Row */}
-        <div ref={ref} className="relative">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-7">
-            {visibleBrands.map((brand, idx) => {
-              const actualIndex = currentIndex + idx
-              return (
-                <BrandCard key={`${brand.name}-${currentIndex}`} brand={brand} index={actualIndex} inView={inView} />
-              )
-            })}
-          </div>
+        <div ref={ref} className="relative overflow-hidden">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              initial={{ opacity: 0, x: direction > 0 ? 100 : -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: direction > 0 ? -100 : 100 }}
+              transition={{ duration: 0.5, ease: 'easeInOut' }}
+              className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-7"
+            >
+              {visibleBrands.map((brand, idx) => {
+                const actualIndex = currentIndex + idx
+                return (
+                  <BrandCard key={`${brand.name}-${currentIndex}-${idx}`} brand={brand} index={actualIndex} inView={inView} />
+                )
+              })}
+            </motion.div>
+          </AnimatePresence>
 
           {/* Navigation Arrows */}
           {brands.length > itemsPerView && (

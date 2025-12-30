@@ -14,7 +14,7 @@ const wellnessServices = [
     name: 'Seven SPA',
     description: 'Indulge in a world of relaxation and rejuvenation. Our spa offers a range of therapeutic treatments, massages, and wellness therapies designed to restore your mind, body, and soul.',
     icon: Droplets,
-    image: '/SPA.png',
+    image: '/seven spa.jpeg',
     gradient: 'from-green-500 to-emerald-500',
   },
   {
@@ -28,7 +28,7 @@ const wellnessServices = [
     name: 'Seven Salon',
     description: 'Transform your look with our professional hair styling, beauty treatments, and grooming services. Our expert stylists ensure you look and feel your best.',
     icon: Scissors,
-    image: '/SPA.png',
+    image: '/seven uni spa.jpeg',
     gradient: 'from-pink-500 to-rose-500',
   },
 ]
@@ -69,7 +69,7 @@ export default function WellnessPage() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src="/SPA.png"
+            src="/wellness_bg.png"
             alt="Wellness & Spa"
             fill
             className="object-cover scale-110"
@@ -157,7 +157,7 @@ export default function WellnessPage() {
       </motion.section>
 
       {/* Enhanced Introduction */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -183,7 +183,7 @@ export default function WellnessPage() {
       </section>
 
       {/* Enhanced Wellness Services */}
-      <section ref={servicesRef} className="py-20 md:py-32 px-6 bg-white">
+      <section ref={servicesRef} className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="space-y-32">
             {wellnessServices.map((service, index) => {
@@ -194,7 +194,7 @@ export default function WellnessPage() {
                   initial={{ opacity: 0, y: 100 }}
                   animate={servicesInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
-                  className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center group`}
+                  className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 md:gap-8 items-center group`}
                 >
                   <motion.div 
                     className="flex-1 relative"
@@ -265,7 +265,7 @@ export default function WellnessPage() {
       </section>
 
       {/* Enhanced Wellness Features */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-10"
           animate={{
@@ -327,7 +327,7 @@ export default function WellnessPage() {
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-green-600 via-emerald-600 to-green-600 text-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-20"
           animate={{

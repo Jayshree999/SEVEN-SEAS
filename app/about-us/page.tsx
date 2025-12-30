@@ -160,7 +160,7 @@ export default function AboutUsPage() {
       </motion.section>
 
       {/* Enhanced Introduction */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-8 md:py-12 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -169,13 +169,13 @@ export default function AboutUsPage() {
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
               Welcome to Seven Seas Hotel
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
@@ -185,8 +185,77 @@ export default function AboutUsPage() {
         </div>
       </section>
 
+      {/* Chairman's Message Section */}
+      <section className="py-8 md:py-12 px-6 bg-white relative overflow-hidden">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            className="mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              CHAIRMAN'S MESSAGE!
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
+            {/* Chairman Image */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative"
+            >
+              <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/chairman.jpg"
+                  alt="Jitender Kumar Singla - Chairman"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              </div>
+            </motion.div>
+
+            {/* Chairman's Message */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-6"
+            >
+              <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                <p>
+                  Open your eyes to a new form of hospitality in one of the world's most dynamic cities, thanks to the contemporary impact of global hospitality icon Seven Seas Hotel, Al Nahda.
+                </p>
+                <p>
+                  Welcome to a destination where every feature defines the Seven Seas Hotel, Al Nahda's lifestyle and design philosophy; where our commitment to world-class service and elegance matches our guests' high standards.
+                </p>
+                <p>
+                  Personalisation is our mark, and the Stay with Seven Seas Hotel experience invites you to experience a distinctive idea rich in imagination, unparalleled in innovation, and crafted with meticulous attention to detail. Elegance matches our guests' exacting standards.
+                </p>
+              </div>
+
+              <div className="pt-6 border-t-2 border-amber-200">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  Jitender Kumar Singla
+                </h3>
+                <p className="text-lg text-amber-600 font-semibold">
+                  Chairman
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Enhanced Stats Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-20"
           animate={{
@@ -230,10 +299,10 @@ export default function AboutUsPage() {
       </section>
 
       {/* Enhanced Our Values */}
-      <section ref={valuesRef} className="py-20 md:py-32 px-6 bg-white">
+      <section ref={valuesRef} className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={valuesInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -290,7 +359,7 @@ export default function AboutUsPage() {
       </section>
 
       {/* Enhanced Location & Contact */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-10"
           animate={{

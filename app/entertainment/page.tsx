@@ -14,28 +14,28 @@ const entertainmentVenues = [
     name: 'OVO Nightclub',
     description: 'Experience Dubai\'s premier nightlife destination. Dance the night away to world-class DJs, enjoy premium cocktails, and immerse yourself in an electrifying atmosphere.',
     icon: Music,
-    image: '/OVO-revnlf3x7tabbdepouclc6803qagbm0zetfdwyr7ce.png',
+    image: '/entovee.jpg',
     gradient: 'from-purple-500 to-pink-500',
   },
   {
     name: 'Rovee Club',
     description: 'A vibrant entertainment venue featuring live performances, music, and an energetic atmosphere perfect for socializing and celebrating.',
     icon: Mic,
-    image: '/ROveee.png',
+    image: '/ent1.jpg',
     gradient: 'from-blue-500 to-cyan-500',
   },
   {
     name: 'Bazigar',
     description: 'An exciting entertainment destination offering live shows, performances, and unforgettable experiences.',
     icon: Sparkles,
-    image: '/WhatsApp-Image-2025-02-17-at-5.41.40-PM-r1n18v5ti5smd3xe2vopf97vhrp46in7sxnu9rivou.jpeg',
+    image: '/bazigar.png',
     gradient: 'from-amber-500 to-orange-500',
   },
   {
     name: 'Geoffrey\'s Sports Bar',
     description: 'Catch the latest games on big screens while enjoying great food, drinks, and a lively sports atmosphere.',
     icon: Users,
-    image: '/Geoffry-rg1qusleu4g5vi5ajxxm8bj17vjhkupglxpueq9odc (1).png',
+    image: '/Jeoffrey.png',
     gradient: 'from-green-500 to-emerald-500',
   },
 ]
@@ -76,7 +76,7 @@ export default function EntertainmentPage() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src="/OVO-revnlf3x7tabbdepouclc6803qagbm0zetfdwyr7ce.png"
+            src="/entertainment_bg.avif"
             alt="Entertainment"
             fill
             className="object-cover scale-110"
@@ -164,7 +164,7 @@ export default function EntertainmentPage() {
       </motion.section>
 
       {/* Enhanced Introduction */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -173,7 +173,7 @@ export default function EntertainmentPage() {
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -190,7 +190,7 @@ export default function EntertainmentPage() {
       </section>
 
       {/* Enhanced Entertainment Venues */}
-      <section ref={venuesRef} className="py-20 md:py-32 px-6 bg-white">
+      <section ref={venuesRef} className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="space-y-32">
             {entertainmentVenues.map((venue, index) => {
@@ -201,7 +201,7 @@ export default function EntertainmentPage() {
                   initial={{ opacity: 0, y: 100 }}
                   animate={venuesInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
-                  className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center group`}
+                  className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 md:gap-8 items-center group`}
                 >
                   <motion.div 
                     className="flex-1 relative"
@@ -272,7 +272,7 @@ export default function EntertainmentPage() {
       </section>
 
       {/* Enhanced Nightlife Features */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-10"
           animate={{
@@ -334,7 +334,7 @@ export default function EntertainmentPage() {
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 text-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-20"
           animate={{

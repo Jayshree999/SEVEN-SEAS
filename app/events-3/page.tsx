@@ -77,7 +77,7 @@ export default function EventsPage() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src="/banquet-4.png"
+            src="/events_bg.webp"
             alt="Events"
             fill
             className="object-cover scale-110"
@@ -153,7 +153,7 @@ export default function EventsPage() {
       </motion.section>
 
       {/* Enhanced Joyful Occasions */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -162,7 +162,7 @@ export default function EventsPage() {
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -179,9 +179,9 @@ export default function EventsPage() {
       </section>
 
       {/* Enhanced Plan Your Celebrations */}
-      <section className="py-20 md:py-32 px-6 bg-white">
+      <section className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -233,10 +233,10 @@ export default function EventsPage() {
       </section>
 
       {/* Enhanced Our Promise */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto max-w-7xl">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -263,7 +263,7 @@ export default function EventsPage() {
       </section>
 
       {/* Enhanced Event Types Grid */}
-      <section ref={eventsRef} className="py-20 md:py-32 px-6 bg-white">
+      <section ref={eventsRef} className="py-12 md:py-16 px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {eventTypes.map((event, index) => {
@@ -300,7 +300,7 @@ export default function EventsPage() {
       </section>
 
       {/* Enhanced Divorce Party Special Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 text-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 text-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-20"
           animate={{

@@ -42,8 +42,8 @@ const legendaryRestaurants = [
   },
   {
     name: 'Chachu Chai',
-    logo: '/Chahu-cai.png',
-    interiorImage: '/WhatsApp_Image_2024-12-15_at_8.51.06_PM-removebg-preview-e1737565952933-r0e3pnup3j6939020r818shyip234hhmdnyw6ehnhc.png',
+    logo: '/WhatsApp_Image_2024-12-15_at_8.51.06_PM-removebg-preview-e1737565952933-r0e3pnup3j6939020r818shyip234hhmdnyw6ehnhc.png',
+    interiorImage: '/Chahu-cai.png',
     description: 'Chachu Chai: A Cafe for Tea at Seven Seas Hotel Dubai is the perfect place to unwind with a cup of tea, offering a cozy ambiance and a variety of flavors. Whether you\'re looking for a soothing experience or a place to meet friends, Chachu Chai is the spot to relax and enjoy a warm beverage. Come and enjoy a cup of warmth today!',
     cuisine: 'A Cafe for Tea',
     phone: '+971 52 322 1162',
@@ -223,7 +223,7 @@ export default function DiningPage() {
       </motion.section>
 
       {/* Enhanced Fine Dining Categories */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -233,7 +233,7 @@ export default function DiningPage() {
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -289,10 +289,10 @@ export default function DiningPage() {
       </section>
 
       {/* Enhanced Legendary Restaurant Brands */}
-      <section ref={restaurantsRef} className="py-20 md:py-32 px-6 bg-white relative">
+      <section ref={restaurantsRef} className="py-12 md:py-16 px-6 bg-white relative">
         <div className="container mx-auto max-w-7xl">
           <motion.div
-            className="text-center mb-20"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={restaurantsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -321,7 +321,7 @@ export default function DiningPage() {
                 initial={{ opacity: 0, y: 100 }}
                 animate={restaurantsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center group`}
+                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 md:gap-8 items-center group`}
               >
                 <motion.div 
                   className="flex-1 relative"
@@ -435,7 +435,7 @@ export default function DiningPage() {
       </section>
 
       {/* Enhanced Cuisine Types */}
-      <section ref={categoriesRef} className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      <section ref={categoriesRef} className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
         {/* Animated Background */}
         <motion.div
           className="absolute inset-0 opacity-10"
@@ -455,7 +455,7 @@ export default function DiningPage() {
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -498,7 +498,7 @@ export default function DiningPage() {
       </section>
 
       {/* Enhanced Contact Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 relative overflow-hidden">
         {/* Animated Background Pattern */}
         <motion.div
           className="absolute inset-0 opacity-20"

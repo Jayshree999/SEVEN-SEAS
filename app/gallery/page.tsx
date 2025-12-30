@@ -146,7 +146,7 @@ export default function GalleryPage() {
       </section>
 
       {/* Featured Gallery Section - Premium Enhanced */}
-      <section className="py-20 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 right-0 w-96 h-96 bg-gradient-to-l from-amber-200/15 via-amber-100/8 to-transparent rounded-full blur-3xl"></div>

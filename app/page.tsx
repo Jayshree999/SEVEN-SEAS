@@ -213,7 +213,7 @@ export default function Home() {
 
       {/* Image Showcase - Enhanced with Carousel */}
       <motion.section 
-        className="py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden"
+        className="py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: '-100px' }}

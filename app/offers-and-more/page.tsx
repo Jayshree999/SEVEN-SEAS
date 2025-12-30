@@ -6,58 +6,107 @@ import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { useInView } from 'react-intersection-observer'
-import { Tag, Gift, Sparkles, Calendar, Star, Percent, ArrowRight } from 'lucide-react'
+import { Tag, Gift, Sparkles, Calendar, Star, Percent, ArrowRight, Phone, CheckCircle } from 'lucide-react'
 import { useRef } from 'react'
 
-const specialOffers = [
+const exclusiveRoomOffers = [
   {
-    title: 'Early Bird Special',
-    description: 'Book your stay in advance and enjoy exclusive discounts on room rates. Perfect for planning your Dubai getaway.',
-    discount: '20% OFF',
-    icon: Calendar,
+    title: '3 night promo',
+    code: 'Promo 15',
+    discount: '15% OFF',
+    description: 'Stay for 3 nights and get 15% off when you book direct. Advance booking of 15 days is required.',
+    image: '/3-night-promo-rezi8z9sy5jbwlmydsyszk8hyhp8nkma1j19ic4u5c.png',
     color: 'from-blue-500 to-cyan-500',
   },
   {
-    title: 'Weekend Getaway',
-    description: 'Escape to luxury this weekend. Special rates for Friday and Saturday stays with complimentary breakfast.',
-    discount: '15% OFF',
-    icon: Sparkles,
+    title: '7 night promo',
+    code: 'Promo 20',
+    discount: '20% OFF',
+    description: 'Stay for 7 nights and get 20% off when you book direct. Advance booking of 15 days is required.',
+    image: '/7-night-promo-rezie957aor91tz5l31fz8blybpdufk23mtcg8bb8g.png',
     color: 'from-purple-500 to-pink-500',
   },
   {
-    title: 'Extended Stay',
-    description: 'Stay longer and save more. Book 5 nights or more and receive special extended stay rates.',
-    discount: '25% OFF',
-    icon: Calendar,
+    title: 'Royal Suit promo',
+    code: 'Promo 10',
+    discount: '10% OFF',
+    description: 'Stay for 7 nights and get 20% off when you book direct. Advance booking of 15 days is required.',
+    image: '/Royal-Suit-promo-1-reziipvlrcva75hoiiinblrfj7p5eoa5pqddijozog.png',
     color: 'from-amber-500 to-orange-500',
-  },
-  {
-    title: 'Honeymoon Package',
-    description: 'Celebrate your special moments with our romantic honeymoon package including room upgrade and spa credits.',
-    discount: '30% OFF',
-    icon: Sparkles,
-    color: 'from-rose-500 to-pink-500',
   },
 ]
 
-const packages = [
+const newYearOffers = [
   {
-    name: 'Dining Package',
-    description: 'Enjoy complimentary breakfast and dinner credits at our signature restaurants.',
-    icon: Tag,
-    gradient: 'from-amber-500 to-orange-500',
+    title: "Geoffrey's New Year Offer",
+    venue: "Geoffrey's Level 22",
+    description: "Ring in 2026 at Geoffrey's Level 22 with our Midnight Mania celebration. Enjoy live DJ performances, great vibes, and special entry packages for singles, couples, and groups. The party starts at 9 PM onwards on 31st December.",
+    image: '/Banquet-Promotion-rg1quehtzlwv1cpru9u7ox34b3gzde5hjzxk7kukyo.png',
+    color: 'from-red-500 to-pink-500',
   },
   {
-    name: 'Spa Package',
-    description: 'Relax and rejuvenate with spa treatments included in your stay.',
-    icon: Sparkles,
-    gradient: 'from-green-500 to-emerald-500',
+    title: 'Mehfil Ballroom New Year Offer',
+    venue: 'Mehfil Ballroom',
+    description: 'Join us at the Mehfil Ballroom for a dazzling gala night featuring a lucky draw, live DJ, and a sparkling midnight toast. An unforgettable evening of food, music, and celebrations awaits. Book now!',
+    image: '/Geoffry-rg1qusleu4g5vi5ajxxm8bj17vjhkupglxpueq9odc.png',
+    color: 'from-purple-500 to-indigo-500',
+  },
+]
+
+const longStayRooms = [
+  {
+    title: 'Premium 19 Series',
+    description: 'Stay A Bit Longer - Breakfast Inclusive',
+    features: [
+      'Bi-weekly housekeeping service',
+      'Free WiFi & Utility Bills',
+      'Complimentary access to Swimming Pool, Gym, Steam room, Sauna & Jacuzzi.',
+      '10% discount on food & beverages except promotions.',
+    ],
+    validity: 'Monthly / Round the Year',
+    color: 'from-amber-500 to-yellow-500',
   },
   {
-    name: 'Family Package',
-    description: 'Perfect for families with special rates and family-friendly amenities.',
-    icon: Gift,
-    gradient: 'from-blue-500 to-cyan-500',
+    title: 'Burj View Executive Suites',
+    description: 'Stay A Bit Longer - Breakfast Inclusive',
+    features: [
+      'Bi-weekly housekeeping service',
+      'Free WiFi & Utility Bills',
+      'Complimentary access to Swimming Pool, Gym, Steam room, Sauna & Jacuzzi.',
+      '10% discount on food & beverages except promotions.',
+    ],
+    validity: 'Monthly / Round the Year',
+    color: 'from-blue-500 to-cyan-500',
+  },
+  {
+    title: 'Sea View Deluxe Suites',
+    description: 'Stay A Bit Longer - Breakfast Inclusive',
+    features: [
+      'Bi-weekly housekeeping service',
+      'Free WiFi & Utility Bills',
+      'Complimentary access to Swimming Pool, Gym, Steam room, Sauna & Jacuzzi.',
+      '10% discount on food & beverages except promotions.',
+    ],
+    validity: 'Monthly / Round the Year',
+    color: 'from-green-500 to-emerald-500',
+  },
+]
+
+const amenitiesOffers = [
+  {
+    title: 'Spa & Wellness',
+    discount: '20% OFF',
+    color: 'from-pink-500 to-rose-500',
+  },
+  {
+    title: 'Fitness & Gym',
+    discount: '20% OFF',
+    color: 'from-blue-500 to-indigo-500',
+  },
+  {
+    title: 'Swimming Pool',
+    discount: '20% OFF',
+    color: 'from-cyan-500 to-blue-500',
   },
 ]
 
@@ -90,7 +139,7 @@ export default function OffersAndMorePage() {
           className="absolute inset-0 z-0"
         >
           <Image
-            src="/hero2.jpg"
+            src="/offers.webp"
             alt="Special Offers"
             fill
             className="object-cover scale-110"
@@ -137,7 +186,7 @@ export default function OffersAndMorePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Offers & More
+              Offers & Promotions
             </motion.h1>
             
             <motion.p
@@ -149,7 +198,7 @@ export default function OffersAndMorePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Exclusive Deals & Packages
+              Exclusive Room Offer
             </motion.p>
             
             <motion.div
@@ -177,138 +226,9 @@ export default function OffersAndMorePage() {
         </motion.div>
       </motion.section>
 
-      {/* Enhanced Introduction */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }} />
-        </div>
-
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
-              SPECIAL OFFERS & PACKAGES
-            </h2>
-            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Discover exclusive deals and packages designed to make your stay at Seven Seas Hotel even more memorable. From special rates to all-inclusive packages, find the perfect offer for your Dubai adventure.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Enhanced Special Offers */}
-      <section ref={offersRef} className="py-20 md:py-32 px-6 bg-white">
+      {/* Exclusive Room Offers */}
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white">
         <div className="container mx-auto max-w-7xl">
-          <motion.div
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={offersInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              className="inline-flex items-center gap-3 mb-4"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={offersInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <Star className="w-10 h-10 text-amber-500" />
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
-                Special Offers
-              </h2>
-              <Star className="w-10 h-10 text-amber-500" />
-            </motion.div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {specialOffers.map((offer, index) => {
-              const IconComponent = offer.icon
-              return (
-                <motion.div
-                  key={offer.title}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.2, type: 'spring' }}
-                  whileHover={{ y: -15, scale: 1.05 }}
-                  className="group relative"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${offer.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                  <div className="relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-transparent group-hover:border-amber-200">
-                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${offer.color} rounded-bl-full flex items-center justify-center shadow-xl`}>
-                      <span className="text-white font-bold text-xl">{offer.discount}</span>
-                    </div>
-                    
-                    <div className="p-8">
-                      <div className="flex items-center gap-4 mb-4">
-                        <motion.div 
-                          className={`w-16 h-16 bg-gradient-to-br ${offer.color} rounded-full flex items-center justify-center shadow-lg`}
-                          animate={{ rotate: [0, 15, -15, 0] }}
-                          transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
-                        >
-                          <IconComponent className="w-8 h-8 text-white" />
-                        </motion.div>
-                        <h3 className="text-2xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
-                          {offer.title}
-                        </h3>
-                      </div>
-                      
-                      <p className="text-gray-600 leading-relaxed mb-6">
-                        {offer.description}
-                      </p>
-                      
-                      <Link href="/rooms">
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -3 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`group relative w-full px-6 py-3 bg-gradient-to-r ${offer.color} text-white font-bold rounded-lg shadow-lg overflow-hidden`}
-                        >
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            Book Now
-                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                          </span>
-                          <motion.div
-                            className="absolute inset-0 opacity-80"
-                            initial={{ x: '-100%' }}
-                            whileHover={{ x: 0 }}
-                            transition={{ duration: 0.3 }}
-                          />
-                        </motion.button>
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Enhanced Packages */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-        <motion.div
-          className="absolute inset-0 opacity-10"
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 100%'],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: 'reverse',
-          }}
-          style={{
-            backgroundImage: `radial-gradient(circle at 20% 50%, rgba(251, 191, 36, 0.3), transparent 50%),
-                              radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.3), transparent 50%)`,
-          }}
-        />
-
-        <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
             className="text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
@@ -316,56 +236,305 @@ export default function OffersAndMorePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Special Packages
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Exclusive Room Offer
             </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Unlock special rates and enjoy premium benefits tailored just for you. Experience more with exclusive discounts available only to members!
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {packages.map((pkg, index) => {
-              const IconComponent = pkg.icon
-              return (
-                <motion.div
-                  key={pkg.name}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1, type: 'spring' }}
-                  whileHover={{ y: -15, scale: 1.05 }}
-                  className="group relative"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${pkg.gradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                  <div className="relative bg-white rounded-xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-transparent group-hover:border-amber-200 h-full">
-                    <motion.div 
-                      className={`w-16 h-16 bg-gradient-to-br ${pkg.gradient} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}
-                      animate={{ rotate: [0, 15, -15, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
-                    >
-                      <IconComponent className="w-8 h-8 text-white" />
-                    </motion.div>
-                    <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
-                      {pkg.name}
-                    </h3>
-                    <p className="text-gray-600 mb-6">{pkg.description}</p>
-                    <Link href="/contact">
-                      <motion.button
-                        whileHover={{ scale: 1.05, y: -3 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`px-6 py-3 bg-gradient-to-r ${pkg.gradient} text-white font-semibold rounded-lg hover:shadow-lg transition-all`}
-                      >
-                        Learn More
-                      </motion.button>
-                    </Link>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {exclusiveRoomOffers.map((offer, index) => (
+              <motion.div
+                key={offer.title}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <Image
+                    src={offer.image}
+                    alt={offer.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute top-4 right-4">
+                    <span className={`px-4 py-2 bg-gradient-to-r ${offer.color} text-white font-bold rounded-lg shadow-lg`}>
+                      {offer.discount}
+                    </span>
                   </div>
-                </motion.div>
-              )
-            })}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    {offer.title}
+                  </h3>
+                  <div className="mb-3">
+                    <span className="text-sm text-gray-500">Use Code:</span>
+                    <span className={`ml-2 px-3 py-1 bg-gradient-to-r ${offer.color} text-white font-semibold rounded-md`}>
+                      {offer.code}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{offer.description}</p>
+                  <a
+                    href="tel:+971551009152"
+                    className="flex items-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors"
+                  >
+                    <Phone className="w-5 h-5" />
+                    <span>+971 55 100 9152</span>
+                  </a>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* New Year Exclusive Offers */}
+      <section className="py-12 md:py-16 px-6 bg-white">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              New Year Exclusive Offers
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Celebrate the New Year with special offers on events at Geoffrey and Mehfil Ballroom. Perfect for gatherings, parties, and corporate functions.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {newYearOffers.map((offer, index) => (
+              <motion.div
+                key={offer.title}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                <div className="relative h-80 md:h-96 lg:h-[500px] overflow-hidden bg-gray-100">
+                  <Image
+                    src={offer.image}
+                    alt={offer.title}
+                    fill
+                    className="object-contain group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    {offer.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{offer.description}</p>
+                  <Link href="/contact">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`w-full px-6 py-3 bg-gradient-to-r ${offer.color} text-white font-semibold rounded-lg hover:shadow-lg transition-all`}
+                    >
+                      Book Now
+                    </motion.button>
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* New Year Exclusive Offers for Room */}
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              New Year Exclusive Offers for room
+            </h2>
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              Enjoy an unforgettable gala night with stunning views, a lucky draw, and a midnight champagne toast. Celebrate in comfort and style reserve your spot now!
+            </p>
+            <Link href="/rooms">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all"
+              >
+                Book Now
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Newly Renovated Long Stay Rooms */}
+      <section className="py-12 md:py-16 px-6 bg-white">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Newly Renovated Long Stay Rooms
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Explore spaces thoughtfully designed to welcome you the moment you step inside
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {longStayRooms.map((room, index) => (
+              <motion.div
+                key={room.title}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-gray-100"
+              >
+                <h3 className={`text-2xl font-bold mb-2 bg-gradient-to-r ${room.color} bg-clip-text text-transparent`} style={{ fontFamily: 'var(--font-playfair)' }}>
+                  {room.title}
+                </h3>
+                <p className="text-gray-600 mb-6 font-semibold">{room.description}</p>
+                <ul className="space-y-3 mb-6">
+                  {room.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <CheckCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-600">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mb-6">
+                  <span className="text-sm text-gray-500">Validity:</span>
+                  <span className="ml-2 font-semibold text-gray-900">{room.validity}</span>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <a
+                    href="tel:+971551009152"
+                    className="flex items-center justify-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors"
+                  >
+                    <Phone className="w-5 h-5" />
+                    <span>+971 55 100 9152</span>
+                  </a>
+                  <Link href="/rooms">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`w-full px-6 py-3 bg-gradient-to-r ${room.color} text-white font-semibold rounded-lg hover:shadow-lg transition-all`}
+                    >
+                      Book now
+                    </motion.button>
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Get 20% off On Amenities */}
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto max-w-7xl">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Get 20% off On Amenities
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Relaxing beach paradises, thrilling urban getaways, exotic hill stations and historic homes of royalty are all within reach.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {amenitiesOffers.map((amenity, index) => (
+              <motion.div
+                key={amenity.title}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.05 }}
+                className="group relative bg-white rounded-2xl p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-gray-100"
+              >
+                <div className={`w-20 h-20 bg-gradient-to-br ${amenity.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}>
+                  <span className="text-white font-bold text-xl">{amenity.discount}</span>
+                </div>
+                <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  {amenity.title}
+                </h3>
+                <Link href="/wellness">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`mt-4 px-6 py-3 bg-gradient-to-r ${amenity.color} text-white font-semibold rounded-lg hover:shadow-lg transition-all`}
+                  >
+                    Learn More
+                  </motion.button>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* The Modern Attire Section */}
+      <section className="py-12 md:py-16 px-6 bg-white">
+        <div className="container mx-auto max-w-4xl">
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+              The Modern Attire
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+              <div>
+                <h3 className="text-xl font-bold mb-3">To be Thoughtfully Considered</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Whether picking up a fresh snack on your way out, or lingering over a good meal with friends, the flavors you crave are here.
+                </p>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-3">That Wake up the Senses</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Power everywhere you need it. Locally inspired artwork adorns our spaces, creating an atmosphere of sophistication and culture.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Enhanced CTA Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-20"
           animate={{

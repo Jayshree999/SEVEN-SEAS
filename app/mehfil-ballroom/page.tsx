@@ -171,7 +171,7 @@ export default function MehfilBallroomPage() {
       </motion.section>
 
       {/* Enhanced Event & Venue Types */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -180,7 +180,7 @@ export default function MehfilBallroomPage() {
         </div>
 
         <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -275,10 +275,10 @@ export default function MehfilBallroomPage() {
       </section>
 
       {/* Enhanced Production Details */}
-      <section ref={detailsRef} className="py-20 md:py-32 px-6 bg-white relative">
+      <section ref={detailsRef} className="py-12 md:py-16 px-6 bg-white relative">
         <div className="container mx-auto max-w-7xl">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={detailsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
@@ -497,7 +497,7 @@ export default function MehfilBallroomPage() {
       </section>
 
       {/* Enhanced Capacities Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
         <motion.div
           className="absolute inset-0 opacity-10"
           animate={{
