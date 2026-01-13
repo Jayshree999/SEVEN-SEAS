@@ -198,22 +198,47 @@ export default function BookingForm({ roomId, roomName, price, monthlyRent: prop
         throw new Error('User not found. Please log in again.')
       }
 
+      // Determine the authoritative total amount based on booking type
+      let authoritativeTotal = total
+      if (bookingType === 'month' && monthlyRent) authoritativeTotal = monthlyRent
+      if (bookingType === 'year' && yearlyRent) authoritativeTotal = yearlyRent
+      
+      // Calculate unit rent derived from the authoritative total
+      // This ensures that even if there are rounding errors in rent, the total matches the fixed price
+      const calculatedRent = calculatedNights > 0 ? authoritativeTotal / calculatedNights : 0
+      const unitRent = Number(calculatedRent.toFixed(2))
+
+      // Production-ready HTTPS URLs are required for Live Stripe Mode
+      const successUrl = 'https://dubaibooking.io/payment/success'
+      const cancelUrl = `https://dubaibooking.io/rooms/${roomId}`
+
       const bookingData: any = {
         userId: user._id,
+        // Fallback fields for Stripe Customer Creation
+        email: user.email,
+        phone: user.phone || '', 
+        name: user.fullName,
+        customerEmail: user.email,
+        customerName: user.fullName,
+        customerPhone: user.phone || '',
+        
         checkIn: formData.checkIn,
         checkOut: formData.checkOut,
-        guest: formData.guests.toString(),
+        guest: Number(formData.guests),
         property: roomId,
-        nights: calculatedNights,
-        rent: total,
-        subtotal: subtotal,
-        totalAmount: total,
+        nights: Number(calculatedNights),
+        rent: unitRent, 
+        totalAmount: Number(authoritativeTotal),
         isMonthlyBooking: bookingType === 'month',
         isYearlyBooking: bookingType === 'year',
-        monthlyPrice: bookingType === 'month' ? monthlyRent : undefined,
-        yearlyPrice: bookingType === 'year' ? yearlyRent : undefined,
-        bookingType: bookingType || 'day',
+        monthlyPrice: bookingType === 'month' ? Number(monthlyRent) : undefined,
+        yearlyPrice: bookingType === 'year' ? Number(yearlyRent) : undefined,
+        bookingType: bookingType === 'month' ? 'monthly' : bookingType === 'year' ? 'yearly' : 'daily',
+        successUrl,
+        cancelUrl,
       }
+      
+      console.log('Sending booking data:', bookingData)
 
       // Create payment session
       const paymentData = await createBookingWithPayment(bookingData)
@@ -361,26 +386,26 @@ export default function BookingForm({ roomId, roomName, price, monthlyRent: prop
       {/* Monthly and Yearly Stay Options */}
       {(monthlyRent > 0 || yearlyRent > 0) && (
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Looking for a longer stay?</h3>
-          <div className="grid grid-cols-2 gap-4">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4 text-center">Looking for a longer stay?</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {monthlyRent > 0 && (
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                className={`border-2 rounded-lg p-3 sm:p-4 cursor-pointer transition-all ${
                   bookingType === 'month' 
                     ? 'border-blue-500 bg-blue-50' 
                     : 'border-gray-200 hover:border-blue-300'
                 }`}
                 onClick={() => handleBookingTypeSelect('month')}
               >
-                <h4 className="font-bold text-gray-900 mb-1">Monthly Stay</h4>
-                <p className="text-sm text-gray-600 mb-3">30-day booking at special rate</p>
-                <div className="text-2xl font-bold text-blue-600 mb-3">
+                <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Monthly Stay</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">30-day booking at special rate</p>
+                <div className="text-xl sm:text-2xl font-bold text-blue-600 mb-2 sm:mb-3">
                   {monthlyRent.toLocaleString()} AED
             </div>
                 <button
                   type="button"
-                  className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                  className={`w-full py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
                     bookingType === 'month'
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -394,22 +419,22 @@ export default function BookingForm({ roomId, roomName, price, monthlyRent: prop
             {yearlyRent > 0 && (
               <motion.div
                 whileHover={{ scale: 1.02 }}
-                className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                className={`border-2 rounded-lg p-3 sm:p-4 cursor-pointer transition-all ${
                   bookingType === 'year' 
                     ? 'border-green-500 bg-green-50' 
                     : 'border-gray-200 hover:border-green-300'
                 }`}
                 onClick={() => handleBookingTypeSelect('year')}
               >
-                <h4 className="font-bold text-gray-900 mb-1">Yearly Stay</h4>
-                <p className="text-sm text-gray-600 mb-1">365-day booking at special rate</p>
-                <p className="text-xs text-gray-500 mb-3">Split into 4 easy installments</p>
-                <div className="text-2xl font-bold text-green-600 mb-3">
+                <h4 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Yearly Stay</h4>
+                <p className="text-xs sm:text-sm text-gray-600 mb-1">365-day booking at special rate</p>
+                <p className="text-[10px] sm:text-xs text-gray-500 mb-2 sm:mb-3">Split into 4 easy installments</p>
+                <div className="text-xl sm:text-2xl font-bold text-green-600 mb-2 sm:mb-3">
                   {yearlyRent.toLocaleString()} AED
             </div>
                 <button
                   type="button"
-                  className={`w-full py-2 rounded-lg font-medium transition-colors ${
+                  className={`w-full py-2 rounded-lg font-medium transition-colors text-sm sm:text-base ${
                     bookingType === 'year'
                       ? 'bg-green-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'

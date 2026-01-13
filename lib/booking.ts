@@ -2,7 +2,7 @@
  * Booking API utility functions
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
 
 export interface BookingData {
   checkIn: string
@@ -26,7 +26,7 @@ export async function getMonthlyRent(propertyId: string): Promise<number> {
       'Content-Type': 'application/json',
       'x-organisation': 'sevenseas',
     }
-    
+
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
     }
@@ -58,7 +58,7 @@ export async function getYearlyRent(propertyId: string): Promise<number> {
       'Content-Type': 'application/json',
       'x-organisation': 'sevenseas',
     }
-    
+
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
     }
@@ -86,7 +86,7 @@ export async function getYearlyRent(propertyId: string): Promise<number> {
 export async function createBooking(bookingData: BookingData): Promise<any> {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-    
+
     if (!token) {
       throw new Error('Please log in to make a booking')
     }
@@ -116,7 +116,7 @@ export async function createBooking(bookingData: BookingData): Promise<any> {
 export async function createBookingWithPayment(bookingData: BookingData): Promise<any> {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-    
+
     if (!token) {
       throw new Error('Please log in to make a booking')
     }
@@ -132,8 +132,21 @@ export async function createBookingWithPayment(bookingData: BookingData): Promis
     })
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      throw new Error(errorData.message || 'Failed to create payment session')
+      const errorText = await response.text()
+      console.error('Payment API Error:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText
+      })
+
+      let errorData: any = {}
+      try {
+        errorData = JSON.parse(errorText)
+      } catch {
+        // Ignore JSON parse error if body is not JSON
+      }
+
+      throw new Error(errorData.message || `Payment session failed: ${response.status} ${response.statusText}`)
     }
 
     const data = await response.json()

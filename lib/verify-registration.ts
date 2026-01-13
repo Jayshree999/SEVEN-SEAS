@@ -2,7 +2,7 @@
  * Utility to verify if a user registration was successful
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
 
 export async function verifyUserExists(email: string): Promise<boolean> {
   try {
@@ -23,16 +23,16 @@ export async function verifyUserExists(email: string): Promise<boolean> {
     // If we get a 400 with "Invalid credentials" or "User not found", user doesn't exist
     // If we get a 401 with "Invalid password", user exists but password is wrong (which means user exists)
     const status = response.status
-    
+
     if (status === 401) {
       // User exists but password is wrong - this means registration was successful
       return true
     }
-    
+
     if (status === 400) {
       const data = await response.json()
-      if (data.message?.toLowerCase().includes('not found') || 
-          data.message?.toLowerCase().includes('does not exist')) {
+      if (data.message?.toLowerCase().includes('not found') ||
+        data.message?.toLowerCase().includes('does not exist')) {
         return false
       }
     }
@@ -54,11 +54,11 @@ export async function checkRegistrationStatus(email: string): Promise<{
   message: string
 }> {
   const exists = await verifyUserExists(email)
-  
+
   return {
     exists,
-    message: exists 
-      ? `✅ User with email ${email} is registered successfully!` 
+    message: exists
+      ? `✅ User with email ${email} is registered successfully!`
       : `❌ User with email ${email} was not found. Registration may have failed.`
   }
 }

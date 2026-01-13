@@ -69,10 +69,10 @@ export default function BookingModal({ roomId, roomName, price, monthlyRent, yea
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 50 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4"
+              className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 pt-12 sm:pt-20"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto p-4 sm:p-6 md:p-8 relative">
+              <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] sm:max-h-[85vh] overflow-y-auto p-4 sm:p-6 md:p-8 relative">
                 {/* Close Button */}
                 <button
                   onClick={handleClose}

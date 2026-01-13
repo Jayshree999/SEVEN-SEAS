@@ -2,7 +2,7 @@
  * User profile and favorites API functions
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
 
 export interface UpdateProfileData {
   fullName?: string
@@ -66,7 +66,7 @@ export interface UserProfileResponse {
 export async function getCurrentUserProfile(): Promise<UserProfileResponse> {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-    
+
     if (!token) {
       throw new Error('No authentication token found')
     }
@@ -89,13 +89,13 @@ export async function getCurrentUserProfile(): Promise<UserProfileResponse> {
       } catch {
         errorData = { message: 'Authentication failed' }
       }
-      
+
       // Clear invalid token
       if (typeof window !== 'undefined') {
         localStorage.removeItem('auth_token')
         localStorage.removeItem('user')
       }
-      
+
       throw new Error(errorData.message || 'Session expired. Please log in again with your email and password.')
     }
 
@@ -130,7 +130,7 @@ export async function getCurrentUserProfile(): Promise<UserProfileResponse> {
 export async function updateProfile(profileData: UpdateProfileData): Promise<UserProfileResponse> {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-    
+
     if (!token) {
       throw new Error('No authentication token found')
     }
@@ -171,7 +171,7 @@ export async function updateProfile(profileData: UpdateProfileData): Promise<Use
 export async function getUserBookings(): Promise<Booking[]> {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-    
+
     if (!token) {
       throw new Error('No authentication token found')
     }
@@ -199,7 +199,7 @@ export async function getUserBookings(): Promise<Booking[]> {
     }
 
     const data = await response.json()
-    
+
     // Backend returns: { data: Booking[] } or { data: null } if no bookings
     if (!data.data) {
       return []
@@ -218,7 +218,7 @@ export async function getUserBookings(): Promise<Booking[]> {
 export async function toggleWatchlist(propertyId: string, action: 'save' | 'unsave'): Promise<{ statusCode?: number; message?: string; data?: string[] }> {
   try {
     const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
-    
+
     if (!token) {
       throw new Error('No authentication token found')
     }
