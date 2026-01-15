@@ -17,12 +17,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #d97706, #f59e0b);
+  background: linear-gradient(to bottom, #997B36, #C5A059);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #b45309, #d97706);
+  background: linear-gradient(to bottom, #866a2e, #997B36);
 }
 
 /* Optimized Particle Animation - GPU accelerated */
@@ -127,14 +127,14 @@ html {
 .gold-shimmer {
   background: linear-gradient(
     90deg,
-    #d4af37 0%,
-    #ffd700 25%,
-    #ffed4e 50%,
-    #ffd700 75%,
-    #d4af37 100%
+    #C5A059 0%,
+    #E5C585 25%,
+    #F4E4BC 50%,
+    #E5C585 75%,
+    #C5A059 100%
   );
   background-size: 200% 100%;
-  animation: gold-shimmer 3s linear infinite;
+  animation: gold-shimmer 4s linear infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -204,27 +204,27 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #D4AF37 0%, #FFD700 100%);
+  background: linear-gradient(180deg, #C5A059 0%, #E5C585 100%);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+  background: linear-gradient(180deg, #E5C585 0%, #F4E4BC 100%);
 }
 
 /* Clean glass morphism */
 .glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .glass-dark {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 25, 47, 0.7); /* Deep Royal Blue tint */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Shimmer effect */
@@ -262,11 +262,12 @@ body {
 
 /* Luxury Gold Gradient Text */
 .gradient-gold {
-  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #FFA500 100%);
+  background: linear-gradient(135deg, #C5A059 0%, #E5C585 50%, #C5A059 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+  text-shadow: none; /* Removed heavy shadow for elegance */
+  filter: drop-shadow(0 2px 4px rgba(197, 160, 89, 0.2));
 }
 
 /* Luxury Glow Effect */

@@ -65,15 +65,15 @@ export default function Footer() {
 
   return (
     <motion.footer 
-      className="bg-gradient-to-b from-black via-gray-900 to-black text-white relative overflow-hidden"
+      className="bg-zinc-950 text-white relative overflow-hidden pt-20"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       {/* Animated Background Pattern */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/5 via-transparent to-amber-900/5"></div>
+      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,160,89,0.08),transparent_40%)]"></div>
         <motion.div
           className="absolute inset-0 opacity-10"
           style={{
@@ -115,7 +115,7 @@ export default function Footer() {
                     className="h-12 md:h-14 w-auto object-contain brightness-0 invert"
                   />
                   <motion.div
-                    className="absolute -inset-2 bg-gradient-to-r from-amber-400/20 via-amber-300/20 to-amber-400/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute -inset-2 bg-white/5 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
                   />
                 </motion.div>
               </Link>

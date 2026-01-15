@@ -13,10 +13,14 @@ module.exports = {
         accent: '#1a1a1a',
         'light-gray': '#f5f5f5',
         'dark-gray': '#333333',
-        gold: '#D4AF37',
-        'gold-light': '#FFD700',
-        'gold-dark': '#B8941F',
-        luxury: '#1a1a1a',
+        // Metallic Gold System
+        gold: '#C5A059', // More metallic, less yellow
+        'gold-light': '#E5C585', // Soft champagne gold
+        'gold-dark': '#997B36', // Deep bronze gold
+        // Deep Contrast System
+        'royal-blue': '#0A192F', // Deep midnight blue
+        'charcoal': '#121212', // Rich black
+        luxury: '#0A192F', // Replacing basic black with Royal Blue for luxury elements
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
