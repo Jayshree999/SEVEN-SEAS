@@ -86,7 +86,7 @@ export default function PropertyPage({ params }: PageProps) {
             const yearly = await getYearlyRent(fetchedProperty._id)
             setMonthlyRent(monthly > 0 ? monthly : (fetchedProperty?.monthlyRent || 0))
             setYearlyRent(yearly > 0 ? yearly : (fetchedProperty?.yearlyRent || 0))
-      } catch (err) {
+          } catch (err) {
             console.error('Error loading rent prices:', err)
             setMonthlyRent(fetchedProperty?.monthlyRent || 0)
             setYearlyRent(fetchedProperty?.yearlyRent || 0)
@@ -201,7 +201,7 @@ export default function PropertyPage({ params }: PageProps) {
     <div className="min-h-screen bg-white">
       <Navigation />
       <div className="mx-auto pt-20 sm:pt-24">
-          {/* Gallery Section with Parallax */}
+        {/* Gallery Section with Parallax */}
         <motion.div
           style={{ opacity }}
           className="relative"
@@ -213,13 +213,12 @@ export default function PropertyPage({ params }: PageProps) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                className={`text-white font-semibold px-4 py-2 rounded-lg shadow-xl border backdrop-blur-md ${
-                  property.defaultPropertyType === 'daily'
-                    ? 'bg-blue-600/90 border-blue-400/50'
-                    : property.defaultPropertyType === 'monthly'
-                      ? 'bg-green-600/90 border-green-400/50'
-                      : 'bg-purple-600/90 border-purple-400/50'
-                }`}
+                className={`text-white font-semibold px-4 py-2 rounded-lg shadow-xl border backdrop-blur-md ${property.defaultPropertyType === 'daily'
+                  ? 'bg-blue-600/90 border-blue-400/50'
+                  : property.defaultPropertyType === 'monthly'
+                    ? 'bg-green-600/90 border-green-400/50'
+                    : 'bg-purple-600/90 border-purple-400/50'
+                  }`}
               >
                 {property.defaultPropertyType.charAt(0).toUpperCase() + property.defaultPropertyType.slice(1)} Rent
               </motion.span>
@@ -301,11 +300,11 @@ export default function PropertyPage({ params }: PageProps) {
                     >
                       <div className="p-1.5 sm:p-2.5 rounded-lg bg-amber-500 shadow-lg flex-shrink-0">
                         <Home className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                  </div>
+                      </div>
                       <div className="min-w-0">
                         <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Size</p>
                         <p className="text-sm sm:text-base font-bold text-gray-900 truncate">{property.size.toLocaleString()} sqft</p>
-            </div>
+                      </div>
                     </motion.div>
                   )}
                   {property?.guest_no && (
@@ -315,15 +314,15 @@ export default function PropertyPage({ params }: PageProps) {
                     >
                       <div className="p-1.5 sm:p-2.5 rounded-lg bg-blue-500 shadow-lg flex-shrink-0">
                         <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </div>
+                      </div>
                       <div className="min-w-0">
                         <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Guests</p>
                         <p className="text-sm sm:text-base font-bold text-gray-900">{property.guest_no}</p>
-              </div>
+                      </div>
                     </motion.div>
                   )}
                   {property?.parking && (
-                  <motion.div
+                    <motion.div
                       whileHover={{ scale: 1.05, y: -2 }}
                       className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 border border-green-200"
                     >
@@ -349,9 +348,9 @@ export default function PropertyPage({ params }: PageProps) {
                         <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
                           {property.Check_in_time || 'N/A'} / {property.Check_out_time || 'N/A'}
                         </p>
-                    </div>
-                  </motion.div>
-                )}
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
 
                 {/* Booking Statistics */}
@@ -366,7 +365,7 @@ export default function PropertyPage({ params }: PageProps) {
                       <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
                         <div className="p-1.5 sm:p-2 bg-amber-500 rounded-lg shadow-lg flex-shrink-0">
                           <Star className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
-                            </div>
+                        </div>
                         <div className="min-w-0">
                           <p className="text-sm sm:text-base font-bold text-gray-900">
                             {totalBookings} {totalBookings === 1 ? 'booking' : 'bookings'}
@@ -416,7 +415,7 @@ export default function PropertyPage({ params }: PageProps) {
 
             {/* Right Column - Desktop Booking Card */}
             <div className="w-full lg:w-[400px] relative hidden lg:block">
-                  <motion.div
+              <motion.div
                 ref={bookingRef}
                 initial={{ opacity: 0, x: 30 }}
                 animate={bookingInView ? { opacity: 1, x: 0 } : {}}
@@ -437,23 +436,7 @@ export default function PropertyPage({ params }: PageProps) {
                       ) : (
                         <div className="text-2xl font-bold text-gray-900 mb-2">Contact for Pricing</div>
                       )}
-                      {(monthlyPrice || yearlyPrice) && (
-                        <div className="space-y-2 text-sm pt-4 border-t border-gray-100">
-                          {monthlyPrice && (
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-600">Monthly:</span>
-                              <span className="text-gray-900 font-bold">{monthlyPrice} AED</span>
-                            </div>
-                          )}
-                          {yearlyPrice && (
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-600">Yearly:</span>
-                              <span className="text-gray-900 font-bold">{yearlyPrice} AED</span>
-                          </div>
-                          )}
-                        </div>
-                      )}
-                      </div>
+                    </div>
 
                     <BookingModal
                       roomId={property?._id || property?.id || resolvedParams.id}
@@ -481,15 +464,15 @@ export default function PropertyPage({ params }: PageProps) {
                           >
                             <div className="p-1.5 bg-green-100 rounded-lg">
                               <item.icon className="w-4 h-4 text-green-600" />
-                      </div>
+                            </div>
                             <span className="font-medium">{item.text}</span>
                           </motion.div>
                         ))}
                       </div>
-                      </div>
-                      </div>
                     </div>
-                  </motion.div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
 
@@ -507,7 +490,7 @@ export default function PropertyPage({ params }: PageProps) {
           </motion.div>
 
           {/* Full Width Map Section */}
-                <motion.div
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -557,31 +540,26 @@ export default function PropertyPage({ params }: PageProps) {
 
                 <div className="aspect-[16/6] w-full rounded-xl overflow-hidden border-2 border-gray-200 relative shadow-lg">
                   <iframe
-                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d${
-                      typeof property?.address === 'object' && property?.address?.latitude
-                        ? property.address.latitude
-                        : '3610.178787593566'
-                    }!2d${typeof property?.address === 'object' && property?.address?.longitude ? property.address.longitude : '55.2707828'}!3d${
-                      typeof property?.address === 'object' && property?.address?.latitude
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d${typeof property?.address === 'object' && property?.address?.latitude
+                      ? property.address.latitude
+                      : '3610.178787593566'
+                      }!2d${typeof property?.address === 'object' && property?.address?.longitude ? property.address.longitude : '55.2707828'}!3d${typeof property?.address === 'object' && property?.address?.latitude
                         ? property.address.latitude
                         : '25.197197'
-                    }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x${
-                      typeof property?.address === 'object' && property?.address?.latitude
+                      }!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x${typeof property?.address === 'object' && property?.address?.latitude
                         ? property.address.latitude
                         : '0'
-                    }%3A0x${
-                      typeof property?.address === 'object' && property?.address?.longitude
+                      }%3A0x${typeof property?.address === 'object' && property?.address?.longitude
                         ? property.address.longitude
                         : '0'
-                    }!2s${encodeURIComponent(
-                      typeof property?.address === 'string'
-                        ? property.address
-                        : property?.address?.address || 'Dubai',
-                    )}!5e0!3m2!1sen!2sae!4v1644856015000!5m2!1sen!2sae&markers=color:amber%7C${
-                      typeof property?.address === 'object' && property?.address?.latitude
+                      }!2s${encodeURIComponent(
+                        typeof property?.address === 'string'
+                          ? property.address
+                          : property?.address?.address || 'Dubai',
+                      )}!5e0!3m2!1sen!2sae!4v1644856015000!5m2!1sen!2sae&markers=color:amber%7C${typeof property?.address === 'object' && property?.address?.latitude
                         ? property.address.latitude
                         : '25.197197'
-                    },${typeof property?.address === 'object' && property?.address?.longitude ? property.address.longitude : '55.2707828'}`}
+                      },${typeof property?.address === 'object' && property?.address?.longitude ? property.address.longitude : '55.2707828'}`}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -593,7 +571,7 @@ export default function PropertyPage({ params }: PageProps) {
 
                   {/* Custom Marker Overlay */}
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10">
-                    <motion.div 
+                    <motion.div
                       animate={{
                         scale: [1, 1.2, 1],
                         opacity: [0.8, 1, 0.8],
@@ -610,16 +588,16 @@ export default function PropertyPage({ params }: PageProps) {
                         <div className="w-4 h-4 bg-amber-600 rounded-full animate-ping" />
                       </div>
                     </motion.div>
-                    </div>
                   </div>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
-        </div>
+      </div>
 
       {/* Mobile Booking Card - Fixed Bottom */}
-                  <motion.div
+      <motion.div
         initial={{ y: 100 }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -633,27 +611,13 @@ export default function PropertyPage({ params }: PageProps) {
                   <div className="flex items-baseline gap-1">
                     <span className="text-xs text-gray-500">AED</span>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">{dailyPrice}</p>
-                    </div>
+                  </div>
                   <p className="text-xs text-gray-500 mb-1">per night</p>
                 </>
               ) : (
                 <p className="text-base sm:text-lg font-bold text-gray-900">Contact for Pricing</p>
               )}
-              {(monthlyPrice || yearlyPrice) && (
-                <div className="space-y-0.5 text-[10px] sm:text-xs mt-1">
-                  {monthlyPrice && (
-                    <p className="text-gray-700 font-medium">
-                      {monthlyPrice} AED/month
-                    </p>
-                  )}
-                  {yearlyPrice && (
-                    <p className="text-gray-700 font-medium">
-                      {yearlyPrice} AED/year
-                    </p>
-                  )}
-                      </div>
-              )}
-                      </div>
+            </div>
             <div className="flex-shrink-0">
               <BookingModal
                 roomId={property?._id || property?.id || resolvedParams.id}
@@ -663,10 +627,10 @@ export default function PropertyPage({ params }: PageProps) {
                 yearlyRent={yearlyRent}
                 property={property}
               />
-                    </div>
+            </div>
           </div>
-              </div>
-            </motion.div>
+        </div>
+      </motion.div>
       <div className="h-[90px] sm:h-[100px] lg:h-0" />
 
       <Footer />

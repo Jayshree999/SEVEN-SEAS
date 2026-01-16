@@ -196,6 +196,7 @@ export async function resetPassword(resetData: ResetPasswordData): Promise<AuthR
  * Logout - clear stored auth data
  */
 export function logout(): void {
+  if (typeof window === 'undefined') return
   localStorage.removeItem('auth_token')
   localStorage.removeItem('user')
 }

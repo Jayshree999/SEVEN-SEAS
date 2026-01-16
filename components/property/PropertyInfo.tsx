@@ -110,22 +110,14 @@ export function PropertyInfo({
             </div>
           </div>
           {/* Price Display */}
-          {(price || monthlyRent || yearlyRent) && (
+          {price && (
             <div className="flex flex-col items-start sm:items-end gap-1 text-left sm:text-right">
-              {price && (
-                <div className="flex items-baseline gap-1">
-                  <span className="text-xl sm:text-2xl font-bold text-amber-600">
-                    {formatPrice(getCurrentDailyPrice(dailyPrices || []) || price)}
-                  </span>
-                  <span className="text-xs sm:text-sm text-gray-500">AED/night</span>
-                </div>
-              )}
-              {(monthlyRent || yearlyRent) && (
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-[10px] sm:text-xs text-gray-500">
-                  {monthlyRent && <span>{formatPrice(monthlyRent)} AED/month</span>}
-                  {yearlyRent && <span>{formatPrice(yearlyRent)} AED/year</span>}
-                </div>
-              )}
+              <div className="flex items-baseline gap-1">
+                <span className="text-xl sm:text-2xl font-bold text-amber-600">
+                  {formatPrice(getCurrentDailyPrice(dailyPrices || []) || price)}
+                </span>
+                <span className="text-xs sm:text-sm text-gray-500">AED/night</span>
+              </div>
             </div>
           )}
         </div>

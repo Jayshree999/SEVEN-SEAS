@@ -64,8 +64,8 @@ export default function Footer() {
   ]
 
   return (
-    <motion.footer 
-      className="bg-[#191f3b] text-white relative overflow-hidden pt-20"
+    <motion.footer
+      className="bg-[#191f3b] text-white relative overflow-hidden pt-8"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-100px' }}
@@ -90,10 +90,10 @@ export default function Footer() {
           }}
         />
       </div>
-      
+
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-12 md:py-16 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 lg:gap-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-6 sm:py-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-8">
           {/* Brand Section */}
           <div className="md:col-span-2 lg:col-span-2">
             <motion.div
@@ -102,7 +102,7 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Link href="/" className="inline-block mb-4">
+              <Link href="/" className="inline-block mb-3">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   className="relative"
@@ -110,22 +110,22 @@ export default function Footer() {
                   <Image
                     src="/logo.png"
                     alt="Seven Seas Hotel Dubai"
-                    width={180}
-                    height={60}
-                    className="h-12 md:h-14 w-auto object-contain brightness-0 invert"
+                    width={150}
+                    height={50}
+                    className="h-10 w-auto object-contain brightness-0 invert"
                   />
                   <motion.div
                     className="absolute -inset-2 bg-white/5 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
                   />
                 </motion.div>
               </Link>
-              
-              <p className="text-gray-300 leading-relaxed mb-6 max-w-md text-sm md:text-base">
-                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination. Your perfect stay awaits.
+
+              <p className="text-gray-300 leading-relaxed mb-4 max-w-md text-xs sm:text-sm">
+                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination.
               </p>
-              
+
               {/* Contact Information */}
-              <div className="space-y-3 text-sm text-gray-400">
+              <div className="space-y-2 text-xs sm:text-sm text-gray-400">
                 <motion.a
                   href="https://maps.google.com"
                   target="_blank"
@@ -136,7 +136,7 @@ export default function Footer() {
                   <MapPin className="w-5 h-5 mt-0.5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="leading-relaxed">Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE</span>
                 </motion.a>
-                
+
                 <motion.a
                   href="tel:+971551009152"
                   className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
@@ -145,7 +145,7 @@ export default function Footer() {
                   <Phone className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>+971 55 100 9152</span>
                 </motion.a>
-                
+
                 <motion.a
                   href="mailto:reservation@sevenseashotel.ae"
                   className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
@@ -154,7 +154,7 @@ export default function Footer() {
                   <Mail className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
                   <span>reservation@sevenseashotel.ae</span>
                 </motion.a>
-                
+
                 <motion.a
                   href="https://sevenseashotel.ae"
                   target="_blank"
@@ -168,9 +168,9 @@ export default function Footer() {
               </div>
 
               {/* Social Media Icons */}
-              <div className="mt-6">
-                <p className="text-sm font-semibold text-gray-300 mb-3">Follow Us</p>
-                <div className="flex items-center gap-4">
+              <div className="mt-4">
+                <p className="text-xs font-semibold text-gray-300 mb-2">Follow Us</p>
+                <div className="flex items-center gap-3">
                   {socialLinks.map((social, index) => {
                     const IconComponent = social.icon
                     return (
@@ -183,16 +183,16 @@ export default function Footer() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.1, type: 'spring', stiffness: 200 }}
-                        whileHover={{ 
-                          scale: 1.2, 
+                        whileHover={{
+                          scale: 1.2,
                           y: -5,
                           rotate: [0, -10, 10, -10, 0],
                         }}
                         whileTap={{ scale: 0.9 }}
-                        className={`w-10 h-10 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 flex items-center justify-center text-gray-400 ${social.color} transition-all duration-300 hover:border-amber-500/50 hover:bg-gray-800`}
+                        className={`w-8 h-8 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 flex items-center justify-center text-gray-400 ${social.color} transition-all duration-300 hover:border-amber-500/50 hover:bg-gray-800`}
                         aria-label={social.name}
                       >
-                        <IconComponent className="w-5 h-5" />
+                        <IconComponent className="w-4 h-4" />
                       </motion.a>
                     )
                   })}
@@ -208,11 +208,11 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
+              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Hotel
             </motion.h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-2">
               {footerLinks.hotel.map((link, index) => (
                 <motion.li
                   key={link.name}
@@ -240,7 +240,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
+              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Services
             </motion.h3>
@@ -272,7 +272,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
+              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Support
             </motion.h3>
@@ -304,7 +304,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
-              className="text-base font-bold mb-4 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-12 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
+              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
             >
               Company
             </motion.h3>
@@ -336,13 +336,13 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="mt-12 pt-8 border-t border-gray-800/50"
+          className="mt-8 pt-6 border-t border-gray-800/50"
         >
           <div className="max-w-5xl mx-auto">
-            <h3 className="text-xl font-bold mb-6 text-center text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h3 className="text-base font-bold mb-4 text-center text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
               Hotel Policy
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs sm:text-sm text-gray-300">
               <div className="flex items-start gap-2">
                 <span className="text-amber-500 mt-1">•</span>
                 <span>Check-in time is 2:00 PM; check-out time is 12:00 PM.</span>
@@ -376,7 +376,7 @@ export default function Footer() {
         </motion.div>
 
         {/* Bottom Bar */}
-        <div className="mt-10 pt-8 border-t border-gray-800/50">
+        <div className="mt-6 pt-6 border-t border-gray-800/50">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             {/* Quick Legal Links */}
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
