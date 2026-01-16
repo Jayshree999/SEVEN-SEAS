@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 import { UtensilsCrossed, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 export default function RoveeArabicCuisine() {
   const [ref, inView] = useInView({
@@ -83,6 +84,7 @@ export default function RoveeArabicCuisine() {
         </div>
 
         {/* Restaurant Image - Ultra Premium & Super Rich */}
+        <Link href="/dining">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
@@ -126,6 +128,7 @@ export default function RoveeArabicCuisine() {
             <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-amber-200/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.8s' }}></div>
           </div>
         </motion.div>
+        </Link>
       </div>
     </section>
   )

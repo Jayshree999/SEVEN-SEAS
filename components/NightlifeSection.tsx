@@ -4,22 +4,26 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 import { Music, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 const venues = [
   {
     title: 'BAAZIGAR',
     image: '/russian-belly-dancer-r1n13tqyv4wa4d8wi79pk0zwuej9wxn0rzr4nczv1q.jpg',
     description: 'Catch every game live with an unbeatable atmosphere & refreshing drinks. The ultimate destination for sports lovers!',
+    link: '/entertainment',
   },
   {
     title: "GEOFREY'S SPORTS BAR",
     image: '/WhatsApp-Image-2025-02-17-at-5.41.40-PM-r1n18v5ti5smd3xe2vopf97vhrp46in7sxnu9rivou.jpeg',
     description: 'Feel the beat, own the night! Experience electrifying music, dazzling lights, and an unforgettable party vibe at Rhythm Nightclub.',
+    link: '/entertainment',
   },
   {
     title: 'OVO CLUB',
     image: '/OVO-revnlf3x7tabbdepouclc6803qagbm0zetfdwyr7ce.png',
     description: 'Sip, savor, and unwind with a premium selection of spirits and cocktails in a stylish, laid-back ambiance.',
+    link: '/entertainment',
   },
 ]
 
@@ -121,6 +125,7 @@ function VenueCard({
   inView: boolean
 }) {
   return (
+    <Link href={venue.link}>
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -196,6 +201,7 @@ function VenueCard({
         <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-pink-400/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.8s' }}></div>
       </div>
     </motion.div>
+    </Link>
   )
 }
 

@@ -2,20 +2,24 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 
 const amenities = [
   {
     title: 'SPA & WELLNESS',
     image: '/SPA.png',
+    link: '/wellness',
   },
   {
     title: 'FITNESS & GYM',
     image: '/Gym.png',
+    link: '/wellness',
   },
   {
     title: 'SWIMMING POOL',
     image: '/DSC02661-2048x1365.jpg',
+    link: '/wellness',
   },
 ]
 
@@ -103,6 +107,7 @@ function AmenityCard({
   inView: boolean
 }) {
   return (
+    <Link href={amenity.link}>
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -151,6 +156,7 @@ function AmenityCard({
       {/* Subtle corner accent */}
       <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-white/10 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
     </motion.div>
+    </Link>
   )
 }
 

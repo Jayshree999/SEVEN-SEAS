@@ -6,50 +6,7 @@ import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 import { Newspaper, Calendar, ArrowRight } from 'lucide-react'
 
-const newsItems = [
-  {
-    title: 'Luxury Redefined: What Makes Seven Seas Hotel a 5-Star Experience?',
-    date: 'February 3, 2025',
-    excerpt: 'When it comes to luxury hospitality in Dubai, Seven Seas Hotel stands as an icon of elegance and comfort.',
-    image: '/019A3962-Enhanced-NR-1-scaled.jpg',
-    category: 'Luxury',
-  },
-  {
-    title: 'A Food Lover\'s Guide to Seven Seas Hotel: Exploring Dubai\'s Best Dining Experience',
-    date: 'April 28, 2024',
-    excerpt: 'Dubai is a global culinary hub, offering a diverse range of cuisines from around the world.',
-    image: '/Salt.webp',
-    category: 'Dining',
-  },
-  {
-    title: 'Welcome to Seven Seas Hotel – Your Luxurious Escape in Dubai',
-    date: 'April 27, 2024',
-    excerpt: 'Nestled in the vibrant heart of Dubai, Seven Seas Hotel is a five-star destination designed for travelers...',
-    image: '/hero2.jpg',
-    category: 'Hotel',
-  },
-  {
-    title: 'Seven Seas Hotel – A Five-Star Oasis in Dubai',
-    date: 'April 27, 2024',
-    excerpt: 'Welcome to Seven Seas Hotel, where luxury meets comfort in the heart of Dubai. Whether you\'re visiting for ...',
-    image: '/DSC02661-2048x1365.jpg',
-    category: 'Luxury',
-  },
-  {
-    title: 'Experience Luxury and Comfort at Seven Seas Hotel, Dubai',
-    date: 'April 27, 2024',
-    excerpt: 'Dubai is a city that never fails to impress with its towering skyscrapers, golden beaches, and ...',
-    image: '/019A3962-Enhanced-NR-1-scaled.jpg',
-    category: 'Experience',
-  },
-  {
-    title: 'Celebrate in Elegance at Mehfil Ballroom, Seven Seas Hotel',
-    date: 'March 14, 2024',
-    excerpt: 'Whether you\'re planning a wedding, corporate event, gala dinner, or private celebration, the right venue sets the ...',
-    image: '/banquet-4.png',
-    category: 'Events',
-  },
-]
+import { newsItems } from '@/data/news'
 
 export default function NewsEvents() {
   const [ref, inView] = useInView({
@@ -110,7 +67,7 @@ export default function NewsEvents() {
         {/* News Grid */}
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {newsItems.map((item, index) => (
-            <NewsCard key={item.title} item={item} index={index} inView={inView} />
+            <NewsCard key={item.slug} item={item} index={index} inView={inView} />
           ))}
         </div>
       </div>
@@ -135,6 +92,9 @@ function NewsCard({
       whileHover={{ y: -15, scale: 1.05 }}
       className="group relative overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-transparent group-hover:border-amber-300 bg-white"
     >
+      {/* Make the whole card clickable */}
+      <Link href={`/news/${item.slug}`} className="absolute inset-0 z-20" aria-label={`Read more about ${item.title}`} />
+      
       {/* Premium card background glow */}
       <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/30 to-amber-300/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
       
@@ -175,11 +135,11 @@ function NewsCard({
           {item.excerpt}
         </p>
 
-        {/* Read More Link */}
-        <Link href="/about-us" className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold text-sm group/link">
+        {/* Read More Visual Indicator (Not a Link anymore, just visual) */}
+        <div className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold text-sm group/link">
           <span>Read More</span>
           <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-        </Link>
+        </div>
       </div>
 
       {/* Premium Border Glow on Hover */}

@@ -65,7 +65,7 @@ export default function Footer() {
 
   return (
     <motion.footer 
-      className="bg-zinc-950 text-white relative overflow-hidden pt-20"
+      className="bg-[#191f3b] text-white relative overflow-hidden pt-20"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-100px' }}

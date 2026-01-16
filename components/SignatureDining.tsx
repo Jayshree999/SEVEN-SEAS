@@ -4,22 +4,26 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 import { UtensilsCrossed, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 const restaurants = [
   {
     title: 'ROVEE',
     image: '/Nahas-al-Blad.webp',
     description: 'Authentic Arabic flavors in the heart of Dubai, serving traditional dishes with a modern touch.',
+    link: '/dining',
   },
   {
     title: 'JULIENNES',
     image: '/Delhi-6.png',
     description: 'A taste of Juliennes rich culinary heritage, bringing authentic Indian flavors and spices to your plate.',
+    link: '/dining',
   },
   {
     title: 'SALT RESTAURANT',
     image: '/Salt.webp',
     description: 'An elegant fine dining experience, offering gourmet cuisine in a sophisticated and inviting atmosphere.',
+    link: '/dining',
   },
 ]
 
@@ -121,6 +125,7 @@ function RestaurantCard({
   inView: boolean
 }) {
   return (
+    <Link href={restaurant.link}>
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -195,6 +200,7 @@ function RestaurantCard({
         <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-amber-300/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.6s' }}></div>
       </div>
     </motion.div>
+    </Link>
   )
 }
 

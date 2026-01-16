@@ -12,6 +12,7 @@ export default function Navigation() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
   const [isMehfilDropdownOpen, setIsMehfilDropdownOpen] = useState(false)
   const [isOffersDropdownOpen, setIsOffersDropdownOpen] = useState(false)
+  const [isExperiencesDropdownOpen, setIsExperiencesDropdownOpen] = useState(false)
   const { user, logout, isAuth } = useAuth()
 
   useEffect(() => {
@@ -34,10 +35,13 @@ export default function Navigation() {
       if (isOffersDropdownOpen && !(event.target as Element).closest('.offers-dropdown')) {
         setIsOffersDropdownOpen(false)
       }
+      if (isExperiencesDropdownOpen && !(event.target as Element).closest('.experiences-dropdown')) {
+        setIsExperiencesDropdownOpen(false)
+      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isUserMenuOpen, isMehfilDropdownOpen, isOffersDropdownOpen])
+  }, [isUserMenuOpen, isMehfilDropdownOpen, isOffersDropdownOpen, isExperiencesDropdownOpen])
 
   const mehfilSubmenu = [
     { name: 'Meetings', href: '/meetings' },
@@ -51,12 +55,16 @@ export default function Navigation() {
     { name: 'Special Offers', href: '/offers-and-more' }
   ]
 
+  const experiencesSubmenu = [
+    { name: 'Dining', href: '/dining' },
+    { name: 'Wellness', href: '/wellness' },
+    { name: 'Entertainment', href: '/entertainment' },
+  ]
+
   const navItems = [
     { name: 'ROOMS', href: '/rooms' },
-    { name: 'DINING', href: '/dining' },
+    { name: 'EXPERIENCES', href: '/experiences', hasDropdown: true, dropdownKey: 'experiences' },
     { name: 'MEHFIL BALLROOM', href: '/mehfil-ballroom', hasDropdown: true, dropdownKey: 'mehfil' },
-    { name: 'ENTERTAINMENT', href: '/entertainment' },
-    { name: 'WELLNESS', href: '/wellness' },
     { name: 'OFFERS & MORE', href: '/offers-and-more', hasDropdown: true, dropdownKey: 'offers' },
   ]
 
@@ -139,7 +147,7 @@ export default function Navigation() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 + 0.3, type: 'spring', stiffness: 100 }}
-                className={`relative ${item.dropdownKey === 'mehfil' ? 'mehfil-dropdown' : item.dropdownKey === 'offers' ? 'offers-dropdown' : ''}`}
+                className={`relative ${item.dropdownKey === 'mehfil' ? 'mehfil-dropdown' : item.dropdownKey === 'offers' ? 'offers-dropdown' : item.dropdownKey === 'experiences' ? 'experiences-dropdown' : ''}`}
               >
                 {item.hasDropdown ? (
                   <div
@@ -149,6 +157,8 @@ export default function Navigation() {
                         setIsMehfilDropdownOpen(true)
                       } else if (item.dropdownKey === 'offers') {
                         setIsOffersDropdownOpen(true)
+                      } else if (item.dropdownKey === 'experiences') {
+                        setIsExperiencesDropdownOpen(true)
                       }
                     }}
                     onMouseLeave={() => {
@@ -156,6 +166,8 @@ export default function Navigation() {
                         setIsMehfilDropdownOpen(false)
                       } else if (item.dropdownKey === 'offers') {
                         setIsOffersDropdownOpen(false)
+                      } else if (item.dropdownKey === 'experiences') {
+                        setIsExperiencesDropdownOpen(false)
                       }
                     }}
                   >
@@ -193,7 +205,8 @@ export default function Navigation() {
                     
                     <AnimatePresence>
                       {((item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
-                        (item.dropdownKey === 'offers' && isOffersDropdownOpen)) && (
+                      (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
+                      (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen)) && (
                         <motion.div
                           initial={{ opacity: 0, y: -10, scale: 0.95 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -204,7 +217,7 @@ export default function Navigation() {
                           {/* Solid gradient background */}
                           <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-yellow-50" />
                           <div className="relative z-10">
-                          {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : offersSubmenu).map((subItem, subIndex) => (
+                          {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem, subIndex) => (
                             <Link
                               key={subItem.name}
                               href={subItem.href}
@@ -213,6 +226,8 @@ export default function Navigation() {
                                   setIsMehfilDropdownOpen(false)
                                 } else if (item.dropdownKey === 'offers') {
                                   setIsOffersDropdownOpen(false)
+                                } else if (item.dropdownKey === 'experiences') {
+                                  setIsExperiencesDropdownOpen(false)
                                 }
                               }}
                             >
@@ -426,9 +441,15 @@ export default function Navigation() {
                           if (item.dropdownKey === 'mehfil') {
                             setIsMehfilDropdownOpen(!isMehfilDropdownOpen)
                             setIsOffersDropdownOpen(false)
+                            setIsExperiencesDropdownOpen(false)
                           } else if (item.dropdownKey === 'offers') {
                             setIsOffersDropdownOpen(!isOffersDropdownOpen)
                             setIsMehfilDropdownOpen(false)
+                            setIsExperiencesDropdownOpen(false)
+                          } else if (item.dropdownKey === 'experiences') {
+                            setIsExperiencesDropdownOpen(!isExperiencesDropdownOpen)
+                            setIsMehfilDropdownOpen(false)
+                            setIsOffersDropdownOpen(false)
                           }
                         }}
                         className="flex items-center justify-between w-full text-black text-base sm:text-lg font-medium uppercase py-2 min-h-[48px]"
@@ -438,7 +459,8 @@ export default function Navigation() {
                           className="w-5 h-5"
                           animate={{ 
                             rotate: (item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
-                                    (item.dropdownKey === 'offers' && isOffersDropdownOpen) ? 180 : 0 
+                                    (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
+                                    (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen) ? 180 : 0 
                           }}
                           transition={{ duration: 0.3 }}
                           fill="none" 
@@ -450,14 +472,15 @@ export default function Navigation() {
                       </button>
                       <AnimatePresence>
                         {((item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
-                          (item.dropdownKey === 'offers' && isOffersDropdownOpen)) && (
+                          (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
+                          (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen)) && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             className="ml-4 mt-2 space-y-2"
                           >
-                            {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : offersSubmenu).map((subItem) => (
+                            {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem) => (
                               <Link
                                 key={subItem.name}
                                 href={subItem.href}
@@ -467,6 +490,8 @@ export default function Navigation() {
                                     setIsMehfilDropdownOpen(false)
                                   } else if (item.dropdownKey === 'offers') {
                                     setIsOffersDropdownOpen(false)
+                                  } else if (item.dropdownKey === 'experiences') {
+                                    setIsExperiencesDropdownOpen(false)
                                   }
                                 }}
                                 className="block text-gray-600 text-base hover:text-amber-600 transition-colors"

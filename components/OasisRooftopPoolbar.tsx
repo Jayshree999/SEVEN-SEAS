@@ -72,6 +72,7 @@ export default function OasisRooftopPoolbar() {
         </motion.div>
 
         {/* Image Showcase - Ultra Premium & Super Rich */}
+        <Link href="/dining">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
@@ -173,6 +174,7 @@ export default function OasisRooftopPoolbar() {
             <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-cyan-400/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.8s' }}></div>
           </div>
         </motion.div>
+        </Link>
       </div>
     </section>
   )

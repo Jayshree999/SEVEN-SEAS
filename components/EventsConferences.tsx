@@ -4,19 +4,23 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 import { Calendar, Sparkles } from 'lucide-react'
+import Link from 'next/link'
 
 const events = [
   {
     title: 'MEETINGS & CONFERENCES',
     image: '/Meeting-Room.png',
+    link: '/meetings',
   },
   {
     title: 'EVENTS',
     image: '/banquet-4.png',
+    link: '/events-3',
   },
   {
     title: 'TIMELESS WEDDINGS',
     image: '/Wedding.png',
+    link: '/weddings',
   },
 ]
 
@@ -118,6 +122,7 @@ function EventCard({
   inView: boolean
 }) {
   return (
+    <Link href={event.link}>
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -180,6 +185,7 @@ function EventCard({
         <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-amber-300/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.6s' }}></div>
       </div>
     </motion.div>
+    </Link>
   )
 }
 

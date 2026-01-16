@@ -4,20 +4,22 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
+
 import { Sparkles, Store, ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 const brands = [
-  { name: 'Salt', image: '/partners/Salt.png', category: 'Restaurant' },
-  { name: "Geoffrey's", image: '/partners/Geoffreys.png', category: 'Sports Bar' },
-  { name: 'Seven SPA', image: '/partners/Seven-SPA.png', category: 'Wellness' },
-  { name: 'Pool23', image: '/partners/Pool23.png', category: 'Pool' },
-  { name: 'Behnah spa', image: '/partners/Behnah-spa3.png', category: 'Wellness' },
-  { name: 'Mehfil Ballroom', image: '/partners/Mehfillballroom2.png', category: 'Events' },
-  { name: 'Seven Salon', image: '/partners/Seven-Salon.png', category: 'Beauty' },
-  { name: 'Rovee Club', image: '/partners/Rovee-Club.png', category: 'Entertainment' },
-  { name: 'Bazigar', image: '/partners/Bazigar.png', category: 'Entertainment' },
-  { name: 'Partner 1', image: '/partners/Untitled-design.png', category: 'Partner' },
-  { name: 'Partner 2', image: '/partners/Untitled-design-1.png', category: 'Partner' },
+  { name: 'Salt', image: '/partners/Salt.png', category: 'Restaurant', link: '/dining' },
+  { name: "Geoffrey's", image: '/partners/Geoffreys.png', category: 'Sports Bar', link: '/entertainment' },
+  { name: 'Seven SPA', image: '/partners/Seven-SPA.png', category: 'Wellness', link: '/wellness' },
+  { name: 'Pool23', image: '/partners/Pool23.png', category: 'Pool', link: '/wellness' },
+  { name: 'Behnah spa', image: '/partners/Behnah-spa3.png', category: 'Wellness', link: '/wellness' },
+  { name: 'Mehfil Ballroom', image: '/partners/Mehfillballroom2.png', category: 'Events', link: '/mehfil-ballroom' },
+  { name: 'Seven Salon', image: '/partners/Seven-Salon.png', category: 'Beauty', link: '/wellness' },
+  { name: 'Rovee Club', image: '/partners/Rovee-Club.png', category: 'Entertainment', link: '/entertainment' },
+  { name: 'Bazigar', image: '/partners/Bazigar.png', category: 'Entertainment', link: '/entertainment' },
+  { name: 'Partner 1', image: '/partners/Untitled-design.png', category: 'Partner', link: '#' },
+  { name: 'Partner 2', image: '/partners/Untitled-design-1.png', category: 'Partner', link: '#' },
 ]
 
 export default function BrandsOutlets() {
@@ -364,6 +366,7 @@ function BrandCard({
   inView: boolean
 }) {
   return (
+    <Link href={brand.link}>
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -446,6 +449,7 @@ function BrandCard({
         <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
       </motion.div>
     </motion.div>
+    </Link>
   )
 }
 
