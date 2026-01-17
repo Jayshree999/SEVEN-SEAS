@@ -53,10 +53,10 @@ export default function FeaturesSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-black mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
             UNFORGETTABLE EXPERIENCES
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-2xl mx-auto">
             Discover what makes Seven Seas Hotel the perfect choice for your Dubai stay
           </p>
         </motion.div>
@@ -89,18 +89,18 @@ export default function FeaturesSection() {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <motion.div 
+                  <motion.div
                     className="text-5xl mb-6"
                     animate={{ rotate: [0, 15, -15, 0] }}
                     transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
                   >
                     {feature.icon}
                   </motion.div>
-                  
+
                   <h3 className="text-xl font-bold text-black mb-4">
                     {feature.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 leading-relaxed">
                     {feature.description}
                   </p>
