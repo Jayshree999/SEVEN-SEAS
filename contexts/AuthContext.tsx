@@ -6,6 +6,7 @@ import {
   login as loginApi,
   signup as signupApi,
   logout as logoutApi,
+  googleLogin as googleLoginApi,
   getStoredUser,
   isAuthenticated,
   type AuthResponse,
@@ -25,6 +26,7 @@ interface AuthContextType {
   loading: boolean
   login: (credentials: LoginCredentials) => Promise<void>
   signup: (userData: SignupData) => Promise<void>
+  googleLogin: (credential: string) => Promise<void>
   logout: () => void
   isAuth: boolean
   refreshUser: () => void
@@ -91,6 +93,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const googleLogin = async (credential: string) => {
+    try {
+      const response: AuthResponse = await googleLoginApi(credential)
+      const userData = response.user || response.data?.user
+      if (userData) {
+        setUser(userData)
+        router.push('/')
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
   const logout = () => {
     logoutApi()
     setUser(null)
@@ -104,6 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading,
         login,
         signup,
+        googleLogin,
         logout,
         isAuth: isMounted && !!user,
         refreshUser,

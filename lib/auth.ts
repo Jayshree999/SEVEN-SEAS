@@ -230,3 +230,40 @@ export function isAuthenticated(): boolean {
   return !!getAuthToken()
 }
 
+/**
+ * Google OAuth login
+ */
+export async function googleLogin(credential: string): Promise<AuthResponse> {
+  try {
+    const response = await fetch(`${API_URL}/api/v1/google/auth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-organisation': 'sevenseas',
+      },
+      body: JSON.stringify({ token: credential }),
+    })
+
+    const data: AuthResponse = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Google login failed')
+    }
+
+    // Backend returns: { data: { user: {...}, accessToken, refreshToken } }
+    const token = data.token || data.data?.token || data.data?.accessToken
+    const userData = data.user || data.data?.user
+
+    // Store token and user if provided
+    if (token && userData) {
+      localStorage.setItem('auth_token', token)
+      localStorage.setItem('user', JSON.stringify(userData))
+    }
+
+    return data
+  } catch (error) {
+    console.error('Google login error:', error)
+    throw error
+  }
+}
+

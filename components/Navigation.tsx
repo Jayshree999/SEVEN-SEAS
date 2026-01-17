@@ -331,7 +331,17 @@ export default function Navigation() {
                   )}
                 </AnimatePresence>
               </div>
-            ) : null}
+            ) : (
+              <Link href="/login">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-5 py-2 text-sm font-semibold text-amber-600 hover:text-amber-700 border-2 border-amber-600 hover:border-amber-700 rounded-lg transition-all"
+                >
+                  Sign In
+                </motion.button>
+              </Link>
+            )}
             <Link href="/rooms">
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -550,7 +560,18 @@ export default function Navigation() {
                     Sign Out
                   </motion.button>
                 </div>
-              ) : null}
+              ) : (
+                <div className="pt-4 border-t border-gray-200">
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      className="w-full mb-2 px-6 py-3 border-2 border-amber-600 text-amber-600 font-bold uppercase rounded-lg"
+                    >
+                      Sign In
+                    </motion.button>
+                  </Link>
+                </div>
+              )}
               <Link href="/rooms" onClick={() => setIsMenuOpen(false)} className="w-full">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
@@ -566,3 +587,4 @@ export default function Navigation() {
     </motion.nav>
   )
 }
+
