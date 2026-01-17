@@ -71,24 +71,25 @@ export default function Footer() {
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      {/* Animated Background Pattern */}
-      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(197,160,89,0.08),transparent_40%)]"></div>
-        <motion.div
-          className="absolute inset-0 opacity-10"
+      {/* Video Background */}
+      <div className="absolute inset-0 overflow-hidden z-0">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            opacity: 0.4,
+            filter: 'brightness(0.7)',
           }}
-          animate={{
-            x: [0, 60, 0],
-            y: [0, 60, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        />
+        >
+          <source src="/footer.mp4" type="video/mp4" />
+        </video>
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-[#191f3b]/80"></div>
       </div>
 
       {/* Main Footer Content */}
