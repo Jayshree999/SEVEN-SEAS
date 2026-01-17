@@ -152,14 +152,6 @@ export function PropertyInfo({
         )}
       </div>
 
-      {/* Listing Date */}
-      {createdAt && (
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Calendar className="w-4 h-4" />
-          <span>Listed on {formatListingDate(createdAt)}</span>
-        </div>
-      )}
-
       <div className="border-t border-gray-200 pt-6"></div>
 
       <div>

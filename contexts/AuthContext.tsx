@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
-import { 
-  login as loginApi, 
-  signup as signupApi, 
+import {
+  login as loginApi,
+  signup as signupApi,
   logout as logoutApi,
   getStoredUser,
   isAuthenticated,
@@ -35,18 +35,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [isMounted, setIsMounted] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
-    // Check for stored user on mount
-    if (typeof window !== 'undefined') {
+    // Set mounted first to prevent hydration errors
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    // Check for stored user only after component is mounted
+    if (isMounted && typeof window !== 'undefined') {
       const storedUser = getStoredUser()
       if (storedUser && isAuthenticated()) {
         setUser(storedUser)
       }
       setLoading(false)
     }
-  }, [])
+  }, [isMounted])
 
   // Function to refresh user data (can be called from profile page)
   const refreshUser = () => {
@@ -99,7 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         signup,
         logout,
-        isAuth: !!user,
+        isAuth: isMounted && !!user,
         refreshUser,
       }}
     >
