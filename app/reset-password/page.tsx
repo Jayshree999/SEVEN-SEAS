@@ -1,7 +1,7 @@
 'use client'
 
 // Reset Password Page - Commented out as not needed
-/*
+
 import { useState, useEffect, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -265,31 +265,31 @@ export default function ResetPasswordPage() {
     </Suspense>
   )
 }
-*/
 
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
-import Link from 'next/link'
 
-export default function ResetPasswordPage() {
-  return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <Navigation />
-      <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Page Not Available</h1>
-            <p className="text-gray-600 mb-6">This page is currently not available.</p>
-            <Link
-              href="/"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-yellow-700 transition-all"
-            >
-              Go to Homepage
-            </Link>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </main>
-  )
-}
+// import Navigation from '@/components/Navigation'
+// import Footer from '@/components/Footer'
+// import Link from 'next/link'
+
+// export default function ResetPasswordPage() {
+//   return (
+//     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+//       <Navigation />
+//       <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+//         <div className="max-w-md mx-auto">
+//           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
+//             <h1 className="text-2xl font-bold text-gray-900 mb-4">Page Not Available</h1>
+//             <p className="text-gray-600 mb-6">This page is currently not available.</p>
+//             <Link
+//               href="/"
+//               className="inline-block px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-semibold rounded-lg hover:from-amber-600 hover:to-yellow-700 transition-all"
+//             >
+//               Go to Homepage
+//             </Link>
+//           </div>
+//         </div>
+//       </div>
+//       <Footer />
+//     </main>
+//   )
+// }
