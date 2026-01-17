@@ -8,13 +8,13 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import { LuxuryChatbot } from '@/components/LuxuryChatbot'
 import { Toaster } from 'sonner'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
@@ -42,6 +42,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: '/logo2.jpg',
+    apple: '/logo2.jpg',
+  },
 }
 
 export default function RootLayout({
