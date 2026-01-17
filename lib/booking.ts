@@ -2,7 +2,7 @@
  * Booking API utility functions
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.sevenseashotel.ae'
 
 export interface BookingData {
   checkIn: string

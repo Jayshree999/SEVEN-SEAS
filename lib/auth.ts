@@ -2,7 +2,7 @@
  * Authentication API service functions
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.sevenseashotel.ae'
 
 export interface LoginCredentials {
   email: string
@@ -143,7 +143,7 @@ export async function signup(userData: SignupData): Promise<AuthResponse> {
  */
 export async function forgotPassword(email: string): Promise<ForgotPasswordResponse> {
   try {
-    const response = await fetch(`${API_URL}/api/v1/auth/host/forget-password`, {
+    const response = await fetch(`${API_URL}/api/v1/bookinguser/forget-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

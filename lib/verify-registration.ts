@@ -2,7 +2,7 @@
  * Utility to verify if a user registration was successful
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.sevenseashotel.ae'
 
 export async function verifyUserExists(email: string): Promise<boolean> {
   try {

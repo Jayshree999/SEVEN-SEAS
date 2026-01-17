@@ -290,9 +290,17 @@ export default function Navigation() {
                   whileTap={{ scale: 0.95 }}
                   className="flex items-center space-x-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-amber-600 transition-colors"
                 >
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center text-white font-semibold text-xs">
-                    {user?.fullName?.charAt(0).toUpperCase() || 'U'}
-                  </div>
+                  {user?.profileImg ? (
+                    <img
+                      src={user.profileImg}
+                      alt={user.fullName || 'User'}
+                      className="w-7 h-7 rounded-full object-cover border-2 border-amber-500"
+                    />
+                  ) : (
+                    <div className="w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center text-white font-semibold text-xs">
+                      {user?.fullName?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                  )}
                   <span>{user?.fullName?.split(' ')[0] || 'User'}</span>
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

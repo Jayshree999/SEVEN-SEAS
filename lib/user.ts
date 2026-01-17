@@ -2,7 +2,7 @@
  * User profile and favorites API functions
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.dubaibooking.io'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.sevenseashotel.ae'
 
 export interface UpdateProfileData {
   fullName?: string

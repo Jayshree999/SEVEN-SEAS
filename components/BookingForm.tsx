@@ -209,8 +209,8 @@ export default function BookingForm({ roomId, roomName, price, monthlyRent: prop
       const unitRent = Number(calculatedRent.toFixed(2))
 
       // Production-ready HTTPS URLs are required for Live Stripe Mode
-      const successUrl = 'https://dubaibooking.io/payment/success'
-      const cancelUrl = `https://dubaibooking.io/rooms/${roomId}`
+      const successUrl = 'https://sevenseashotel.ae/payment/success'
+      const cancelUrl = `https://sevenseashotel.ae/rooms/${roomId}`
 
       const bookingData: any = {
         userId: user._id,
