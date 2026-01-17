@@ -13,7 +13,12 @@ export default function Navigation() {
   const [isMehfilDropdownOpen, setIsMehfilDropdownOpen] = useState(false)
   const [isOffersDropdownOpen, setIsOffersDropdownOpen] = useState(false)
   const [isExperiencesDropdownOpen, setIsExperiencesDropdownOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const { user, logout, isAuth } = useAuth()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,8 +82,8 @@ export default function Navigation() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'bg-white/98 backdrop-blur-xl shadow-2xl py-1 border-b border-amber-200/30'
-          : 'bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm py-1.5 border-b border-amber-100/50'
+        ? 'bg-white/98 backdrop-blur-xl shadow-2xl py-1 border-b border-amber-200/30'
+        : 'bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm py-1.5 border-b border-amber-100/50'
         }`}
     >
       {/* Animated Background Gradient */}
@@ -277,7 +282,7 @@ export default function Navigation() {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            {isAuth ? (
+            {isMounted && isAuth ? (
               <div className="relative">
                 <motion.button
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -520,7 +525,7 @@ export default function Navigation() {
                   )}
                 </div>
               ))}
-              {isAuth ? (
+              {isMounted && isAuth ? (
                 <div className="pt-4 border-t border-gray-200">
                   <div className="mb-4">
                     <p className="text-sm font-semibold text-gray-800">{user?.fullName}</p>
