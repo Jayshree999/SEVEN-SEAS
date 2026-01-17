@@ -109,8 +109,10 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
   } else {
     queryParams.append('filters[area]', '')
   }
+   
+  const SERVER_URL = process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io'
 
-  const url = `https://api.sevenseashotel.ae/api/v1/property/property?${queryParams.toString()}`
+  const url = `${SERVER_URL}/api/v1/property/property?${queryParams.toString()}`
 
   try {
     const response = await fetch(url, {

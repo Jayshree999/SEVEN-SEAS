@@ -2,7 +2,7 @@
  * Authentication API service functions
  */
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.sevenseashotel.ae'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io'
 
 export interface LoginCredentials {
   email: string

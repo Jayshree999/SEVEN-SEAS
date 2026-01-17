@@ -15,7 +15,7 @@ export const config = {
   googleMapsLocationLink: 'https://maps.app.goo.gl/sd5NvAgBXGQ2zmEf8',
   
   // API Base URL
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'https://api.sevenseashotel.ae',
+  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io',
   
   // Frontend URL
   frontendUrl: process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000',
