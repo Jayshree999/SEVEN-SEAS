@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 interface BackgroundVideoProps {
@@ -15,18 +15,23 @@ export default function BackgroundVideo({
   opacity = 0.3,
 }: BackgroundVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [isMounted, setIsMounted] = useState(false)
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
 
   useEffect(() => {
-    if (videoRef.current && inView) {
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (videoRef.current && inView && isMounted) {
       videoRef.current.play().catch(() => {
         // Handle autoplay restrictions
       })
     }
-  }, [inView])
+  }, [inView, isMounted])
 
   if (!videoUrl) {
     return (
@@ -36,25 +41,27 @@ export default function BackgroundVideo({
 
   return (
     <div ref={ref} className={`absolute inset-0 overflow-hidden ${className}`}>
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        style={{ 
-          opacity,
-          filter: 'none',
-          transform: 'translateZ(0)',
-          willChange: 'auto',
-          imageRendering: 'auto',
-          ...({ WebkitImageRendering: 'auto' } as React.CSSProperties)
-        }}
-      >
-        <source src={videoUrl} type="video/mp4" />
-      </video>
+      {isMounted && (
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          style={{
+            opacity,
+            filter: 'none',
+            transform: 'translateZ(0)',
+            willChange: 'auto',
+            imageRendering: 'auto',
+            ...({ WebkitImageRendering: 'auto' } as React.CSSProperties)
+          }}
+        >
+          <source src={videoUrl} type="video/mp4" />
+        </video>
+      )}
     </div>
   )
 }

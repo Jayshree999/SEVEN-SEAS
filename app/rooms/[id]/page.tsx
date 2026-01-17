@@ -206,39 +206,13 @@ export default function PropertyPage({ params }: PageProps) {
           style={{ opacity }}
           className="relative"
         >
-          {/* Property Type Badges Overlay */}
+          {/* Property Type Badges Overlay - Only Popular */}
           <div className="absolute top-3 right-3 sm:top-6 sm:right-6 z-20 flex flex-col gap-2">
-            {property?.defaultPropertyType && (
-              <motion.span
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className={`text-white font-semibold px-4 py-2 rounded-lg shadow-xl border backdrop-blur-md ${property.defaultPropertyType === 'daily'
-                  ? 'bg-blue-600/90 border-blue-400/50'
-                  : property.defaultPropertyType === 'monthly'
-                    ? 'bg-green-600/90 border-green-400/50'
-                    : 'bg-purple-600/90 border-purple-400/50'
-                  }`}
-              >
-                {property.defaultPropertyType.charAt(0).toUpperCase() + property.defaultPropertyType.slice(1)} Rent
-              </motion.span>
-            )}
-            {isNewProperty && (
-              <motion.span
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-pink-600/90 backdrop-blur-md text-white font-semibold px-4 py-2 rounded-lg shadow-xl border border-pink-400/50 flex items-center gap-2"
-              >
-                <Sparkles className="w-4 h-4" />
-                New Listing
-              </motion.span>
-            )}
             {isPopular && (
               <motion.span
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.3 }}
                 className="bg-orange-600/90 backdrop-blur-md text-white font-semibold px-4 py-2 rounded-lg shadow-xl border border-orange-400/50 flex items-center gap-2"
               >
                 <TrendingUp className="w-4 h-4" />
@@ -283,95 +257,98 @@ export default function PropertyPage({ params }: PageProps) {
                 />
               </motion.div>
 
-              {/* Enhanced Property Details Card */}
+              {/* Ultra-Premium Property Details Card */}
               <motion.div
                 ref={statsRef}
                 initial={{ opacity: 0, y: 30 }}
                 animate={statsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white border border-gray-200 shadow-xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6"
+                className="bg-gradient-to-br from-white via-slate-50 to-white border-2 border-amber-200/40 shadow-2xl rounded-3xl p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-8"
               >
-                {/* Property Stats Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                {/* Ultra-Premium Property Stats Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
                   {property?.size && (
                     <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/50 border border-amber-200"
+                      whileHover={{ scale: 1.08, y: -3 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-50 border-2 border-amber-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
                     >
-                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-amber-500 shadow-lg flex-shrink-0">
-                        <Home className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 shadow-xl">
+                        <Home className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Size</p>
-                        <p className="text-sm sm:text-base font-bold text-gray-900 truncate">{property.size.toLocaleString()} sqft</p>
+                      <div>
+                        <p className="text-xl sm:text-2xl font-black text-gray-900">{property.size.toLocaleString()}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider mt-1">sqft</p>
                       </div>
                     </motion.div>
                   )}
                   {property?.guest_no && (
                     <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 border border-blue-200"
+                      whileHover={{ scale: 1.08, y: -3 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-blue-50 via-blue-100/50 to-blue-50 border-2 border-blue-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
                     >
-                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-blue-500 shadow-lg flex-shrink-0">
-                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl">
+                        <Users className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Guests</p>
-                        <p className="text-sm sm:text-base font-bold text-gray-900">{property.guest_no}</p>
+                      <div>
+                        <p className="text-xl sm:text-2xl font-black text-gray-900">{property.guest_no}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider mt-1">Guests</p>
                       </div>
                     </motion.div>
                   )}
                   {property?.parking && (
                     <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 border border-green-200"
+                      whileHover={{ scale: 1.08, y: -3 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-green-50 via-green-100/50 to-green-50 border-2 border-green-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
                     >
-                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-green-500 shadow-lg flex-shrink-0">
-                        <Car className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-green-500 to-green-600 shadow-xl">
+                        <Car className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Parking</p>
-                        <p className="text-sm sm:text-base font-bold text-gray-900">{property.parking} spaces</p>
+                      <div>
+                        <p className="text-xl sm:text-2xl font-black text-gray-900">{property.parking}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider mt-1">Parking</p>
                       </div>
                     </motion.div>
                   )}
                   {(property?.Check_in_time || property?.Check_out_time) && (
                     <motion.div
-                      whileHover={{ scale: 1.05, y: -2 }}
-                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 border border-purple-200"
+                      whileHover={{ scale: 1.08, y: -3 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-purple-50 via-purple-100/50 to-purple-50 border-2 border-purple-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
                     >
-                      <div className="p-1.5 sm:p-2.5 rounded-lg bg-purple-500 shadow-lg flex-shrink-0">
-                        <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-xl">
+                        <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                       </div>
-                      <div className="min-w-0">
-                        <p className="text-[10px] sm:text-xs text-gray-600 font-medium">Check-in/out</p>
-                        <p className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
-                          {property.Check_in_time || 'N/A'} / {property.Check_out_time || 'N/A'}
+                      <div>
+                        <p className="text-sm sm:text-base font-black text-gray-900 leading-tight">
+                          {property.Check_in_time || 'N/A'}
+                        </p>
+                        <p className="text-xs text-gray-500 font-semibold">to</p>
+                        <p className="text-sm sm:text-base font-black text-gray-900 leading-tight">
+                          {property.Check_out_time || 'N/A'}
                         </p>
                       </div>
                     </motion.div>
                   )}
                 </div>
 
-                {/* Booking Statistics */}
+                {/* Ultra-Premium Booking Statistics */}
                 {(isPopular || totalBookings > 0) && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={statsInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ delay: 0.4 }}
-                    className="p-4 sm:p-5 bg-gradient-to-r from-amber-50 via-orange-50 to-amber-50 rounded-lg sm:rounded-xl border-2 border-amber-200"
+                    className="p-6 sm:p-8 bg-gradient-to-r from-amber-50 via-amber-100/60 to-orange-50 rounded-2xl border-2 border-amber-300/50 shadow-xl"
                   >
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-                        <div className="p-1.5 sm:p-2 bg-amber-500 rounded-lg shadow-lg flex-shrink-0">
-                          <Star className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-4 min-w-0 flex-1">
+                        <div className="p-3 sm:p-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-2xl flex-shrink-0">
+                          <Star className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white drop-shadow-lg" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm sm:text-base font-bold text-gray-900">
-                            {totalBookings} {totalBookings === 1 ? 'booking' : 'bookings'}
+                          <p className="text-lg sm:text-xl font-black text-gray-900">
+                            {totalBookings} {totalBookings === 1 ? 'Booking' : 'Bookings'}
                           </p>
                           {totalRevenue > 0 && (
-                            <p className="text-xs sm:text-sm text-gray-600 truncate">
+                            <p className="text-sm sm:text-base text-gray-700 font-bold truncate mt-1">
                               Revenue: {totalRevenue.toLocaleString()} AED
                             </p>
                           )}
@@ -379,11 +356,11 @@ export default function PropertyPage({ params }: PageProps) {
                       </div>
                       {isPopular && (
                         <motion.span
-                          whileHover={{ scale: 1.05 }}
-                          className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-[10px] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 shadow-lg flex-shrink-0"
+                          whileHover={{ scale: 1.1, y: -2 }}
+                          className="bg-gradient-to-r from-orange-500 via-orange-600 to-orange-500 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-black flex items-center gap-2 shadow-2xl flex-shrink-0 border-2 border-orange-400/50"
                         >
-                          <TrendingUp className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                          <span className="hidden xs:inline">Popular</span>
+                          <TrendingUp className="w-4 h-4" />
+                          <span className="hidden xs:inline tracking-wide">POPULAR</span>
                         </motion.span>
                       )}
                     </div>
@@ -422,19 +399,19 @@ export default function PropertyPage({ params }: PageProps) {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="sticky top-20"
               >
-                <div className="bg-white border-2 border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
-                  <div className="p-6 sm:p-8">
-                    {/* Price Section */}
-                    <div className="mb-6 pb-6 border-b border-gray-200">
+                <div className="bg-gradient-to-br from-white via-amber-50/20 to-white border-2 border-amber-200/40 rounded-3xl shadow-2xl overflow-hidden">
+                  <div className="p-8 sm:p-10">
+                    {/* Ultra-Premium Price Section */}
+                    <div className="mb-8 pb-8 border-b-2 border-gradient-to-r from-transparent via-amber-300/40 to-transparent">
                       {dailyPrice ? (
                         <>
-                          <div className="text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-                            AED {dailyPrice}
+                          <div className="text-5xl font-black text-gray-900 mb-3 tracking-tight">
+                            <span className="text-2xl font-bold text-amber-700">AED</span> {dailyPrice}
                           </div>
-                          <div className="text-gray-600 font-medium mb-4">per night</div>
+                          <div className="text-gray-600 font-bold text-base uppercase tracking-wider">per night</div>
                         </>
                       ) : (
-                        <div className="text-2xl font-bold text-gray-900 mb-2">Contact for Pricing</div>
+                        <div className="text-3xl font-black text-gray-900 mb-2">Contact for Pricing</div>
                       )}
                     </div>
 
@@ -447,25 +424,32 @@ export default function PropertyPage({ params }: PageProps) {
                       property={property}
                     />
 
-                    {/* Trust Badges */}
-                    <div className="mt-6 pt-6 border-t-2 border-gray-200">
-                      <div className="space-y-3">
+                    {/* Ultra-Premium Trust Badges */}
+                    <div className="mt-8 pt-8 border-t-2 border-amber-200/40">
+                      <div className="space-y-4">
                         {[
-                          { icon: Shield, text: 'Free cancellation' },
-                          { icon: CheckCircle2, text: 'No prepayment needed' },
-                          { icon: Star, text: 'Best price guarantee' },
+                          { icon: Shield, text: 'Free cancellation', color: 'green' },
+                          { icon: CheckCircle2, text: 'No prepayment needed', color: 'blue' },
+                          { icon: Star, text: 'Best price guarantee', color: 'amber' },
                         ].map((item, idx) => (
                           <motion.div
                             key={idx}
                             initial={{ opacity: 0, x: -10 }}
                             animate={bookingInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ delay: 0.5 + idx * 0.1 }}
-                            className="flex items-center gap-3 text-sm text-gray-700"
+                            whileHover={{ scale: 1.03, x: 5 }}
+                            className={`flex items-center gap-4 text-sm font-bold text-gray-800 p-3 rounded-xl bg-gradient-to-r ${item.color === 'green' ? 'from-green-50 to-green-100/50 border border-green-200/50' :
+                                item.color === 'blue' ? 'from-blue-50 to-blue-100/50 border border-blue-200/50' :
+                                  'from-amber-50 to-amber-100/50 border border-amber-200/50'
+                              } shadow-sm hover:shadow-md transition-all duration-300`}
                           >
-                            <div className="p-1.5 bg-green-100 rounded-lg">
-                              <item.icon className="w-4 h-4 text-green-600" />
+                            <div className={`p-2 rounded-lg shadow-lg ${item.color === 'green' ? 'bg-gradient-to-br from-green-500 to-green-600' :
+                                item.color === 'blue' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
+                                  'bg-gradient-to-br from-amber-500 to-amber-600'
+                              }`}>
+                              <item.icon className="w-5 h-5 text-white" />
                             </div>
-                            <span className="font-medium">{item.text}</span>
+                            <span>{item.text}</span>
                           </motion.div>
                         ))}
                       </div>

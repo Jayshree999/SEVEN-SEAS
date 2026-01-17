@@ -59,12 +59,15 @@ export default function Navigation() {
     { name: 'Dining', href: '/dining' },
     { name: 'Wellness', href: '/wellness' },
     { name: 'Entertainment', href: '/entertainment' },
+    { name: 'Meetings', href: '/meetings' },
+    { name: 'Weddings', href: '/weddings' },
+    { name: 'Events', href: '/events-3' },
+    { name: 'Mehfil Ballroom', href: '/mehfil-ballroom' },
   ]
 
   const navItems = [
     { name: 'ROOMS', href: '/rooms' },
     { name: 'EXPERIENCES', href: '/experiences', hasDropdown: true, dropdownKey: 'experiences' },
-    { name: 'MEHFIL BALLROOM', href: '/mehfil-ballroom', hasDropdown: true, dropdownKey: 'mehfil' },
     { name: 'OFFERS & MORE', href: '/offers-and-more', hasDropdown: true, dropdownKey: 'offers' },
   ]
 
@@ -73,11 +76,10 @@ export default function Navigation() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? 'bg-white/98 backdrop-blur-xl shadow-2xl py-2 border-b border-amber-200/30'
-          : 'bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm py-4 border-b border-amber-100/50'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+          ? 'bg-white/98 backdrop-blur-xl shadow-2xl py-1 border-b border-amber-200/30'
+          : 'bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm py-1.5 border-b border-amber-100/50'
+        }`}
     >
       {/* Animated Background Gradient */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -124,7 +126,7 @@ export default function Navigation() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-        <div className="flex items-center justify-between min-h-[60px] sm:min-h-[65px]">
+        <div className="flex items-center justify-between min-h-[50px] sm:min-h-[52px]">
           {/* Logo */}
           <Link href="/">
             <div className="flex items-center cursor-pointer">
@@ -133,7 +135,7 @@ export default function Navigation() {
                 alt="Seven Seas Hotel Dubai"
                 width={180}
                 height={50}
-                className="h-10 sm:h-12 md:h-14 w-auto object-contain"
+                className="h-8 sm:h-9 md:h-10 w-auto object-contain"
                 priority
               />
             </div>
@@ -183,15 +185,15 @@ export default function Navigation() {
                       />
                       <span className="text-gray-700 text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-amber-600 relative z-10 flex items-center gap-1.5">
                         {item.name}
-                        <motion.svg 
+                        <motion.svg
                           className="w-4 h-4"
-                          animate={{ 
-                            rotate: (item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
-                                    (item.dropdownKey === 'offers' && isOffersDropdownOpen) ? 180 : 0 
+                          animate={{
+                            rotate: (item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) ||
+                              (item.dropdownKey === 'offers' && isOffersDropdownOpen) ? 180 : 0
                           }}
                           transition={{ duration: 0.3 }}
-                          fill="none" 
-                          stroke="currentColor" 
+                          fill="none"
+                          stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -202,49 +204,49 @@ export default function Navigation() {
                         transition={{ duration: 0.4, ease: 'easeOut' }}
                       />
                     </motion.div>
-                    
+
                     <AnimatePresence>
-                      {((item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
-                      (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
-                      (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen)) && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                          transition={{ duration: 0.2, type: 'spring', stiffness: 300 }}
-                          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-amber-200 py-2 z-50 overflow-hidden"
-                        >
-                          {/* Solid gradient background */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-yellow-50" />
-                          <div className="relative z-10">
-                          {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem, subIndex) => (
-                            <Link
-                              key={subItem.name}
-                              href={subItem.href}
-                              onClick={() => {
-                                if (item.dropdownKey === 'mehfil') {
-                                  setIsMehfilDropdownOpen(false)
-                                } else if (item.dropdownKey === 'offers') {
-                                  setIsOffersDropdownOpen(false)
-                                } else if (item.dropdownKey === 'experiences') {
-                                  setIsExperiencesDropdownOpen(false)
-                                }
-                              }}
-                            >
-                              <motion.div
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: subIndex * 0.05, type: 'spring' }}
-                                whileHover={{ x: 5, scale: 1.02 }}
-                                className="px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gradient-to-r hover:from-amber-200 hover:to-yellow-200 hover:text-amber-800 transition-all duration-300 rounded-lg mx-2"
-                              >
-                                {subItem.name}
-                              </motion.div>
-                            </Link>
-                          ))}
-                          </div>
-                        </motion.div>
-                      )}
+                      {((item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) ||
+                        (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
+                        (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen)) && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            transition={{ duration: 0.2, type: 'spring', stiffness: 300 }}
+                            className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-amber-200 py-2 z-50 overflow-hidden"
+                          >
+                            {/* Solid gradient background */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-yellow-50" />
+                            <div className="relative z-10">
+                              {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem, subIndex) => (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  onClick={() => {
+                                    if (item.dropdownKey === 'mehfil') {
+                                      setIsMehfilDropdownOpen(false)
+                                    } else if (item.dropdownKey === 'offers') {
+                                      setIsOffersDropdownOpen(false)
+                                    } else if (item.dropdownKey === 'experiences') {
+                                      setIsExperiencesDropdownOpen(false)
+                                    }
+                                  }}
+                                >
+                                  <motion.div
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: subIndex * 0.05, type: 'spring' }}
+                                    whileHover={{ x: 5, scale: 1.02 }}
+                                    className="px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gradient-to-r hover:from-amber-200 hover:to-yellow-200 hover:text-amber-800 transition-all duration-300 rounded-lg mx-2"
+                                  >
+                                    {subItem.name}
+                                  </motion.div>
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
                     </AnimatePresence>
                   </div>
                 ) : (
@@ -291,7 +293,7 @@ export default function Navigation() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </motion.button>
-                
+
                 <AnimatePresence>
                   {isUserMenuOpen && (
                     <motion.div
@@ -330,7 +332,7 @@ export default function Navigation() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.1,
                   boxShadow: '0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.4)',
                   y: -2,
@@ -455,52 +457,52 @@ export default function Navigation() {
                         className="flex items-center justify-between w-full text-black text-base sm:text-lg font-medium uppercase py-2 min-h-[48px]"
                       >
                         <span>{item.name}</span>
-                        <motion.svg 
+                        <motion.svg
                           className="w-5 h-5"
-                          animate={{ 
-                            rotate: (item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
-                                    (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
-                                    (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen) ? 180 : 0 
+                          animate={{
+                            rotate: (item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) ||
+                              (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
+                              (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen) ? 180 : 0
                           }}
                           transition={{ duration: 0.3 }}
-                          fill="none" 
-                          stroke="currentColor" 
+                          fill="none"
+                          stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </motion.svg>
                       </button>
                       <AnimatePresence>
-                        {((item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) || 
+                        {((item.dropdownKey === 'mehfil' && isMehfilDropdownOpen) ||
                           (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
                           (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen)) && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="ml-4 mt-2 space-y-2"
-                          >
-                            {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem) => (
-                              <Link
-                                key={subItem.name}
-                                href={subItem.href}
-                                onClick={() => {
-                                  setIsMenuOpen(false)
-                                  if (item.dropdownKey === 'mehfil') {
-                                    setIsMehfilDropdownOpen(false)
-                                  } else if (item.dropdownKey === 'offers') {
-                                    setIsOffersDropdownOpen(false)
-                                  } else if (item.dropdownKey === 'experiences') {
-                                    setIsExperiencesDropdownOpen(false)
-                                  }
-                                }}
-                                className="block text-gray-600 text-base hover:text-amber-600 transition-colors"
-                              >
-                                {subItem.name}
-                              </Link>
-                            ))}
-                          </motion.div>
-                        )}
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="ml-4 mt-2 space-y-2"
+                            >
+                              {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem) => (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  onClick={() => {
+                                    setIsMenuOpen(false)
+                                    if (item.dropdownKey === 'mehfil') {
+                                      setIsMehfilDropdownOpen(false)
+                                    } else if (item.dropdownKey === 'offers') {
+                                      setIsOffersDropdownOpen(false)
+                                    } else if (item.dropdownKey === 'experiences') {
+                                      setIsExperiencesDropdownOpen(false)
+                                    }
+                                  }}
+                                  className="block text-gray-600 text-base hover:text-amber-600 transition-colors"
+                                >
+                                  {subItem.name}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
                       </AnimatePresence>
                     </div>
                   ) : (

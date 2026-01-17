@@ -105,8 +105,6 @@ export function PropertyInfo({
                 <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-500 text-amber-500 flex-shrink-0" />
                 <span className="font-medium">4.9</span>
               </div>
-              <span className="hidden sm:inline text-gray-400">·</span>
-              <span className="text-gray-600 line-clamp-2">{location || 'Location not available'}</span>
             </div>
           </div>
           {/* Price Display */}

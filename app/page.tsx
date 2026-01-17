@@ -44,9 +44,9 @@ export default function Home() {
       <ParticleBackground />
       <Navigation />
       <HeroSection />
-      
+
       {/* Luxury Stats Banner - Enhanced with better animations */}
-      <motion.section 
+      <motion.section
         className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 text-white overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -71,7 +71,7 @@ export default function Home() {
             />
           </motion.div>
           {/* Animated gradient overlay */}
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80"
             animate={{
               opacity: [0.7, 0.8, 0.7],
@@ -95,7 +95,7 @@ export default function Home() {
             }}
           />
         </div>
-        
+
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -109,7 +109,7 @@ export default function Home() {
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-gray-300 px-2">Our commitment to luxury and service</p>
           </motion.div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             <motion.div
               initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -169,34 +169,34 @@ export default function Home() {
 
       {/* Brands & Outlets Section */}
       <BrandsOutlets />
-      
+
       {/* Accommodation Section - Now with Carousel */}
       <AccommodationSection />
-      
+
       {/* Smart Features Section - New from website */}
       <SmartFeatures />
-      
+
       {/* Explore More Section */}
       <ExploreMore />
-      
+
       {/* Signature Dining Section */}
       <SignatureDining />
-      
+
       {/* Events & Conferences Section */}
       <EventsConferences />
-      
+
       {/* Rovee Arabic Cuisine Section */}
       <RoveeArabicCuisine />
-      
+
       {/* Amenities Gallery Section - Commented out */}
       {/* <AmenitiesGallery /> */}
-      
+
       {/* Nightlife Section */}
       <NightlifeSection />
-      
+
       {/* Oasis Rooftop Poolbar Section */}
       <OasisRooftopPoolbar />
-      
+
       {/* Luxury Video Banner Section */}
       <div style={{ marginTop: '-200px', marginBottom: '-200px' }}>
         <VideoBanner
@@ -207,12 +207,10 @@ export default function Home() {
         />
       </div>
 
-      <div style={{ marginTop: '-200px' }}>
-        <Scene3D />
-      </div>
+
 
       {/* Image Showcase - Enhanced with Carousel */}
-      <motion.section 
+      <motion.section
         className="py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -247,16 +245,16 @@ export default function Home() {
             }}
           />
         </div>
-        
+
         <div className="container mx-auto max-w-7xl relative z-10">
-          <motion.div 
+          <motion.div
             className="text-center mb-10 md:mb-12"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.h2 
+            <motion.h2
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-3 md:mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -266,7 +264,7 @@ export default function Home() {
             >
               DISCOVER OUR WORLD
             </motion.h2>
-            <motion.p 
+            <motion.p
               className="text-base sm:text-lg md:text-xl text-gray-600 px-2"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -278,41 +276,41 @@ export default function Home() {
           </motion.div>
           <ImageCarousel
             items={[
-              { 
-                id: 1, 
-                image: '/hero2.jpg', 
-                title: 'Luxury Lobby', 
-                description: 'Grand entrance with elegant design and world-class hospitality' 
+              {
+                id: 1,
+                image: '/hero2.jpg',
+                title: 'Luxury Lobby',
+                description: 'Grand entrance with elegant design and world-class hospitality'
               },
-              { 
-                id: 2, 
-                image: '/DSC02661-2048x1365.jpg', 
-                title: 'Swimming Pool', 
-                description: 'Infinity pool with breathtaking city views and premium amenities' 
+              {
+                id: 2,
+                image: '/DSC02661-2048x1365.jpg',
+                title: 'Swimming Pool',
+                description: 'Infinity pool with breathtaking city views and premium amenities'
               },
-              { 
-                id: 3, 
-                image: '/019A3962-Enhanced-NR-1-scaled.jpg', 
-                title: 'Fine Dining', 
-                description: 'Award-winning restaurants serving exquisite international cuisine' 
+              {
+                id: 3,
+                image: '/019A3962-Enhanced-NR-1-scaled.jpg',
+                title: 'Fine Dining',
+                description: 'Award-winning restaurants serving exquisite international cuisine'
               },
-              { 
-                id: 4, 
-                image: '/SPA.png', 
-                title: 'Spa & Wellness', 
-                description: 'Rejuvenating treatments and state-of-the-art wellness facilities' 
+              {
+                id: 4,
+                image: '/SPA.png',
+                title: 'Spa & Wellness',
+                description: 'Rejuvenating treatments and state-of-the-art wellness facilities'
               },
-              { 
-                id: 5, 
-                image: '/Meeting-Room.png', 
-                title: 'Executive Lounge', 
-                description: 'Exclusive business facilities for corporate travelers' 
+              {
+                id: 5,
+                image: '/Meeting-Room.png',
+                title: 'Executive Lounge',
+                description: 'Exclusive business facilities for corporate travelers'
               },
-              { 
-                id: 6, 
-                image: '/DSC02661-2048x1365.jpg', 
-                title: 'Rooftop Terrace', 
-                description: 'Stunning panoramic views of Dubai skyline' 
+              {
+                id: 6,
+                image: '/DSC02661-2048x1365.jpg',
+                title: 'Rooftop Terrace',
+                description: 'Stunning panoramic views of Dubai skyline'
               },
             ]}
             autoPlay={true}
@@ -344,7 +342,7 @@ export default function Home() {
 
       {/* Gallery Preview Section - Commented out */}
       {/* <GalleryPreview /> */}
-      
+
       {/* Video Section - Dining Experience */}
       <VideoSection
         videoUrl="https://sevenseashotel.ae/wp-content/uploads/2022/04/hotel-video.mp4"
@@ -354,10 +352,10 @@ export default function Home() {
       />
 
       <OffersSection />
-      
+
       {/* News & Events Section */}
       <NewsEvents />
-      
+
       {/* Hotel Policies Section */}
       <HotelPolicies />
 
@@ -387,28 +385,28 @@ export default function Home() {
       >
         <CTA />
       </motion.div>
-      
+
       <Footer />
 
       {/* ============================================
           ADDITIONAL SECTIONS (COMMENTED - Can be added if needed)
           ============================================ */}
-      
+
       {/* Testimonials Section - Uncomment to add customer reviews */}
       {/* <Testimonials /> */}
-      
+
       {/* Virtual Tour Section - Uncomment to add 360° hotel tour */}
       {/* <VirtualTourSection /> */}
-      
+
       {/* Location Map Section - Uncomment to add interactive map */}
       {/* <LocationMapSection /> */}
-      
+
       {/* Awards & Recognition Section - Uncomment to showcase awards */}
       {/* <AwardsSection /> */}
-      
+
       {/* Sustainability Section - Uncomment to add eco-friendly initiatives */}
       {/* <SustainabilitySection /> */}
-      
+
       {/* Partnership Section - Uncomment to add partner logos */}
       {/* <PartnershipSection /> */}
     </main>
