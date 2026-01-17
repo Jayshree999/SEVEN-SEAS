@@ -110,7 +110,7 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
     queryParams.append('filters[area]', '')
   }
 
-  const url = `https://api.dubaibooking.io/api/v1/property/property?${queryParams.toString()}`
+  const url = `https://api.sevenseashotel.ae/api/v1/property/property?${queryParams.toString()}`
 
   try {
     const response = await fetch(url, {

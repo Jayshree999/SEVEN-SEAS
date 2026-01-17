@@ -19,6 +19,7 @@ interface User {
   fullName: string
   email: string
   phone?: string | null
+  profileImg?: string | null
 }
 
 interface AuthContextType {
