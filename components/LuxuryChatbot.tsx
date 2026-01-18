@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { MessageCircle, X, Send, Sparkles, ChevronUp, ChevronDown, Home, MapPin, Calendar, Phone, Mail, Star, Shield, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 
 interface Message {
   id: string
@@ -126,14 +127,14 @@ export function LuxuryChatbot() {
 
   const getAutoReply = (userMessage: string): { text: string; quickActions?: QuickAction[] } => {
     const lowerMessage = userMessage.toLowerCase().trim()
-    
+
     // Check for keywords
     for (const [keyword, reply] of Object.entries(AUTO_REPLIES)) {
       if (lowerMessage.includes(keyword)) {
         return reply
       }
     }
-    
+
     // Check for specific patterns
     if (lowerMessage.includes('room') || lowerMessage.includes('stay') || lowerMessage.includes('accommodation') || lowerMessage.includes('suite')) {
       return {
@@ -143,23 +144,23 @@ export function LuxuryChatbot() {
         ]
       }
     }
-    
+
     if (lowerMessage.includes('book') || lowerMessage.includes('reserve') || lowerMessage.includes('rent')) {
       return AUTO_REPLIES.booking
     }
-    
+
     if (lowerMessage.includes('when') || lowerMessage.includes('date') || lowerMessage.includes('available')) {
       return AUTO_REPLIES.availability
     }
-    
+
     if (lowerMessage.includes('cost') || lowerMessage.includes('pay') || lowerMessage.includes('rate') || lowerMessage.includes('price')) {
       return AUTO_REPLIES.price
     }
-    
+
     if (lowerMessage.includes('where') || lowerMessage.includes('area') || lowerMessage.includes('place') || lowerMessage.includes('location')) {
       return AUTO_REPLIES.location
     }
-    
+
     if (lowerMessage.includes('feature') || lowerMessage.includes('facility') || lowerMessage.includes('service') || lowerMessage.includes('amenit')) {
       return AUTO_REPLIES.amenities
     }
@@ -167,7 +168,7 @@ export function LuxuryChatbot() {
     if (lowerMessage.includes('dining') || lowerMessage.includes('restaurant') || lowerMessage.includes('food') || lowerMessage.includes('eat')) {
       return AUTO_REPLIES.dining
     }
-    
+
     return AUTO_REPLIES.default
   }
 
@@ -214,6 +215,12 @@ export function LuxuryChatbot() {
     }
   }
 
+  const pathname = usePathname()
+
+  if (pathname?.startsWith('/rooms/')) {
+    return null
+  }
+
   return (
     <>
       {/* Chat Button */}
@@ -240,9 +247,8 @@ export function LuxuryChatbot() {
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] rounded-2xl shadow-2xl border border-gray-200 bg-white transition-all duration-300 overflow-hidden ${
-            isMinimized ? 'h-14 sm:h-16' : 'h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px]'
-          }`}
+          className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] w-[calc(100vw-2rem)] sm:w-[380px] max-w-[380px] rounded-2xl shadow-2xl border border-gray-200 bg-white transition-all duration-300 overflow-hidden ${isMinimized ? 'h-14 sm:h-16' : 'h-[calc(100vh-8rem)] sm:h-[600px] max-h-[600px]'
+            }`}
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 p-3 sm:p-4 flex items-center justify-between shadow-lg">
@@ -290,9 +296,8 @@ export function LuxuryChatbot() {
                 {messages.map((message) => (
                   <div key={message.id} className="space-y-2">
                     <div
-                      className={`flex gap-2 ${
-                        message.sender === 'user' ? 'justify-end' : 'justify-start'
-                      }`}
+                      className={`flex gap-2 ${message.sender === 'user' ? 'justify-end' : 'justify-start'
+                        }`}
                     >
                       {message.sender === 'bot' && (
                         <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center flex-shrink-0 shadow-lg">
@@ -300,11 +305,10 @@ export function LuxuryChatbot() {
                         </div>
                       )}
                       <div
-                        className={`max-w-[85%] sm:max-w-[80%] rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 shadow-md ${
-                          message.sender === 'user'
-                            ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white'
-                            : 'bg-gray-50 text-gray-900 border border-gray-200'
-                        }`}
+                        className={`max-w-[85%] sm:max-w-[80%] rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-2.5 shadow-md ${message.sender === 'user'
+                          ? 'bg-gradient-to-r from-gray-800 to-gray-900 text-white'
+                          : 'bg-gray-50 text-gray-900 border border-gray-200'
+                          }`}
                       >
                         <p className="text-xs sm:text-sm whitespace-pre-line leading-relaxed">{message.text}</p>
                         <span className="text-[10px] sm:text-xs opacity-70 mt-1 block">
@@ -334,7 +338,7 @@ export function LuxuryChatbot() {
                     )}
                   </div>
                 ))}
-                
+
                 {isTyping && (
                   <div className="flex gap-2 justify-start">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-gray-700 to-gray-800 flex items-center justify-center flex-shrink-0">
