@@ -7,12 +7,14 @@ interface BackgroundVideoProps {
   videoUrl?: string
   className?: string
   opacity?: number
+  videoType?: string
 }
 
 export default function BackgroundVideo({
   videoUrl,
   className = '',
   opacity = 0.3,
+  videoType = 'video/mp4',
 }: BackgroundVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isMounted, setIsMounted] = useState(false)
@@ -59,7 +61,7 @@ export default function BackgroundVideo({
             ...({ WebkitImageRendering: 'auto' } as React.CSSProperties)
           }}
         >
-          <source src={videoUrl} type="video/mp4" />
+          <source src={videoUrl} type={videoType} />
         </video>
       )}
     </div>

@@ -12,25 +12,25 @@ export default function HeroSection() {
 
   useEffect(() => {
     const tl = gsap.timeline()
-    
+
     tl.from('.hero-title', {
       y: 100,
       opacity: 0,
       duration: 1.2,
       ease: 'power4.out'
     })
-    .from('.hero-subtitle', {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: 'power3.out'
-    }, '-=0.5')
-    .from('.hero-buttons', {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out'
-    }, '-=0.3')
+      .from('.hero-subtitle', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out'
+      }, '-=0.5')
+      .from('.hero-buttons', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.3')
   }, [])
 
   return (
@@ -39,8 +39,8 @@ export default function HeroSection() {
       className="relative h-screen flex items-center justify-center overflow-hidden bg-white"
     >
       {/* Background Video */}
-      <BackgroundVideo videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/11/Seven-Seas-Hotel-Intro-for-event.mp4" opacity={1.0} />
-      
+      <BackgroundVideo videoUrl="/hero.MOV" opacity={1.0} />
+
       {/* Subtle overlay only for text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-[5]" />
 
@@ -58,7 +58,7 @@ export default function HeroSection() {
         >
           <span className="relative z-10 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">SEVEN SEAS</span>
         </motion.h1>
-        
+
         <motion.p
           className="hero-subtitle text-base sm:text-xl md:text-2xl lg:text-4xl text-gray-100 mb-3 sm:mb-4 font-light tracking-[0.2em] px-2"
           style={{
