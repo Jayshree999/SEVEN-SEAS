@@ -1,122 +1,158 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Grid, Heart, Share, X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { toggleWatchlist } from '@/lib/user'
-import { useAuth } from '@/contexts/AuthContext'
-import { Property } from '@/lib/api'
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Grid, Heart, Share, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { toggleWatchlist } from "@/lib/user";
+import { useAuth } from "@/contexts/AuthContext";
+import { Property } from "@/lib/api";
 
 interface PropertyGalleryProps {
-  images?: Array<{ url: string; category?: string; _id?: string }> | string[]
-  propertyData?: Property | null
+  images?: Array<{ url: string; category?: string; _id?: string }> | string[];
+  propertyData?: Property | null;
 }
 
 const getAllImagesFlattened = (images: any[]) => {
-  return images.map((img: any) => (typeof img === 'object' && img.url ? img.url : img))
-}
+  return images.map((img: any) =>
+    typeof img === "object" && img.url ? img.url : img,
+  );
+};
 
-export function PropertyGallery({ images = [], propertyData }: PropertyGalleryProps) {
-  const [isSaved, setIsSaved] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [showAllPhotos, setShowAllPhotos] = useState(false)
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(-1)
-  const { isAuth, user } = useAuth()
+export function PropertyGallery({
+  images = [],
+  propertyData,
+}: PropertyGalleryProps) {
+  const [isSaved, setIsSaved] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showAllPhotos, setShowAllPhotos] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(-1);
+  const { isAuth, user } = useAuth();
 
   // Normalize images array
-  const normalizedImages = images.map((img: any) => 
-    typeof img === 'string' ? { url: img } : img
-  )
+  const normalizedImages = images.map((img: any) =>
+    typeof img === "string" ? { url: img } : img,
+  );
 
-  const allImages = getAllImagesFlattened(normalizedImages)
-  const displayImages = normalizedImages.slice(0, 5)
-  const remainingCount = Math.max(0, normalizedImages.length - 5)
+  const allImages = getAllImagesFlattened(normalizedImages);
+  const displayImages = normalizedImages.slice(0, 5);
+  const remainingCount = Math.max(0, normalizedImages.length - 5);
 
   const handleWishlistToggle = async () => {
-    if (!propertyData?._id || !isAuth) return
+    if (!propertyData?._id || !isAuth) return;
 
     try {
-      setIsAnimating(true)
-      const newSavedState = !isSaved
-      setIsSaved(newSavedState)
+      setIsAnimating(true);
+      const newSavedState = !isSaved;
+      setIsSaved(newSavedState);
 
-      await toggleWatchlist(propertyData._id, newSavedState ? 'save' : 'unsave')
+      await toggleWatchlist(
+        propertyData._id,
+        newSavedState ? "save" : "unsave",
+      );
     } catch (error) {
-      console.error('Error updating wishlist:', error)
-      setIsSaved((prev) => !prev)
+      console.error("Error updating wishlist:", error);
+      setIsSaved((prev) => !prev);
     } finally {
       setTimeout(() => {
-        setIsAnimating(false)
-      }, 1000)
+        setIsAnimating(false);
+      }, 1000);
     }
-  }
+  };
 
   const handleShare = async () => {
-    const currentUrl = window.location.href
+    const currentUrl = window.location.href;
     const shareData = {
-      title: propertyData?.title || propertyData?.name || 'Property',
+      title: propertyData?.title || propertyData?.name || "Property",
       text: `Check out this property: ${propertyData?.title || propertyData?.name}`,
       url: currentUrl,
-    }
+    };
 
     try {
       if (navigator.share) {
-        await navigator.share(shareData)
+        await navigator.share(shareData);
       } else {
-        await navigator.clipboard.writeText(`${shareData.text}\n\nView property at: ${shareData.url}`)
+        await navigator.clipboard.writeText(
+          `${shareData.text}\n\nView property at: ${shareData.url}`,
+        );
       }
     } catch (error) {
-      console.error('Error sharing:', error)
+      console.error("Error sharing:", error);
     }
-  }
+  };
 
   const openImageModal = (image: any, index: number) => {
-    const imageUrl = typeof image === 'string' ? image : image.url
-    setSelectedImage(imageUrl)
-    setSelectedImageIndex(index)
-    setShowAllPhotos(false)
-  }
+    const imageUrl = typeof image === "string" ? image : image.url;
+    setSelectedImage(imageUrl);
+    setSelectedImageIndex(index);
+    setShowAllPhotos(false);
+  };
 
   const handleNextImage = () => {
-    if (allImages.length <= 1) return
-    const nextIndex = (selectedImageIndex + 1) % allImages.length
-    setSelectedImage(allImages[nextIndex])
-    setSelectedImageIndex(nextIndex)
-  }
+    if (allImages.length <= 1) return;
+    const nextIndex = (selectedImageIndex + 1) % allImages.length;
+    setSelectedImage(allImages[nextIndex]);
+    setSelectedImageIndex(nextIndex);
+  };
 
   const handlePreviousImage = () => {
-    if (allImages.length <= 1) return
-    const prevIndex = (selectedImageIndex - 1 + allImages.length) % allImages.length
-    setSelectedImage(allImages[prevIndex])
-    setSelectedImageIndex(prevIndex)
-  }
+    if (allImages.length <= 1) return;
+    const prevIndex =
+      (selectedImageIndex - 1 + allImages.length) % allImages.length;
+    setSelectedImage(allImages[prevIndex]);
+    setSelectedImageIndex(prevIndex);
+  };
+
+  // Lock body scroll when modals are open
+  useEffect(() => {
+    if (showAllPhotos || selectedImage) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+
+      // Lock body scroll
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
+
+      return () => {
+        // Restore body scroll
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        document.body.style.overflow = "";
+
+        // Restore scroll position
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [showAllPhotos, selectedImage]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedImage) return
+      if (!selectedImage) return;
 
-      if (e.key === 'ArrowRight') {
-        handleNextImage()
-      } else if (e.key === 'ArrowLeft') {
-        handlePreviousImage()
-      } else if (e.key === 'Escape') {
-        setSelectedImage(null)
-        setSelectedImageIndex(-1)
+      if (e.key === "ArrowRight") {
+        handleNextImage();
+      } else if (e.key === "ArrowLeft") {
+        handlePreviousImage();
+      } else if (e.key === "Escape") {
+        setSelectedImage(null);
+        setSelectedImageIndex(-1);
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [selectedImage, selectedImageIndex])
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage, selectedImageIndex]);
 
   if (normalizedImages.length === 0) {
     return (
       <div className="relative w-full h-[400px] bg-gray-200 rounded-xl flex items-center justify-center">
         <p className="text-gray-500">No images available</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -127,7 +163,7 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
           {displayImages[0] && (
             <div className="relative col-span-1 sm:col-span-2 sm:row-span-2 rounded-none sm:rounded-t-none sm:rounded-l-xl overflow-hidden">
               <Image
-                src={displayImages[0]?.url || '/placeholder.svg'}
+                src={displayImages[0]?.url || "/placeholder.svg"}
                 alt="Property main image"
                 fill
                 className="object-cover cursor-pointer transition-transform hover:scale-105"
@@ -143,14 +179,14 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
               key={index}
               className={`hidden sm:block relative ${
                 index === displayImages.length - 2
-                  ? 'rounded-tr-xl'
+                  ? "rounded-tr-xl"
                   : index === displayImages.length - 1
-                    ? 'rounded-br-xl'
-                    : ''
+                    ? "rounded-br-xl"
+                    : ""
               }`}
             >
               <Image
-                src={image?.url || '/placeholder.svg'}
+                src={image?.url || "/placeholder.svg"}
                 alt={`Property image ${index + 2}`}
                 fill
                 className="object-cover cursor-pointer transition-transform hover:scale-105"
@@ -159,7 +195,9 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
               />
               {index === displayImages.length - 1 && remainingCount > 0 && (
                 <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <span className="text-white text-lg font-medium">+{remainingCount} more</span>
+                  <span className="text-white text-lg font-medium">
+                    +{remainingCount} more
+                  </span>
                 </div>
               )}
             </div>
@@ -179,13 +217,13 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
             <button
               onClick={handleWishlistToggle}
               className={`bg-white/80 hover:bg-white transition-all duration-300 rounded-full p-2 sm:p-2.5 touch-manipulation ${
-                isAnimating ? 'scale-125' : 'scale-100'
+                isAnimating ? "scale-125" : "scale-100"
               }`}
               aria-label="Save to wishlist"
             >
               <Heart
                 className={`h-4 w-4 sm:h-5 sm:w-5 transition-all duration-300 ${
-                  isSaved ? 'fill-red-500 text-red-500' : 'text-gray-500'
+                  isSaved ? "fill-red-500 text-red-500" : "text-gray-500"
                 }`}
               />
             </button>
@@ -206,11 +244,13 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
 
       {/* Show All Photos Modal */}
       {showAllPhotos && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-0 sm:p-4">
-          <div className="relative w-full max-w-7xl h-full sm:h-[90vh] overflow-y-auto bg-white">
+        <div className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-0 sm:p-4 overflow-hidden">
+          <div className="relative w-full max-w-7xl h-full sm:h-[90vh] overflow-y-auto bg-white rounded-none sm:rounded-xl">
             <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b p-3 sm:p-4">
               <div className="flex items-center justify-between max-w-6xl mx-auto">
-                <h1 className="text-lg sm:text-2xl font-semibold">All Photos</h1>
+                <h1 className="text-lg sm:text-2xl font-semibold">
+                  All Photos
+                </h1>
                 <button
                   onClick={() => setShowAllPhotos(false)}
                   className="rounded-full hover:bg-gray-100 p-2 touch-manipulation"
@@ -233,7 +273,7 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
                     onClick={() => openImageModal(image, index)}
                   >
                     <Image
-                      src={image.url || '/placeholder.svg'}
+                      src={image.url || "/placeholder.svg"}
                       alt={`Property image ${index + 1}`}
                       fill
                       className="object-cover transition duration-300 hover:scale-105"
@@ -249,12 +289,12 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
 
       {/* Individual Image Modal */}
       {selectedImage && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-0 sm:p-4">
+        <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-0 sm:p-4 overflow-hidden">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
               onClick={() => {
-                setSelectedImage(null)
-                setSelectedImageIndex(-1)
+                setSelectedImage(null);
+                setSelectedImageIndex(-1);
               }}
               className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 p-2.5 sm:p-3 touch-manipulation"
               aria-label="Close"
@@ -302,7 +342,5 @@ export function PropertyGallery({ images = [], propertyData }: PropertyGalleryPr
         </div>
       )}
     </>
-  )
+  );
 }
-
-
