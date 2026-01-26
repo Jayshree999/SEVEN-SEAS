@@ -8,6 +8,7 @@ interface BackgroundVideoProps {
   className?: string
   opacity?: number
   videoType?: string
+  isMuted?: boolean
 }
 
 export default function BackgroundVideo({
@@ -15,6 +16,7 @@ export default function BackgroundVideo({
   className = '',
   opacity = 0.3,
   videoType = 'video/mp4',
+  isMuted = true,
 }: BackgroundVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isMounted, setIsMounted] = useState(false)
@@ -49,7 +51,7 @@ export default function BackgroundVideo({
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           loop
-          muted
+          muted={isMuted}
           playsInline
           preload="auto"
           style={{

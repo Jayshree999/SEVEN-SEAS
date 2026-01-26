@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import Link from 'next/link'
@@ -8,6 +8,7 @@ import BackgroundVideo from './BackgroundVideo'
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLDivElement>(null)
+  const [isMuted, setIsMuted] = useState(true)
   // Optimized: Removed parallax scroll for better performance
 
   useEffect(() => {
@@ -39,7 +40,25 @@ export default function HeroSection() {
       className="relative h-screen flex items-center justify-center overflow-hidden bg-white"
     >
       {/* Background Video */}
-      <BackgroundVideo videoUrl="/hero.MOV" opacity={1.0} />
+      <BackgroundVideo videoUrl="/hero.mp4" opacity={1.0} isMuted={isMuted} />
+
+      {/* Sound Toggle Button */}
+      <div className="absolute top-24 right-4 z-30">
+        <button
+          onClick={() => setIsMuted(!isMuted)}
+          className="p-3 bg-black/30 backdrop-blur-md rounded-full text-white hover:bg-black/50 transition-colors border border-white/20"
+        >
+          {isMuted ? (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.75-4.75 4.5 4.5m-4.5-4.5v12m-4.5-4.5-4.75 4.75A9 9 0 0 1 3 12a9 9 0 0 1 9-9Z" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.75-4.75 4.5 4.5m-4.5-4.5v12m-4.5-4.5-4.75 4.75A9 9 0 0 1 3 12a9 9 0 0 1 9-9Z" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* Subtle overlay only for text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-[5]" />
@@ -81,23 +100,23 @@ export default function HeroSection() {
           className="hero-buttons flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-2"
         >
           <Link href="/rooms" className="w-full sm:w-auto">
-            <motion.button
+            <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto px-10 py-4 bg-white text-black font-semibold text-sm sm:text-base tracking-[0.15em] hover:bg-gray-100 transition-all duration-300 shadow-[0_4px_14px_0_rgba(255,255,255,0.39)]"
+              className="w-full sm:w-auto px-10 py-4 bg-white text-black font-semibold text-center text-sm sm:text-base tracking-[0.15em] hover:bg-gray-100 transition-all duration-300 shadow-[0_4px_14px_0_rgba(255,255,255,0.39)] cursor-pointer"
             >
               BOOK YOUR STAY
-            </motion.button>
+            </motion.div>
           </Link>
 
           <Link href="/about-us" className="w-full sm:w-auto">
-            <motion.button
+            <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto px-10 py-4 border border-white/30 backdrop-blur-sm text-white font-semibold text-sm sm:text-base tracking-[0.15em] hover:bg-white/10 transition-colors duration-300"
+              className="w-full sm:w-auto px-10 py-4 border border-white/30 backdrop-blur-sm text-white font-semibold text-center text-sm sm:text-base tracking-[0.15em] hover:bg-white/10 transition-colors duration-300 cursor-pointer"
             >
               EXPLORE
-            </motion.button>
+            </motion.div>
           </Link>
         </motion.div>
 

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Globe } from 'lucide-react'
+import BackgroundVideo from './BackgroundVideo'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -73,21 +74,12 @@ export default function Footer() {
     >
       {/* Video Background */}
       <div className="absolute inset-0 overflow-hidden z-0">
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          style={{
-            opacity: 0.4,
-            filter: 'brightness(0.7)',
-          }}
-        >
-          <source src="/footer.mp4" type="video/mp4" />
-        </video>
+        <BackgroundVideo
+          videoUrl="/footer.mp4"
+          opacity={0.4}
+          isMuted={true}
+          className="brightness-[0.7]"
+        />
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-[#191f3b]/80"></div>
       </div>
