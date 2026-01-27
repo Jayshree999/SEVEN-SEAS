@@ -7,6 +7,7 @@ import FloatingGoldParticles from '@/components/FloatingGoldParticles'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { LuxuryChatbot } from '@/components/LuxuryChatbot'
 import { Toaster } from 'sonner'
+import Providers from './providers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -56,14 +57,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
-        <AuthProvider>
-          <LoadingScreen />
-          {/* Optimized: Only show particles on home page, removed from global layout */}
-          {children}
-          <ScrollToTop />
-          <LuxuryChatbot />
-          <Toaster position="top-right" richColors />
-        </AuthProvider>
+        <Providers>
+          <AuthProvider>
+            <LoadingScreen />
+            {/* Optimized: Only show particles on home page, removed from global layout */}
+            {children}
+            <ScrollToTop />
+            <LuxuryChatbot />
+            <Toaster position="top-right" richColors />
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   )
