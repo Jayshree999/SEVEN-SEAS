@@ -1,4 +1,4 @@
-              # Seven Seas Hotel Dubai - Luxury 4 Star Hotel Website
+               # Seven Seas Hotel Dubai - Luxury 4 Star Hotel Website
 
 A clean, modern, and highly animated website for a luxury 4-star hotel in Dubai built with Next.js, Three.js, and Framer Motion. Features a sophisticated white and black design with smooth animations and 3D elements.
 ,,,
