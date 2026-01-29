@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -12,6 +12,14 @@ import Image from 'next/image'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 
 export default function SignupPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignupForm />
+    </Suspense>
+  )
+}
+
+function SignupForm() {
   const { signup, googleLogin } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
