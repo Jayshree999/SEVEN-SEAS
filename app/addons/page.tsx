@@ -101,17 +101,30 @@ export default function AddonsPage() {
                             <div className="mb-8">
                                 <h4 className="font-semibold text-gray-700 mb-3 uppercase text-xs tracking-wider">Categories</h4>
                                 <div className="space-y-1">
-                                    {categoryOptions.map((cat) => (
+                                    <button
+                                        onClick={() => setSelectedCategory('all')}
+                                        className={`w-full flex items-center px-3 py-2 rounded-lg text-sm transition-all ${selectedCategory === 'all'
+                                            ? 'bg-amber-50 text-amber-700 font-semibold'
+                                            : 'text-gray-600 hover:bg-gray-50'
+                                            }`}
+                                    >
+                                        <Star className={`w-4 h-4 mr-3 ${selectedCategory === 'all' ? 'text-amber-500' : 'text-gray-400'}`} />
+                                        All Experiences
+                                    </button>
+                                    {categories.map((cat: any) => (
                                         <button
-                                            key={cat.value}
-                                            onClick={() => setSelectedCategory(cat.value)}
-                                            className={`w-full flex items-center px-3 py-2 rounded-lg text-sm transition-all ${selectedCategory === cat.value
+                                            key={cat._id}
+                                            onClick={() => setSelectedCategory(cat.slug)}
+                                            className={`w-full flex items-center px-3 py-2 rounded-lg text-sm transition-all ${selectedCategory === cat.slug
                                                 ? 'bg-amber-50 text-amber-700 font-semibold'
                                                 : 'text-gray-600 hover:bg-gray-50'
                                                 }`}
                                         >
-                                            <cat.icon className={`w-4 h-4 mr-3 ${selectedCategory === cat.value ? 'text-amber-500' : 'text-gray-400'}`} />
-                                            {cat.label}
+                                            <div className={`w-1.5 h-1.5 rounded-full mr-4 ${selectedCategory === cat.slug ? 'bg-amber-500' : 'bg-gray-300'}`} />
+                                            <span className="flex-1 text-left">{cat.name}</span>
+                                            <span className="text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-gray-400">
+                                                {cat.addonCount}
+                                            </span>
                                         </button>
                                     ))}
                                 </div>
@@ -135,11 +148,12 @@ export default function AddonsPage() {
                                         <button
                                             key={vendor._id}
                                             onClick={() => setSelectedVendor(vendor._id)}
-                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all truncate ${selectedVendor === vendor._id
+                                            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all truncate flex items-center ${selectedVendor === vendor._id
                                                 ? 'bg-amber-50 text-amber-700 font-semibold'
                                                 : 'text-gray-600 hover:bg-gray-50'
                                                 }`}
                                         >
+                                            <div className={`w-2 h-2 rounded-sm mr-3 ${selectedVendor === vendor._id ? 'bg-amber-500 shadow-sm' : 'bg-gray-200'}`} />
                                             {vendor.restaurantName || vendor.fullName}
                                         </button>
                                     ))}

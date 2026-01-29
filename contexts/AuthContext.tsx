@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import {
   login as loginApi,
   signup as signupApi,
+  partnerSignup as partnerSignupApi,
   logout as logoutApi,
   googleLogin as googleLoginApi,
   getStoredUser,
@@ -26,7 +27,7 @@ interface AuthContextType {
   user: User | null
   loading: boolean
   login: (credentials: LoginCredentials) => Promise<void>
-  signup: (userData: SignupData) => Promise<void>
+  signup: (userData: SignupData, isPartner?: boolean) => Promise<void>
   googleLogin: (credential: string) => Promise<void>
   logout: () => void
   isAuth: boolean
@@ -80,9 +81,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const signup = async (userData: SignupData) => {
+  const signup = async (userData: SignupData, isPartner: boolean = false) => {
     try {
-      const response: AuthResponse = await signupApi(userData)
+      const response: AuthResponse = isPartner
+        ? await partnerSignupApi(userData)
+        : await signupApi(userData)
+
       const userDataFromResponse = response.user || response.data?.user
       if (userDataFromResponse) {
         setUser(userDataFromResponse)

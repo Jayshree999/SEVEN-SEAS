@@ -3,24 +3,36 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
+import { useEffect } from 'react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google'
 
 export default function SignupPage() {
+  const { signup, googleLogin } = useAuth()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+  const [isPartner, setIsPartner] = useState(!!token)
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     password: '',
     phone: '',
+    restaurantName: '',
   })
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const { signup, googleLogin } = useAuth()
-  const router = useRouter()
+
+  useEffect(() => {
+    if (token) {
+      setIsPartner(true);
+    }
+  }, [token]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -71,7 +83,9 @@ export default function SignupPage() {
         email: formData.email,
         password: formData.password,
         phone: formData.phone,
-      })
+        restaurantName: formData.restaurantName,
+        token: token || undefined
+      }, isPartner)
       router.push('/')
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please try again.')
@@ -130,8 +144,12 @@ export default function SignupPage() {
                     className="mx-auto h-12 w-auto object-contain"
                   />
                 </motion.div>
-                <h1 className="text-2xl font-bold text-white mt-4">Create Account</h1>
-                <p className="text-amber-100 mt-2">Join us for exclusive benefits</p>
+                <h1 className="text-2xl font-bold text-white mt-4">
+                  {isPartner ? 'Partner Registration' : 'Create Account'}
+                </h1>
+                <p className="text-amber-100 mt-2">
+                  {isPartner ? 'Set up your restaurant manager account' : 'Join us for exclusive benefits'}
+                </p>
               </div>
 
               {/* Form */}
@@ -222,6 +240,25 @@ export default function SignupPage() {
                       placeholder="+971 50 123 4567"
                     />
                   </div>
+
+                  {/* Restaurant Name (Partner only) */}
+                  {isPartner && (
+                    <div>
+                      <label htmlFor="restaurantName" className="block text-sm font-medium text-gray-700 mb-2">
+                        Restaurant Name
+                      </label>
+                      <input
+                        type="text"
+                        id="restaurantName"
+                        name="restaurantName"
+                        value={formData.restaurantName}
+                        onChange={handleChange}
+                        required={isPartner}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+                        placeholder="The Garden Grill"
+                      />
+                    </div>
+                  )}
 
                   {/* Password */}
                   <div>

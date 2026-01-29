@@ -10,8 +10,7 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use((config) => {
     // Add organization header
-    const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
-    const organization = hostname === 'localhost' ? 'sevenseas' : 'sevenseas';
+    const organization = process.env.NEXT_PUBLIC_ORGANIZATION || 'sevenseas';
     config.headers.set('x-organisation', organization);
 
     // Add auth token if available
@@ -56,6 +55,7 @@ export const getPublicAddons = async (filters?: {
     limit?: number;
     category?: string;
     search?: string;
+    vendor?: string;
     minPrice?: number;
     maxPrice?: number;
     featured?: boolean;

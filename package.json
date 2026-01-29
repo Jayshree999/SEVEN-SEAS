@@ -14,6 +14,7 @@
     "@react-three/fiber": "^8.15.11",
     "@tanstack/react-query": "^5.90.20",
     "axios": "^1.13.3",
+    "date-fns": "^4.1.0",
     "framer-motion": "^10.16.16",
     "gsap": "^3.12.2",
     "lucide-react": "^0.562.0",

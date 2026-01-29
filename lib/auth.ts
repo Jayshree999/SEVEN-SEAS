@@ -14,6 +14,8 @@ export interface SignupData {
   email: string
   password: string
   phone: string
+  restaurantName?: string
+  token?: string
 }
 
 export interface AuthResponse {
@@ -134,6 +136,41 @@ export async function signup(userData: SignupData): Promise<AuthResponse> {
     return data
   } catch (error) {
     console.error('Signup error:', error)
+    throw error
+  }
+}
+
+/**
+ * Partner signup/registration (for F&B Vendors with invitations)
+ */
+export async function partnerSignup(userData: SignupData): Promise<AuthResponse> {
+  try {
+    const response = await fetch(`${API_URL}/api/v1/fb-invitations/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-organisation': 'sevenseas',
+      },
+      body: JSON.stringify(userData),
+    })
+
+    const data: AuthResponse = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Partner registration failed')
+    }
+
+    const token = data.token || data.data?.token || data.data?.accessToken
+    const userDataFromResponse = data.user || data.data?.user
+
+    if (token && userDataFromResponse) {
+      localStorage.setItem('auth_token', token)
+      localStorage.setItem('user', JSON.stringify(userDataFromResponse))
+    }
+
+    return data
+  } catch (error) {
+    console.error('Partner signup error:', error)
     throw error
   }
 }

@@ -23,12 +23,16 @@ export default function Footer() {
     hotel: [
       { name: 'About Us', href: '/about-us' },
       { name: 'Our Rooms', href: '/rooms' },
+      { name: 'Facilities', href: '/facilities' },
+      { name: 'Media Showcase', href: '/media' },
       { name: 'Gallery', href: '/gallery' },
       { name: 'Services', href: '/services' },
     ],
     services: [
       { name: 'Dining', href: '/dining' },
       { name: 'Spa & Wellness', href: '/wellness' },
+      { name: 'Experiences', href: '/addons' },
+      { name: 'F&B Partners', href: '/fnb' },
       { name: 'Events', href: '/events-3' },
       { name: 'Concierge', href: '/contact' },
     ],
@@ -42,6 +46,7 @@ export default function Footer() {
     company: [
       { name: 'Company', href: '/company' },
       { name: 'About', href: '/about-us' },
+      { name: 'Our Team', href: '/our-team' },
       { name: 'Our Apps', href: '/company/apps' },
       { name: 'Contact', href: '/contact' },
       { name: 'Corporate Contact', href: '/company/corporate' },
