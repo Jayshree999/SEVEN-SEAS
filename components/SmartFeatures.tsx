@@ -2,32 +2,110 @@
 
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
-import { Key, Lock, Utensils, Sparkles } from 'lucide-react'
+
+// Custom Premium SVG Icons
+const SmartKeyIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      {/* Card body */}
+      <rect x="8" y="16" width="48" height="32" rx="4" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Chip */}
+      <rect x="14" y="22" width="12" height="10" rx="1.5" fill="currentColor" fillOpacity="0.4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Signal waves */}
+      <path d="M38 26C40 26 42 27.5 42 29.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <path d="M44 24C47 24 50 26.5 50 30" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      {/* Security dots */}
+      <circle cx="40" cy="38" r="1.5" fill="currentColor"/>
+      <circle cx="46" cy="38" r="1.5" fill="currentColor"/>
+      <circle cx="52" cy="38" r="1.5" fill="currentColor"/>
+    </g>
+  </svg>
+)
+
+const StorageLuggageIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      {/* Suitcase body */}
+      <rect x="12" y="24" width="40" height="28" rx="3" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Handle top */}
+      <path d="M24 24V18C24 15.7909 25.7909 14 28 14H36C38.2091 14 40 15.7909 40 18V24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      {/* Lock plate */}
+      <rect x="28" y="34" width="8" height="10" rx="1.5" fill="currentColor" fillOpacity="0.3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Keyhole */}
+      <circle cx="32" cy="38" r="2" fill="currentColor"/>
+      <path d="M32 40L32 42" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      {/* Side straps */}
+      <line x1="20" y1="28" x2="20" y2="48" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+      <line x1="44" y1="28" x2="44" y2="48" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    </g>
+  </svg>
+)
+
+const RoomServiceIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      {/* Cloche dome */}
+      <path d="M48 34C48 24.0589 40.8366 16 32 16C23.1634 16 16 24.0589 16 34" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" fillOpacity="0.15"/>
+      {/* Handle knob */}
+      <circle cx="32" cy="14" r="3" fill="currentColor" fillOpacity="0.4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Base plate */}
+      <ellipse cx="32" cy="34" rx="20" ry="3" fill="currentColor" fillOpacity="0.3" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Serving tray */}
+      <line x1="10" y1="38" x2="54" y2="38" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+      <path d="M12 38L10 42C10 44 11 46 13 46H51C53 46 54 44 54 42L52 38" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Steam */}
+      <path d="M26 22C26 20 25 18 25 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
+      <path d="M32 20C32 18 31 16 31 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
+      <path d="M38 22C38 20 37 18 37 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.6"/>
+    </g>
+  </svg>
+)
+
+const DisinfectionIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      {/* Shield */}
+      <path d="M32 10L14 18C14 18 12 28 14 38C16 48 32 54 32 54C32 54 48 48 50 38C52 28 50 18 50 18L32 10Z" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Inner shield detail */}
+      <path d="M32 16L20 22C20 22 19 29 20 36C21 43 32 48 32 48C32 48 43 43 44 36C45 29 44 22 44 22L32 16Z" fill="currentColor" fillOpacity="0.15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Checkmark */}
+      <path d="M26 32L30 36L38 26" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {/* Sparkle 1 */}
+      <path d="M48 22L50 24L52 22L50 20L48 22Z" fill="currentColor"/>
+      <path d="M50 19L50 25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M47 22L53 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      {/* Sparkle 2 */}
+      <path d="M14 30L15.5 31.5L17 30L15.5 28.5L14 30Z" fill="currentColor" opacity="0.8"/>
+      <path d="M15.5 27.5L15.5 32.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.8"/>
+      <path d="M13 30L18 30" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.8"/>
+    </g>
+  </svg>
+)
 
 const smartFeatures = [
   {
-    icon: Key,
+    icon: SmartKeyIcon,
     title: 'Smart Key',
     description: 'Touch your own door',
     color: 'from-blue-500 to-cyan-500',
     hoverColor: 'hover:from-blue-600 hover:to-cyan-600',
   },
   {
-    icon: Lock,
+    icon: StorageLuggageIcon,
     title: 'Store Luggage',
     description: 'Feel your Home Locker',
     color: 'from-amber-500 to-yellow-500',
     hoverColor: 'hover:from-amber-600 hover:to-yellow-600',
   },
   {
-    icon: Utensils,
+    icon: RoomServiceIcon,
     title: 'Room Service',
     description: 'Feel your home Dining',
     color: 'from-purple-500 to-pink-500',
     hoverColor: 'hover:from-purple-600 hover:to-pink-600',
   },
   {
-    icon: Sparkles,
+    icon: DisinfectionIcon,
     title: 'Disinfection',
     description: 'Spotless Lives',
     color: 'from-green-500 to-emerald-500',
