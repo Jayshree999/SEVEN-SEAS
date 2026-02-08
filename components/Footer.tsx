@@ -23,25 +23,25 @@ export default function Footer() {
     discover: [
       { name: 'Our Story', href: '/about-us' },
       { name: 'Luxury Rooms', href: '/rooms' },
+      { name: 'Facilities', href: '/facilities' },
       { name: 'Dining', href: '/dining' },
       { name: 'Wellness & Spa', href: '/wellness' },
+      { name: 'Location', href: '/location' },
       { name: 'Special Offers', href: '/offers' },
-      { name: 'Gallery', href: '/gallery' },
-      { name: 'Media', href: '/media' },
     ],
     services: [
-      { name: 'Concierge', href: '/services' },
+      { name: 'Hotel Services', href: '/services' },
       { name: 'Events & Weddings', href: '/events-3' },
+      { name: 'Concierge', href: '/services#concierge' },
       { name: 'Airport Transfer', href: '/services#transfer' },
-      { name: 'Private Butler', href: '/services#butler' },
-      { name: 'Gift Cards', href: '/gift-cards' },
+      { name: 'Business Center', href: '/services#business' },
     ],
     support: [
       { name: 'Contact Us', href: '/contact' },
       { name: 'FAQ', href: '/faq' },
+      { name: 'Gallery', href: '/gallery' },
       { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
-      { name: 'Sitemap', href: '/sitemap' },
     ],
   }
 

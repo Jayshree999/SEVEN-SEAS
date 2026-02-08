@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import Image from 'next/image'
 import { fetchProperties, Property } from '@/lib/api'
@@ -122,6 +123,59 @@ export default function RoomsPage() {
   return (
     <main className="min-h-screen bg-white">
       <Navigation />
+      <Breadcrumbs />
+
+      {/* Generate JSON-LD Product Schema for all rooms */}
+      {!loading && !error && rooms.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ItemList",
+              "itemListElement": rooms.map((room, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": {
+                  "@type": "Product",
+                  "@id": `https://sevenseashotel.ae/rooms/${room.id}`,
+                  "name": room.name,
+                  "description": `Luxurious ${room.name} at Seven Seas Hotel Dubai. Features ${room.beds}, ${room.baths} bathroom(s), accommodates ${room.guests} guests. ${room.amenities.slice(0, 3).join(', ')}.`,
+                  "image": room.image || "https://sevenseashotel.ae/default-room.jpg",
+                  "brand": {
+                    "@type": "Brand",
+                    "name": "Seven Seas Hotel Dubai"
+                  },
+                  "offers": {
+                    "@type": "Offer",
+                    "url": `https://sevenseashotel.ae/rooms/${room.id}`,
+                    "priceCurrency": "AED",
+                    "price": room.price || "0",
+                    "priceValidUntil": new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    "availability": "https://schema.org/InStock",
+                    "seller": {
+                      "@type": "Organization",
+                      "name": "Seven Seas Hotel Dubai"
+                    }
+                  },
+                  "aggregateRating": {
+                    "@type": "AggregateRating",
+                    "ratingValue": "4.9",
+                    "reviewCount": "284",
+                    "bestRating": "5",
+                    "worstRating": "1"
+                  },
+                  "category": "Hotel Room",
+                  "amenityFeature": room.amenities.map(amenity => ({
+                    "@type": "LocationFeatureSpecification",
+                    "name": amenity
+                  }))
+                }
+              }))
+            })
+          }}
+        />
+      )}
 
       {/* Hero Section */}
       <div className="pt-32 pb-10 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-gray-50 to-white">

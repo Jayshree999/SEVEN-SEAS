@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas (if any)
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://sevenseashotel.ae/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
