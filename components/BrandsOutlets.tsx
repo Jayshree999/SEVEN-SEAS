@@ -115,9 +115,9 @@ export default function BrandsOutlets() {
             scale: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
           }}
         />
-        
+
         {/* Animated pattern overlay */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D97706' fill-opacity='1'%3E%3Cpath d='M50 50c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-8.284-6.716-15-15-15s-15 6.716-15 15 6.716 15 15 15 15-6.716 15-15zM16.667 37.5c0-5.75-4.75-10.5-10.5-10.5S-4.833 31.75-4.833 37.5.083 48 5.833 48s10.834-4.75 10.834-10.5zm10 0c0-8.008-6.492-14.5-14.5-14.5S-8.167 29.492-8.167 37.5-1.675 52 6.333 52s14.5-6.492 14.5-14.5zM56.667 37.5c0-5.75-4.75-10.5-10.5-10.5s-10.5 4.75-10.5 10.5 4.75 10.5 10.5 10.5 10.5-4.75 10.5-10.5zm10 0c0-8.008-6.492-14.5-14.5-14.5s-14.5 6.492-14.5 14.5 6.492 14.5 14.5 14.5 14.5-6.492 14.5-14.5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
@@ -131,7 +131,7 @@ export default function BrandsOutlets() {
             ease: 'easeInOut',
           }}
         />
-        
+
         {/* Animated border lines */}
         <motion.div
           className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400/60 to-transparent"
@@ -157,7 +157,7 @@ export default function BrandsOutlets() {
           }}
         />
       </div>
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Enhanced Header Section */}
         <div className="mb-12 md:mb-16">
@@ -168,7 +168,7 @@ export default function BrandsOutlets() {
               transition={{ duration: 0.8, type: 'spring', stiffness: 100 }}
               className="flex-shrink-0 flex items-center gap-4"
             >
-              <motion.div 
+              <motion.div
                 className="relative"
                 whileHover={{ scale: 1.1, rotate: [0, -5, 5, -5, 0] }}
                 transition={{ duration: 0.5 }}
@@ -190,7 +190,7 @@ export default function BrandsOutlets() {
                 </motion.div>
               </motion.div>
               <div>
-                <motion.h2 
+                <motion.h2
                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                   initial={{ opacity: 0, y: 20 }}
@@ -212,7 +212,7 @@ export default function BrandsOutlets() {
               transition={{ duration: 0.8, delay: 0.3, type: 'spring' }}
               className="flex-1 max-w-2xl"
             >
-              <motion.p 
+              <motion.p
                 className="text-base md:text-lg text-gray-700 leading-relaxed font-semibold mb-3"
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -220,7 +220,7 @@ export default function BrandsOutlets() {
               >
                 Dubai's Best Restaurant & Nightlife Experiences Across 21 Venues in Hotel
               </motion.p>
-              <motion.p 
+              <motion.p
                 className="text-sm md:text-base text-gray-600 leading-relaxed"
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -280,11 +280,10 @@ export default function BrandsOutlets() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    currentIndex === index
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${currentIndex === index
                       ? 'bg-amber-600 w-8'
                       : 'bg-gray-300 hover:bg-amber-300'
-                  }`}
+                    }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}
@@ -294,61 +293,48 @@ export default function BrandsOutlets() {
 
         {/* Enhanced Stats Banner */}
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          initial={{ opacity: 0, y: 40, scale: 0.95 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.6, type: 'spring', stiffness: 100 }}
-          whileHover={{ scale: 1.02, y: -5 }}
-          className="mt-12 md:mt-16 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 rounded-3xl p-8 md:p-10 text-center text-white shadow-2xl relative overflow-hidden border-2 border-amber-400/30"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mt-12 md:mt-20 relative max-w-5xl mx-auto"
         >
-          {/* Animated background pattern */}
-          <motion.div
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-            animate={{
-              x: [0, 60, 0],
-              y: [0, 60, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          />
-          
-          {/* Shimmer effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-            animate={{
-              x: ['-100%', '200%'],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatDelay: 1,
-              ease: 'linear',
-            }}
-          />
-          
-          <div className="relative z-10">
-            <motion.div
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-              animate={{
-                scale: [1, 1.05, 1],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            >
-              21+ Venues
-            </motion.div>
-            <p className="text-base md:text-lg text-amber-50 font-medium">
-              Under One Roof • Restaurants • Bars • Nightlife • Wellness • Entertainment
-            </p>
+          {/* Glass Container */}
+          <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 md:p-12 overflow-hidden border border-white/10 shadow-2xl">
+
+            {/* Animated Background Gradients */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-600/20 rounded-full blur-[80px]" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-800/20 rounded-full blur-[80px]" />
+            </div>
+
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <motion.div
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <h3 className="text-5xl md:text-7xl font-bold bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent mb-4 drop-shadow-sm" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  21+ Venues
+                </h3>
+              </motion.div>
+
+              <div className="h-px w-24 bg-gradient-to-r from-transparent via-amber-500 to-transparent mb-6" />
+
+              <p className="text-lg md:text-xl text-gray-300 font-light tracking-wide mb-2 uppercase">
+                Under One Roof
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm md:text-base text-gray-400">
+                <span>Restaurants</span>
+                <span className="text-amber-500">•</span>
+                <span>Bars</span>
+                <span className="text-amber-500">•</span>
+                <span>Nightlife</span>
+                <span className="text-amber-500">•</span>
+                <span>Wellness</span>
+                <span className="text-amber-500">•</span>
+                <span>Entertainment</span>
+              </div>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -356,66 +342,66 @@ export default function BrandsOutlets() {
   )
 }
 
-function BrandCard({ 
-  brand, 
-  index, 
-  inView 
-}: { 
+function BrandCard({
+  brand,
+  index,
+  inView
+}: {
   brand: typeof brands[0]
   index: number
   inView: boolean
 }) {
   return (
     <Link href={brand.link}>
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ 
-        duration: 0.6, 
-        delay: index * 0.1,
-      }}
-      whileHover={{ 
-        y: -15, 
-        scale: 1.05,
-      }}
-      className="group relative aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 bg-white border-2 border-transparent group-hover:border-amber-300"
-    >
-      {/* Outer glow effect */}
       <motion.div
-        className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/50 to-yellow-400/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
-      />
-      
-      {/* Card border */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-amber-200/30 group-hover:border-amber-400/60 transition-all duration-500"></div>
-      
-      {/* Image Container */}
-      <div className="absolute inset-0 overflow-hidden rounded-2xl">
-        <Image
-          src={brand.image}
-          alt={brand.name}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 20vw, 16vw"
-        />
-        
-        {/* Gradient Overlay - Better visibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/95 group-hover:via-black/60 transition-all duration-500"></div>
-        
-        {/* Shine effect */}
+        initial={{ opacity: 0, y: 30 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{
+          duration: 0.6,
+          delay: index * 0.1,
+        }}
+        whileHover={{
+          y: -15,
+          scale: 1.05,
+        }}
+        className="group relative aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 bg-white border-2 border-transparent group-hover:border-amber-300"
+      >
+        {/* Outer glow effect */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100"
-          animate={{
-            x: ['-100%', '200%'],
-          }}
-          transition={{
-            duration: 1.5,
-            ease: 'linear',
-          }}
+          className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/50 to-yellow-400/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
         />
-      </div>
 
-      {/* Content Badge - Redesigned */}
-      {/* <div className="absolute inset-0 flex items-end justify-center p-4 z-10">
+        {/* Card border */}
+        <div className="absolute inset-0 rounded-2xl border-2 border-amber-200/30 group-hover:border-amber-400/60 transition-all duration-500"></div>
+
+        {/* Image Container */}
+        <div className="absolute inset-0 overflow-hidden rounded-2xl">
+          <Image
+            src={brand.image}
+            alt={brand.name}
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 20vw, 16vw"
+          />
+
+          {/* Gradient Overlay - Better visibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/95 group-hover:via-black/60 transition-all duration-500"></div>
+
+          {/* Shine effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100"
+            animate={{
+              x: ['-100%', '200%'],
+            }}
+            transition={{
+              duration: 1.5,
+              ease: 'linear',
+            }}
+          />
+        </div>
+
+        {/* Content Badge - Redesigned */}
+        {/* <div className="absolute inset-0 flex items-end justify-center p-4 z-10">
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
@@ -439,16 +425,16 @@ function BrandCard({
         </motion.div>
       </div> */}
 
-      {/* Top corner badge */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={inView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ delay: index * 0.05 + 0.4 }}
-        className="absolute top-3 right-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      >
-        <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+        {/* Top corner badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ delay: index * 0.05 + 0.4 }}
+          className="absolute top-3 right-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        >
+          <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+        </motion.div>
       </motion.div>
-    </motion.div>
     </Link>
   )
 }

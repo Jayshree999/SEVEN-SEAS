@@ -1,146 +1,129 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { gsap } from 'gsap'
 import Link from 'next/link'
 import BackgroundVideo from './BackgroundVideo'
+import { ChevronDown } from 'lucide-react'
 
 export default function HeroSection() {
-  const heroRef = useRef<HTMLDivElement>(null)
   const [isMuted, setIsMuted] = useState(true)
-  // Optimized: Removed parallax scroll for better performance
-
-  useEffect(() => {
-    const tl = gsap.timeline()
-
-    tl.from('.hero-title', {
-      y: 100,
-      opacity: 0,
-      duration: 1.2,
-      ease: 'power4.out'
-    })
-      .from('.hero-subtitle', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-      }, '-=0.5')
-      .from('.hero-buttons', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out'
-      }, '-=0.3')
-  }, [])
 
   return (
-    <section
-      ref={heroRef}
-      className="relative h-screen flex items-center justify-center overflow-hidden bg-white"
-    >
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Video */}
       <BackgroundVideo videoUrl="/hero.mp4" opacity={1.0} isMuted={isMuted} />
 
       {/* Sound Toggle Button */}
-      <div className="absolute top-24 right-4 z-30">
+      <div className="absolute top-24 right-6 z-30">
         <button
           onClick={() => setIsMuted(!isMuted)}
-          className="p-3 bg-black/30 backdrop-blur-md rounded-full text-white hover:bg-black/50 transition-colors border border-white/20"
+          className="p-3 bg-black/20 backdrop-blur-md rounded-full text-white hover:bg-black/40 transition-all border border-white/20 hover:border-white/50 group"
+          aria-label={isMuted ? "Unmute" : "Mute"}
         >
           {isMuted ? (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:scale-110 transition-transform">
               <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.75-4.75 4.5 4.5m-4.5-4.5v12m-4.5-4.5-4.75 4.75A9 9 0 0 1 3 12a9 9 0 0 1 9-9Z" />
             </svg>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 group-hover:scale-110 transition-transform">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.75-4.75 4.5 4.5m-4.5-4.5v12m-4.5-4.5-4.75 4.75A9 9 0 0 1 3 12a9 9 0 0 1 9-9Z" />
             </svg>
           )}
         </button>
       </div>
 
-      {/* Subtle overlay only for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 z-[5]" />
+      {/* Cinematic Gradient Overlay - Removed for clearer view as per request */}
+      <div className="absolute inset-0 bg-black/20 z-[5]" />
 
       {/* Main Content */}
-      <div className="relative z-20 text-center px-4 sm:px-6 max-w-6xl mx-auto">
-        <motion.h1
-          className="hero-title text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-bold mb-4 sm:mb-6 text-white relative drop-shadow-2xl"
-          style={{
-            fontFamily: 'var(--font-playfair)',
-            textShadow: '0 4px 12px rgba(0, 0, 0, 0.4)', // Reduced shadow for cleaner look
-          }}
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          <span className="relative z-10 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">SEVEN SEAS</span>
-        </motion.h1>
+      <div className="relative z-20 text-center px-4 sm:px-6 max-w-7xl mx-auto flex flex-col items-center">
+        <div className="overflow-hidden mb-2">
+          <motion.h1
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="text-5xl sm:text-6xl md:text-8xl lg:text-[9rem] font-bold text-white relative leading-none tracking-tight"
+            style={{
+              fontFamily: 'var(--font-playfair)',
+              textShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            SEVEN SEAS
+          </motion.h1>
+        </div>
+
+        <motion.div
+          className="w-24 h-1 bg-amber-500 mb-8 mx-auto rounded-full"
+          initial={{ width: 0, opacity: 0 }}
+          animate={{ width: 96, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1 }}
+        />
 
         <motion.p
-          className="hero-subtitle text-base sm:text-xl md:text-2xl lg:text-4xl text-gray-100 mb-3 sm:mb-4 font-light tracking-[0.2em] px-2"
-          style={{
-            textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
-          }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-amber-50 mb-4 font-light tracking-[0.3em] uppercase drop-shadow-md"
         >
-          LUXURY REDEFINED IN THE HEART OF DUBAI
+          Luxury Redefined in Dubai
         </motion.p>
 
         <motion.p
-          className="hero-subtitle text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 mb-8 sm:mb-12 max-w-2xl mx-auto px-2 font-light"
-          style={{
-            textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
-          }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 1.0, duration: 0.8 }}
+          className="text-base sm:text-lg text-gray-200 mb-12 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-sm"
         >
-          Experience unparalleled comfort and world-class service at Dubai's premier 4-star destination
+          Experience unparalleled comfort and world-class service at the city's premier destination
         </motion.p>
 
         <motion.div
-          className="hero-buttons flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center px-2"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="flex flex-col sm:flex-row gap-5 sm:gap-8 justify-center items-center w-full"
         >
-          <Link href="/rooms" className="w-full sm:w-auto">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto px-10 py-4 bg-white text-black font-semibold text-center text-sm sm:text-base tracking-[0.15em] hover:bg-gray-100 transition-all duration-300 shadow-[0_4px_14px_0_rgba(255,255,255,0.39)] cursor-pointer"
+          <Link href="/rooms">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 bg-white text-black font-bold text-sm tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] min-w-[200px]"
             >
-              BOOK YOUR STAY
-            </motion.div>
+              Book Your Stay
+            </motion.button>
           </Link>
 
-          <Link href="/about-us" className="w-full sm:w-auto">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto px-10 py-4 border border-white/30 backdrop-blur-sm text-white font-semibold text-center text-sm sm:text-base tracking-[0.15em] hover:bg-white/10 transition-colors duration-300 cursor-pointer"
+          <Link href="/about-us">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-4 border border-white text-white font-semibold text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300 min-w-[200px]"
             >
-              EXPLORE
-            </motion.div>
+              Explore
+            </motion.button>
           </Link>
         </motion.div>
 
-        {/* Scroll Indicator with Gold */}
+        {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+          className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 cursor-pointer"
           animate={{
             y: [0, 10, 0],
+            opacity: [0.5, 1, 0.5]
           }}
           transition={{
             duration: 2,
             repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          onClick={() => {
+            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
           }}
         >
-          <div className="flex flex-col items-center">
-            <span className="text-white text-sm mb-2 tracking-wider drop-shadow-md" style={{ textShadow: '0 2px 8px rgba(0, 0, 0, 0.6)' }}>SCROLL</span>
-            <motion.div
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              <svg className="w-6 h-6 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6))' }}>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </motion.div>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-white/70">Scroll</span>
+            <ChevronDown className="w-6 h-6 text-white/70" />
           </div>
         </motion.div>
       </div>

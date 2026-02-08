@@ -2,18 +2,25 @@
 
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera, Environment, Float, useGLTF } from '@react-three/drei'
-import { Suspense, useRef } from 'react'
+import { Suspense, useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import * as THREE from 'three'
 
 function LuxuryRoom({ roomType }: { roomType: string }) {
   const roomRef = useRef<THREE.Group>(null)
-  
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   useFrame((state) => {
     if (roomRef.current) {
       roomRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.1
     }
   })
+
+  if (!mounted) return null
 
   return (
     <group ref={roomRef}>
@@ -182,7 +189,7 @@ export default function Room3DPreview({ roomType = 'deluxe' }: { roomType?: stri
       <Canvas shadows camera={{ position: [5, 3, 5], fov: 50 }}>
         <Suspense fallback={null}>
           <PerspectiveCamera makeDefault position={[5, 3, 5]} />
-          
+
           <ambientLight intensity={0.5} />
           <directionalLight
             position={[5, 5, 5]}
@@ -200,9 +207,9 @@ export default function Room3DPreview({ roomType = 'deluxe' }: { roomType?: stri
             intensity={0.5}
             color="#D4AF37"
           />
-          
+
           <LuxuryRoom roomType={roomType} />
-          
+
           <OrbitControls
             enableZoom={false}
             enablePan={false}
@@ -211,11 +218,11 @@ export default function Room3DPreview({ roomType = 'deluxe' }: { roomType?: stri
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2.2}
           />
-          
+
           <Environment preset="sunset" />
         </Suspense>
       </Canvas>
-      
+
       {/* Overlay Gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
     </div>

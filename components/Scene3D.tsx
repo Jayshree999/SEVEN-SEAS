@@ -2,19 +2,26 @@
 
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera, Environment, Float, MeshDistortMaterial, useGLTF, Text3D, Center } from '@react-three/drei'
-import { Suspense, useRef } from 'react'
+import { Suspense, useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import BackgroundVideo from './BackgroundVideo'
 import * as THREE from 'three'
 
 function LuxuryBuilding() {
   const buildingRef = useRef<THREE.Group>(null)
-  
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   useFrame((state) => {
     if (buildingRef.current) {
       buildingRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.1
     }
   })
+
+  if (!mounted) return null
 
   return (
     <group ref={buildingRef}>
@@ -208,7 +215,7 @@ export default function Scene3D() {
         <Canvas shadows camera={{ position: [0, 3, 12], fov: 50 }}>
           <Suspense fallback={null}>
             <PerspectiveCamera makeDefault position={[0, 3, 12]} />
-            
+
             {/* Luxury Lighting Setup */}
             <ambientLight intensity={0.4} />
             <directionalLight
@@ -235,9 +242,9 @@ export default function Scene3D() {
               color="#FFD700"
               castShadow
             />
-            
+
             <LuxuryBuilding />
-            
+
             <OrbitControls
               enableZoom={true}
               enablePan={false}
@@ -248,12 +255,12 @@ export default function Scene3D() {
               minDistance={8}
               maxDistance={20}
             />
-            
+
             <Environment preset="sunset" />
           </Suspense>
         </Canvas>
       </div>
-      
+
       {/* Overlay Text with Gold Gradient */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
         <motion.div

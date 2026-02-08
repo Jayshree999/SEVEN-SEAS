@@ -104,15 +104,19 @@ const SUGGESTED_QUESTIONS = [
 export function LuxuryChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: "Hello! 👋 Welcome to Seven Seas Hotel! I'm your luxury concierge assistant. How can I help you find your perfect stay?",
-      sender: 'bot',
-      timestamp: new Date()
-    }
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    setMessages([
+      {
+        id: '1',
+        text: "Hello! 👋 Welcome to Seven Seas Hotel! I'm your luxury concierge assistant. How can I help you find your perfect stay?",
+        sender: 'bot',
+        timestamp: new Date()
+      }
+    ])
+  }, [])
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)

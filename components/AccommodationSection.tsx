@@ -1,66 +1,84 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
-import { Bed, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Bed, Sparkles, ChevronLeft, ChevronRight, User, Maximize, ArrowRight } from 'lucide-react'
 
 const roomTypes = [
   {
     title: 'Executive Suites',
-    description: 'The Executive Suite offers a perfect blend of luxury and comfort, featuring a spacious living area, a king-sized bed, and a fully equipped kitchen. Enjoy stunning views of the Burj Khalifa and Dubai skyline from your private balcony, providing an unparalleled experience of elegance and convenience.',
+    description: 'The Executive Suite offers a perfect blend of luxury and comfort, featuring a spacious living area, a king-sized bed, and a fully equipped kitchen. Enjoy stunning views of the Burj Khalifa and Dubai skyline from your private balcony.',
     image: '/accomodation/executive suites.jpg',
-    features: ['Spacious Living Area', 'King-Sized Bed', 'Fully Equipped Kitchen', 'Private Balcony', 'Burj Khalifa Views'],
+    features: ['Spacious Living Area', 'King-Sized Bed', 'Private Balcony'],
+    size: '85 m²',
+    guests: '3 Adults',
   },
   {
     title: 'Premium King',
-    description: 'A luxurious king bed room featuring a spacious layout with a large, comfortable king-sized bed, designed to offer the perfect blend of relaxation and sophistication, along with modern amenities for an exceptional stay.',
+    description: 'A luxurious king bed room featuring a spacious layout with a large, comfortable king-sized bed, designed to offer the perfect blend of relaxation and sophistication.',
     image: '/accomodation/premium king.jpg',
-    features: ['King-Sized Bed', 'Spacious Layout', 'Modern Amenities', 'Luxury Design'],
+    features: ['King-Sized Bed', 'Modern Amenities', 'Luxury Design'],
+    size: '45 m²',
+    guests: '2 Adults',
   },
   {
     title: 'Premium Twin',
     description: 'A stylish twin room, elegantly furnished with two single beds, providing a serene and comfortable retreat for guests seeking both relaxation and convenience.',
     image: '/accomodation/premium twin.jpg',
-    features: ['Two Single Beds', 'Elegant Furnishings', 'Serene Atmosphere', 'Comfortable Retreat'],
+    features: ['Two Single Beds', 'Elegant Furnishings', 'Comfortable Retreat'],
+    size: '45 m²',
+    guests: '2 Adults',
   },
   {
     title: 'Premium City King',
-    description: 'A luxurious king bed room with stunning city views, featuring a spacious layout and a comfortable king-sized bed, complemented by sophisticated decor and modern amenities for an unforgettable stay.',
+    description: 'A luxurious king bed room with stunning city views, featuring a spacious layout and a comfortable king-sized bed, complemented by sophisticated decor.',
     image: '/accomodation/premium city king.jpg',
-    features: ['City Views', 'King-Sized Bed', 'Sophisticated Decor', 'Modern Amenities'],
+    features: ['City Views', 'King-Sized Bed', 'Sophisticated Decor'],
+    size: '50 m²',
+    guests: '2 Adults',
   },
   {
     title: 'Premium City Twin',
-    description: 'Featuring two single beds, offering more spacious accommodations with breathtaking city views, complemented by elegant furnishings and modern amenities for a truly comfortable and elevated stay.',
+    description: 'Featuring two single beds, offering more spacious accommodations with breathtaking city views, complemented by elegant furnishings.',
     image: '/accomodation/premium city twin.jpeg',
-    features: ['Two Single Beds', 'City Views', 'Spacious', 'Elegant Furnishings'],
+    features: ['Two Single Beds', 'City Views', 'Elegant Furnishings'],
+    size: '50 m²',
+    guests: '2 Adults',
   },
   {
     title: 'Premium Sea View King',
-    description: 'Wake up to refreshing views of the serene sea from your king-sized bed, where you can relax and unwind while enjoying the peaceful, scenic beauty right outside your window.',
+    description: 'Wake up to refreshing views of the serene sea from your king-sized bed, where you can relax and unwind while enjoying the peaceful, scenic beauty.',
     image: '/accomodation/premium sea view king.jpg',
-    features: ['Sea Views', 'King-Sized Bed', 'Serene Atmosphere', 'Scenic Beauty'],
+    features: ['Sea Views', 'King-Sized Bed', 'Serene Atmosphere'],
+    size: '50 m²',
+    guests: '2 Adults',
   },
   {
-    title: 'Deluxe Family 2 Queen Bed',
-    description: 'Our Deluxe Family Room features two spacious queen-sized beds, perfect for a restful stay. Ideal for families, this room offers plenty of space, modern amenities, and a comfortable setting for all.',
+    title: 'Deluxe Family 2 Queen',
+    description: 'Our Deluxe Family Room features two spacious queen-sized beds, perfect for a restful stay. Ideal for families, this room offers plenty of space.',
     image: '/accomodation/delux family 2 queen bed.jpg',
-    features: ['Two Queen Beds', 'Family-Friendly', 'Spacious', 'Modern Amenities'],
+    features: ['Two Queen Beds', 'Family-Friendly', 'Spacious'],
+    size: '60 m²',
+    guests: '2 Adults, 2 Kids',
   },
   {
     title: 'Deluxe Balcony King',
-    description: 'A luxurious balcony room with a king-sized bed, offering a private outdoor space with stunning city and stadium views, combining comfort, elegance, and modern amenities for an unforgettable stay.',
+    description: 'A luxurious balcony room with a king-sized bed, offering a private outdoor space with stunning city and stadium views.',
     image: '/accomodation/delux balcony king.jpg',
-    features: ['Private Balcony', 'King-Sized Bed', 'City & Stadium Views', 'Elegant Design'],
+    features: ['Private Balcony', 'King-Sized Bed', 'City Views'],
+    size: '55 m²',
+    guests: '2 Adults',
   },
   {
     title: 'Royal Suite',
-    description: 'The Presidential Suite is the hotel\'s largest and most luxurious room, featuring expansive living areas, a private balcony with stunning views of the Burj Khalifa, Dubai skyline, and the Arabian Sea, offering the ultimate in comfort and sophistication.',
+    description: 'The Presidential Suite is the hotel\'s largest and most luxurious room, featuring expansive living areas, a private balcony with stunning views of the Burj Khalifa.',
     image: '/accomodation/royal suit.jpg',
-    features: ['Largest Suite', 'Expansive Living Areas', 'Private Balcony', 'Burj Khalifa Views', 'Arabian Sea Views'],
+    features: ['Largest Suite', 'Expansive Living Areas', 'Panormaic Views'],
+    size: '120 m²',
+    guests: '4 Adults',
   },
 ]
 
@@ -70,11 +88,9 @@ export default function AccommodationSection() {
     threshold: 0.1,
   })
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [direction, setDirection] = useState(0)
-  const itemsPerView = 3 // Show 3 cards at a time on desktop, 1 on mobile
+  const itemsPerView = 3
 
   const goToPrevious = () => {
-    setDirection(-1)
     setCurrentIndex((prev) => {
       const maxIndex = Math.max(0, roomTypes.length - itemsPerView)
       return prev <= 0 ? maxIndex : prev - 1
@@ -82,7 +98,6 @@ export default function AccommodationSection() {
   }
 
   const goToNext = () => {
-    setDirection(1)
     setCurrentIndex((prev) => {
       const maxIndex = Math.max(0, roomTypes.length - itemsPerView)
       return prev >= maxIndex ? 0 : prev + 1
@@ -90,7 +105,6 @@ export default function AccommodationSection() {
   }
 
   const goToSlide = (index: number) => {
-    setDirection(index > currentIndex ? 1 : -1)
     setCurrentIndex(index)
   }
 
@@ -98,90 +112,86 @@ export default function AccommodationSection() {
   const maxIndex = Math.max(0, roomTypes.length - itemsPerView)
 
   return (
-    <section className="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
-      {/* Premium Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-tl from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
-        
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-300/40 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-300/40 to-transparent"></div>
-      </div>
-      
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section className="py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#0a0a0a] relative overflow-hidden text-white">
+      {/* Cinematic Background */}
+      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.03] pointer-events-none mix-blend-overlay" />
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-black/80 to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-amber-900/10 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto relative z-10">
         {/* Header Section */}
-        <div className="mb-12 md:mb-16 text-center">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-20 gap-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="flex items-center justify-center gap-3 mb-4"
+            initial={{ opacity: 0, x: -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="max-w-2xl"
           >
-            <Bed className="w-8 h-8 md:w-10 md:h-10 text-amber-600" />
-            <h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight"
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px w-10 bg-amber-500" />
+              <span className="text-amber-500 uppercase tracking-[0.2em] text-sm font-medium">Sanctuary of Comfort</span>
+            </div>
+            <h2
+              className="text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-[1.1]"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
-              ACCOMMODATION
+              Exquisite <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600">Living</span>
             </h2>
-            <Sparkles className="w-6 h-6 text-amber-400 animate-pulse" />
           </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto"
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex gap-4"
           >
-            Experience luxury and comfort in our thoughtfully designed rooms and suites
-          </motion.p>
+            <button
+              onClick={goToPrevious}
+              className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"
+              aria-label="Previous rooms"
+            >
+              <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+            </button>
+            <button
+              onClick={goToNext}
+              className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"
+              aria-label="Next rooms"
+            >
+              <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </motion.div>
         </div>
 
         {/* Rooms Carousel */}
         <div ref={ref} className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {visibleRooms.map((room, idx) => {
-              const actualIndex = currentIndex + idx
-              return (
-                <RoomCard key={`${room.title}-${currentIndex}`} room={room} index={actualIndex} inView={inView} />
-              )
-            })}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <AnimatePresence mode='wait'>
+              {visibleRooms.map((room, idx) => {
+                const actualIndex = currentIndex + idx
+                return (
+                  <RoomCard key={`${room.title}-${actualIndex}`} room={room} index={idx} />
+                )
+              })}
+            </AnimatePresence>
           </div>
-
-          {/* Navigation Arrows */}
-          {roomTypes.length > itemsPerView && (
-            <>
-              <button
-                onClick={goToPrevious}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-12 h-12 rounded-full bg-white shadow-xl border-2 border-amber-200 flex items-center justify-center hover:bg-amber-50 transition-all duration-300 group"
-                aria-label="Previous rooms"
-              >
-                <ChevronLeft className="w-6 h-6 text-amber-600 group-hover:scale-110 transition-transform" />
-              </button>
-              <button
-                onClick={goToNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-12 h-12 rounded-full bg-white shadow-xl border-2 border-amber-200 flex items-center justify-center hover:bg-amber-50 transition-all duration-300 group"
-                aria-label="Next rooms"
-              >
-                <ChevronRight className="w-6 h-6 text-amber-600 group-hover:scale-110 transition-transform" />
-              </button>
-            </>
-          )}
 
           {/* Dots Indicator */}
           {roomTypes.length > itemsPerView && (
-            <div className="flex justify-center gap-2 mt-8">
-              {Array.from({ length: maxIndex + 1 }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? 'bg-amber-600 w-8'
-                      : 'bg-gray-300 hover:bg-amber-300'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+            <div className="flex items-center gap-4 mt-12 md:mt-16">
+              <div className="h-px bg-white/10 flex-grow" />
+              <div className="flex gap-2">
+                {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`h-1 transition-all duration-500 rounded-full ${currentIndex === index
+                        ? 'bg-amber-500 w-12'
+                        : 'bg-white/20 w-4 hover:bg-white/40'
+                      }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -190,89 +200,80 @@ export default function AccommodationSection() {
   )
 }
 
-function RoomCard({ 
-  room, 
-  index, 
-  inView 
-}: { 
+function RoomCard({
+  room,
+  index,
+}: {
   room: typeof roomTypes[0]
   index: number
-  inView: boolean
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ y: -15, scale: 1.05 }}
-      className="group relative overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-transparent group-hover:border-amber-300 bg-white"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.215, 0.610, 0.355, 1.000] }}
+      className="group relative h-[500px] w-full cursor-pointer overflow-hidden rounded-sm"
     >
-      {/* Premium card background glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/30 to-amber-300/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
-      
-      {/* Image */}
-      <div className="relative h-64 overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 w-full h-full">
         <Image
           src={room.image}
           alt={room.title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          className="object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-        
-        {/* Room Title Badge */}
-        <div className="absolute top-4 left-4 z-10">
-          <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-lg shadow-lg border border-amber-200/50">
-            <h3 
-              className="text-sm md:text-base font-bold text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              {room.title}
-            </h3>
-          </div>
-        </div>
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-500 group-hover:bg-gradient-to-t group-hover:from-black/95 group-hover:via-black/60 group-hover:to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <p className="text-sm text-gray-600 mb-4 line-clamp-3 leading-relaxed">
-          {room.description}
-        </p>
-        
-        {/* Features */}
-        <div className="mb-4">
-          <div className="flex flex-wrap gap-2">
-            {room.features.slice(0, 3).map((feature, idx) => (
-              <span
-                key={idx}
-                className="text-xs px-2 py-1 bg-amber-50 text-amber-700 rounded-md border border-amber-200"
-              >
-                {feature}
-              </span>
-            ))}
-            {room.features.length > 3 && (
-              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-md">
-                +{room.features.length - 3} more
-              </span>
-            )}
-          </div>
+      <div className="absolute inset-0 p-8 flex flex-col justify-end">
+        {/* Top Badge */}
+        <div className="absolute top-6 left-6 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+          <span className="px-3 py-1 bg-amber-600 text-white text-xs tracking-widest uppercase font-bold">Premium</span>
         </div>
 
-        {/* Book Button */}
-        <Link href="/rooms">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full px-6 py-3 bg-gradient-to-r from-amber-600 to-yellow-600 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-yellow-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+        <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
+          <h3
+            className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight group-hover:text-amber-400 transition-colors"
+            style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            Book a Stay
-          </motion.button>
-        </Link>
-      </div>
+            {room.title}
+          </h3>
 
-      {/* Premium Border Glow on Hover */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-amber-300/50 transition-all duration-500 pointer-events-none"></div>
+          <div className="flex items-center gap-4 text-sm text-gray-300 mb-4 opacity-80">
+            <div className="flex items-center gap-1.5">
+              <Maximize className="w-4 h-4" />
+              <span>{room.size}</span>
+            </div>
+            <div className="w-px h-3 bg-gray-500" />
+            <div className="flex items-center gap-1.5">
+              <User className="w-4 h-4" />
+              <span>{room.guests}</span>
+            </div>
+          </div>
+
+          <p className="text-gray-300 text-sm leading-relaxed mb-6 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-700 ease-in-out overflow-hidden">
+            {room.description}
+          </p>
+
+          <div className="flex items-center justify-between border-t border-white/20 pt-4 mt-2">
+            <div className="flex gap-2">
+              {room.features.slice(0, 2).map((feat, i) => (
+                <span key={i} className="text-[10px] uppercase tracking-wider px-2 py-1 border border-white/20 rounded-full text-white/80">{feat}</span>
+              ))}
+            </div>
+
+            <Link href="/rooms">
+              <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:bg-amber-500 hover:text-white transition-colors duration-300">
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
     </motion.div>
   )
 }

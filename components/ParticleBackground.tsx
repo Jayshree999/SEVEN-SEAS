@@ -1,10 +1,17 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 
 // Optimized: Reduced particles and using CSS animations
 export default function ParticleBackground() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const particles = useMemo(() => {
+    if (!mounted) return []
     return Array.from({ length: 15 }, (_, i) => ({
       id: i,
       size: Math.random() * 1.5 + 0.5,
@@ -14,7 +21,9 @@ export default function ParticleBackground() {
       delay: Math.random() * 3,
       opacity: Math.random() * 0.2 + 0.1,
     }))
-  }, [])
+  }, [mounted])
+
+  if (!mounted) return null
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">

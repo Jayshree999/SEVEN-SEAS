@@ -2,402 +2,228 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Globe } from 'lucide-react'
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Globe, ChevronRight, Send } from 'lucide-react'
+import { useInView } from 'react-intersection-observer'
 import BackgroundVideo from './BackgroundVideo'
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  })
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.play().catch(() => {
-        // Handle autoplay restrictions
-      })
-    }
+    setCurrentYear(new Date().getFullYear())
   }, [])
 
   const footerLinks = {
-    hotel: [
-      { name: 'About Us', href: '/about-us' },
-      { name: 'Our Rooms', href: '/rooms' },
-      { name: 'Facilities', href: '/facilities' },
-      { name: 'Media Showcase', href: '/media' },
+    discover: [
+      { name: 'Our Story', href: '/about-us' },
+      { name: 'Luxury Rooms', href: '/rooms' },
+      { name: 'Dining', href: '/dining' },
+      { name: 'Wellness & Spa', href: '/wellness' },
+      { name: 'Special Offers', href: '/offers' },
       { name: 'Gallery', href: '/gallery' },
-      { name: 'Services', href: '/services' },
     ],
     services: [
-      { name: 'Dining', href: '/dining' },
-      { name: 'Spa & Wellness', href: '/wellness' },
-      { name: 'Experiences', href: '/addons' },
-      { name: 'F&B Partners', href: '/fnb' },
-      { name: 'Events', href: '/events-3' },
-      { name: 'Concierge', href: '/contact' },
+      { name: 'Concierge', href: '/services' },
+      { name: 'Events & Weddings', href: '/events-3' },
+      { name: 'Airport Transfer', href: '/services#transfer' },
+      { name: 'Private Butler', href: '/services#butler' },
+      { name: 'Gift Cards', href: '/gift-cards' },
     ],
     support: [
-      { name: 'Support', href: '/support' },
-      { name: 'Help Center', href: '/support/help-center' },
-      { name: 'Safety', href: '/support/safety' },
-      { name: 'Cancellation', href: '/support/cancellation' },
+      { name: 'Contact Us', href: '/contact' },
       { name: 'FAQ', href: '/faq' },
-    ],
-    company: [
-      { name: 'Company', href: '/company' },
-      { name: 'About', href: '/about-us' },
-      { name: 'Our Team', href: '/our-team' },
-      { name: 'Our Apps', href: '/company/apps' },
-      { name: 'Contact', href: '/contact' },
-      { name: 'Corporate Contact', href: '/company/corporate' },
-      { name: 'Press', href: '/company/press' },
-    ],
-    legal: [
-      { name: 'Legal', href: '/legal' },
-      { name: 'Terms & Conditions', href: '/terms' },
       { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Cookie Policy', href: '/legal/cookies' },
-      { name: 'Guidelines', href: '/legal/guidelines' },
-      { name: 'Host Terms', href: '/legal/host-terms' },
+      { name: 'Terms of Service', href: '/terms' },
+      { name: 'Sitemap', href: '/sitemap' },
     ],
   }
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: '#', color: 'hover:text-blue-500' },
-    { name: 'Instagram', icon: Instagram, href: '#', color: 'hover:text-pink-500' },
-    { name: 'Twitter', icon: Twitter, href: '#', color: 'hover:text-blue-400' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#', color: 'hover:text-blue-600' },
+    { name: 'Facebook', icon: Facebook, href: '#' },
+    { name: 'Instagram', icon: Instagram, href: '#' },
+    { name: 'Twitter', icon: Twitter, href: '#' },
+    { name: 'LinkedIn', icon: Linkedin, href: '#' },
   ]
 
   return (
-    <motion.footer
-      className="bg-[#191f3b] text-white relative overflow-hidden pt-8"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
-    >
+    <footer ref={ref} className="relative bg-[#0a0f1c] text-white pt-20 pb-10 overflow-hidden">
       {/* Video Background */}
-      <div className="absolute inset-0 overflow-hidden z-0">
+      <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
         <BackgroundVideo
           videoUrl="/footer.mp4"
-          opacity={0.4}
+          opacity={0.7}
           isMuted={true}
-          className="brightness-[0.7]"
+          className="brightness-[0.8]"
         />
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-[#191f3b]/80"></div>
+        <div className="absolute inset-0 bg-[#0a0f1c]/70"></div>
+
+        {/* Subtle Gradient Overlays for depth */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#0a0f1c] via-transparent to-[#0a0f1c]/60"></div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-6 sm:py-8 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-8">
-          {/* Brand Section */}
-          <div className="md:col-span-2 lg:col-span-2">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+
+        {/* Top Section: Newsletter & Branding */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 border-b border-white/5 pb-16">
+
+          {/* Brand Identity */}
+          <div className="lg:col-span-4 space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
-              <Link href="/" className="inline-block mb-3">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="relative"
-                >
-                  <Image
-                    src="/logo.png"
-                    alt="Seven Seas Hotel Dubai"
-                    width={150}
-                    height={50}
-                    className="h-10 w-auto object-contain brightness-0 invert"
-                  />
-                  <motion.div
-                    className="absolute -inset-2 bg-white/5 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
-                </motion.div>
-              </Link>
-
-              <p className="text-gray-300 leading-relaxed mb-4 max-w-md text-xs sm:text-sm">
-                Experience unparalleled luxury and world-class service at Dubai's premier 4-star destination.
-              </p>
-
-              {/* Contact Information */}
-              <div className="space-y-2 text-xs sm:text-sm text-gray-400">
-                <motion.a
-                  href="https://maps.google.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-3 hover:text-amber-400 transition-colors group"
-                  whileHover={{ x: 5 }}
-                >
-                  <MapPin className="w-5 h-5 mt-0.5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <span className="leading-relaxed">Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE</span>
-                </motion.a>
-
-                <motion.a
-                  href="tel:+971551009152"
-                  className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
-                  whileHover={{ x: 5 }}
-                >
-                  <Phone className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <span>+971 55 100 9152</span>
-                </motion.a>
-
-                <motion.a
-                  href="mailto:reservation@sevenseashotel.ae"
-                  className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
-                  whileHover={{ x: 5 }}
-                >
-                  <Mail className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <span>reservation@sevenseashotel.ae</span>
-                </motion.a>
-
-                <motion.a
-                  href="https://sevenseashotel.ae"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:text-amber-400 transition-colors group"
-                  whileHover={{ x: 5 }}
-                >
-                  <Globe className="w-5 h-5 text-amber-500 flex-shrink-0 group-hover:scale-110 transition-transform" />
-                  <span>www.sevenseashotel.ae</span>
-                </motion.a>
-              </div>
-
-              {/* Social Media Icons */}
-              <div className="mt-4">
-                <p className="text-xs font-semibold text-gray-300 mb-2">Follow Us</p>
-                <div className="flex items-center gap-3">
-                  {socialLinks.map((social, index) => {
-                    const IconComponent = social.icon
-                    return (
-                      <motion.a
-                        key={social.name}
-                        href={social.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1, type: 'spring', stiffness: 200 }}
-                        whileHover={{
-                          scale: 1.2,
-                          y: -5,
-                          rotate: [0, -10, 10, -10, 0],
-                        }}
-                        whileTap={{ scale: 0.9 }}
-                        className={`w-8 h-8 rounded-full bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 flex items-center justify-center text-gray-400 ${social.color} transition-all duration-300 hover:border-amber-500/50 hover:bg-gray-800`}
-                        aria-label={social.name}
-                      >
-                        <IconComponent className="w-4 h-4" />
-                      </motion.a>
-                    )
-                  })}
+              <Link href="/" className="inline-block mb-6">
+                <div className="relative">
+                  <h2 className="text-3xl font-bold tracking-widest text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    SEVEN SEAS
+                  </h2>
+                  <p className="text-[10px] tracking-[0.4em] text-amber-500 uppercase mt-2 ml-1">Hotel & Experiences</p>
                 </div>
+              </Link>
+              <p className="text-gray-400 leading-relaxed font-light text-sm md:text-base max-w-sm">
+                A sanctuary of luxury in the heart of Dubai, where timeless elegance meets modern sophistication. Experience the art of hospitality.
+              </p>
+            </motion.div>
+
+            {/* Social Icons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex gap-4"
+            >
+              {socialLinks.map((social, idx) => {
+                const Icon = social.icon
+                return (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-300 group"
+                  >
+                    <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  </a>
+                )
+              })}
+            </motion.div>
+          </div>
+
+          {/* Spacer */}
+          <div className="hidden lg:block lg:col-span-1"></div>
+
+          {/* Links Sections */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {[
+              { title: 'Discover', links: footerLinks.discover },
+              { title: 'Services', links: footerLinks.services },
+              { title: 'Support', links: footerLinks.support },
+            ].map((section, idx) => (
+              <motion.div
+                key={section.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 + (idx * 0.1) }}
+              >
+                <h3 className="text-lg font-bold text-white mb-6 font-serif tracking-wide">{section.title}</h3>
+                <ul className="space-y-4">
+                  {section.links.map((link) => (
+                    <li key={link.name}>
+                      <Link href={link.href} className="text-gray-400 hover:text-amber-400 text-sm transition-colors duration-300 flex items-center group">
+                        <span className="w-0 overflow-hidden group-hover:w-3 transition-all duration-300 mr-0 group-hover:mr-2 text-amber-500">
+                          <ChevronRight className="w-3 h-3" />
+                        </span>
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Middle Section: Newsletter & Contact */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 border-b border-white/5 pb-16">
+          {/* Newsletter */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>Join Our World</h3>
+              <p className="text-gray-400 text-sm mb-6">Subscribe to receive exclusive offers and latest news.</p>
+
+              <div className="relative max-w-md">
+                <input
+                  type="email"
+                  placeholder="Your Email Address"
+                  className="w-full bg-white/5 border border-white/10 text-white px-6 py-4 rounded-full focus:outline-none focus:border-amber-500/50 focus:bg-white/10 transition-all pr-32 placeholder:text-gray-600 font-light"
+                />
+                <button className="absolute right-2 top-2 bottom-2 bg-amber-600 hover:bg-amber-700 text-white px-6 rounded-full font-medium text-xs tracking-widest uppercase transition-colors flex items-center gap-2">
+                  <span>Send</span>
+                </button>
               </div>
             </motion.div>
           </div>
 
-          {/* Hotel Links */}
-          <div>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
-            >
-              Hotel
-            </motion.h3>
-            <ul className="space-y-2">
-              {footerLinks.hotel.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+          <div className="lg:col-span-1 hidden lg:block"></div>
 
-          {/* Services Links */}
-          <div>
-            <motion.h3
+          {/* Contact Details */}
+          <div className="lg:col-span-6 flex flex-col md:flex-row justify-between gap-8 items-start md:items-center">
+            <motion.div
+              className="flex items-center gap-4"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.5 }}
             >
-              Services
-            </motion.h3>
-            <ul className="space-y-2.5">
-              {footerLinks.services.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + index * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
+                <Phone className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Reservation</p>
+                <a href="tel:+971551009152" className="text-lg text-white font-medium hover:text-amber-400 transition-colors">+971 55 100 9152</a>
+              </div>
+            </motion.div>
 
-          {/* Support Links */}
-          <div>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
-            >
-              Support
-            </motion.h3>
-            <ul className="space-y-2.5">
-              {footerLinks.support.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + index * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+            <div className="h-12 w-px bg-white/10 hidden md:block"></div>
 
-          {/* Company & Legal Links Combined */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <motion.h3
+            <motion.div
+              className="flex items-center gap-4"
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="text-sm font-bold mb-3 uppercase tracking-wider text-white relative pb-2 after:absolute after:bottom-0 after:left-0 after:w-10 after:h-0.5 after:bg-gradient-to-r after:from-amber-500 after:to-transparent"
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.6 }}
             >
-              Company
-            </motion.h3>
-            <ul className="space-y-2.5">
-              {footerLinks.company.map((link, index) => (
-                <motion.li
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 + index * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
+              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Email</p>
+                <a href="mailto:reservation@sevenseashotel.ae" className="text-lg text-white font-medium hover:text-amber-400 transition-colors">reservation@sevenseashotel.ae</a>
+              </div>
+            </motion.div>
           </div>
         </div>
 
-        {/* Hotel Policies Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-8 pt-6 border-t border-gray-800/50"
-        >
-          <div className="max-w-5xl mx-auto">
-            <h3 className="text-base font-bold mb-4 text-center text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Hotel Policy
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs sm:text-sm text-gray-300">
-              <div className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>Check-in time is 2:00 PM; check-out time is 12:00 PM.</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>A valid ID or passport is required at the time of check-in.</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>Pets are not allowed on the premises.</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>Smoking inside the room is strictly prohibited; penalties will apply.</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>An AED 200 security deposit is required upon check-in.</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>Parking is available at AED 20 per day.</span>
-              </div>
-              <div className="flex items-start gap-2 md:col-span-2 lg:col-span-3">
-                <span className="text-amber-500 mt-1">•</span>
-                <span>Visitors are not permitted in guest rooms after 10:00 PM.</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        {/* Bottom Section: Policy & Copyright */}
+        <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-6 pt-8 text-xs text-gray-500 font-light border-t border-white/5">
+          <p>© {currentYear} Seven Seas Hotel. All rights reserved.</p>
 
-        {/* Bottom Bar */}
-        <div className="mt-6 pt-6 border-t border-gray-800/50">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Quick Legal Links */}
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
-              <Link href="/terms" className="hover:text-amber-400 transition-colors">
-                Terms
-              </Link>
-              <span className="text-gray-600">•</span>
-              <Link href="/privacy" className="hover:text-amber-400 transition-colors">
-                Privacy
-              </Link>
-              <span className="text-gray-600">•</span>
-              <Link href="/legal/cookies" className="hover:text-amber-400 transition-colors">
-                Cookies
-              </Link>
-            </div>
-
-            {/* Copyright */}
-            <div className="text-center md:text-right text-sm text-gray-500">
-              <p>© {currentYear} Seven Seas Hotel Dubai. All rights reserved.</p>
-            </div>
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+            <Link href="/terms" className="hover:text-amber-500 transition-colors">Hotel Policy</Link>
+            <Link href="/privacy" className="hover:text-amber-500 transition-colors">Privacy Policy</Link>
+            <Link href="/cookies" className="hover:text-amber-500 transition-colors">Cookie Policy</Link>
+            <Link href="/sitemap" className="hover:text-amber-500 transition-colors">Sitemap</Link>
           </div>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   )
 }

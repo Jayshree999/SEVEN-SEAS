@@ -325,6 +325,7 @@ export default function BookingForm({
           const now = new Date();
           return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
         })()}
+        suppressHydrationWarning
         pricePerNight={price}
         blockedDates={getBlockedDates()}
         dailyPrices={property?.dailyPrices || []}
@@ -374,9 +375,8 @@ export default function BookingForm({
                     setFormData({ ...formData, guests: num });
                     setShowGuestDropdown(false);
                   }}
-                  className={`w-full px-4 py-3 text-left hover:bg-amber-50 transition-colors ${
-                    formData.guests === num ? "bg-amber-50 font-semibold" : ""
-                  }`}
+                  className={`w-full px-4 py-3 text-left hover:bg-amber-50 transition-colors ${formData.guests === num ? "bg-amber-50 font-semibold" : ""
+                    }`}
                 >
                   {num} {num === 1 ? "guest" : "guests"}
                 </button>

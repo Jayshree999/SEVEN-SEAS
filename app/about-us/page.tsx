@@ -14,33 +14,33 @@ const values = [
     title: 'Excellence',
     description: 'We strive for excellence in every aspect of our service, ensuring that every guest receives the highest standard of hospitality.',
     icon: Star,
-    color: 'from-yellow-400 to-amber-500',
+    color: 'text-gold',
   },
   {
     title: 'Hospitality',
-    description: 'Warm, authentic Arabian hospitality at its finest. We treat every guest as family and ensure their comfort is our priority.',
+    description: 'Warm, authentic hospitality at its finest. We treat every guest as family, prioritizing your comfort above all.',
     icon: Heart,
-    color: 'from-red-400 to-pink-500',
+    color: 'text-gold-dark',
   },
   {
     title: 'Innovation',
-    description: 'Modern amenities and innovative solutions for our guests, combining traditional hospitality with contemporary luxury.',
+    description: 'Blending timeless tradition with modern luxury to create a seamless and sophisticated stay.',
     icon: Sparkles,
-    color: 'from-purple-400 to-indigo-500',
+    color: 'text-amber-700',
   },
   {
     title: 'Sustainability',
-    description: 'Committed to sustainable practices and environmental responsibility, ensuring a better future for generations to come.',
+    description: 'Dedicated to eco-conscious practices that preserve our planet for future generations.',
     icon: Leaf,
-    color: 'from-green-400 to-emerald-500',
+    color: 'text-emerald-700',
   },
 ]
 
 const stats = [
-  { number: '150+', label: 'Luxury Rooms', icon: Award },
-  { number: '10+', label: 'Years of Excellence', icon: Star },
-  { number: '50K+', label: 'Happy Guests', icon: Users },
-  { number: '4.8', label: 'Average Rating', icon: Heart },
+  { number: '150+', label: 'Elegant Rooms & Suites', icon: Award },
+  { number: '10+', label: 'Years of Legacy', icon: Star },
+  { number: '50K+', label: 'Delighted Guests', icon: Users },
+  { number: '4.8', label: 'Guest Satisfaction', icon: Heart },
 ]
 
 export default function AboutUsPage() {
@@ -58,7 +58,7 @@ export default function AboutUsPage() {
   return (
     <main className="min-h-screen bg-white overflow-hidden">
       <Navigation />
-      
+
       {/* Enhanced Hero Section with Parallax */}
       <motion.section
         ref={heroRef}
@@ -67,7 +67,7 @@ export default function AboutUsPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <motion.div 
+        <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 z-0"
         >
@@ -79,7 +79,7 @@ export default function AboutUsPage() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
-          
+
           {/* Animated gradient overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-amber-900/20 via-transparent to-amber-900/20"
@@ -93,7 +93,7 @@ export default function AboutUsPage() {
             }}
           />
         </motion.div>
-        
+
         <div className="relative z-20 text-center px-6 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -101,17 +101,17 @@ export default function AboutUsPage() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <motion.div
-              initial={{ scale: 0, y: 30 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ duration: 1, type: 'spring', delay: 0.3 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
               className="inline-block mb-6"
             >
-              <Sparkles className="w-16 h-16 text-amber-400 drop-shadow-2xl" />
+              <span className="text-white/80 text-sm tracking-[0.2em] uppercase">Est. 2014</span>
             </motion.div>
-            
+
             <motion.h1
               className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
-              style={{ 
+              style={{
                 fontFamily: 'var(--font-playfair)',
                 textShadow: '0 4px 30px rgba(0, 0, 0, 1), 0 2px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8)'
               }}
@@ -121,7 +121,7 @@ export default function AboutUsPage() {
             >
               About Us
             </motion.h1>
-            
+
             <motion.p
               className="text-base md:text-lg lg:text-xl text-white mb-8 max-w-3xl mx-auto leading-relaxed font-medium"
               style={{
@@ -131,13 +131,13 @@ export default function AboutUsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Discover the epitome of comfort and elegance
+              Where luxury finds its home. Experience a sanctuary of serenity and style.
             </motion.p>
-            
+
             <motion.div
-              className="w-32 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-8"
+              className="w-24 h-0.5 bg-white/30 mx-auto mb-8"
               initial={{ width: 0 }}
-              animate={{ width: 128 }}
+              animate={{ width: 96 }}
               transition={{ duration: 1, delay: 0.6 }}
             />
           </motion.div>
@@ -179,7 +179,7 @@ export default function AboutUsPage() {
               Welcome to Seven Seas Hotel
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-              Discover the epitome of comfort and elegance at Seven Seas Hotel, where luxury meets impeccable hospitality. Nestled in the bustling neighborhood of Al Nahda 1, Dubai, our hotel offers a serene escape with world-class amenities and personalized services. Experience unparalleled comfort and world-class service at Dubai's premier 4-star destination.
+              Located in the vibrant heart of Al Nahda 1, Dubai, Seven Seas Hotel offers a sanctuary of serenity and style. Every detail is curated to provide an unforgettable experience, blending world-class amenities with personalized service that anticipates your every need. Whether you are here for business or leisure, discover a haven where comfort meets sophistication.
             </p>
           </motion.div>
         </div>
@@ -231,13 +231,13 @@ export default function AboutUsPage() {
             >
               <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
                 <p>
-                  Open your eyes to a new form of hospitality in one of the world's most dynamic cities, thanks to the contemporary impact of global hospitality icon Seven Seas Hotel, Al Nahda.
+                  "Experience a new standard of hospitality in one of the world's most dynamic cities. At Seven Seas Hotel, Al Nahda, we believe that true luxury lies in the details."
                 </p>
                 <p>
-                  Welcome to a destination where every feature defines the Seven Seas Hotel, Al Nahda's lifestyle and design philosophy; where our commitment to world-class service and elegance matches our guests' high standards.
+                  "Our philosophy is built on a foundation of excellence, where every interaction is an opportunity to create a lasting memory. We invite you to immerse yourself in an environment where comfort meets sophistication."
                 </p>
                 <p>
-                  Personalisation is our mark, and the Stay with Seven Seas Hotel experience invites you to experience a distinctive idea rich in imagination, unparalleled in innovation, and crafted with meticulous attention to detail. Elegance matches our guests' exacting standards.
+                  "Personalisation is our mark, and we treat every guest as a unique individual. Welcome to a destination where you are always the center of our world."
                 </p>
               </div>
 
@@ -255,43 +255,16 @@ export default function AboutUsPage() {
       </section>
 
       {/* Enhanced Stats Section */}
-      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white relative overflow-hidden">
-        <motion.div
-          className="absolute inset-0 opacity-20"
-          animate={{
-            x: [0, 100],
-            y: [0, 100],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: 'reverse',
-          }}
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM36 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zM16 16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        />
-
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="py-20 bg-primary text-white">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-b border-white/10 py-12">
             {stats.map((stat, index) => {
               const IconComponent = stat.icon
               return (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -10 }}
-                  className="text-center"
-                >
-                  <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
-                    <IconComponent className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</div>
-                  <div className="text-sm md:text-base text-amber-50 uppercase tracking-wider">{stat.label}</div>
-                </motion.div>
+                <div key={stat.label} className="text-center group">
+                  <div className="text-4xl md:text-5xl font-light mb-4 text-gold font-serif">{stat.number}</div>
+                  <div className="text-xs md:text-sm text-gray-400 uppercase tracking-widest">{stat.label}</div>
+                </div>
               )
             })}
           </div>
@@ -299,7 +272,8 @@ export default function AboutUsPage() {
       </section>
 
       {/* Enhanced Our Values */}
-      <section ref={valuesRef} className="py-12 md:py-16 px-6 bg-white">
+      <section ref={valuesRef} className="py-24 bg-white relative">
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
         <div className="container mx-auto max-w-7xl">
           <motion.div
             className="text-center mb-8"
@@ -330,26 +304,20 @@ export default function AboutUsPage() {
               return (
                 <motion.div
                   key={value.title}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1, type: 'spring' }}
-                  whileHover={{ y: -15, scale: 1.05 }}
-                  className="group relative"
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group"
                 >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${value.color} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                  <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-transparent group-hover:border-amber-200 text-center h-full">
-                    <motion.div 
-                      className={`w-16 h-16 bg-gradient-to-br ${value.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg`}
-                      animate={{ rotate: [0, 15, -15, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
-                    >
-                      <IconComponent className="w-8 h-8 text-white" />
-                    </motion.div>
-                    <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  <div className="bg-white p-8 h-full border border-gray-100 transition-all duration-500 hover:border-gold/30 hover:shadow-lg">
+                    <div className="mb-6">
+                      <IconComponent className={`w-8 h-8 ${value.color} stroke-1`} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-4 text-primary" style={{ fontFamily: 'var(--font-playfair)' }}>
                       {value.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                    <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
                   </div>
                 </motion.div>
               )
@@ -464,10 +432,10 @@ export default function AboutUsPage() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Experience Luxury Redefined
+              Your Journey Begins Here
             </h2>
             <p className="text-base md:text-lg lg:text-xl mb-8 text-amber-50 leading-relaxed">
-              Join us at Seven Seas Hotel and discover why we are Dubai's premier destination for luxury, comfort, and exceptional service.
+              Indulge in the extraordinary. Book your stay at Seven Seas Hotel and elevate your Dubai experience.
             </p>
             <Link href="/rooms">
               <motion.button

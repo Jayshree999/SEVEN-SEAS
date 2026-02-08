@@ -46,132 +46,74 @@ export default function Home() {
       <HeroSection />
 
       {/* Luxury Stats Banner - Enhanced with better animations */}
+      {/* Luxury Stats Banner - Enhanced with Glassmorphism */}
       <motion.section
-        className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 text-white overflow-hidden"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        className="relative py-16 md:py-24 px-4 sm:px-6 -mt-20 z-30"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
       >
-        {/* Background Image with Parallax Effect */}
-        <div className="absolute inset-0 z-0">
-          <motion.div
-            initial={{ scale: 1.1 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-          >
-            <Image
-              src="/hero2.jpg"
-              alt="Seven Seas Hotel Lobby"
-              fill
-              className="object-cover"
-              priority
-              quality={90}
-            />
-          </motion.div>
-          {/* Animated gradient overlay */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80"
-            animate={{
-              opacity: [0.7, 0.8, 0.7],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          {/* Shimmer effect */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-            animate={{
-              x: ['-100%', '100%'],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-          />
-        </div>
+        <div className="container mx-auto max-w-7xl">
+          {/* Dark Glass Card for better text contrast/visibility on all backgrounds */}
+          <div className="relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden">
 
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-8 sm:mb-10 md:mb-12"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 px-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-              EXCELLENCE IN NUMBERS
-            </h2>
-            <p className="text-sm sm:text-base md:text-lg text-gray-300 px-2">Our commitment to luxury and service</p>
-          </motion.div>
+            {/* Glossy Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+            {/* Header */}
             <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1, type: 'spring', stiffness: 100 }}
-              whileHover={{ scale: 1.05, y: -15 }}
-              className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2 border-transparent hover:border-white/30 hover:bg-white/20 transition-all duration-300"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-10 md:mb-14 relative z-10"
             >
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-2 bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
-                <AnimatedCounter value={150} suffix="+" />
-              </div>
-              <div className="text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-wider font-semibold">Luxury Rooms</div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-3 text-white drop-shadow-md" style={{ fontFamily: 'var(--font-playfair)' }}>
+                EXCELLENCE IN NUMBERS
+              </h2>
+              <div className="h-1 w-20 bg-amber-500 mx-auto rounded-full mb-4" />
+              <p className="text-gray-200 text-sm md:text-base tracking-wider uppercase">Our commitment to luxury and service</p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 100 }}
-              whileHover={{ scale: 1.05, y: -15 }}
-              className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2 border-transparent hover:border-white/30 hover:bg-white/20 transition-all duration-300"
-            >
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-2 bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
-                <AnimatedCounter value={10} suffix="+" />
-              </div>
-              <div className="text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-wider font-semibold">Years Excellence</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, type: 'spring', stiffness: 100 }}
-              whileHover={{ scale: 1.05, y: -15 }}
-              className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2 border-transparent hover:border-white/30 hover:bg-white/20 transition-all duration-300"
-            >
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-2 bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
-                <AnimatedCounter value={50} suffix="K+" />
-              </div>
-              <div className="text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-wider font-semibold">Happy Guests</div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, type: 'spring', stiffness: 100 }}
-              whileHover={{ scale: 1.05, y: -15 }}
-              className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border-2 border-transparent hover:border-white/30 hover:bg-white/20 transition-all duration-300"
-            >
-              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-2 bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
-                <AnimatedCounter value={4.8} suffix="" />
-              </div>
-              <div className="text-xs sm:text-sm md:text-base text-gray-300 uppercase tracking-wider font-semibold">Average Rating</div>
-            </motion.div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative z-10">
+              {[
+                { value: 150, suffix: '+', label: 'Luxury Rooms', delay: 0 },
+                { value: 10, suffix: '+', label: 'Years Excellence', delay: 0.1 },
+                { value: 50, suffix: 'K+', label: 'Happy Guests', delay: 0.2 },
+                { value: 4.8, suffix: '', label: 'Average Rating', delay: 0.3 },
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.1 * index, duration: 0.5 }}
+                  className="group relative text-center p-6"
+                >
+                  <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-white/10" />
+
+                  <div className="relative z-10">
+                    <div className="text-4xl md:text-5xl lg:text-6xl font-light text-amber-400 mb-2 font-serif group-hover:scale-110 transition-transform duration-500" style={{ textShadow: '0 0 20px rgba(251, 191, 36, 0.3)' }}>
+                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                    </div>
+                    <div className="h-px w-12 bg-white/20 mx-auto mb-3 group-hover:w-20 transition-all duration-500" />
+                    <div className="text-xs md:text-sm text-gray-300 uppercase tracking-[0.2em]">{stat.label}</div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </motion.section>
 
-      {/* Brands & Outlets Section */}
-      <BrandsOutlets />
 
       {/* Accommodation Section - Now with Carousel */}
       <AccommodationSection />
+
+      {/* Brands & Outlets Section */}
+      <BrandsOutlets />
 
       {/* Smart Features Section - New from website */}
       <SmartFeatures />
@@ -217,33 +159,10 @@ export default function Home() {
         viewport={{ once: true, margin: '-100px' }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
-        {/* Background decorative elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-amber-200/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute bottom-20 right-10 w-96 h-96 bg-yellow-200/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: 1,
-            }}
-          />
+        {/* Background decorative elements - clean and minimal */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-gray-100 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-gray-100 to-transparent rounded-full blur-3xl" />
         </div>
 
         <div className="container mx-auto max-w-7xl relative z-10">
@@ -255,7 +174,7 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-3 md:mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-3 md:mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}

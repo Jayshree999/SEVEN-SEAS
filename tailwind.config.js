@@ -8,19 +8,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#000000',
-        secondary: '#FFFFFF',
-        accent: '#1a1a1a',
-        'light-gray': '#f5f5f5',
-        'dark-gray': '#333333',
+        primary: '#1C1C1C', // Soft charcoal/black
+        secondary: '#FAFAF5', // Cream/Off-white
+        accent: '#A38047', // Classic Gold
+        'light-gray': '#F2F2F2',
+        'dark-gray': '#4A4A4A',
         // Metallic Gold System
-        gold: '#C5A059', // More metallic, less yellow
-        'gold-light': '#E5C585', // Soft champagne gold
-        'gold-dark': '#997B36', // Deep bronze gold
+        gold: '#A38047', // Classic Gold (Desaturated)
+        'gold-light': '#D4AF37', // Metallic sheen
+        'gold-dark': '#8B6914', // Deep bronze
         // Deep Contrast System
-        'royal-blue': '#0A192F', // Deep midnight blue
-        'charcoal': '#121212', // Rich black
-        luxury: '#0A192F', // Replacing basic black with Royal Blue for luxury elements
+        'royal-blue': '#0f172a', // Deep slate blue (modern luxury)
+        'charcoal': '#1C1C1C', // Rich black
+        luxury: '#1C1C1C', // Primary luxury text color
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

@@ -6,29 +6,31 @@ import Link from 'next/link'
 import ImageBanner from './ImageBanner'
 import BackgroundVideo from './BackgroundVideo'
 
+import { Bed, Utensils, Sparkles, Calendar } from 'lucide-react'
+
 const features = [
   {
     title: 'LUXURIOUS ROOMS',
     description: 'Spacious suites with panoramic views of Dubai, featuring modern amenities and elegant design',
-    icon: '🏨',
+    icon: Bed,
     link: '/rooms',
   },
   {
     title: 'WORLD-CLASS DINING',
     description: 'Award-winning restaurants offering international cuisine and authentic local flavors',
-    icon: '🍽️',
+    icon: Utensils,
     link: '/dining',
   },
   {
     title: 'SPA & WELLNESS',
     description: 'Rejuvenate at our state-of-the-art spa facility with expert therapists',
-    icon: '💆',
+    icon: Sparkles,
     link: '/wellness',
   },
   {
     title: 'EVENT SPACES',
     description: 'Elegant venues for your special occasions, meetings, and celebrations',
-    icon: '🎉',
+    icon: Calendar,
     link: '/mehfil-ballroom',
   },
 ]
@@ -82,19 +84,17 @@ export default function FeaturesSection() {
                 whileHover={{ y: -15, scale: 1.05 }}
                 className="bg-white border-2 border-transparent group-hover:border-amber-400 rounded-lg p-8 relative overflow-hidden group cursor-pointer h-full transition-all duration-200 shadow-xl hover:shadow-2xl"
               >
-                {/* Hover Effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
 
                 {/* Content */}
                 <div className="relative z-10">
                   <motion.div
-                    className="text-5xl mb-6"
-                    animate={{ rotate: [0, 15, -15, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
+                    className="mb-6 text-gold"
+                    whileHover={{ scale: 1.1 }}
                   >
-                    {feature.icon}
+                    <feature.icon className="w-12 h-12 stroke-1" />
                   </motion.div>
 
                   <h3 className="text-xl font-bold text-black mb-4">

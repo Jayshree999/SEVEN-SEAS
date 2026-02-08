@@ -83,8 +83,8 @@ export default function Navigation() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? 'bg-white/98 backdrop-blur-xl shadow-2xl py-1 border-b border-amber-200/30'
-        : 'bg-gradient-to-b from-white via-white to-white/95 backdrop-blur-sm py-1.5 border-b border-amber-100/50'
+        ? 'bg-black/80 backdrop-blur-xl shadow-2xl py-2 border-b border-white/10'
+        : 'bg-gradient-to-b from-black/60 to-transparent backdrop-blur-[2px] py-4 border-b border-white/5'
         }`}
     >
       {/* Animated Background Gradient */}
@@ -141,7 +141,7 @@ export default function Navigation() {
                 alt="Seven Seas Hotel Dubai"
                 width={180}
                 height={50}
-                className="h-8 sm:h-9 md:h-10 w-auto object-contain"
+                className="h-8 sm:h-9 md:h-10 w-auto object-contain brightness-0 invert"
                 priority
               />
             </div>
@@ -186,10 +186,10 @@ export default function Navigation() {
                     >
                       {/* Hover background glow */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-amber-100/50 to-yellow-100/50 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
+                        className="absolute inset-0 bg-gold/10 rounded-sm opacity-0 group-hover:opacity-100"
                         transition={{ duration: 0.3 }}
                       />
-                      <span className="text-gray-700 text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-amber-600 relative z-10 flex items-center gap-1.5">
+                      <span className="text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-amber-400 relative z-10 flex items-center gap-1.5">
                         {item.name}
                         <motion.svg
                           className="w-4 h-4"
@@ -219,11 +219,9 @@ export default function Navigation() {
                             initial={{ opacity: 0, y: -10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                            transition={{ duration: 0.2, type: 'spring', stiffness: 300 }}
-                            className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border-2 border-amber-200 py-2 z-50 overflow-hidden"
+                            transition={{ duration: 0.2, ease: 'easeOut' }}
+                            className="absolute top-full left-0 mt-2 w-56 bg-white rounded-sm shadow-xl border border-gold/20 py-2 z-50"
                           >
-                            {/* Solid gradient background */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-yellow-50" />
                             <div className="relative z-10">
                               {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem, subIndex) => (
                                 <Link
@@ -242,9 +240,8 @@ export default function Navigation() {
                                   <motion.div
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: subIndex * 0.05, type: 'spring' }}
-                                    whileHover={{ x: 5, scale: 1.02 }}
-                                    className="px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gradient-to-r hover:from-amber-200 hover:to-yellow-200 hover:text-amber-800 transition-all duration-300 rounded-lg mx-2"
+                                    transition={{ delay: subIndex * 0.05 }}
+                                    className="px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gold hover:bg-gold/5 transition-colors duration-300 mx-2 rounded-sm"
                                   >
                                     {subItem.name}
                                   </motion.div>
@@ -267,7 +264,7 @@ export default function Navigation() {
                         className="absolute inset-0 bg-gradient-to-r from-amber-100/50 to-yellow-100/50 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
                         transition={{ duration: 0.3 }}
                       />
-                      <span className="text-gray-700 text-sm font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-600 relative z-10">
+                      <span className="text-white text-sm font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10">
                         {item.name}
                       </span>
                       <motion.div
@@ -355,56 +352,15 @@ export default function Navigation() {
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, type: 'spring', stiffness: 200 }}
                 whileHover={{
-                  scale: 1.1,
-                  boxShadow: '0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.4)',
-                  y: -2,
+                  scale: 1.05,
+                  backgroundColor: '#1C1C1C',
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-6 py-3 text-sm font-bold text-white bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:from-amber-600 hover:via-yellow-600 hover:to-amber-700 transition-all duration-300 rounded-xl overflow-hidden group shadow-lg hover:shadow-2xl border border-amber-400/30"
+                className="relative px-8 py-3 text-sm font-medium tracking-widest text-white bg-black hover:bg-charcoal transition-all duration-300 rounded-sm border border-gold/30"
               >
-                {/* Animated shimmer effect */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  animate={{
-                    x: ['-200%', '200%'],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: 'linear',
-                  }}
-                />
-                {/* Pulsing glow */}
-                <motion.div
-                  className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-xl blur opacity-75"
-                  animate={{
-                    opacity: [0.5, 0.8, 0.5],
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                />
                 <span className="relative z-10 flex items-center gap-2">
                   <span>BOOK NOW</span>
-                  <motion.svg
-                    className="w-4 h-4"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                    }}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </motion.svg>
                 </span>
               </motion.button>
             </Link>
@@ -455,9 +411,14 @@ export default function Navigation() {
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="lg:hidden bg-gradient-to-b from-white to-amber-50/30 border-t border-amber-200/50 shadow-2xl backdrop-blur-xl"
+            className="lg:hidden bg-[#0a0a0a]/95 border-t border-amber-900/30 shadow-2xl backdrop-blur-xl relative overflow-hidden"
           >
-            <div className="container mx-auto px-4 sm:px-6 py-6 space-y-4">
+            {/* Subtle Pattern Overlay */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+              style={{ backgroundImage: 'radial-gradient(#D4AF37 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+            </div>
+
+            <div className="container mx-auto px-4 sm:px-6 py-8 space-y-6 relative z-10">
               {navItems.map((item) => (
                 <div key={item.name}>
                   {item.hasDropdown ? (
@@ -478,9 +439,9 @@ export default function Navigation() {
                             setIsOffersDropdownOpen(false)
                           }
                         }}
-                        className="flex items-center justify-between w-full text-black text-base sm:text-lg font-medium uppercase py-2 min-h-[48px]"
+                        className="flex items-center justify-between w-full text-white text-base sm:text-lg font-medium uppercase py-3 min-h-[48px] border-b border-white/5"
                       >
-                        <span>{item.name}</span>
+                        <span className="tracking-widest">{item.name}</span>
                         <motion.svg
                           className="w-5 h-5"
                           animate={{
@@ -504,7 +465,7 @@ export default function Navigation() {
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
                               exit={{ opacity: 0, height: 0 }}
-                              className="ml-4 mt-2 space-y-2"
+                              className="ml-4 mt-2 space-y-3 pl-4 border-l border-white/10"
                             >
                               {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem) => (
                                 <Link
@@ -520,7 +481,7 @@ export default function Navigation() {
                                       setIsExperiencesDropdownOpen(false)
                                     }
                                   }}
-                                  className="block text-gray-600 text-base hover:text-amber-600 transition-colors"
+                                  className="block text-gray-400 text-sm hover:text-amber-400 transition-colors py-1"
                                 >
                                   {subItem.name}
                                 </Link>
@@ -536,7 +497,7 @@ export default function Navigation() {
                       <Link
                         href={item.href}
                         onClick={() => setIsMenuOpen(false)}
-                        className="block text-black text-base sm:text-lg font-medium uppercase py-2 min-h-[48px] flex items-center"
+                        className="block text-white text-base sm:text-lg font-medium uppercase py-3 min-h-[48px] flex items-center border-b border-white/5 tracking-widest hover:text-amber-400 transition-colors"
                       >
                         {item.name}
                       </Link>

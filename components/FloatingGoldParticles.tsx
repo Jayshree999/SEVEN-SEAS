@@ -1,11 +1,18 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 
 // Optimized: Use CSS animations instead of Framer Motion for better performance
 export default function FloatingGoldParticles() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   // Memoize particle data to prevent recalculation on every render
   const particles = useMemo(() => {
+    if (!mounted) return []
     return Array.from({ length: 12 }, (_, i) => ({
       id: i,
       size: Math.random() * 4 + 2,
@@ -15,7 +22,9 @@ export default function FloatingGoldParticles() {
       delay: Math.random() * 5,
       opacity: Math.random() * 0.4 + 0.3,
     }))
-  }, [])
+  }, [mounted])
+
+  if (!mounted) return null
 
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">

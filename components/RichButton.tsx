@@ -15,7 +15,7 @@ export default function RichButton({
 }: RichButtonProps) {
   return (
     <motion.button
-      whileHover={{ scale: 1.09, boxShadow: variant === 'filled' ? '0 0 24px 6px #FFD70088' : undefined }}
+      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.97 }}
       className={`
         px-4 sm:px-6 py-3 sm:py-3.5
@@ -24,9 +24,9 @@ export default function RichButton({
         rounded-lg
         focus:outline-none
         min-h-[48px]
-        ${variant === 'filled' ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-white border-2 border-amber-400 shadow-lg' : ''}
-        ${variant === 'outline' ? 'bg-transparent border-2 border-amber-400 text-amber-950 hover:bg-amber-50/40' : ''}
-        shimmer relative overflow-hidden z-10
+        ${variant === 'filled' ? 'bg-gold text-white border-none shadow-md hover:bg-gold-dark' : ''}
+        ${variant === 'outline' ? 'bg-transparent border border-gold text-gold hover:bg-gold/5' : ''}
+        relative overflow-hidden z-10
         ${className}
       `}
       style={{
@@ -35,13 +35,9 @@ export default function RichButton({
       {...props}
     >
       <span className="relative z-20">{children}</span>
-      {/* Gold shimmer effect */}
+      {/* Gold shimmer effect - simplified */}
       {variant === 'filled' && (
-        <span className="absolute inset-0 opacity-30 z-0 shimmer-block" style={{
-          background: 'linear-gradient(120deg, rgba(254,243,199,0.7) 0%, rgba(253,230,138,0.35) 60%, rgba(252,211,77,0.4) 100%)',
-          pointerEvents: 'none',
-          animation: 'gradient-x 2.6s linear infinite',
-        }} />
+        <span className="absolute inset-0 opacity-20 z-0 bg-gold-light" />
       )}
     </motion.button>
   );
