@@ -8,7 +8,7 @@ const policies = [
   {
     icon: Clock,
     title: 'Check-in & Check-out',
-    details: 'Check-in time is 2:00 PM; check-out time is 12:00 PM.',
+    details: 'Check-in time is 3:00 PM; check-out time is 12:00 PM.',
     color: 'text-amber-600',
     bg: 'bg-amber-50',
     border: 'border-amber-100'
