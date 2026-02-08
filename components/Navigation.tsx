@@ -72,7 +72,6 @@ export default function Navigation() {
 
   const navItems = [
     { name: 'ROOMS', href: '/rooms' },
-    { name: 'MEDIA', href: '/media' },
     { name: 'EXPERIENCES', href: '/addons', hasDropdown: true, dropdownKey: 'experiences' },
     { name: 'OFFERS & MORE', href: '/offers-and-more', hasDropdown: true, dropdownKey: 'offers' },
   ]

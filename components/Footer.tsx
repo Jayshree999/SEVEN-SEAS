@@ -27,6 +27,7 @@ export default function Footer() {
       { name: 'Wellness & Spa', href: '/wellness' },
       { name: 'Special Offers', href: '/offers' },
       { name: 'Gallery', href: '/gallery' },
+      { name: 'Media', href: '/media' },
     ],
     services: [
       { name: 'Concierge', href: '/services' },

@@ -118,7 +118,7 @@ export default function VideoSection({
                   Your browser does not support the video tag.
                 </video>
                 {!isPlaying && (
-                  <div 
+                  <div
                     className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 cursor-pointer"
                     onClick={handlePlay}
                   >
@@ -145,7 +145,7 @@ export default function VideoSection({
                   </div>
                 )}
                 {isPlaying && (
-                  <div 
+                  <div
                     className="absolute inset-0 z-10 cursor-pointer"
                     onClick={handlePlay}
                     aria-label="Pause video"

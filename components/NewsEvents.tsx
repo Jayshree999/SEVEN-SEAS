@@ -20,11 +20,11 @@ export default function NewsEvents() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-tl from-amber-200/20 via-amber-100/10 to-transparent rounded-full blur-3xl"></div>
-        
+
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-300/40 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-300/40 to-transparent"></div>
       </div>
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header Section */}
         <div className="mb-12 md:mb-16">
@@ -37,7 +37,7 @@ export default function NewsEvents() {
             >
               <Newspaper className="w-8 h-8 md:w-10 md:h-10 text-amber-600" />
               <div>
-                <h2 
+                <h2
                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                 >
@@ -75,11 +75,11 @@ export default function NewsEvents() {
   )
 }
 
-function NewsCard({ 
-  item, 
-  index, 
-  inView 
-}: { 
+function NewsCard({
+  item,
+  index,
+  inView
+}: {
   item: typeof newsItems[0]
   index: number
   inView: boolean
@@ -94,10 +94,10 @@ function NewsCard({
     >
       {/* Make the whole card clickable */}
       <Link href={`/news/${item.slug}`} className="absolute inset-0 z-20" aria-label={`Read more about ${item.title}`} />
-      
+
       {/* Premium card background glow */}
       <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/30 to-amber-300/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
-      
+
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <Image
@@ -108,7 +108,7 @@ function NewsCard({
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-        
+
         {/* Category Badge */}
         <div className="absolute top-4 left-4 z-10">
           <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-lg border border-amber-200/50">
@@ -123,14 +123,14 @@ function NewsCard({
           <Calendar className="w-4 h-4" />
           <span>{item.date}</span>
         </div>
-        
-        <h3 
+
+        <h3
           className="text-lg md:text-xl font-bold text-gray-900 mb-3 line-clamp-2 leading-tight"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           {item.title}
         </h3>
-        
+
         <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">
           {item.excerpt}
         </p>

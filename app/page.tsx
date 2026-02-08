@@ -38,6 +38,32 @@ const Scene3D = dynamic(() => import('@/components/Scene3D'), {
   ssr: false,
 })
 
+// Luxury animation variants with premium easing
+const luxuryEasing = [0.22, 1, 0.36, 1] // Custom ease-out curve for luxury feel
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: luxuryEasing,
+    }
+  }
+}
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    }
+  }
+}
+
 export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-white">
@@ -45,28 +71,30 @@ export default function Home() {
       <Navigation />
       <HeroSection />
 
-      {/* Luxury Stats Banner - Enhanced with better animations */}
-      {/* Luxury Stats Banner - Enhanced with Glassmorphism */}
+      {/* Excellence in Numbers - Premium Stats Banner */}
       <motion.section
         className="relative py-16 md:py-24 px-4 sm:px-6 -mt-20 z-30"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
       >
         <div className="container mx-auto max-w-7xl">
-          {/* Dark Glass Card for better text contrast/visibility on all backgrounds */}
           <div className="relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden">
 
             {/* Glossy Overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+
+            {/* Ambient Glow Effects */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-[120px] pointer-events-none" />
 
             {/* Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.6, ease: luxuryEasing }}
               className="text-center mb-10 md:mb-14 relative z-10"
             >
               <h2 className="text-3xl md:text-5xl font-bold mb-3 text-white drop-shadow-md" style={{ fontFamily: 'var(--font-playfair)' }}>
@@ -77,7 +105,13 @@ export default function Home() {
             </motion.div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative z-10">
+            <motion.div
+              className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative z-10"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {[
                 { value: 150, suffix: '+', label: 'Luxury Rooms', delay: 0 },
                 { value: 10, suffix: '+', label: 'Years Excellence', delay: 0.1 },
@@ -86,10 +120,16 @@ export default function Home() {
               ].map((stat, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * index, duration: 0.5 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 30, scale: 0.9 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      transition: { duration: 0.6, ease: luxuryEasing }
+                    }
+                  }}
+                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
                   className="group relative text-center p-6"
                 >
                   <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-white/10" />
@@ -103,92 +143,78 @@ export default function Home() {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>
 
-
-      {/* Accommodation Section - Now with Carousel */}
-      <AccommodationSection />
-
-      {/* Brands & Outlets Section */}
-      <BrandsOutlets />
-
-      {/* Smart Features Section - New from website */}
-      <SmartFeatures />
-
-      {/* Explore More Section */}
-      <ExploreMore />
-
-      {/* Signature Dining Section */}
-      <SignatureDining />
-
-      {/* Events & Conferences Section */}
-      <EventsConferences />
-
-      {/* Rovee Arabic Cuisine Section */}
-      <RoveeArabicCuisine />
-
-      {/* Amenities Gallery Section - Commented out */}
-      {/* <AmenitiesGallery /> */}
-
-      {/* Nightlife Section */}
-      <NightlifeSection />
-
-      {/* Oasis Rooftop Poolbar Section */}
-      <OasisRooftopPoolbar />
-
-      {/* Luxury Video Banner Section */}
-      <div style={{ marginTop: '-200px', marginBottom: '-200px' }}>
-        <VideoBanner
-          title="Welcome to Luxury"
-          subtitle="Experience Dubai's finest hospitality in the heart of the city"
-          height="large"
-          textPosition="center"
-        />
-      </div>
-
-
-
-      {/* Image Showcase - Enhanced with Carousel */}
-      <motion.section
-        className="py-8 md:py-12 lg:py-16 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+      {/* Accommodation Section - Luxury Rooms Showcase */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
       >
-        {/* Background decorative elements - clean and minimal */}
+        <AccommodationSection />
+      </motion.div>
+
+      {/* Smart Features - Modern Conveniences */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <SmartFeatures />
+      </motion.div>
+
+      {/* Virtual Tour Video - Early Engagement */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+        className="py-0"
+      >
+        <VideoSection
+          videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/01/Lobby-video-converter.com_.mp4"
+          title="Take a Virtual Tour"
+          description="Explore our hotel facilities, rooms, and amenities through this immersive video experience. See why Seven Seas is the perfect choice for your Dubai stay."
+          position="left"
+        />
+      </motion.div>
+
+      {/* Discover Our World - Image Carousel */}
+      <motion.section
+        className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={sectionVariants}
+      >
+        {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-gray-100 to-transparent rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-gray-100 to-transparent rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-amber-100 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-yellow-100 to-transparent rounded-full blur-3xl" />
         </div>
 
         <div className="container mx-auto max-w-7xl relative z-10">
           <motion.div
-            className="text-center mb-10 md:mb-12"
+            className="text-center mb-12 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: luxuryEasing }}
           >
             <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-3 md:mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
             >
               DISCOVER OUR WORLD
             </motion.h2>
+            <div className="h-1 w-20 bg-amber-500 mx-auto rounded-full mb-6" />
             <motion.p
               className="text-base sm:text-lg md:text-xl text-gray-600 px-2"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
             >
               A glimpse into the Seven Seas experience
             </motion.p>
@@ -241,50 +267,167 @@ export default function Home() {
         </div>
       </motion.section>
 
-      <FeaturesSection />
+      {/* Unparalleled Experiences - Features */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <FeaturesSection />
+      </motion.div>
 
-      {/* Video Section - Hotel Tour */}
-      <VideoSection
-        videoUrl="https://sevenseashotel.ae/wp-content/uploads/2025/01/Lobby-video-converter.com_.mp4"
-        title="Take a Virtual Tour"
-        description="Explore our hotel facilities, rooms, and amenities through this immersive video experience. See why Seven Seas is the perfect choice for your Dubai stay."
-        position="left"
-      />
+      {/* Ultimate Playground - Nightlife */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <NightlifeSection />
+      </motion.div>
+
+      {/* Dining Experiences - Consolidated */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <SignatureDining />
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <RoveeArabicCuisine />
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <EventsConferences />
+      </motion.div>
+
+      {/* Brands & Outlets */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <BrandsOutlets />
+      </motion.div>
+
+      {/* Wellness & Experiences */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <ExploreMore />
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <OasisRooftopPoolbar />
+      </motion.div>
+
+      {/* Luxury Video Banner */}
+      <motion.div
+        className="my-16 md:my-24"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <VideoBanner
+          title="Welcome to Luxury"
+          subtitle="Experience Dubai's finest hospitality in the heart of the city"
+          height="large"
+          textPosition="center"
+        />
+      </motion.div>
 
       {/* Parallax Banner */}
-      <ParallaxBanner
-        imageUrl="/DSC02655-scaled.jpg"
-        title="Unforgettable Experiences Await"
-        subtitle="Every moment at Seven Seas is crafted to perfection"
-        height={400}
-      />
-
-      {/* Gallery Preview Section - Commented out */}
-      {/* <GalleryPreview /> */}
-
-      {/* Video Section - Dining Experience */}
-      <VideoSection
-        videoUrl="https://sevenseashotel.ae/wp-content/uploads/2022/04/hotel-video.mp4"
-        title="Culinary Excellence"
-        description="Watch our chefs create masterpieces in our award-winning restaurants. Experience the art of fine dining at its finest."
-        position="right"
-      />
-
-      <OffersSection />
-
-      {/* News & Events Section */}
-      <NewsEvents />
-
-      {/* Hotel Policies Section */}
-      <HotelPolicies />
-
-      {/* Final Video Banner - Enhanced - Reduced height */}
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="mb-0 -mt-8 md:-mt-12"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <ParallaxBanner
+          imageUrl="/DSC02655-scaled.jpg"
+          title="Unforgettable Experiences Await"
+          subtitle="Every moment at Seven Seas is crafted to perfection"
+          height={400}
+        />
+      </motion.div>
+
+      {/* Culinary Excellence Video */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+        className="py-0"
+      >
+        <VideoSection
+          videoUrl="https://sevenseashotel.ae/wp-content/uploads/2022/04/hotel-video.mp4"
+          title="Culinary Excellence"
+          description="Watch our chefs create masterpieces in our award-winning restaurants. Experience the art of fine dining at its finest."
+          position="right"
+        />
+      </motion.div>
+
+      {/* Special Offers */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <OffersSection />
+      </motion.div>
+
+      {/* News & Events */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <NewsEvents />
+      </motion.div>
+
+      {/* Hotel Policies */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+      >
+        <HotelPolicies />
+      </motion.div>
+
+      {/* Final Video Banner + CTA */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
+        className="mb-0"
       >
         <VideoBanner
           title="Book Your Stay Today"
@@ -294,40 +437,18 @@ export default function Home() {
         />
       </motion.div>
 
-      {/* Call to Action Section */}
+      {/* Call to Action */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={sectionVariants}
         className="-mt-16 md:-mt-20"
       >
         <CTA />
       </motion.div>
 
       <Footer />
-
-      {/* ============================================
-          ADDITIONAL SECTIONS (COMMENTED - Can be added if needed)
-          ============================================ */}
-
-      {/* Testimonials Section - Uncomment to add customer reviews */}
-      {/* <Testimonials /> */}
-
-      {/* Virtual Tour Section - Uncomment to add 360° hotel tour */}
-      {/* <VirtualTourSection /> */}
-
-      {/* Location Map Section - Uncomment to add interactive map */}
-      {/* <LocationMapSection /> */}
-
-      {/* Awards & Recognition Section - Uncomment to showcase awards */}
-      {/* <AwardsSection /> */}
-
-      {/* Sustainability Section - Uncomment to add eco-friendly initiatives */}
-      {/* <SustainabilitySection /> */}
-
-      {/* Partnership Section - Uncomment to add partner logos */}
-      {/* <PartnershipSection /> */}
     </main>
   )
 }

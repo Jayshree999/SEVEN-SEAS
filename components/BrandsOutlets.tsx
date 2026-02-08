@@ -281,8 +281,8 @@ export default function BrandsOutlets() {
                   key={index}
                   onClick={() => goToSlide(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${currentIndex === index
-                      ? 'bg-amber-600 w-8'
-                      : 'bg-gray-300 hover:bg-amber-300'
+                    ? 'bg-amber-600 w-8'
+                    : 'bg-gray-300 hover:bg-amber-300'
                     }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
