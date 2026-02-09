@@ -178,17 +178,17 @@ export default function RoomsPage() {
       )}
 
       {/* Hero Section */}
-      <div className="pt-32 pb-10 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-gray-50 to-white">
+      <div className="pt-40 pb-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-cream">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-center max-w-4xl mx-auto"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-charcoal mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
             Our Rooms
           </h1>
-          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
             Experience comfort and luxury in our thoughtfully designed accommodations
           </p>
         </motion.div>
@@ -321,8 +321,8 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
       className="group cursor-pointer"
     >
       <Link href={`/rooms/${room.id}`}>
-        {/* Ultra-Premium Card Container */}
-        <div className="relative bg-gradient-to-br from-white via-slate-50 to-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-[0_25px_60px_-12px_rgba(0,0,0,0.25)] transition-all duration-700 border-2 border-amber-200/30 hover:border-amber-300/50 backdrop-blur-sm group-hover:scale-[1.02]">
+        {/* Premium Card Container */}
+        <div className="relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 border border-gold/10 hover:border-gold/30 group-hover:scale-[1.01]">
 
           {/* Ultra-Premium Image Container with Ornate Overlay */}
           <div className="relative h-64 overflow-hidden">
@@ -336,11 +336,10 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority={index < 3}
                 />
-                {/* Multi-Layered Luxury Gradients */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-transparent to-purple-900/20 pointer-events-none" />
+                {/* Subtle Luxury Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
                 {/* Elegant Vignette Effect */}
-                <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.3)] pointer-events-none" />
+                <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)] pointer-events-none" />
               </>
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-purple-50">
@@ -348,12 +347,12 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
               </div>
             )}
 
-            {/* Ultra-Premium Popular Badge */}
+            {/* Premium Popular Badge */}
             {isPopular && (
               <div className="absolute top-4 left-4 z-10">
-                <div className="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-white font-extrabold px-4 py-2 rounded-full text-[11px] shadow-2xl border-2 border-white/40 backdrop-blur-xl flex items-center gap-2 animate-pulse">
+                <div className="bg-gold text-white font-bold px-4 py-2 rounded-full text-[11px] shadow-lg border border-white/60 backdrop-blur-md flex items-center gap-2">
                   <TrendingUp className="w-3.5 h-3.5" />
-                  <span className="tracking-widest">POPULAR</span>
+                  <span className="tracking-wider">POPULAR</span>
                 </div>
               </div>
             )}
@@ -372,9 +371,9 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
               </button>
             )}
 
-            {/* Ultra-Premium Price Badge with Ornate Styling */}
+            {/* Premium Price Badge */}
             <div className="absolute bottom-4 right-4 z-10">
-              <div className="bg-gradient-to-br from-white via-amber-50/90 to-white backdrop-blur-2xl px-5 py-3 rounded-2xl shadow-2xl border-2 border-amber-300/40">
+              <div className="bg-white/95 backdrop-blur-md px-5 py-3 rounded-xl shadow-xl border border-gold/30">
                 {formattedPrice ? (
                   <>
                     <div className="flex items-baseline gap-1.5">
@@ -391,76 +390,62 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
                 )}
               </div>
             </div>
-
-            {/* Decorative Corner Accents */}
-            <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-amber-400/10 to-transparent rounded-br-full pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-purple-400/10 to-transparent rounded-tl-full pointer-events-none" />
           </div>
 
           {/* Premium Content Section */}
-          <div className="p-5 bg-gradient-to-br from-white via-slate-50/50 to-amber-50/30 relative">
-
-            {/* Decorative Element */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-300/40 to-transparent" />
-
+          <div className="p-6 bg-white relative">
             {/* Premium Title */}
-            <h3 className="text-lg font-extrabold text-gray-900 mb-3 line-clamp-1 leading-tight">
+            <h3 className="text-xl font-bold text-charcoal mb-4 line-clamp-1" style={{ fontFamily: 'var(--font-playfair)' }}>
               {room.name}
             </h3>
 
-            {/* Ultra-Premium Amenities Grid - 3 items only, no size */}
+            {/* Premium Amenities Grid - Monochromatic Elegance */}
             <div className="grid grid-cols-3 gap-3 mb-5">
-              <div className="flex flex-col items-center gap-2 text-center bg-gradient-to-br from-amber-50 to-amber-100/50 rounded-xl px-3 py-3 border-2 border-amber-200/40 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <div className="p-2 bg-gradient-to-br from-amber-400 to-amber-500 rounded-lg shadow-lg">
-                  <Users className="w-4 h-4 text-white" />
-                </div>
+              <div className="flex flex-col items-center gap-2 text-center bg-cream/40 rounded-lg px-3 py-3 border border-gold/20 hover:border-gold/40 transition-all duration-300 hover:shadow-md">
+                <Users className="w-5 h-5 text-gold" strokeWidth={1.5} />
                 <div className="flex flex-col">
-                  <span className="text-xs font-black text-gray-900">{room.guests}</span>
-                  <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wide">Guests</span>
+                  <span className="text-sm font-bold text-charcoal">{room.guests}</span>
+                  <span className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Guests</span>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-2 text-center bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl px-3 py-3 border-2 border-blue-200/40 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <div className="p-2 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg shadow-lg">
-                  <Bed className="w-4 h-4 text-white" />
-                </div>
+              <div className="flex flex-col items-center gap-2 text-center bg-cream/40 rounded-lg px-3 py-3 border border-gold/20 hover:border-gold/40 transition-all duration-300 hover:shadow-md">
+                <Bed className="w-5 h-5 text-gold" strokeWidth={1.5} />
                 <div className="flex flex-col">
-                  <span className="text-xs font-black text-gray-900 line-clamp-1">{room.beds}</span>
-                  <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wide">Beds</span>
+                  <span className="text-sm font-bold text-charcoal line-clamp-1">{room.beds}</span>
+                  <span className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Beds</span>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-2 text-center bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-xl px-3 py-3 border-2 border-purple-200/40 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105">
-                <div className="p-2 bg-gradient-to-br from-purple-400 to-purple-500 rounded-lg shadow-lg">
-                  <Bath className="w-4 h-4 text-white" />
-                </div>
+              <div className="flex flex-col items-center gap-2 text-center bg-cream/40 rounded-lg px-3 py-3 border border-gold/20 hover:border-gold/40 transition-all duration-300 hover:shadow-md">
+                <Bath className="w-5 h-5 text-gold" strokeWidth={1.5} />
                 <div className="flex flex-col">
-                  <span className="text-xs font-black text-gray-900">{room.baths}</span>
-                  <span className="text-[9px] font-bold text-gray-600 uppercase tracking-wide">Bathrooms</span>
+                  <span className="text-sm font-bold text-charcoal">{room.baths}</span>
+                  <span className="text-[10px] font-medium text-gray-600 uppercase tracking-wide">Bathrooms</span>
                 </div>
               </div>
             </div>
 
-            {/* Ultra-Premium Rating Section */}
-            <div className="flex items-center justify-between mb-5 bg-gradient-to-r from-amber-50 via-amber-100/50 to-purple-50 rounded-2xl px-4 py-3 border-2 border-amber-200/40 shadow-lg backdrop-blur-sm">
+            {/* Premium Rating Section */}
+            <div className="flex items-center justify-between mb-5 bg-cream/30 rounded-xl px-4 py-3 border border-gold/20">
               <div className="flex items-center gap-2.5">
-                <div className="flex items-center gap-1.5 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl px-3 py-1.5 shadow-xl border border-amber-400/50">
-                  <Star className="w-4 h-4 fill-white text-white drop-shadow-md" />
-                  <span className="text-sm font-black text-white">4.9</span>
+                <div className="flex items-center gap-1.5 bg-gold rounded-lg px-3 py-1.5 shadow-md">
+                  <Star className="w-4 h-4 fill-white text-white" />
+                  <span className="text-sm font-bold text-white">4.9</span>
                 </div>
-                <span className="text-sm text-gray-900 font-extrabold tracking-tight">Exceptional</span>
+                <span className="text-sm text-charcoal font-bold">Exceptional</span>
               </div>
-              <span className="text-xs text-gray-700 font-bold">284 reviews</span>
+              <span className="text-xs text-gray-700 font-medium">284 reviews</span>
             </div>
 
-            {/* Ultra-Premium CTA Button */}
+            {/* Premium CTA Button */}
             <motion.button
-              whileHover={{ scale: 1.03, y: -3 }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full px-6 py-4 bg-gradient-to-r from-gray-900 via-black to-gray-900 hover:from-amber-700 hover:via-amber-800 hover:to-amber-900 text-white font-black rounded-2xl transition-all duration-700 shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.4)] text-sm uppercase tracking-[0.2em] relative overflow-hidden group/btn border-2 border-gray-800 hover:border-amber-600"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full px-6 py-4 bg-charcoal hover:bg-gold text-white font-bold rounded-xl transition-all duration-500 shadow-lg hover:shadow-xl text-sm uppercase tracking-wider relative overflow-hidden group/btn border border-charcoal hover:border-gold"
             >
               <span className="relative z-10 flex items-center justify-center gap-3">
-                <span className="drop-shadow-lg">View Details</span>
+                <span>View Details</span>
                 <motion.span
                   className="inline-block text-lg"
                   initial={{ x: 0 }}
@@ -470,19 +455,10 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
                   →
                 </motion.span>
               </span>
-              {/* Enhanced Shine Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000" />
-              {/* Subtle Pulse Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-600/10 to-amber-600/0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-700" />
+              {/* Subtle Shine Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
             </motion.button>
           </div>
-
-          {/* Ultra-Premium Border Glow & Shimmer */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400/0 via-amber-500/30 to-purple-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none blur-sm" />
-
-          {/* Elegant Corner Highlights */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-200/20 to-transparent rounded-bl-full pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-purple-200/20 to-transparent rounded-tr-full pointer-events-none" />
         </div>
       </Link>
     </motion.div>

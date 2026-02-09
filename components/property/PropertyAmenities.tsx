@@ -94,7 +94,7 @@ export function PropertyAmenities({ amenities }: PropertyAmenitiesProps) {
               className="flex items-center gap-4 group"
             >
               <div className="p-1">
-                <amenity.icon className="w-6 h-6 text-amber-600" />
+                <amenity.icon className="w-6 h-6 text-gold" strokeWidth={1.5} />
               </div>
               <span className="text-base">{amenity.name}</span>
             </motion.div>
@@ -106,7 +106,7 @@ export function PropertyAmenities({ amenities }: PropertyAmenitiesProps) {
         <>
           <button
             onClick={() => setIsOpen(true)}
-            className="rounded-lg h-14 text-base font-medium w-full justify-between hover:border-amber-600 transition-colors border-2 border-gray-300 px-4 flex items-center"
+            className="rounded-lg h-14 text-base font-medium w-full justify-between hover:border-gold transition-colors border-2 border-gray-300 px-4 flex items-center"
           >
             Show all {totalAmenities} amenities
             <ChevronRight className="w-5 h-5" />
@@ -139,7 +139,7 @@ export function PropertyAmenities({ amenities }: PropertyAmenitiesProps) {
                             className="flex items-center gap-4"
                           >
                             <div className="p-1">
-                              <amenity.icon className="w-6 h-6 text-amber-600" />
+                              <amenity.icon className="w-6 h-6 text-gold" strokeWidth={1.5} />
                             </div>
                             <span className="text-base">{amenity.name}</span>
                           </motion.div>

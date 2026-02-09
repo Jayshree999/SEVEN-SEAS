@@ -213,7 +213,7 @@ export default function PropertyPage({ params }: PageProps) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-orange-600/90 backdrop-blur-md text-white font-semibold px-4 py-2 rounded-lg shadow-xl border border-orange-400/50 flex items-center gap-2"
+                className="bg-gold backdrop-blur-md text-white font-semibold px-4 py-2 rounded-lg shadow-lg border border-gold/50 flex items-center gap-2"
               >
                 <TrendingUp className="w-4 h-4" />
                 Popular
@@ -263,66 +263,58 @@ export default function PropertyPage({ params }: PageProps) {
                 initial={{ opacity: 0, y: 30 }}
                 animate={statsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-gradient-to-br from-white via-slate-50 to-white border-2 border-amber-200/40 shadow-2xl rounded-3xl p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-8"
+                className="bg-white border border-gold/20 shadow-lg rounded-xl p-6 sm:p-8 md:p-10 space-y-6 sm:space-y-8"
               >
-                {/* Ultra-Premium Property Stats Grid */}
+                {/* Premium Property Stats Grid - Monochromatic */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
                   {property?.size && (
                     <motion.div
-                      whileHover={{ scale: 1.08, y: -3 }}
-                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-50 border-2 border-amber-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-lg bg-cream/40 border border-gold/20 hover:border-gold/40 shadow-sm hover:shadow-md transition-all duration-300"
                     >
-                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 shadow-xl">
-                        <Home className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                      </div>
+                      <Home className="w-6 h-6 sm:w-7 sm:h-7 text-gold" strokeWidth={1.5} />
                       <div>
-                        <p className="text-xl sm:text-2xl font-black text-gray-900">{property.size.toLocaleString()}</p>
-                        <p className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider mt-1">sqft</p>
+                        <p className="text-xl sm:text-2xl font-bold text-charcoal">{property.size.toLocaleString()}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide mt-1">sqft</p>
                       </div>
                     </motion.div>
                   )}
                   {property?.guest_no && (
                     <motion.div
-                      whileHover={{ scale: 1.08, y: -3 }}
-                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-blue-50 via-blue-100/50 to-blue-50 border-2 border-blue-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-lg bg-cream/40 border border-gold/20 hover:border-gold/40 shadow-sm hover:shadow-md transition-all duration-300"
                     >
-                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl">
-                        <Users className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                      </div>
+                      <Users className="w-6 h-6 sm:w-7 sm:h-7 text-gold" strokeWidth={1.5} />
                       <div>
-                        <p className="text-xl sm:text-2xl font-black text-gray-900">{property.guest_no}</p>
-                        <p className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider mt-1">Guests</p>
+                        <p className="text-xl sm:text-2xl font-bold text-charcoal">{property.guest_no}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide mt-1">Guests</p>
                       </div>
                     </motion.div>
                   )}
                   {property?.parking && (
                     <motion.div
-                      whileHover={{ scale: 1.08, y: -3 }}
-                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-green-50 via-green-100/50 to-green-50 border-2 border-green-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-lg bg-cream/40 border border-gold/20 hover:border-gold/40 shadow-sm hover:shadow-md transition-all duration-300"
                     >
-                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-green-500 to-green-600 shadow-xl">
-                        <Car className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                      </div>
+                      <Car className="w-6 h-6 sm:w-7 sm:h-7 text-gold" strokeWidth={1.5} />
                       <div>
-                        <p className="text-xl sm:text-2xl font-black text-gray-900">{property.parking}</p>
-                        <p className="text-xs sm:text-sm text-gray-600 font-bold uppercase tracking-wider mt-1">Parking</p>
+                        <p className="text-xl sm:text-2xl font-bold text-charcoal">{property.parking}</p>
+                        <p className="text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide mt-1">Parking</p>
                       </div>
                     </motion.div>
                   )}
                   {(property?.Check_in_time || property?.Check_out_time) && (
                     <motion.div
-                      whileHover={{ scale: 1.08, y: -3 }}
-                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-purple-50 via-purple-100/50 to-purple-50 border-2 border-purple-200/50 shadow-lg hover:shadow-2xl transition-all duration-300"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      className="flex flex-col items-center text-center gap-3 p-5 sm:p-6 rounded-lg bg-cream/40 border border-gold/20 hover:border-gold/40 shadow-sm hover:shadow-md transition-all duration-300"
                     >
-                      <div className="p-3 sm:p-4 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-xl">
-                        <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                      </div>
+                      <Clock className="w-6 h-6 sm:w-7 sm:h-7 text-gold" strokeWidth={1.5} />
                       <div>
-                        <p className="text-sm sm:text-base font-black text-gray-900 leading-tight">
+                        <p className="text-sm sm:text-base font-bold text-charcoal leading-tight">
                           {property.Check_in_time || 'N/A'}
                         </p>
-                        <p className="text-xs text-gray-500 font-semibold">to</p>
-                        <p className="text-sm sm:text-base font-black text-gray-900 leading-tight">
+                        <p className="text-xs text-gray-500 font-medium">to</p>
+                        <p className="text-sm sm:text-base font-bold text-charcoal leading-tight">
                           {property.Check_out_time || 'N/A'}
                         </p>
                       </div>
@@ -336,19 +328,19 @@ export default function PropertyPage({ params }: PageProps) {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={statsInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ delay: 0.4 }}
-                    className="p-6 sm:p-8 bg-gradient-to-r from-amber-50 via-amber-100/60 to-orange-50 rounded-2xl border-2 border-amber-300/50 shadow-xl"
+                    className="p-6 sm:p-8 bg-cream/30 rounded-xl border border-gold/30 shadow-md"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4 min-w-0 flex-1">
-                        <div className="p-3 sm:p-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-2xl flex-shrink-0">
-                          <Star className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white drop-shadow-lg" />
+                        <div className="p-3 sm:p-4 bg-gold rounded-lg shadow-lg flex-shrink-0">
+                          <Star className="w-6 h-6 sm:w-7 sm:h-7 text-white fill-white" />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-lg sm:text-xl font-black text-gray-900">
+                          <p className="text-lg sm:text-xl font-bold text-charcoal">
                             {totalBookings} {totalBookings === 1 ? 'Booking' : 'Bookings'}
                           </p>
                           {totalRevenue > 0 && (
-                            <p className="text-sm sm:text-base text-gray-700 font-bold truncate mt-1">
+                            <p className="text-sm sm:text-base text-gray-700 font-semibold truncate mt-1">
                               Revenue: {totalRevenue.toLocaleString()} AED
                             </p>
                           )}
@@ -356,8 +348,8 @@ export default function PropertyPage({ params }: PageProps) {
                       </div>
                       {isPopular && (
                         <motion.span
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          className="bg-gradient-to-r from-orange-500 via-orange-600 to-orange-500 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-black flex items-center gap-2 shadow-2xl flex-shrink-0 border-2 border-orange-400/50"
+                          whileHover={{ scale: 1.05, y: -1 }}
+                          className="bg-gold text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-2 shadow-lg flex-shrink-0 border border-gold"
                         >
                           <TrendingUp className="w-4 h-4" />
                           <span className="hidden xs:inline tracking-wide">POPULAR</span>
@@ -399,14 +391,14 @@ export default function PropertyPage({ params }: PageProps) {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="sticky top-20"
               >
-                <div className="bg-gradient-to-br from-white via-amber-50/20 to-white border-2 border-amber-200/40 rounded-3xl shadow-2xl overflow-hidden">
+                <div className="bg-white border border-gold/20 rounded-xl shadow-lg overflow-hidden">
                   <div className="p-8 sm:p-10">
                     {/* Ultra-Premium Price Section */}
-                    <div className="mb-8 pb-8 border-b-2 border-gradient-to-r from-transparent via-amber-300/40 to-transparent">
+                    <div className="mb-8 pb-8 border-b border-gold/20">
                       {dailyPrice ? (
                         <>
-                          <div className="text-5xl font-black text-gray-900 mb-3 tracking-tight">
-                            <span className="text-2xl font-bold text-amber-700">AED</span> {dailyPrice}
+                          <div className="text-5xl font-black text-charcoal mb-3 tracking-tight">
+                            <span className="text-2xl font-bold text-gold">AED</span> {dailyPrice}
                           </div>
                           <div className="text-gray-600 font-bold text-base uppercase tracking-wider">per night</div>
                         </>
@@ -424,29 +416,23 @@ export default function PropertyPage({ params }: PageProps) {
                       property={property}
                     />
 
-                    {/* Ultra-Premium Trust Badges */}
-                    <div className="mt-8 pt-8 border-t-2 border-amber-200/40">
+                    {/* Premium Trust Badges - Monochromatic */}
+                    <div className="mt-8 pt-8 border-t border-gold/20">
                       <div className="space-y-4">
                         {[
-                          { icon: Shield, text: 'Free cancellation', color: 'green' },
-                          { icon: CheckCircle2, text: 'No prepayment needed', color: 'blue' },
-                          { icon: Star, text: 'Best price guarantee', color: 'amber' },
+                          { icon: Shield, text: 'Free cancellation' },
+                          { icon: CheckCircle2, text: 'No prepayment needed' },
+                          { icon: Star, text: 'Best price guarantee' },
                         ].map((item, idx) => (
                           <motion.div
                             key={idx}
                             initial={{ opacity: 0, x: -10 }}
                             animate={bookingInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ delay: 0.5 + idx * 0.1 }}
-                            whileHover={{ scale: 1.03, x: 5 }}
-                            className={`flex items-center gap-4 text-sm font-bold text-gray-800 p-3 rounded-xl bg-gradient-to-r ${item.color === 'green' ? 'from-green-50 to-green-100/50 border border-green-200/50' :
-                                item.color === 'blue' ? 'from-blue-50 to-blue-100/50 border border-blue-200/50' :
-                                  'from-amber-50 to-amber-100/50 border border-amber-200/50'
-                              } shadow-sm hover:shadow-md transition-all duration-300`}
+                            whileHover={{ scale: 1.02, x: 3 }}
+                            className="flex items-center gap-4 text-sm font-semibold text-gray-800 p-3 rounded-lg bg-cream/30 border border-gold/20 hover:border-gold/40 shadow-sm hover:shadow-md transition-all duration-300"
                           >
-                            <div className={`p-2 rounded-lg shadow-lg ${item.color === 'green' ? 'bg-gradient-to-br from-green-500 to-green-600' :
-                                item.color === 'blue' ? 'bg-gradient-to-br from-blue-500 to-blue-600' :
-                                  'bg-gradient-to-br from-amber-500 to-amber-600'
-                              }`}>
+                            <div className="p-2 rounded-lg shadow-md bg-gold">
                               <item.icon className="w-5 h-5 text-white" />
                             </div>
                             <span>{item.text}</span>

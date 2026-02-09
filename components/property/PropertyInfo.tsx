@@ -102,7 +102,7 @@ export function PropertyInfo({
             <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight mb-2 leading-tight">{title || 'Property Title'}</h1>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm">
               <div className="flex items-center gap-2">
-                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-500 text-amber-500 flex-shrink-0" />
+                <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-gold text-gold flex-shrink-0" />
                 <span className="font-medium">4.9</span>
               </div>
             </div>
@@ -111,7 +111,7 @@ export function PropertyInfo({
           {price && (
             <div className="flex flex-col items-start sm:items-end gap-1 text-left sm:text-right">
               <div className="flex items-baseline gap-1">
-                <span className="text-xl sm:text-2xl font-bold text-amber-600">
+                <span className="text-xl sm:text-2xl font-bold text-gold">
                   {formatPrice(getCurrentDailyPrice(dailyPrices || []) || price)}
                 </span>
                 <span className="text-xs sm:text-sm text-gray-500">AED/night</span>
@@ -159,7 +159,7 @@ export function PropertyInfo({
         {description && description.split(' ').length > 60 && (
           <button
             onClick={() => setShowFullDescription(!showFullDescription)}
-            className="text-amber-600 font-medium underline mt-3 sm:mt-4 text-sm sm:text-base hover:opacity-80"
+            className="text-gold font-medium underline mt-3 sm:mt-4 text-sm sm:text-base hover:opacity-80"
           >
             {showFullDescription ? 'Show less' : 'Show more'}
           </button>
