@@ -325,7 +325,6 @@ export default function BookingForm({
           const now = new Date();
           return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
         })()}
-        suppressHydrationWarning
         pricePerNight={price}
         blockedDates={getBlockedDates()}
         dailyPrices={property?.dailyPrices || []}
