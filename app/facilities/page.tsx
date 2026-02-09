@@ -286,7 +286,7 @@ export default function FacilitiesPage() {
 
     return (
         <main className=\"min-h-screen bg-white overflow-hidden\">
-            < Navigation />
+            <Navigation />
             <Breadcrumbs />
 
     {/* Ultra-Premium Hero Section with Parallax */ }
