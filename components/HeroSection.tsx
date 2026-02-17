@@ -66,7 +66,7 @@ export default function HeroSection() {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-amber-50 mb-4 font-light tracking-[0.3em] uppercase drop-shadow-md"
         >
-          Luxury Redefined in Dubai
+          Luxury Redefined
         </motion.p>
 
         <motion.p
