@@ -32,6 +32,7 @@ import NewsEvents from '@/components/NewsEvents'
 import HotelPolicies from '@/components/HotelPolicies'
 import SmartFeatures from '@/components/SmartFeatures'
 import ImageCarousel from '@/components/ImageCarousel'
+import InstagramSection from '@/components/InstagramSection'
 
 // Dynamically import 3D components to avoid SSR issues
 const Scene3D = dynamic(() => import('@/components/Scene3D'), {
@@ -436,6 +437,9 @@ export default function Home() {
           textPosition="center"
         />
       </motion.div>
+
+      {/* Instagram Feed */}
+      <InstagramSection />
 
       {/* Call to Action */}
       <motion.div
