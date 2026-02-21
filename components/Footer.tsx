@@ -4,12 +4,15 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useRef, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Globe, ChevronRight, Send } from 'lucide-react'
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Globe, ChevronRight, Send, Loader2 } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 import BackgroundVideo from './BackgroundVideo'
+import { toast } from 'sonner'
 
 export default function Footer() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+  const [email, setEmail] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -51,6 +54,45 @@ export default function Footer() {
     { name: 'Twitter', icon: Twitter, href: '#' },
     { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/company/seven-seas-hotel-dubai' },
   ]
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || !email.includes('@')) {
+      toast.error('Please enter a valid email address')
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      // Derive name from email prefix
+      const name = email.split('@')[0]
+
+      const response = await fetch('https://sevenseas-api.propfusion.io/api/email_manager/public/audience_email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name,
+          emails: [email],
+          audience_type: 'newsletter'
+        }),
+      })
+
+      if (response.ok) {
+        toast.success('Successfully subscribed to our newsletter!')
+        setEmail('')
+      } else {
+        const errorData = await response.json().catch(() => ({}))
+        toast.error(errorData.message || 'Subscription failed. Please try again later.')
+      }
+    } catch (error) {
+      console.error('Newsletter error:', error)
+      toast.error('Connect failed. Please check your network.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <footer ref={ref} className="relative bg-[#0a0f1c] text-white pt-12 pb-8 overflow-hidden">
@@ -162,16 +204,28 @@ export default function Footer() {
               <h3 className="text-xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Join Our World</h3>
               <p className="text-gray-400 text-xs mb-4">Subscribe to receive exclusive offers and latest news.</p>
 
-              <div className="relative max-w-md">
+              <form onSubmit={handleSubscribe} className="relative max-w-md">
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your Email Address"
-                  className="w-full bg-white/5 border border-white/10 text-white px-6 py-4 rounded-full focus:outline-none focus:border-amber-500/50 focus:bg-white/10 transition-all pr-32 placeholder:text-gray-600 font-light"
+                  disabled={isLoading}
+                  className="w-full bg-white/5 border border-white/10 text-white px-6 py-4 rounded-full focus:outline-none focus:border-amber-500/50 focus:bg-white/10 transition-all pr-32 placeholder:text-gray-600 font-light disabled:opacity-50"
+                  required
                 />
-                <button className="absolute right-2 top-2 bottom-2 bg-amber-600 hover:bg-amber-700 text-white px-6 rounded-full font-medium text-xs tracking-widest uppercase transition-colors flex items-center gap-2">
-                  <span>Send</span>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="absolute right-2 top-2 bottom-2 bg-amber-600 hover:bg-amber-700 text-white px-6 rounded-full font-medium text-xs tracking-widest uppercase transition-colors flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <span>Send</span>
+                  )}
                 </button>
-              </div>
+              </form>
             </motion.div>
           </div>
 
