@@ -8,15 +8,22 @@ export interface PropertyFilters {
   bedrooms?: string
   category?: string
   area?: string
+  minPrice?: number
+  maxPrice?: number
+  guest_no?: string | number
+  amenities?: string[]
+  roomType?: string
+  search?: string
 }
 
 export interface PropertyApiParams {
   limit?: number
   page?: number
   activeStatus?: boolean
+  sortBy?: string
+  sortOrder?: 'asc' | 'desc'
   filters?: PropertyFilters
 }
-
 export interface Property {
   _id: string
   id?: string
@@ -43,6 +50,7 @@ export interface Property {
     _id?: string
   }> | string[]
   amenities?: string[]
+  createdAt?: string
   [key: string]: any
 }
 
@@ -71,6 +79,8 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
     limit = 100,
     page = 1,
     activeStatus = true,
+    sortBy = 'sno',
+    sortOrder = 'asc',
     filters = {},
   } = params
 
@@ -79,38 +89,20 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
     limit: limit.toString(),
     page: page.toString(),
     activeStatus: activeStatus.toString(),
+    sortBy: sortBy,
+    sortOrder: sortOrder,
   })
 
-  // Add filter parameters
-  if (filters.address) {
-    queryParams.append('filters[address]', filters.address)
-  } else {
-    queryParams.append('filters[address]', '')
-  }
-
-  if (filters.city) {
-    queryParams.append('filters[city]', filters.city)
-  } else {
-    queryParams.append('filters[city]', '')
-  }
-
-  if (filters.bedrooms) {
-    queryParams.append('filters[bedrooms]', filters.bedrooms)
-  } else {
-    queryParams.append('filters[bedrooms]', '')
-  }
-
-  if (filters.category) {
-    queryParams.append('filters[category]', filters.category)
-  } else {
-    queryParams.append('filters[category]', '')
-  }
-
-  if (filters.area) {
-    queryParams.append('filters[area]', filters.area)
-  } else {
-    queryParams.append('filters[area]', '')
-  }
+  // Add filter parameters directly (not wrapped in filters[])
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      if (Array.isArray(value)) {
+        queryParams.append(key, value.join(','))
+      } else {
+        queryParams.append(key, value.toString())
+      }
+    }
+  })
 
   const SERVER_URL = process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io'
 

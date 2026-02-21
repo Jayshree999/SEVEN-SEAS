@@ -53,7 +53,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer ref={ref} className="relative bg-[#0a0f1c] text-white pt-20 pb-10 overflow-hidden">
+    <footer ref={ref} className="relative bg-[#0a0f1c] text-white pt-12 pb-8 overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
         <BackgroundVideo
@@ -72,7 +72,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
 
         {/* Top Section: Newsletter & Branding */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 border-b border-white/5 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-10 border-b border-white/5 pb-10">
 
           {/* Brand Identity */}
           <div className="lg:col-span-4 space-y-8">
@@ -151,7 +151,7 @@ export default function Footer() {
         </div>
 
         {/* Middle Section: Newsletter & Contact */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16 border-b border-white/5 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-10 border-b border-white/5 pb-10">
           {/* Newsletter */}
           <div className="lg:col-span-5">
             <motion.div
@@ -159,8 +159,8 @@ export default function Footer() {
               animate={inView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <h3 className="text-2xl font-bold text-white mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>Join Our World</h3>
-              <p className="text-gray-400 text-sm mb-6">Subscribe to receive exclusive offers and latest news.</p>
+              <h3 className="text-xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Join Our World</h3>
+              <p className="text-gray-400 text-xs mb-4">Subscribe to receive exclusive offers and latest news.</p>
 
               <div className="relative max-w-md">
                 <input
@@ -178,36 +178,36 @@ export default function Footer() {
           <div className="lg:col-span-1 hidden lg:block"></div>
 
           {/* Contact Details */}
-          <div className="lg:col-span-6 flex flex-col md:flex-row justify-between gap-8 items-start md:items-center">
+          <div className="lg:col-span-6 flex flex-col md:flex-row justify-start md:justify-between gap-6 items-start md:items-center">
             <motion.div
-              className="flex items-center gap-4"
+              className="flex items-center gap-3"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
-                <Phone className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
+                <Phone className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Reservation</p>
-                <a href="tel:+971551009152" className="text-lg text-white font-medium hover:text-amber-400 transition-colors">+971 55 100 9152</a>
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Reservation</p>
+                <a href="tel:+971551009152" className="text-base text-white font-medium hover:text-amber-400 transition-colors">+971 55 100 9152</a>
               </div>
             </motion.div>
 
-            <div className="h-12 w-px bg-white/10 hidden md:block"></div>
+            <div className="h-10 w-px bg-white/10 hidden md:block"></div>
 
             <motion.div
-              className="flex items-center gap-4"
+              className="flex items-center gap-3"
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
-                <Mail className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
+                <Mail className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Email</p>
-                <a href="mailto:reservation@sevenseashotel.ae" className="text-lg text-white font-medium hover:text-amber-400 transition-colors">reservation@sevenseashotel.ae</a>
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Email</p>
+                <a href="mailto:reservation@sevenseashotel.ae" className="text-base text-white font-medium hover:text-amber-400 transition-colors">reservation@sevenseashotel.ae</a>
               </div>
             </motion.div>
           </div>

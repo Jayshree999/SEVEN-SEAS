@@ -7,11 +7,12 @@ import Footer from '@/components/Footer'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import Image from 'next/image'
-import { fetchProperties, Property } from '@/lib/api'
-import { Star, MapPin, Home, Users, Bed, Bath, Heart, TrendingUp, Sparkles } from 'lucide-react'
+import { fetchProperties, Property, PropertyFilters } from '@/lib/api'
+import { Star, MapPin, Home, Users, Bed, Bath, Heart, TrendingUp, Sparkles, SlidersHorizontal, Search as SearchIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { toggleWatchlist, getCurrentUserProfile } from '@/lib/user'
 import { toast } from 'sonner'
+import Filters from '@/components/Filters'
 
 interface RoomDisplay {
   id: string
@@ -96,29 +97,45 @@ export default function RoomsPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    const loadRooms = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const response = await fetchProperties({
-          limit: 100,
-          page: 1,
-          activeStatus: true,
-        })
+  const [activeFilters, setActiveFilters] = useState<PropertyFilters>({})
+  const [sortBy, setSortBy] = useState('sno')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
-        const mappedRooms = (response.data?.properties || []).map(mapPropertyToRoom)
-        setRooms(mappedRooms)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load rooms')
-        console.error('Error loading rooms:', err)
-      } finally {
-        setLoading(false)
-      }
+  const loadRooms = async (filters: PropertyFilters = {}, sort: string = 'sno', order: 'asc' | 'desc' = 'asc') => {
+    try {
+      setLoading(true)
+      setError(null)
+      const response = await fetchProperties({
+        limit: 100,
+        page: 1,
+        activeStatus: true,
+        filters: filters,
+        sortBy: sort,
+        sortOrder: order,
+      })
+
+      const mappedRooms = (response.data?.properties || []).map(mapPropertyToRoom)
+      setRooms(mappedRooms)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load rooms')
+      console.error('Error loading rooms:', err)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    loadRooms()
-  }, [])
+  useEffect(() => {
+    loadRooms(activeFilters, sortBy, sortOrder)
+  }, [activeFilters, sortBy, sortOrder])
+
+  const handleFilterChange = (newFilters: PropertyFilters) => {
+    setActiveFilters(newFilters)
+  }
+
+  const handleSortChange = (newSortBy: string, newSortOrder: 'asc' | 'desc') => {
+    setSortBy(newSortBy)
+    setSortOrder(newSortOrder)
+  }
 
   return (
     <main className="min-h-screen bg-white">
@@ -178,7 +195,7 @@ export default function RoomsPage() {
       )}
 
       {/* Hero Section */}
-      <div className="pt-40 pb-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-cream">
+      <div className="pt-32 pb-12 px-4 sm:px-6 md:px-12 lg:px-24 bg-cream">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -195,8 +212,16 @@ export default function RoomsPage() {
       </div>
 
       {/* Rooms Grid */}
-      <section className="px-4 sm:px-6 md:px-12 lg:px-24 py-10 bg-white">
+      <section className="px-4 sm:px-6 md:px-12 lg:px-24 py-6 bg-white">
         <div className="max-w-7xl mx-auto">
+          <Filters
+            onFilterChange={handleFilterChange}
+            onSortChange={handleSortChange}
+            initialFilters={activeFilters}
+            initialSortBy={sortBy}
+            initialSortOrder={sortOrder}
+          />
+
           {loading && (
             <div className="flex items-center justify-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>

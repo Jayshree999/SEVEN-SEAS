@@ -5,7 +5,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 import ScrollToTop from '@/components/ScrollToTop'
 import FloatingGoldParticles from '@/components/FloatingGoldParticles'
 import { AuthProvider } from '@/contexts/AuthContext'
-import { LuxuryChatbot } from '@/components/LuxuryChatbot'
+import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { Toaster } from 'sonner'
 import Providers from './providers'
 
@@ -197,7 +197,7 @@ export default function RootLayout({
             {/* Optimized: Only show particles on home page, removed from global layout */}
             {children}
             <ScrollToTop />
-            <LuxuryChatbot />
+            <WhatsAppWidget />
             <Toaster position="top-right" richColors />
           </AuthProvider>
         </Providers>
