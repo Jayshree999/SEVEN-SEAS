@@ -3,7 +3,6 @@
 A clean, modern, and highly animated website for a luxury 4-star hotel in Dubai built with Next.js, Three.js, and Framer Motion. Features a sophisticated white and black design with smooth animations and 3D elements.
 ,,,
 ## Features
-
 ### Website Features
 
 - ✅ **Custom UI/UX Hotel Website Design** - Clean, modern white/black aesthetic
