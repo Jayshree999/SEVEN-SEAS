@@ -35,6 +35,8 @@ export interface Property {
   size?: number
   area?: number
   price?: number
+  originalPrice?: number
+  breakfastPrice?: number
   photos?: Array<{
     category?: string
     url: string
@@ -109,7 +111,7 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
   } else {
     queryParams.append('filters[area]', '')
   }
-   
+
   const SERVER_URL = process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io'
 
   const url = `${SERVER_URL}/api/v1/property/property?${queryParams.toString()}`
@@ -128,7 +130,7 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
     }
 
     const data: PropertyApiResponse = await response.json()
-    
+
     // Normalize property IDs for easier access
     if (data.data?.properties) {
       data.data.properties = data.data.properties.map(prop => ({
@@ -137,7 +139,7 @@ export async function fetchProperties(params: PropertyApiParams = {}): Promise<P
         name: prop.title || prop.name || prop.nickname || 'Untitled Property',
       }))
     }
-    
+
     return data
   } catch (error) {
     console.error('Error fetching properties:', error)
