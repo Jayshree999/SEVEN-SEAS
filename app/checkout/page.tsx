@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import Navigation from "@/components/Navigation"
 import Footer from "@/components/Footer"
@@ -15,7 +15,19 @@ interface CartItem {
     property?: Property
 }
 
-export default function CheckoutPage() {
+function CheckoutPageWrapper() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+                <Loader2 className="w-10 h-10 animate-spin text-gold" />
+            </div>
+        }>
+            <CheckoutPage />
+        </Suspense>
+    )
+}
+
+function CheckoutPage() {
     const router = useRouter()
     const searchParams = useSearchParams()
     const { user, isAuth } = useAuth()
@@ -356,3 +368,5 @@ export default function CheckoutPage() {
         </main>
     )
 }
+
+export default CheckoutPageWrapper
