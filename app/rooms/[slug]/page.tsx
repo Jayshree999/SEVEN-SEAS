@@ -10,14 +10,15 @@ import { PropertyInfo } from '@/components/property/PropertyInfo'
 import { PropertyAmenities } from '@/components/property/PropertyAmenities'
 import { PropertyPolicies } from '@/components/property/PropertyPolicies'
 import { PropertyReviews } from '@/components/property/PropertyReviews'
-import { fetchPropertyById, Property } from '@/lib/api'
+import { fetchPropertyBySlug, Property } from '@/lib/api'
 import { getMonthlyRent, getYearlyRent } from '@/lib/booking'
 import { MapPin, Star, TrendingUp, Sparkles, Home, Users, Car, Clock, Shield, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
+import { useCurrency } from '@/contexts/CurrencyContext'
 
 interface PageProps {
-  params: Promise<{ id: string }> | { id: string }
+  params: Promise<{ slug: string }> | { slug: string }
 }
 
 // Helper function to format price
@@ -50,11 +51,11 @@ const PropertyDetailsSkeleton = () => {
 
 export default function PropertyPage({ params }: PageProps) {
   // Handle both Promise and direct object for compatibility
-  let resolvedParams: { id: string }
+  let resolvedParams: { slug: string }
   if (params && typeof params === 'object' && 'then' in params) {
-    resolvedParams = use(params as Promise<{ id: string }>)
+    resolvedParams = use(params as Promise<{ slug: string }>)
   } else {
-    resolvedParams = params as { id: string }
+    resolvedParams = params as { slug: string }
   }
 
   const [property, setProperty] = useState<Property | null>(null)
@@ -64,6 +65,7 @@ export default function PropertyPage({ params }: PageProps) {
   const [error, setError] = useState<string | null>(null)
   const { scrollYProgress } = useScroll()
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
+  const { formatPrice: formatPriceCurrency } = useCurrency()
 
   // Animation refs
   const [infoRef, infoInView] = useInView({ triggerOnce: true, threshold: 0.1 })
@@ -76,7 +78,7 @@ export default function PropertyPage({ params }: PageProps) {
       try {
         setIsLoading(true)
         setError(null)
-        const fetchedProperty = await fetchPropertyById(resolvedParams.id)
+        const fetchedProperty = await fetchPropertyBySlug(resolvedParams.slug)
         setProperty(fetchedProperty)
 
         // Load monthly and yearly rent
@@ -104,7 +106,7 @@ export default function PropertyPage({ params }: PageProps) {
     }
 
     loadProperty()
-  }, [resolvedParams.id])
+  }, [resolvedParams.slug])
 
   // Show loading state
   if (isLoading) {
@@ -193,9 +195,9 @@ export default function PropertyPage({ params }: PageProps) {
   const isPopular = totalBookings >= 5
   const totalRevenue = property?.bookingInfo?.totalRevenue || 0
 
-  const dailyPrice = formatPrice(property?.price || 0)
-  const monthlyPrice = formatPrice(monthlyRent || property?.monthlyRent || 0)
-  const yearlyPrice = formatPrice(yearlyRent || property?.yearlyRent || 0)
+  const dailyPrice = property?.price && property.price > 0 && property.price <= 100000 ? formatPriceCurrency(property.price) : null
+  const monthlyPrice = (monthlyRent || property?.monthlyRent) ? formatPriceCurrency(monthlyRent || property?.monthlyRent || 0) : null
+  const yearlyPrice = (yearlyRent || property?.yearlyRent) ? formatPriceCurrency(yearlyRent || property?.yearlyRent || 0) : null
 
   return (
     <div className="min-h-screen bg-white">
@@ -398,7 +400,7 @@ export default function PropertyPage({ params }: PageProps) {
                       {dailyPrice ? (
                         <>
                           <div className="text-5xl font-black text-charcoal mb-3 tracking-tight">
-                            <span className="text-2xl font-bold text-gold">AED</span> {dailyPrice}
+                            {dailyPrice}
                           </div>
                           <div className="text-gray-600 font-bold text-base uppercase tracking-wider">per night</div>
                         </>
@@ -408,7 +410,7 @@ export default function PropertyPage({ params }: PageProps) {
                     </div>
 
                     <BookingModal
-                      roomId={property?._id || property?.id || resolvedParams.id}
+                      roomId={property?._id || property?.id || ''}
                       roomName={property?.title || property?.name || 'Property'}
                       price={property?.price || 0}
                       monthlyRent={monthlyRent}
@@ -579,7 +581,6 @@ export default function PropertyPage({ params }: PageProps) {
               {dailyPrice ? (
                 <>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-xs text-gray-500">AED</span>
                     <p className="text-xl sm:text-2xl font-bold text-gray-900">{dailyPrice}</p>
                   </div>
                   <p className="text-xs text-gray-500 mb-1">per night</p>
@@ -590,7 +591,7 @@ export default function PropertyPage({ params }: PageProps) {
             </div>
             <div className="flex-shrink-0">
               <BookingModal
-                roomId={property?._id || property?.id || resolvedParams.id}
+                roomId={property?._id || property?.id || ''}
                 roomName={property?.title || property?.name || 'Property'}
                 price={property?.price || 0}
                 monthlyRent={monthlyRent}

@@ -5,6 +5,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 import ScrollToTop from '@/components/ScrollToTop'
 import FloatingGoldParticles from '@/components/FloatingGoldParticles'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { Toaster } from 'sonner'
 import Providers from './providers'
@@ -211,14 +212,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
         />
         {/* End Google Tag Manager (noscript) */}
         <Providers>
-          <AuthProvider>
-            <LoadingScreen />
-            {/* Optimized: Only show particles on home page, removed from global layout */}
-            {children}
-            <ScrollToTop />
-            <WhatsAppWidget />
-            <Toaster position="top-right" richColors />
-          </AuthProvider>
+          <CurrencyProvider>
+            <AuthProvider>
+              <LoadingScreen />
+              {children}
+              <ScrollToTop />
+              <WhatsAppWidget />
+              <Toaster position="top-right" richColors />
+            </AuthProvider>
+          </CurrencyProvider>
         </Providers>
       </body>
     </html>

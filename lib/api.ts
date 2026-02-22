@@ -2,6 +2,37 @@
  * API utility functions for Dubai Booking API
  */
 
+/**
+ * Converts a property name to a URL-friendly slug
+ * e.g., "Deluxe King Room" -> "deluxe-king-room"
+ */
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')  // remove special chars
+    .replace(/\s+/g, '-')           // spaces to hyphens
+    .replace(/-+/g, '-')            // collapse multiple hyphens
+    .replace(/^-+|-+$/g, '')        // trim leading/trailing hyphens
+}
+
+/**
+ * Extracts the MongoDB ObjectId from a slug (last 24 hex chars)
+ * e.g., "deluxe-king-room-69487bfdef489742dc309150" -> "69487bfdef489742dc309150"
+ */
+export function idFromSlug(slug: string): string | null {
+  const match = slug.match(/([a-f0-9]{24})$/)
+  return match ? match[1] : null
+}
+
+/**
+ * Creates an SEO-friendly room slug from property name and ID
+ * e.g., "Deluxe King Room" + "69487bfdef489742dc309150" -> "deluxe-king-room-69487bfdef489742dc309150"
+ */
+export function makeRoomSlug(property: Property): string {
+  const name = property.title || property.name || property.nickname || 'room'
+  return `${slugify(name)}-${property._id}`
+}
 export interface PropertyFilters {
   address?: string
   city?: string
@@ -163,3 +194,34 @@ export async function fetchPropertyById(propertyId: string): Promise<Property | 
   }
 }
 
+/**
+ * Fetches a single property by slug from the Dubai Booking API
+ * The slug can be either:
+ * - "property-name-{24_char_id}" (preferred, embeds the ID)
+ * - A raw MongoDB ObjectId (fallback for old links)
+ * @returns Promise with the property data
+ */
+export async function fetchPropertyBySlug(slug: string): Promise<Property | null> {
+  try {
+    // Try to extract the ID from the end of the slug first (fastest)
+    const embeddedId = idFromSlug(slug)
+    if (embeddedId) {
+      return fetchPropertyById(embeddedId)
+    }
+
+    // Fallback: raw ObjectId
+    if (/^[a-f0-9]{24}$/.test(slug)) {
+      return fetchPropertyById(slug)
+    }
+
+    // Last resort: match by slug against all properties
+    const response = await fetchProperties({ limit: 100, page: 1, activeStatus: true })
+    const property = response.data?.properties?.find(
+      (prop) => makeRoomSlug(prop) === slug
+    )
+    return property || null
+  } catch (error) {
+    console.error('Error fetching property by slug:', error)
+    throw error
+  }
+}

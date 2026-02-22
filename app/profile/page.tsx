@@ -7,18 +7,19 @@ import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { updateProfile, getCurrentUserProfile, toggleWatchlist, getUserBookings, type UserProfile, type Booking, type UserBookings } from '@/lib/user'
 import { uploadImageToCloudinary } from '@/lib/cloudinary'
-import { fetchProperties, type Property } from '@/lib/api'
+import { fetchProperties, type Property, makeRoomSlug } from '@/lib/api'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
+import SSCoinsWallet from '@/components/SSCoinsWallet'
 
-type TabType = 'bookings' | 'saved' | 'history'
+type TabType = 'bookings' | 'saved' | 'history' | 'rewards'
 
 export default function ProfilePage() {
   const { user: authUser, isAuth, loading: authLoading, logout, refreshUser } = useAuth()
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  
+
   const [activeTab, setActiveTab] = useState<TabType>('bookings')
   const [isEditing, setIsEditing] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
@@ -81,7 +82,7 @@ export default function ProfilePage() {
       // Load favorite properties if watchlist exists
       const watchlist = response.data?.watchlist || profile?.property || []
       if (watchlist && watchlist.length > 0) {
-        const propertyIds = watchlist.map((item: any) => 
+        const propertyIds = watchlist.map((item: any) =>
           typeof item === 'string' ? item : (item._id || item.id)
         )
         loadFavoriteProperties(propertyIds)
@@ -90,7 +91,7 @@ export default function ProfilePage() {
       console.error('Error loading profile:', error)
       const errorMessage = error.message || 'Failed to load profile'
       setError(errorMessage)
-      
+
       if (errorMessage.includes('Session expired') || errorMessage.includes('Please log in')) {
         setTimeout(() => {
           router.push('/login')
@@ -104,7 +105,7 @@ export default function ProfilePage() {
   const loadBookings = async () => {
     try {
       const allBookings = await getUserBookings()
-      
+
       // Organize bookings by status
       const organizedBookings: UserBookings = {
         completed: allBookings.filter((b: Booking) => b.status === 'Completed'),
@@ -113,7 +114,7 @@ export default function ProfilePage() {
         pending: allBookings.filter((b: Booking) => b.status === 'Pending'),
         ConfirmedBookings: allBookings.filter((b: Booking) => b.status === 'Confirmed'),
       }
-      
+
       setBookings(organizedBookings)
     } catch (error: any) {
       console.error('Error loading bookings:', error)
@@ -160,7 +161,7 @@ export default function ProfilePage() {
     try {
       const imageUrl = await uploadImageToCloudinary(file)
       await updateProfile({ profileImg: imageUrl })
-      
+
       if (userProfile) {
         setUserProfile({ ...userProfile, profileImg: imageUrl })
       }
@@ -169,7 +170,7 @@ export default function ProfilePage() {
         localStorage.setItem('user', JSON.stringify(updatedUser))
         refreshUser()
       }
-      
+
       setSuccess('Profile picture updated successfully!')
       setTimeout(() => setSuccess(''), 3000)
     } catch (error: any) {
@@ -199,7 +200,7 @@ export default function ProfilePage() {
         setIsEditing(false)
         setSuccess('Profile updated successfully!')
         setTimeout(() => setSuccess(''), 3000)
-        
+
         if (authUser) {
           const updatedUser = { ...authUser, ...userData }
           localStorage.setItem('user', JSON.stringify(updatedUser))
@@ -279,7 +280,7 @@ export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Navigation />
-      
+
       <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Profile Header Card */}
@@ -389,9 +390,8 @@ export default function ProfilePage() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className={`mx-6 mt-4 p-3 rounded-lg ${
-                    error ? 'bg-red-50 border border-red-200 text-red-700' : 'bg-green-50 border border-green-200 text-green-700'
-                  }`}
+                  className={`mx-6 mt-4 p-3 rounded-lg ${error ? 'bg-red-50 border border-red-200 text-red-700' : 'bg-green-50 border border-green-200 text-green-700'
+                    }`}
                 >
                   {error || success}
                 </motion.div>
@@ -547,15 +547,15 @@ export default function ProfilePage() {
                   { id: 'bookings' as TabType, label: 'Bookings', icon: '🏨' },
                   { id: 'saved' as TabType, label: 'Saved', icon: '❤️' },
                   { id: 'history' as TabType, label: 'History', icon: '🕐' },
+                  { id: 'rewards' as TabType, label: 'SS Coins', icon: '🪙' },
                 ].map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`px-6 py-4 font-semibold text-sm transition-all whitespace-nowrap rounded-t-lg ${
-                      activeTab === tab.id
-                        ? 'text-white bg-gradient-to-r from-amber-500 to-yellow-600 shadow-md'
-                        : 'text-gray-600 hover:text-amber-600'
-                    }`}
+                    className={`px-6 py-4 font-semibold text-sm transition-all whitespace-nowrap rounded-t-lg ${activeTab === tab.id
+                      ? 'text-white bg-gradient-to-r from-amber-500 to-yellow-600 shadow-md'
+                      : 'text-gray-600 hover:text-amber-600'
+                      }`}
                   >
                     {tab.label}
                   </button>
@@ -620,12 +620,11 @@ export default function ProfilePage() {
                                 </div>
                               </div>
                               <div className="flex items-center gap-2">
-                                <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                  booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' :
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium ${booking.status === 'Confirmed' ? 'bg-green-100 text-green-800' :
                                   booking.status === 'Hosting' ? 'bg-blue-100 text-blue-800' :
-                                  booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
-                                  'bg-gray-100 text-gray-800'
-                                }`}>
+                                    booking.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                                      'bg-gray-100 text-gray-800'
+                                  }`}>
                                   {booking.status}
                                 </span>
                               </div>
@@ -672,7 +671,7 @@ export default function ProfilePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="relative group"
                           >
-                            <Link href={`/rooms/${property._id || property.id}`}>
+                            <Link href={`/rooms/${makeRoomSlug(property)}`}>
                               <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200 hover:border-amber-300 transition-all cursor-pointer">
                                 {property.photos && Array.isArray(property.photos) && property.photos.length > 0 && (
                                   <div className="relative h-48 overflow-hidden">
@@ -774,7 +773,21 @@ export default function ProfilePage() {
                   </motion.div>
                 )}
 
+                {activeTab === 'rewards' && (
+                  <motion.div
+                    key="rewards"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    className="space-y-4"
+                  >
+                    <h3 className="text-xl font-semibold text-gray-800 mb-4">SS Coins — Loyalty Rewards</h3>
+                    <SSCoinsWallet />
+                  </motion.div>
+                )}
+
               </AnimatePresence>
+
             </div>
           </motion.div>
         </div>

@@ -7,9 +7,10 @@ import Footer from '@/components/Footer'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Link from 'next/link'
 import Image from 'next/image'
-import { fetchProperties, Property, PropertyFilters } from '@/lib/api'
+import { fetchProperties, Property, PropertyFilters, makeRoomSlug } from '@/lib/api'
 import { Star, MapPin, Home, Users, Bed, Bath, Heart, TrendingUp, Sparkles, SlidersHorizontal, Search as SearchIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useCurrency } from '@/contexts/CurrencyContext'
 import { toggleWatchlist, getCurrentUserProfile } from '@/lib/user'
 import { toast } from 'sonner'
 import Filters from '@/components/Filters'
@@ -155,7 +156,7 @@ export default function RoomsPage() {
                 "position": index + 1,
                 "item": {
                   "@type": "Product",
-                  "@id": `https://sevenseashotel.ae/rooms/${room.id}`,
+                  "@id": `https://sevenseashotel.ae/rooms/${makeRoomSlug(room.property)}`,
                   "name": room.name,
                   "description": `Luxurious ${room.name} at Seven Seas Hotel Dubai. Features ${room.beds}, ${room.baths} bathroom(s), accommodates ${room.guests} guests. ${room.amenities.slice(0, 3).join(', ')}.`,
                   "image": room.image || "https://sevenseashotel.ae/default-room.jpg",
@@ -165,7 +166,7 @@ export default function RoomsPage() {
                   },
                   "offers": {
                     "@type": "Offer",
-                    "url": `https://sevenseashotel.ae/rooms/${room.id}`,
+                    "url": `https://sevenseashotel.ae/rooms/${makeRoomSlug(room.property)}`,
                     "priceCurrency": "AED",
                     "price": room.price || "0",
                     "priceValidUntil": new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -257,6 +258,7 @@ export default function RoomsPage() {
 
 function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
   const { isAuth, user } = useAuth()
+  const { formatPrice: formatPriceCurrency, currency } = useCurrency()
   const [isSaved, setIsSaved] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const [isChecking, setIsChecking] = useState(true)
@@ -336,7 +338,7 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
     }
   }
 
-  const formattedPrice = formatPrice(room.price)
+  const formattedPrice = room.price > 0 ? formatPriceCurrency(room.price) : null
 
   return (
     <motion.div
@@ -345,7 +347,7 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="group cursor-pointer"
     >
-      <Link href={`/rooms/${room.id}`}>
+      <Link href={`/rooms/${makeRoomSlug(room.property)}`}>
         {/* Premium Card Container */}
         <div className="relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 border border-gold/10 hover:border-gold/30 group-hover:scale-[1.01]">
 
@@ -402,7 +404,6 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
                 {formattedPrice ? (
                   <>
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-sm font-extrabold text-amber-900 tracking-wide">AED</span>
                       <span className="text-2xl font-black text-gray-900 tracking-tight">{formattedPrice}</span>
                     </div>
                     <div className="text-[10px] font-extrabold text-gray-600 uppercase tracking-[0.15em] text-center mt-0.5">per night</div>

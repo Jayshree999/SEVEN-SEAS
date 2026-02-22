@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
+import CurrencySelector from '@/components/CurrencySelector'
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -278,7 +279,9 @@ export default function Navigation() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-3">
+            {/* Currency Selector */}
+            <CurrencySelector />
             {isMounted && isAuth ? (
               <div className="relative">
                 <motion.button

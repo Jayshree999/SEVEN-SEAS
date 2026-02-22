@@ -62,7 +62,7 @@ export default function BookingModal({ roomId, roomName, price, monthlyRent, yea
               onClick={handleClose}
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
             />
-            
+
             {/* Modal */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 50 }}
@@ -87,12 +87,21 @@ export default function BookingModal({ roomId, roomName, price, monthlyRent, yea
                     Book Your Stay
                   </h2>
                   <p className="text-sm sm:text-base text-gray-600">Complete your reservation</p>
+                  {price > 0 && (
+                    <div className="mt-2 inline-flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
+                      <span className="text-sm">🪙</span>
+                      <span className="text-xs font-medium text-amber-800">
+                        Earn <strong>{Math.floor(price)} SS Coins</strong> per night with this booking
+                      </span>
+                    </div>
+                  )}
                 </div>
 
+
                 {/* Content */}
-                <BookingForm 
-                  roomId={roomId} 
-                  roomName={roomName} 
+                <BookingForm
+                  roomId={roomId}
+                  roomName={roomName}
                   price={price}
                   monthlyRent={monthlyRent}
                   yearlyRent={yearlyRent}
