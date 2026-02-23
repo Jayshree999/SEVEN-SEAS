@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
 import { Bed, Sparkles, ChevronLeft, ChevronRight, User, Maximize, ArrowRight, Star } from 'lucide-react'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 const roomTypes = [
   {
@@ -256,8 +257,8 @@ export default function AccommodationSection() {
                     onClick={() => goToSlide(index)}
                     whileHover={{ scale: 1.2 }}
                     className={`h-1.5 transition-all duration-500 rounded-full ${currentIndex === index
-                        ? 'bg-gradient-to-r from-amber-400 to-yellow-500 w-16 shadow-lg shadow-amber-500/50'
-                        : 'bg-white/20 w-6 hover:bg-white/40'
+                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 w-16 shadow-lg shadow-amber-500/50'
+                      : 'bg-white/20 w-6 hover:bg-white/40'
                       }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -398,7 +399,7 @@ function RoomCard({
               </div>
 
               {/* CTA Button */}
-              <Link href="/rooms">
+              <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <motion.div
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   transition={{ duration: 0.3 }}

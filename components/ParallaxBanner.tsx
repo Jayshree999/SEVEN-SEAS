@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
+import Link from 'next/link'
 import FloatingGoldParticles from './FloatingGoldParticles'
 
 interface ParallaxBannerProps {
@@ -9,9 +10,10 @@ interface ParallaxBannerProps {
   title: string
   subtitle?: string
   height?: number
+  ctaLink?: string
 }
 
-export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500 }: ParallaxBannerProps) {
+export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500, ctaLink }: ParallaxBannerProps) {
   const ref = useRef<HTMLDivElement>(null)
   // Optimized: Removed parallax scroll effect for better performance
   // const { scrollYProgress } = useScroll({
@@ -25,7 +27,7 @@ export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500
     <div ref={ref} className={`relative h-[${height}px] overflow-hidden`} style={{ height: `${height}px` }}>
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black">
         {imageUrl ? (
-          <div 
+          <div
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${imageUrl})` }}
           />
@@ -59,6 +61,25 @@ export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500
           >
             {subtitle}
           </motion.p>
+        )}
+        {ctaLink && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-8"
+          >
+            <Link href={ctaLink} target="_blank" rel="noopener noreferrer">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 bg-amber-600 text-white font-bold rounded-lg shadow-xl hover:bg-amber-700 transition-all duration-300 uppercase tracking-wider"
+              >
+                Book Now
+              </motion.button>
+            </Link>
+          </motion.div>
         )}
       </div>
     </div>

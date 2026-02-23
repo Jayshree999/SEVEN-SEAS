@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useInView } from 'react-intersection-observer'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 interface Room {
   title: string
@@ -48,7 +49,7 @@ export default function FeaturedRoomsCarousel({ rooms }: FeaturedRoomsCarouselPr
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h2 
+          <h2
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight tracking-tight mb-4"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -105,11 +106,10 @@ export default function FeaturedRoomsCarousel({ rooms }: FeaturedRoomsCarouselPr
                 <button
                   key={index}
                   onClick={() => goToSlide(index * 3)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    Math.floor(currentIndex / 3) === index
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${Math.floor(currentIndex / 3) === index
                       ? 'bg-amber-600 w-8'
                       : 'bg-gray-300 hover:bg-amber-300'
-                  }`}
+                    }`}
                   aria-label={`Go to page ${index + 1}`}
                 />
               ))}
@@ -158,7 +158,7 @@ function RoomCard({ room, index }: { room: Room; index: number }) {
             </span>
           ))}
         </div>
-        <Link href="/rooms">
+        <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

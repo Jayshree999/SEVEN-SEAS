@@ -8,6 +8,7 @@ import Footer from '@/components/Footer'
 import { useInView } from 'react-intersection-observer'
 import { UtensilsCrossed, Phone, MessageCircle, Sparkles, ChefHat, Coffee, Star, ArrowRight, Clock } from 'lucide-react'
 import { useRef } from 'react'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 const legendaryRestaurants = [
   {
@@ -96,7 +97,7 @@ export default function DiningPage() {
   return (
     <main className="min-h-screen bg-white overflow-hidden">
       <Navigation />
-      
+
       {/* Enhanced Hero Section with Parallax */}
       <motion.section
         ref={heroRef}
@@ -105,7 +106,7 @@ export default function DiningPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <motion.div 
+        <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 z-0"
         >
@@ -117,7 +118,7 @@ export default function DiningPage() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
-          
+
           {/* Animated gradient overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-amber-900/20 via-transparent to-amber-900/20"
@@ -131,7 +132,7 @@ export default function DiningPage() {
             }}
           />
         </motion.div>
-        
+
         <div className="relative z-20 text-center px-4 sm:px-6 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -146,10 +147,10 @@ export default function DiningPage() {
             >
               <Sparkles className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-amber-400 drop-shadow-2xl" />
             </motion.div>
-            
+
             <motion.h1
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-white leading-tight px-2"
-              style={{ 
+              style={{
                 fontFamily: 'var(--font-playfair)',
                 textShadow: '0 4px 30px rgba(0, 0, 0, 1), 0 2px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8)'
               }}
@@ -159,14 +160,14 @@ export default function DiningPage() {
             >
               A Culinary Legacy
             </motion.h1>
-            
+
             <motion.div
               className="w-24 sm:w-32 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6 sm:mb-8"
               initial={{ width: 0 }}
               animate={{ width: 'auto' }}
               transition={{ duration: 1, delay: 0.6 }}
             />
-            
+
             <motion.p
               className="text-sm sm:text-base md:text-lg lg:text-xl text-white mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed font-medium px-2"
               style={{
@@ -178,13 +179,13 @@ export default function DiningPage() {
             >
               Discover the epitome of comfort and elegance at Seven Seas Hotel, where luxury meets impeccable hospitality. Nestled in the bustling neighborhood of Al Nahda 1, Dubai, our hotel offers a serene escape with world-class amenities and personalized services.
             </motion.p>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <Link href="/rooms">
+              <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <motion.button
                   whileHover={{ scale: 1.05, y: -5 }}
                   whileTap={{ scale: 0.95 }}
@@ -323,7 +324,7 @@ export default function DiningPage() {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 md:gap-8 items-center group`}
               >
-                <motion.div 
+                <motion.div
                   className="flex-1 relative"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
@@ -336,7 +337,7 @@ export default function DiningPage() {
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-                    
+
                     {/* Rating Badge */}
                     <motion.div
                       className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg"
@@ -350,7 +351,7 @@ export default function DiningPage() {
                     </motion.div>
                   </div>
                 </motion.div>
-                
+
                 <div className="flex-1 space-y-6">
                   <motion.div
                     className="relative h-24 w-auto"
@@ -366,7 +367,7 @@ export default function DiningPage() {
                       className="object-contain"
                     />
                   </motion.div>
-                  
+
                   <motion.h3
                     className="text-4xl md:text-5xl font-bold"
                     style={{ fontFamily: 'var(--font-playfair)' }}
@@ -377,7 +378,7 @@ export default function DiningPage() {
                   >
                     {restaurant.name}
                   </motion.h3>
-                  
+
                   <motion.p
                     className="text-gray-600 text-lg md:text-xl leading-relaxed"
                     initial={{ opacity: 0 }}
@@ -387,7 +388,7 @@ export default function DiningPage() {
                   >
                     {restaurant.description}
                   </motion.p>
-                  
+
                   <motion.div
                     className="flex items-center gap-3 text-amber-600 font-semibold text-lg"
                     initial={{ opacity: 0, x: -20 }}
@@ -398,7 +399,7 @@ export default function DiningPage() {
                     <ChefHat className="w-6 h-6" />
                     <span>Cuisine: {restaurant.cuisine}</span>
                   </motion.div>
-                  
+
                   <motion.div
                     className="flex flex-wrap gap-4 pt-4"
                     initial={{ opacity: 0, y: 20 }}
@@ -530,11 +531,11 @@ export default function DiningPage() {
             >
               <Phone className="w-16 h-16 mx-auto" />
             </motion.div>
-            
+
             <h2 className="text-4xl md:text-6xl font-bold mb-12" style={{ fontFamily: 'var(--font-playfair)' }}>
               Reach to us
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
@@ -563,7 +564,7 @@ export default function DiningPage() {
                 </a>
               </motion.div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}

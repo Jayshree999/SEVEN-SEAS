@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import BookingForm from './BookingForm'
 import { Property } from '@/lib/api'
+import Link from 'next/link'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 interface BookingModalProps {
   roomId: string
@@ -42,14 +44,15 @@ export default function BookingModal({ roomId, roomName, price, monthlyRent, yea
   return (
     <>
       {/* Trigger Button */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        whileHover={{ scale: 1.02, boxShadow: '0 15px 40px rgba(0, 0, 0, 0.3)' }}
-        whileTap={{ scale: 0.98 }}
-        className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 relative overflow-hidden rounded-lg sm:rounded-xl text-sm sm:text-base whitespace-nowrap"
-      >
-        <span className="relative z-10">Book This Room</span>
-      </motion.button>
+      <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+        <motion.button
+          whileHover={{ scale: 1.02, boxShadow: '0 15px 40px rgba(0, 0, 0, 0.3)' }}
+          whileTap={{ scale: 0.98 }}
+          className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 relative overflow-hidden rounded-lg sm:rounded-xl text-sm sm:text-base whitespace-nowrap"
+        >
+          <span className="relative z-10">Book This Room</span>
+        </motion.button>
+      </Link>
 
       <AnimatePresence>
         {isOpen && (

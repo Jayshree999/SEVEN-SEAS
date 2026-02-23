@@ -8,6 +8,7 @@ import Footer from '@/components/Footer'
 import { useInView } from 'react-intersection-observer'
 import { Star, Heart, Sparkles, Leaf, Award, Users, MapPin, Phone, Mail, ArrowRight } from 'lucide-react'
 import { useRef } from 'react'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 const values = [
   {
@@ -437,7 +438,7 @@ export default function AboutUsPage() {
             <p className="text-base md:text-lg lg:text-xl mb-8 text-amber-50 leading-relaxed">
               Indulge in the extraordinary. Book your stay at Seven Seas Hotel and elevate your Dubai experience.
             </p>
-            <Link href="/rooms">
+            <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <motion.button
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}

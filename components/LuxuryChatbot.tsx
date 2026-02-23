@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { MessageCircle, X, Send, Sparkles, ChevronUp, ChevronDown, Home, MapPin, Calendar, Phone, Mail, Star, Shield, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { usePathname } from 'next/navigation'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 interface Message {
   id: string
@@ -23,45 +24,45 @@ const AUTO_REPLIES: Record<string, { text: string; quickActions?: QuickAction[] 
   'hello': {
     text: "Hello! 👋 Welcome to Seven Seas Hotel! I'm your luxury concierge assistant. How can I help you find your perfect stay today?",
     quickActions: [
-      { label: 'Browse Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> },
+      { label: 'Browse Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> },
       { label: 'View Offers', action: () => window.location.href = '/offers', icon: <Star className="w-4 h-4" /> }
     ]
   },
   'hi': {
     text: "Hi there! 🌟 I'm here to help you discover our luxurious rooms and suites. What brings you here today?",
     quickActions: [
-      { label: 'See Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> }
+      { label: 'See Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> }
     ]
   },
   'help': {
     text: "I'd be delighted to help! I can assist you with:\n\n✨ Finding luxury rooms & suites\n📅 Booking information & availability\n💰 Pricing and special offers\n📍 Hotel amenities & features\n🍽️ Dining options\n📞 Contact & support\n\nWhat would you like to explore?",
     quickActions: [
-      { label: 'View All Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> },
+      { label: 'View All Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> },
       { label: 'Contact Us', action: () => window.location.href = '/contact', icon: <Phone className="w-4 h-4" /> }
     ]
   },
   'price': {
     text: "Our luxury rooms and suites offer exceptional value:\n\n💰 Deluxe Rooms: Starting from AED 150/night\n🏖️ Executive Suites: Starting from AED 350/night\n👑 Presidential Suites: Starting from AED 800/night\n\nPrices vary based on:\n• Room type & size\n• View & amenities\n• Season & duration\n• Special packages\n\nWould you like to see rooms in a specific price range?",
     quickActions: [
-      { label: 'Browse Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> }
+      { label: 'Browse Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> }
     ]
   },
   'booking': {
     text: "Booking with Seven Seas Hotel is seamless:\n\n1️⃣ Browse our luxurious rooms\n2️⃣ Select your preferred dates\n3️⃣ Choose your perfect accommodation\n4️⃣ Complete secure reservation\n\n✨ Benefits:\n• Instant confirmation\n• 24/7 concierge support\n• Flexible cancellation\n• Best price guarantee\n• Free WiFi & parking\n\nReady to find your perfect stay?",
     quickActions: [
-      { label: 'Book Now', action: () => window.location.href = '/rooms', icon: <Calendar className="w-4 h-4" /> }
+      { label: 'Book Now', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Calendar className="w-4 h-4" /> }
     ]
   },
   'availability': {
     text: "I can help you check availability! Our rooms have real-time availability.\n\n📅 To check:\n• Visit our rooms page\n• Select your dates\n• See instant availability\n\nPopular periods:\n• Peak season: Nov - Mar\n• Shoulder season: Apr - May, Sep - Oct\n• Summer: Jun - Aug (Great deals!)\n\nWhich dates are you interested in?",
     quickActions: [
-      { label: 'Check Availability', action: () => window.location.href = '/rooms', icon: <Calendar className="w-4 h-4" /> }
+      { label: 'Check Availability', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Calendar className="w-4 h-4" /> }
     ]
   },
   'amenities': {
     text: "Seven Seas Hotel features world-class amenities:\n\n✨ Luxury spa & wellness center\n🏊 Infinity pool with poolside service\n🍽️ Fine dining restaurants\n🍸 Rooftop bar & lounge\n💆 Full-service spa\n🏋️ State-of-the-art fitness center\n🚗 Valet parking\n🛎️ 24/7 concierge service\n📶 High-speed WiFi\n🎮 Entertainment & gaming room\n🌴 Beautiful gardens\n\nWhich amenities matter most to you?",
     quickActions: [
-      { label: 'Explore Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> }
+      { label: 'Explore Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> }
     ]
   },
   'location': {
@@ -86,7 +87,7 @@ const AUTO_REPLIES: Record<string, { text: string; quickActions?: QuickAction[] 
   'default': {
     text: "Thank you for your message! 🌟 I'm here to help you find the perfect stay at Seven Seas Hotel. I can assist with:\n\n• Room recommendations\n• Booking assistance\n• Hotel amenities\n• Pricing information\n• Special requests\n• Dining reservations\n\nWhat would you like to know?",
     quickActions: [
-      { label: 'Browse Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> },
+      { label: 'Browse Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> },
       { label: 'Get Help', action: () => window.location.href = '/support', icon: <Shield className="w-4 h-4" /> }
     ]
   }
@@ -144,7 +145,7 @@ export function LuxuryChatbot() {
       return {
         text: "We have an exclusive collection of luxury rooms and suites! 🏖️\n\nOur portfolio includes:\n• Deluxe rooms with city views\n• Executive suites with separate living areas\n• Presidential suites with premium amenities\n• Family suites perfect for groups\n\nWould you like to see our available rooms?",
         quickActions: [
-          { label: 'View Rooms', action: () => window.location.href = '/rooms', icon: <Home className="w-4 h-4" /> }
+          { label: 'View Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> }
         ]
       }
     }

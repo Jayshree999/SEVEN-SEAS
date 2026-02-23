@@ -13,6 +13,7 @@ import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 import RichButton from '@/components/RichButton'
 import { Phone, Sparkles } from 'lucide-react'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 const offers = [
   {
@@ -75,7 +76,7 @@ export default function OffersPage() {
   return (
     <main className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Video Banner */}
       <VideoBanner
         title="SPECIAL OFFERS"
@@ -117,6 +118,7 @@ export default function OffersPage() {
         title="Limited Time Offers"
         subtitle="Book now and enjoy exclusive benefits"
         height={300}
+        ctaLink={EXTERNAL_BOOKING_URL}
       />
 
       {/* Offers Grid - Premium Enhanced */}
@@ -149,8 +151,8 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
       initial={{ opacity: 0, y: 50, rotateY: -10 }}
       animate={inView ? { opacity: 1, y: 0, rotateY: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 100 }}
-      whileHover={{ 
-        scale: 1.05, 
+      whileHover={{
+        scale: 1.05,
         y: -12,
         boxShadow: '0 30px 60px rgba(217, 119, 6, 0.25)',
         borderColor: '#d97706',
@@ -160,9 +162,9 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
     >
       {/* Premium glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/30 to-amber-400/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
-      
+
       {/* Discount Badge - Premium Enhanced */}
-      <motion.div 
+      <motion.div
         className="bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 text-white px-6 py-5 text-center relative overflow-hidden"
         animate={{
           boxShadow: [
@@ -222,7 +224,7 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
           </ul>
         </div>
 
-        <Link href={offer.link} className="w-full mt-auto">
+        <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full mt-auto">
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -281,19 +283,19 @@ function ExclusiveRoomOffersSection() {
         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-amber-300/25 via-amber-200/15 to-transparent rounded-full blur-[100px] animate-pulse"></div>
         <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-gradient-to-tl from-amber-300/25 via-amber-200/15 to-transparent rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-r from-amber-200/8 via-amber-100/4 to-amber-200/8 rounded-full blur-[120px]"></div>
-        
+
         {/* Additional luxury accents */}
         <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-transparent rounded-full blur-2xl"></div>
         <div className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-tr from-amber-400/20 to-transparent rounded-full blur-2xl"></div>
-        
+
         {/* Premium pattern overlay */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D97706' fill-opacity='1'%3E%3Cpath d='M50 50c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-8.284-6.716-15-15-15s-15 6.716-15 15 6.716 15 15 15 15-6.716 15-15zM16.667 37.5c0-5.75-4.75-10.5-10.5-10.5S-4.833 31.75-4.833 37.5.083 48 5.833 48s10.834-4.75 10.834-10.5zm10 0c0-8.008-6.492-14.5-14.5-14.5S-8.167 29.492-8.167 37.5-1.675 52 6.333 52s14.5-6.492 14.5-14.5zM56.667 37.5c0-5.75-4.75-10.5-10.5-10.5s-10.5 4.75-10.5 10.5 4.75 10.5 10.5 10.5 10.5-4.75 10.5-10.5zm10 0c0-8.008-6.492-14.5-14.5-14.5s-14.5 6.492-14.5 14.5 6.492 14.5 14.5 14.5 14.5-6.492 14.5-14.5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
         ></div>
-        
+
         {/* Elegant border lines */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-300/40 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-300/40 to-transparent"></div>
@@ -312,7 +314,7 @@ function ExclusiveRoomOffersSection() {
             <span className="text-sm font-semibold text-amber-600 uppercase tracking-wider">Offers & Promotions</span>
             <Sparkles className="w-6 h-6 text-amber-500 animate-pulse" />
           </div>
-          <h2 
+          <h2
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -345,7 +347,7 @@ function ExclusiveOfferCard({ offer, index, inView }: { offer: typeof exclusiveO
     >
       {/* Premium glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/30 to-amber-400/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
-      
+
       {/* Room Image */}
       <div className="relative h-[300px] md:h-[350px] overflow-hidden">
         <Image
@@ -357,7 +359,7 @@ function ExclusiveOfferCard({ offer, index, inView }: { offer: typeof exclusiveO
           priority={index < 2}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-        
+
         {/* Discount Badge Overlay - Premium */}
         <div className="absolute bottom-4 left-4 right-4 z-10">
           <motion.div
@@ -387,7 +389,7 @@ function ExclusiveOfferCard({ offer, index, inView }: { offer: typeof exclusiveO
 
       {/* Content Section */}
       <div className="p-6 md:p-8 relative z-10">
-        <h3 
+        <h3
           className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
@@ -479,19 +481,19 @@ function NewYearExclusiveOffersSection() {
         <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-amber-400/10 rounded-full blur-[100px] animate-pulse"></div>
         <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-gradient-to-tl from-blue-500/20 via-purple-500/15 to-pink-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-r from-purple-400/8 via-pink-400/4 to-amber-300/4 rounded-full blur-[120px]"></div>
-        
+
         {/* Sparkle effects */}
         <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-transparent rounded-full blur-2xl"></div>
         <div className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-tr from-pink-400/20 to-transparent rounded-full blur-2xl"></div>
-        
+
         {/* Premium pattern overlay */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='1'%3E%3Cpath d='M50 50c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-8.284-6.716-15-15-15s-15 6.716-15 15 6.716 15 15 15 15-6.716 15-15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
         ></div>
-        
+
         {/* Elegant border lines */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/40 via-pink-400/40 via-amber-400/40 to-transparent"></div>
         <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/40 via-pink-400/40 via-amber-400/40 to-transparent"></div>
@@ -510,7 +512,7 @@ function NewYearExclusiveOffersSection() {
             <span className="text-sm font-semibold text-amber-400 uppercase tracking-wider">Banquet Promotion</span>
             <Sparkles className="w-6 h-6 text-amber-400 animate-pulse" />
           </div>
-          <h2 
+          <h2
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -543,7 +545,7 @@ function NewYearEventCard({ event, index, inView }: { event: typeof newYearEvent
     >
       {/* Premium glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/0 via-pink-500/30 to-amber-400/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
-      
+
       {/* Event Image */}
       <div className="relative h-[400px] md:h-[450px] overflow-hidden">
         <Image
@@ -555,7 +557,7 @@ function NewYearEventCard({ event, index, inView }: { event: typeof newYearEvent
           priority={index < 1}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
-        
+
         {/* Venue Badge - Top */}
         <div className="absolute top-4 left-4 z-10">
           <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-lg shadow-xl border border-white/50">
@@ -566,7 +568,7 @@ function NewYearEventCard({ event, index, inView }: { event: typeof newYearEvent
 
       {/* Content Section */}
       <div className="p-6 md:p-8 relative z-10 bg-white">
-        <h3 
+        <h3
           className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >

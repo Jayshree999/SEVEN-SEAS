@@ -5,6 +5,7 @@ import { useInView } from 'react-intersection-observer'
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { MapPin, Phone, Mail } from 'lucide-react'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 export default function CTA() {
   const [ref, inView] = useInView({
@@ -186,7 +187,7 @@ export default function CTA() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
           >
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Link href="/rooms">
+              <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <motion.button
                   className="relative px-8 md:px-12 py-4 md:py-5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-white font-bold text-sm md:text-base uppercase tracking-wider rounded-lg overflow-hidden group shadow-lg shadow-amber-500/30"
                   whileHover={{
