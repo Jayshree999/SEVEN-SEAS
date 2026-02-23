@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import CurrencySelector from '@/components/CurrencySelector'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
