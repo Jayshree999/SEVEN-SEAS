@@ -85,9 +85,6 @@ export default function OffersPage() {
         textPosition="center"
       />
 
-      {/* New Year Exclusive Offers Section */}
-      <NewYearExclusiveOffersSection />
-
       {/* Exclusive Room Offer Section - Premium */}
       <ExclusiveRoomOffersSection />
 
@@ -242,32 +239,32 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
 const exclusiveOffers = [
   {
     id: 1,
-    title: '3 Night Promo',
-    code: 'PROMO 15',
-    discount: '15% OFF',
-    nights: 3,
-    description: 'Stay for 3 nights and get 15% off when you book direct. Advance booking of 15 days is required.',
-    image: '/3-night-promo-rezi8z9sy5jbwlmydsyszk8hyhp8nkma1j19ic4u5c.png',
+    title: 'Eid Special Offer',
+    code: 'EID299',
+    discount: 'AED 299',
+    nights: 1,
+    description: 'Celebrate Eid with our exclusive offer. Enjoy a luxurious stay starting from AED 299 per night (excluding taxes). Make your celebration memorable.',
+    image: '/offer1.jpeg',
     phone: '+971 55 100 9152',
   },
   {
     id: 2,
-    title: '7 Night Promo',
-    code: 'PROMO 20',
-    discount: '20% OFF',
-    nights: 7,
-    description: 'Stay for 7 nights and get 20% off when you book direct. Advance booking of 15 days is required.',
-    image: '/7-night-promo-rezie957aor91tz5l31fz8blybpdufk23mtcg8bb8g.png',
+    title: 'Ramadan Long Stay Offer',
+    code: 'RAMADANMONTH',
+    discount: 'AED 5000',
+    nights: 30,
+    description: 'Experience a serene Ramadan with our Long Stay Offer. Book your extended stay starting from AED 5000 per month (excluding taxes).',
+    image: '/2.jpeg',
     phone: '+971 55 100 9152',
   },
   {
     id: 3,
-    title: 'Royal Suit Promo',
-    code: 'PROMO 10',
-    discount: '10% OFF',
+    title: 'Ramadan Special Offer',
+    code: 'RAMADAN150',
+    discount: 'AED 150',
     nights: 1,
-    description: 'Stay for 1 night and get 10% off when you book direct. Advance booking of 15 days is required.',
-    image: '/Royal-Suit-promo-1-reziipvlrcva75hoiiinblrfj7p5eoa5pqddijozog.png',
+    description: 'Embrace the spirit of Ramadan. Enjoy a peaceful and comfortable stay starting from just AED 150 per night (excluding taxes).',
+    image: '/3.jpeg',
     phone: '+971 55 100 9152',
   },
 ]
@@ -339,310 +336,56 @@ function ExclusiveRoomOffersSection() {
 function ExclusiveOfferCard({ offer, index, inView }: { offer: typeof exclusiveOffers[0], index: number, inView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      initial={{ opacity: 0, y: 50, scale: 0.98 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.6, delay: index * 0.15, type: 'spring', stiffness: 100 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_30px_80px_-10px_rgba(0,0,0,0.3)] transition-all duration-500 border border-gray-200/50"
+      className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col"
     >
-      {/* Premium glow effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/30 to-amber-400/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
-
-      {/* Room Image */}
-      <div className="relative h-[300px] md:h-[350px] overflow-hidden">
+      {/* Room Image Container - Premium minimalist */}
+      <div className="relative aspect-square bg-[#f8f6f0] overflow-hidden">
         <Image
           src={offer.image}
           alt={offer.title}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          className="object-contain p-2 group-hover:scale-105 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
           priority={index < 2}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-
-        {/* Discount Badge Overlay - Premium */}
-        <div className="absolute bottom-4 left-4 right-4 z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: index * 0.15 + 0.3 }}
-            className="bg-gradient-to-r from-amber-500/95 via-amber-600/95 to-yellow-600/95 backdrop-blur-md rounded-xl p-4 shadow-2xl border border-amber-400/50"
-          >
-            <div className="text-center">
-              <p className="text-xs md:text-sm text-white/90 uppercase tracking-wider mb-1 font-semibold">
-                STAY {offer.nights} NIGHT{offer.nights > 1 ? 'S' : ''} & ENJOY
-              </p>
-              <p className="text-3xl md:text-4xl font-bold text-white mb-1">
-                {offer.discount}
-              </p>
-              <p className="text-xs text-white/90 uppercase tracking-wide">
-                WHEN YOU BOOK DIRECT.
-              </p>
-              <div className="mt-2 pt-2 border-t border-white/20">
-                <p className="text-[10px] text-white/80">*15-DAY ADVANCE PRIOR BOOKING REQUIRED</p>
-                <p className="text-[10px] text-white/80">*T&C APPLY</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
       </div>
 
-      {/* Content Section */}
-      <div className="p-6 md:p-8 relative z-10">
+      {/* Content Section - Elegant & refined */}
+      <div className="p-8 relative z-10 flex flex-col flex-grow items-center text-center">
         <h3
-          className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
+          className="text-2xl text-gray-900 mb-3 tracking-wide"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           {offer.title}
         </h3>
 
-        {/* Promo Code - Premium Badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={inView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ delay: index * 0.15 + 0.4 }}
-          className="mb-6"
-        >
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-100 to-amber-50 px-4 py-2.5 rounded-lg border-2 border-amber-300/50 shadow-md">
-            <span className="text-sm font-semibold text-gray-700">Use Code:</span>
-            <span className="text-lg font-bold text-amber-700 tracking-wider">{offer.code}</span>
-          </div>
-        </motion.div>
+        <div className="w-12 h-[1px] bg-amber-600 mb-4"></div>
 
-        {/* Description */}
-        <p className="text-gray-700 leading-relaxed mb-6 text-base">
+        <p className="text-gray-600 mb-6 text-sm font-light leading-relaxed">
           {offer.description}
         </p>
 
-        {/* Phone Number - Premium */}
+        <div className="mb-6 flex flex-col items-center gap-1">
+          <span className="text-xs uppercase tracking-widest text-gray-400">Promo Code</span>
+          <span className="text-sm font-medium tracking-widest text-amber-700">{offer.code}</span>
+        </div>
+
         <motion.a
           href={`tel:${offer.phone.replace(/\s/g, '')}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: index * 0.15 + 0.5 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center justify-center gap-3 w-full px-6 py-3.5 bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="mt-auto flex items-center justify-center gap-2 w-full px-6 py-3 border border-amber-600/30 hover:border-amber-600 hover:bg-amber-50 text-amber-700 font-medium tracking-wide uppercase text-sm rounded transition-all duration-300"
         >
-          <Phone className="w-5 h-5" />
+          <Phone className="w-4 h-4" />
           <span>{offer.phone}</span>
         </motion.a>
       </div>
-
-      {/* Premium border glow on hover */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-amber-400/50 transition-all duration-500 pointer-events-none"></div>
     </motion.div>
   )
 }
 
-const newYearEvents = [
-  {
-    id: 1,
-    title: "Geoffrey's New Year Offer",
-    venue: "Geoffrey's Level 22",
-    image: '/Geoffry-rg1qusleu4g5vi5ajxxm8bj17vjhkupglxpueq9odc (1).png',
-    description: 'Ring in 2026 at Geoffrey\'s Level 22 with our Midnight Mania celebration. Enjoy live DJ performances, great vibes, and special entry packages for singles, couples, and groups. The party starts at 9 PM onwards on 31st December.',
-    date: '31st DEC 2025',
-    time: '9 PM ONWARDS',
-    pricing: {
-      stag: 'AED 299',
-      couple: 'AED 499',
-      singleLady: 'AED 199',
-    },
-    phone: '+971 55 100 9150',
-    features: ['Live DJ Performance', 'Burj Khalifa Fireworks Viewing Deck', 'Surprise Bollywood Show'],
-  },
-  {
-    id: 2,
-    title: 'Mehfil Ballroom New Year Offer',
-    venue: 'Mehfil Ballroom',
-    image: '/Banquet-Promotion-rg1quehtzlwv1cpru9u7ox34b3gzde5hjzxk7kukyo (1).png',
-    description: 'Join us at the Mehfil Ballroom for a dazzling gala night featuring a lucky draw, live DJ, and a sparkling midnight toast. An unforgettable evening of food, music, and celebrations awaits. Book now!',
-    date: '31st DEC 2025',
-    time: '9 PM ONWARDS',
-    pricing: {
-      stag: 'AED 299',
-      couple: 'AED 599',
-      singleLady: 'AED 199',
-    },
-    phone: '+971 55 100 9137',
-    features: ['Gala Dinner', 'Lucky Draw', 'Sparkling Toast at Midnight', 'Live DJ Performance'],
-  },
-]
 
-function NewYearExclusiveOffersSection() {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 })
-
-  return (
-    <section className="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
-      {/* Ultra Premium Background Elements - Dark Theme */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Luxury gradient orbs - Purple/Blue/Pink for nightlife */}
-        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-gradient-to-br from-purple-500/20 via-pink-500/15 to-amber-400/10 rounded-full blur-[100px] animate-pulse"></div>
-        <div className="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-gradient-to-tl from-blue-500/20 via-purple-500/15 to-pink-500/10 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-r from-purple-400/8 via-pink-400/4 to-amber-300/4 rounded-full blur-[120px]"></div>
-
-        {/* Sparkle effects */}
-        <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-transparent rounded-full blur-2xl"></div>
-        <div className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-tr from-pink-400/20 to-transparent rounded-full blur-2xl"></div>
-
-        {/* Premium pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='1'%3E%3Cpath d='M50 50c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm10 0c0-8.284-6.716-15-15-15s-15 6.716-15 15 6.716 15 15 15 15-6.716 15-15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        ></div>
-
-        {/* Elegant border lines */}
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/40 via-pink-400/40 via-amber-400/40 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/40 via-pink-400/40 via-amber-400/40 to-transparent"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <div className="inline-flex items-center gap-2 mb-4">
-            <Sparkles className="w-6 h-6 text-amber-400 animate-pulse" />
-            <span className="text-sm font-semibold text-amber-400 uppercase tracking-wider">Banquet Promotion</span>
-            <Sparkles className="w-6 h-6 text-amber-400 animate-pulse" />
-          </div>
-          <h2
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
-            style={{ fontFamily: 'var(--font-playfair)' }}
-          >
-            New Year Exclusive Offers
-          </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Celebrate the New Year with special offers on events at Geoffrey and Mehfill Ballroom. Perfect for gatherings, parties, and corporate functions.
-          </p>
-        </motion.div>
-
-        {/* Events Grid */}
-        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
-          {newYearEvents.map((event, index) => (
-            <NewYearEventCard key={event.id} event={event} index={index} inView={inView} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function NewYearEventCard({ event, index, inView }: { event: typeof newYearEvents[0], index: number, inView: boolean }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.2, type: 'spring', stiffness: 100 }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_30px_80px_-10px_rgba(139,92,246,0.4)] transition-all duration-500 border border-gray-200/50"
-    >
-      {/* Premium glow effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500/0 via-pink-500/30 to-amber-400/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
-
-      {/* Event Image */}
-      <div className="relative h-[400px] md:h-[450px] overflow-hidden">
-        <Image
-          src={event.image}
-          alt={event.title}
-          fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          priority={index < 1}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10"></div>
-
-        {/* Venue Badge - Top */}
-        <div className="absolute top-4 left-4 z-10">
-          <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-lg shadow-xl border border-white/50">
-            <p className="text-sm font-bold text-gray-900">{event.venue}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Content Section */}
-      <div className="p-6 md:p-8 relative z-10 bg-white">
-        <h3
-          className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
-          style={{ fontFamily: 'var(--font-playfair)' }}
-        >
-          {event.title}
-        </h3>
-
-        <p className="text-gray-700 leading-relaxed mb-6 text-base">
-          {event.description}
-        </p>
-
-        {/* Event Details */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-            <p className="text-xs text-gray-600 mb-1">Date</p>
-            <p className="text-sm font-semibold text-gray-900">{event.date}</p>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-            <p className="text-xs text-gray-600 mb-1">Time</p>
-            <p className="text-sm font-semibold text-gray-900">{event.time}</p>
-          </div>
-        </div>
-
-        {/* Pricing */}
-        <div className="mb-6 p-4 bg-gradient-to-r from-amber-50 to-amber-100/50 rounded-lg border border-amber-200/50">
-          <p className="text-sm font-semibold text-amber-900 mb-2">Entry Pricing:</p>
-          <div className="grid grid-cols-3 gap-2 text-xs">
-            <div>
-              <p className="text-gray-600">Stag</p>
-              <p className="font-bold text-gray-900">{event.pricing.stag}</p>
-            </div>
-            <div>
-              <p className="text-gray-600">Couple</p>
-              <p className="font-bold text-gray-900">{event.pricing.couple}</p>
-            </div>
-            <div>
-              <p className="text-gray-600">Single Lady</p>
-              <p className="font-bold text-gray-900">{event.pricing.singleLady}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Features */}
-        <div className="mb-6">
-          <p className="text-sm font-semibold text-gray-900 mb-3">Highlights:</p>
-          <div className="flex flex-wrap gap-2">
-            {event.features.map((feature, i) => (
-              <span
-                key={i}
-                className="px-3 py-1.5 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full border border-purple-200"
-              >
-                {feature}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Contact Button */}
-        <motion.a
-          href={`tel:${event.phone.replace(/\s/g, '')}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: index * 0.2 + 0.4 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center justify-center gap-3 w-full px-6 py-3.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-        >
-          <Phone className="w-5 h-5" />
-          <span>Contact Now: {event.phone}</span>
-        </motion.a>
-      </div>
-
-      {/* Premium border glow on hover */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-purple-400/50 transition-all duration-500 pointer-events-none"></div>
-    </motion.div>
-  )
-}
 

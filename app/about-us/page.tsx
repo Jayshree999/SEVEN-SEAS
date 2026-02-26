@@ -210,7 +210,7 @@ export default function AboutUsPage() {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative h-[400px] md:h-[500px] rounded-none overflow-hidden shadow-xl border border-gray-100">
                 <Image
                   src="/chairman.jpg"
                   alt="Jitender Kumar Singla - Chairman"
@@ -263,7 +263,7 @@ export default function AboutUsPage() {
               const IconComponent = stat.icon
               return (
                 <div key={stat.label} className="text-center group">
-                  <div className="text-4xl md:text-5xl font-light mb-4 text-gold font-serif">{stat.number}</div>
+                  <div className="text-4xl md:text-5xl font-light mb-4 text-amber-200 font-serif">{stat.number}</div>
                   <div className="text-xs md:text-sm text-gray-400 uppercase tracking-widest">{stat.label}</div>
                 </div>
               )
@@ -305,20 +305,21 @@ export default function AboutUsPage() {
               return (
                 <motion.div
                   key={value.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group"
+                  className="group relative"
                 >
-                  <div className="bg-white p-8 h-full border border-gray-100 transition-all duration-500 hover:border-gold/30 hover:shadow-lg">
-                    <div className="mb-6">
-                      <IconComponent className={`w-8 h-8 ${value.color} stroke-1`} />
+                  <div className="bg-white p-10 h-full border border-gray-100 transition-all duration-500 hover:shadow-xl hover:border-amber-200/50 flex flex-col items-center text-center">
+                    <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-6 pt-1 group-hover:scale-110 transition-transform duration-500 group-hover:bg-amber-100/50">
+                      <IconComponent className={`w-8 h-8 ${value.color} stroke-1 opacity-80 group-hover:opacity-100 transition-opacity`} />
                     </div>
-                    <h3 className="text-xl font-bold mb-4 text-primary" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    <h3 className="text-xl font-bold mb-4 tracking-wide text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                       {value.title}
                     </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
+                    <div className="w-8 h-[1px] bg-amber-600/50 mb-4 transition-all duration-500 group-hover:w-16"></div>
+                    <p className="text-gray-500 text-sm font-light leading-relaxed">{value.description}</p>
                   </div>
                 </motion.div>
               )
@@ -364,12 +365,14 @@ export default function AboutUsPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-white rounded-xl p-8 shadow-lg border-2 border-gray-100 text-center"
+              className="bg-white rounded-none p-10 shadow-sm hover:shadow-xl border border-gray-100 hover:border-amber-200/50 transition-all duration-500 text-center flex flex-col items-center group"
             >
-              <MapPin className="w-12 h-12 text-amber-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-3">Location</h3>
-              <p className="text-gray-600">
+              <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-6 pt-1 group-hover:scale-110 transition-transform duration-500">
+                <MapPin className="w-8 h-8 text-amber-600 opacity-80" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>Location</h3>
+              <div className="w-8 h-[1px] bg-amber-600/50 mb-4 transition-all duration-500 group-hover:w-16"></div>
+              <p className="text-gray-500 font-light text-sm">
                 Seven Seas Hotel - 231, Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE
               </p>
             </motion.div>
@@ -379,12 +382,14 @@ export default function AboutUsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-white rounded-xl p-8 shadow-lg border-2 border-gray-100 text-center"
+              className="bg-white rounded-none p-10 shadow-sm hover:shadow-xl border border-gray-100 hover:border-amber-200/50 transition-all duration-500 text-center flex flex-col items-center group"
             >
-              <Phone className="w-12 h-12 text-amber-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-3">Phone</h3>
-              <a href="tel:+971551009152" className="text-gray-600 hover:text-amber-500 transition-colors">
+              <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-6 pt-1 group-hover:scale-110 transition-transform duration-500">
+                <Phone className="w-8 h-8 text-amber-600 opacity-80" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>Phone</h3>
+              <div className="w-8 h-[1px] bg-amber-600/50 mb-4 transition-all duration-500 group-hover:w-16"></div>
+              <a href="tel:+971551009152" className="text-gray-500 hover:text-amber-600 font-light text-sm transition-colors">
                 +971 55 100 9152
               </a>
             </motion.div>
@@ -394,12 +399,14 @@ export default function AboutUsPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-white rounded-xl p-8 shadow-lg border-2 border-gray-100 text-center"
+              className="bg-white rounded-none p-10 shadow-sm hover:shadow-xl border border-gray-100 hover:border-amber-200/50 transition-all duration-500 text-center flex flex-col items-center group"
             >
-              <Mail className="w-12 h-12 text-amber-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-3">Email</h3>
-              <a href="mailto:reservation@sevenseashotel.ae" className="text-gray-600 hover:text-amber-500 transition-colors">
+              <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mb-6 pt-1 group-hover:scale-110 transition-transform duration-500">
+                <Mail className="w-8 h-8 text-amber-600 opacity-80" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>Email</h3>
+              <div className="w-8 h-[1px] bg-amber-600/50 mb-4 transition-all duration-500 group-hover:w-16"></div>
+              <a href="mailto:reservation@sevenseashotel.ae" className="text-gray-500 hover:text-amber-600 font-light text-sm transition-colors">
                 reservation@sevenseashotel.ae
               </a>
             </motion.div>
@@ -408,12 +415,12 @@ export default function AboutUsPage() {
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-20 md:py-32 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 text-white relative overflow-hidden">
+      <section className="py-24 md:py-36 px-6 bg-[#1a1a1a] text-white relative overflow-hidden">
         <motion.div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-10"
           animate={{
-            x: [0, 100],
-            y: [0, 100],
+            x: [0, 50],
+            y: [0, 50],
           }}
           transition={{
             duration: 20,
@@ -438,14 +445,14 @@ export default function AboutUsPage() {
             <p className="text-base md:text-lg lg:text-xl mb-8 text-amber-50 leading-relaxed">
               Indulge in the extraordinary. Book your stay at Seven Seas Hotel and elevate your Dubai experience.
             </p>
-            <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            <Link href="/contact">
               <motion.button
-                whileHover={{ scale: 1.05, y: -3 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-10 py-5 bg-white text-amber-600 font-bold text-lg uppercase tracking-wider rounded-lg shadow-2xl overflow-hidden"
+                className="group relative px-12 py-6 bg-white text-gray-900 font-bold text-lg uppercase tracking-[0.2em] rounded-none shadow-xl overflow-hidden"
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  Book Your Stay
+                  Make a reservation
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <motion.div

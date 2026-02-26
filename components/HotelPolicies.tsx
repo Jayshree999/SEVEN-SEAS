@@ -86,12 +86,12 @@ export default function HotelPolicies() {
           transition={{ duration: 0.8 }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-100 text-amber-800 text-xs font-bold tracking-widest uppercase"
+            className="inline-flex items-center gap-2 mb-4 px-6 py-2 rounded-none bg-gray-900 border border-white/10 text-white text-[10px] font-bold tracking-[0.3em] uppercase"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={headerInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.2 }}
           >
-            <Sparkles className="w-3 h-3" />
+            <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Essential Information</span>
           </motion.div>
 
@@ -100,7 +100,7 @@ export default function HotelPolicies() {
           </h2>
 
           <motion.div
-            className="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-amber-400 to-transparent mb-8"
+            className="h-[1px] w-24 mx-auto bg-amber-500/50 mb-8"
             initial={{ width: 0 }}
             animate={headerInView ? { width: 96 } : {}}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -157,7 +157,7 @@ function PolicyCard({
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group h-full"
     >
-      <div className="relative h-full bg-white p-8 rounded-2xl border border-gray-100 shadow-sm transition-all duration-500 hover:shadow-xl hover:border-amber-200/50 hover:-translate-y-2 overflow-hidden">
+      <div className="relative h-full bg-white p-8 rounded-none border border-gray-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:border-amber-400/30 overflow-hidden">
 
         {/* Card Top Gradient Line */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -167,9 +167,9 @@ function PolicyCard({
 
         <div className="relative z-10 flex flex-col h-full">
           {/* Icon Header */}
-          <div className="flex items-start justify-between mb-6">
-            <div className={`p-3.5 rounded-xl ${policy.bg} ${policy.color} transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 ring-1 ring-inset ${policy.border}`}>
-              <Icon className="w-8 h-8 stroke-[1.5]" />
+          <div className="flex items-start justify-between mb-8">
+            <div className={`p-4 rounded-none ${policy.bg} ${policy.color} transition-all duration-500 group-hover:scale-110 group-hover:bg-white group-hover:shadow-lg border ${policy.border}`}>
+              <Icon className="w-8 h-8 stroke-[1.2]" />
             </div>
             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-x-2 group-hover:translate-x-0">
               <Info className="w-5 h-5 text-gray-300" />
@@ -177,7 +177,7 @@ function PolicyCard({
           </div>
 
           <h3
-            className="text-xl font-bold text-gray-900 mb-3 group-hover:text-amber-700 transition-colors duration-300"
+            className="text-xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors duration-300 uppercase tracking-wide"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             {policy.title}

@@ -258,17 +258,17 @@ export default function BrandsOutlets() {
             <>
               <button
                 onClick={goToPrevious}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-12 h-12 rounded-full bg-white shadow-xl border-2 border-amber-200 flex items-center justify-center hover:bg-amber-50 transition-all duration-300 group"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-12 h-12 rounded-none bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 group"
                 aria-label="Previous brands"
               >
-                <ChevronLeft className="w-6 h-6 text-amber-600 group-hover:scale-110 transition-transform" />
+                <ChevronLeft className="w-5 h-5 text-gray-900 group-hover:-translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={goToNext}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-12 h-12 rounded-full bg-white shadow-xl border-2 border-amber-200 flex items-center justify-center hover:bg-amber-50 transition-all duration-300 group"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-12 h-12 rounded-none bg-white shadow-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-all duration-300 group"
                 aria-label="Next brands"
               >
-                <ChevronRight className="w-6 h-6 text-amber-600 group-hover:scale-110 transition-transform" />
+                <ChevronRight className="w-5 h-5 text-gray-900 group-hover:translate-x-1 transition-transform" />
               </button>
             </>
           )}
@@ -280,9 +280,9 @@ export default function BrandsOutlets() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${currentIndex === index
+                  className={`h-[1px] transition-all duration-300 ${currentIndex === index
                     ? 'bg-amber-600 w-8'
-                    : 'bg-gray-300 hover:bg-amber-300'
+                    : 'bg-gray-300 hover:bg-amber-200'
                     }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -299,7 +299,7 @@ export default function BrandsOutlets() {
           className="mt-12 md:mt-20 relative max-w-5xl mx-auto"
         >
           {/* Glass Container */}
-          <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 md:p-12 overflow-hidden border border-white/10 shadow-2xl">
+          <div className="relative bg-black/90 backdrop-blur-md rounded-none p-10 md:p-14 overflow-hidden border border-white/5 shadow-lg">
 
             {/* Animated Background Gradients */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -364,18 +364,18 @@ function BrandCard({
           y: -15,
           scale: 1.05,
         }}
-        className="group relative aspect-square overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 bg-white border-2 border-transparent group-hover:border-amber-300"
+        className="group relative aspect-square overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-[#f8f6f0] border border-transparent"
       >
         {/* Outer glow effect */}
         <motion.div
-          className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/50 to-yellow-400/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
+          className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/10 to-yellow-400/0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
         />
 
         {/* Card border */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-amber-200/30 group-hover:border-amber-400/60 transition-all duration-500"></div>
+        <div className="absolute inset-0 border border-transparent group-hover:border-amber-600/30 transition-all duration-500 pointer-events-none z-10"></div>
 
         {/* Image Container */}
-        <div className="absolute inset-0 overflow-hidden rounded-2xl">
+        <div className="absolute inset-4 overflow-hidden">
           <Image
             src={brand.image}
             alt={brand.name}
@@ -385,7 +385,7 @@ function BrandCard({
           />
 
           {/* Gradient Overlay - Better visibility */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/95 group-hover:via-black/60 transition-all duration-500"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
 
           {/* Shine effect */}
           <motion.div
@@ -401,29 +401,15 @@ function BrandCard({
         </div>
 
         {/* Content Badge - Redesigned */}
-        {/* <div className="absolute inset-0 flex items-end justify-center p-4 z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.9 }}
-          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ delay: index * 0.05 + 0.3, type: 'spring', stiffness: 200 }}
-          whileHover={{ scale: 1.05, y: -5 }}
-          className="w-full"
-        >
-          <div className="bg-white/98 backdrop-blur-md px-4 py-3 rounded-xl shadow-2xl border-2 border-amber-200/50 group-hover:border-amber-400/80 group-hover:bg-white transition-all duration-300">
-            <h3 
-              className="text-sm md:text-base font-bold text-gray-900 text-center mb-1.5 group-hover:text-amber-700 transition-colors"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              {brand.name}
-            </h3>
-            <div className="flex items-center justify-center">
-              <span className="inline-block px-2 py-1 bg-amber-100 group-hover:bg-amber-200 text-amber-700 text-[10px] md:text-xs font-semibold uppercase tracking-wider rounded-md transition-colors">
-                {brand.category}
-              </span>
-            </div>
-          </div>
-        </motion.div>
-      </div> */}
+        <div className="absolute bottom-4 left-4 right-4 z-10 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 text-center">
+          <h3
+            className="text-lg font-bold text-white tracking-widest mb-2"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            {brand.name}
+          </h3>
+          <div className="w-8 h-[1px] bg-amber-400 mx-auto mb-2"></div>
+        </div>
 
         {/* Top corner badge */}
         <motion.div
@@ -432,7 +418,7 @@ function BrandCard({
           transition={{ delay: index * 0.05 + 0.4 }}
           className="absolute top-3 right-3 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
-          <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-amber-400 rounded-none animate-pulse"></div>
         </motion.div>
       </motion.div>
     </Link>

@@ -127,11 +127,11 @@ function EventCard({
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.5, delay: index * 0.1 }}
-        whileHover={{ y: -6, scale: 1.02 }}
-        className="group relative h-[320px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-2xl cursor-pointer shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_80px_-10px_rgba(0,0,0,0.5)] transition-all duration-500 border border-amber-200/30 bg-white backdrop-blur-sm"
+        whileHover={{ y: -6 }}
+        className="group relative h-[320px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 bg-white"
       >
-        {/* Premium card background glow - Enhanced */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/30 to-amber-300/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
+        {/* Premium card background glow */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/10 to-amber-300/0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
 
         {/* Image */}
         <div className="absolute inset-0">
@@ -160,7 +160,7 @@ function EventCard({
             whileHover={{ scale: 1.05 }}
             className="w-full"
           >
-            <div className="bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-lg shadow-[0_10px_40px_rgba(0,0,0,0.4)] border border-white/30 text-center">
+            <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-none shadow-2xl border border-white/20 text-center">
               <h3
                 className="text-sm md:text-base font-bold text-white tracking-wide"
                 style={{ fontFamily: 'var(--font-playfair)' }}
@@ -171,8 +171,8 @@ function EventCard({
           </motion.div>
         </div>
 
-        {/* Premium Border Glow on Hover - Enhanced */}
-        <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-amber-300/50 transition-all duration-500 pointer-events-none ring-2 ring-white/0 group-hover:ring-amber-200/30"></div>
+        {/* Premium Border Glow on Hover */}
+        <div className="absolute inset-0 rounded-none border border-transparent group-hover:border-amber-400/30 transition-all duration-500 pointer-events-none"></div>
 
         {/* Luxury corner accents */}
         <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-amber-400/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

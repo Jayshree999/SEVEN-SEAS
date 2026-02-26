@@ -26,10 +26,10 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
+
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
-    
+
     alert('Thank you for your message! We will get back to you shortly.')
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
     setIsSubmitting(false)
@@ -45,7 +45,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Video Banner */}
       <VideoBanner
         title="CONTACT US"
@@ -64,7 +64,7 @@ export default function ContactPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-10 md:mb-12"
           >
-            <h2 
+            <h2
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
@@ -76,17 +76,17 @@ export default function ContactPage() {
           </motion.div>
           <ImageGrid
             images={[
-              { 
-                id: 1, 
+              {
+                id: 1,
                 url: '/hero2.jpg',
-                title: 'Hotel Location', 
-                description: 'Prime location in Dubai with easy access to major attractions' 
+                title: 'Hotel Location',
+                description: 'Prime location in Dubai with easy access to major attractions'
               },
-              { 
-                id: 2, 
+              {
+                id: 2,
                 url: '/DSC02655-scaled.jpg',
-                title: 'Reception', 
-                description: '24/7 concierge service and world-class hospitality' 
+                title: 'Reception',
+                description: '24/7 concierge service and world-class hospitality'
               },
             ]}
             columns={2}
@@ -110,10 +110,10 @@ export default function ContactPage() {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="bg-white rounded-2xl shadow-2xl p-8 md:p-10 border border-gray-200/50"
+              className="bg-[#f8f6f0] rounded-none shadow-sm p-8 md:p-10 border border-gray-100"
             >
               <div className="mb-8">
-                <h2 
+                <h2
                   className="text-3xl md:text-4xl font-bold text-gray-900 mb-3"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                 >
@@ -208,9 +208,9 @@ export default function ContactPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  whileHover={{ scale: 1.02, boxShadow: '0 10px 30px rgba(217, 119, 6, 0.3)' }}
+                  whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold uppercase tracking-wider rounded-lg transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-xl"
+                  className="w-full px-8 py-4 bg-gray-900 hover:bg-black text-white font-bold uppercase tracking-widest rounded-none shadow-sm transition-all duration-300 disabled:opacity-50"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </motion.button>
@@ -225,8 +225,8 @@ export default function ContactPage() {
               className="space-y-8"
             >
               {/* Contact Info Card */}
-              <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-10 border border-gray-200/50">
-                <h2 
+              <div className="bg-[#f8f6f0] rounded-none shadow-sm p-8 md:p-10 border border-gray-100">
+                <h2
                   className="text-3xl md:text-4xl font-bold text-gray-900 mb-8"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                 >
@@ -313,9 +313,9 @@ export default function ContactPage() {
               </div>
 
               {/* Google Map - Premium */}
-              <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200/50">
+              <div className="bg-[#f8f6f0] rounded-none shadow-sm p-6 border border-gray-100">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 
+                  <h3
                     className="text-xl md:text-2xl font-bold text-gray-900"
                     style={{ fontFamily: 'var(--font-playfair)' }}
                   >
@@ -325,7 +325,7 @@ export default function ContactPage() {
                     href={config.googleMapsLocationLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
+                    className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 font-semibold rounded-none transition-all duration-300 shadow-sm"
                   >
                     <MapPin className="w-4 h-4" />
                     <span className="text-sm">View on Google Maps</span>

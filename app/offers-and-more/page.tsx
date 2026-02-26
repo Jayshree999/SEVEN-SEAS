@@ -11,47 +11,32 @@ import { useRef } from 'react'
 
 const exclusiveRoomOffers = [
   {
-    title: '3 night promo',
-    code: 'Promo 15',
-    discount: '15% OFF',
-    description: 'Stay for 3 nights and get 15% off when you book direct. Advance booking of 15 days is required.',
-    image: '/3-night-promo-rezi8z9sy5jbwlmydsyszk8hyhp8nkma1j19ic4u5c.png',
-    color: 'from-blue-500 to-cyan-500',
+    title: 'Eid Special Offer',
+    code: 'EID299',
+    discount: 'AED 299',
+    description: 'Celebrate Eid with our exclusive offer. Enjoy a luxurious stay starting from AED 299 per night (excluding taxes). Make your celebration memorable.',
+    image: '/offer1.jpeg',
+    color: 'from-amber-600 to-yellow-600',
   },
   {
-    title: '7 night promo',
-    code: 'Promo 20',
-    discount: '20% OFF',
-    description: 'Stay for 7 nights and get 20% off when you book direct. Advance booking of 15 days is required.',
-    image: '/7-night-promo-rezie957aor91tz5l31fz8blybpdufk23mtcg8bb8g.png',
-    color: 'from-purple-500 to-pink-500',
+    title: 'Ramadan Long Stay Offer',
+    code: 'RAMADANMONTH',
+    discount: 'AED 5000',
+    description: 'Experience a serene Ramadan with our Long Stay Offer. Book your extended stay starting from AED 5000 per month (excluding taxes).',
+    image: '/2.jpeg',
+    color: 'from-amber-500 to-amber-600',
   },
   {
-    title: 'Royal Suit promo',
-    code: 'Promo 10',
-    discount: '10% OFF',
-    description: 'Stay for 7 nights and get 20% off when you book direct. Advance booking of 15 days is required.',
-    image: '/Royal-Suit-promo-1-reziipvlrcva75hoiiinblrfj7p5eoa5pqddijozog.png',
-    color: 'from-amber-500 to-orange-500',
+    title: 'Ramadan Special Offer',
+    code: 'RAMADAN150',
+    discount: 'AED 150',
+    description: 'Embrace the spirit of Ramadan. Enjoy a peaceful and comfortable stay starting from just AED 150 per night (excluding taxes).',
+    image: '/3.jpeg',
+    color: 'from-yellow-600 to-amber-700',
   },
 ]
 
-const newYearOffers = [
-  {
-    title: "Geoffrey's New Year Offer",
-    venue: "Geoffrey's Level 22",
-    description: "Ring in 2026 at Geoffrey's Level 22 with our Midnight Mania celebration. Enjoy live DJ performances, great vibes, and special entry packages for singles, couples, and groups. The party starts at 9 PM onwards on 31st December.",
-    image: '/Banquet-Promotion-rg1quehtzlwv1cpru9u7ox34b3gzde5hjzxk7kukyo.png',
-    color: 'from-red-500 to-pink-500',
-  },
-  {
-    title: 'Mehfil Ballroom New Year Offer',
-    venue: 'Mehfil Ballroom',
-    description: 'Join us at the Mehfil Ballroom for a dazzling gala night featuring a lucky draw, live DJ, and a sparkling midnight toast. An unforgettable evening of food, music, and celebrations awaits. Book now!',
-    image: '/Geoffry-rg1qusleu4g5vi5ajxxm8bj17vjhkupglxpueq9odc.png',
-    color: 'from-purple-500 to-indigo-500',
-  },
-]
+
 
 const longStayRooms = [
   {
@@ -125,7 +110,7 @@ export default function OffersAndMorePage() {
   return (
     <main className="min-h-screen bg-white overflow-hidden">
       <Navigation />
-      
+
       {/* Enhanced Hero Section with Parallax */}
       <motion.section
         ref={heroRef}
@@ -134,7 +119,7 @@ export default function OffersAndMorePage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <motion.div 
+        <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 z-0"
         >
@@ -146,7 +131,7 @@ export default function OffersAndMorePage() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
-          
+
           {/* Animated gradient overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-amber-900/20 via-transparent to-amber-900/20"
@@ -160,7 +145,7 @@ export default function OffersAndMorePage() {
             }}
           />
         </motion.div>
-        
+
         <div className="relative z-20 text-center px-6 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -175,10 +160,10 @@ export default function OffersAndMorePage() {
             >
               <Percent className="w-16 h-16 text-amber-400 drop-shadow-2xl" />
             </motion.div>
-            
+
             <motion.h1
               className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
-              style={{ 
+              style={{
                 fontFamily: 'var(--font-playfair)',
                 textShadow: '0 4px 30px rgba(0, 0, 0, 1), 0 2px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8)'
               }}
@@ -188,7 +173,7 @@ export default function OffersAndMorePage() {
             >
               Offers & Promotions
             </motion.h1>
-            
+
             <motion.p
               className="text-base md:text-lg lg:text-xl text-white mb-8 max-w-3xl mx-auto leading-relaxed font-medium"
               style={{
@@ -200,7 +185,7 @@ export default function OffersAndMorePage() {
             >
               Exclusive Room Offer
             </motion.p>
-            
+
             <motion.div
               className="w-32 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-8"
               initial={{ width: 0 }}
@@ -248,44 +233,38 @@ export default function OffersAndMorePage() {
             {exclusiveRoomOffers.map((offer, index) => (
               <motion.div
                 key={offer.title}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                initial={{ opacity: 0, y: 30, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col"
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative aspect-square bg-[#f8f6f0] overflow-hidden">
                   <Image
                     src={offer.image}
                     alt={offer.title}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-700 ease-out"
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <span className={`px-4 py-2 bg-gradient-to-r ${offer.color} text-white font-bold rounded-lg shadow-lg`}>
-                      {offer.discount}
-                    </span>
-                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl md:text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="p-8 flex flex-col flex-grow items-center text-center">
+                  <h3 className="text-2xl text-gray-900 mb-3 tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>
                     {offer.title}
                   </h3>
-                  <div className="mb-3">
-                    <span className="text-sm text-gray-500">Use Code:</span>
-                    <span className={`ml-2 px-3 py-1 bg-gradient-to-r ${offer.color} text-white font-semibold rounded-md`}>
-                      {offer.code}
-                    </span>
+                  <div className="w-12 h-[1px] bg-amber-600 mb-4"></div>
+                  <p className="text-gray-600 mb-6 text-sm font-light leading-relaxed">
+                    {offer.description}
+                  </p>
+                  <div className="mb-6 flex flex-col items-center gap-1">
+                    <span className="text-xs uppercase tracking-widest text-gray-400">Promo Code</span>
+                    <span className="text-sm font-medium tracking-widest text-amber-700">{offer.code}</span>
                   </div>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{offer.description}</p>
                   <a
                     href="tel:+971551009152"
-                    className="flex items-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors"
+                    className="mt-auto flex items-center justify-center gap-2 w-full px-6 py-3 border border-amber-600/30 hover:border-amber-600 hover:bg-amber-50 text-amber-700 font-medium tracking-wide uppercase text-sm rounded transition-all duration-300"
                   >
-                    <Phone className="w-5 h-5" />
+                    <Phone className="w-4 h-4" />
                     <span>+971 55 100 9152</span>
                   </a>
                 </div>
@@ -295,93 +274,7 @@ export default function OffersAndMorePage() {
         </div>
       </section>
 
-      {/* New Year Exclusive Offers */}
-      <section className="py-12 md:py-16 px-6 bg-white">
-        <div className="container mx-auto max-w-7xl">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-              New Year Exclusive Offers
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Celebrate the New Year with special offers on events at Geoffrey and Mehfil Ballroom. Perfect for gatherings, parties, and corporate functions.
-            </p>
-          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {newYearOffers.map((offer, index) => (
-              <motion.div
-                key={offer.title}
-                initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
-              >
-                <div className="relative h-80 md:h-96 lg:h-[500px] overflow-hidden bg-gray-100">
-                  <Image
-                    src={offer.image}
-                    alt={offer.title}
-                    fill
-                    className="object-contain group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-                    {offer.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{offer.description}</p>
-                  <Link href="/contact">
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`w-full px-6 py-3 bg-gradient-to-r ${offer.color} text-white font-semibold rounded-lg hover:shadow-lg transition-all`}
-                    >
-                      Book Now
-                    </motion.button>
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* New Year Exclusive Offers for Room */}
-      <section className="py-12 md:py-16 px-6 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto max-w-4xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-              New Year Exclusive Offers for room
-            </h2>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              Enjoy an unforgettable gala night with stunning views, a lucky draw, and a midnight champagne toast. Celebrate in comfort and style reserve your spot now!
-            </p>
-            <Link href="/rooms">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all"
-              >
-                Book Now
-              </motion.button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Newly Renovated Long Stay Rooms */}
       <section className="py-12 md:py-16 px-6 bg-white">
@@ -565,7 +458,7 @@ export default function OffersAndMorePage() {
             >
               <Percent className="w-16 h-16 mx-auto" />
             </motion.div>
-            
+
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
               Don't Miss Out on These Exclusive Offers
             </h2>

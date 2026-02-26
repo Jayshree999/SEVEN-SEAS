@@ -89,14 +89,14 @@ function NewsCard({
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, type: 'spring', stiffness: 100 }}
-      whileHover={{ y: -15, scale: 1.05 }}
-      className="group relative overflow-hidden rounded-2xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-transparent group-hover:border-amber-300 bg-white"
+      whileHover={{ y: -10 }}
+      className="group relative overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 bg-white"
     >
       {/* Make the whole card clickable */}
       <Link href={`/news/${item.slug}`} className="absolute inset-0 z-20" aria-label={`Read more about ${item.title}`} />
 
       {/* Premium card background glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/30 to-amber-300/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
+      <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/10 to-amber-300/0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
 
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
@@ -111,8 +111,8 @@ function NewsCard({
 
         {/* Category Badge */}
         <div className="absolute top-4 left-4 z-10">
-          <div className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-lg border border-amber-200/50">
-            <span className="text-xs font-semibold text-amber-700">{item.category}</span>
+          <div className="bg-white/95 backdrop-blur-md px-4 py-2 rounded-none shadow-lg border border-gray-100">
+            <span className="text-xs font-bold text-gray-900 uppercase tracking-widest">{item.category}</span>
           </div>
         </div>
       </div>
@@ -143,7 +143,7 @@ function NewsCard({
       </div>
 
       {/* Premium Border Glow on Hover */}
-      <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-amber-300/50 transition-all duration-500 pointer-events-none"></div>
+      <div className="absolute inset-0 rounded-none border border-transparent group-hover:border-amber-400/30 transition-all duration-500 pointer-events-none"></div>
     </motion.div>
   )
 }

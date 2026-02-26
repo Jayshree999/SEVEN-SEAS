@@ -55,7 +55,7 @@ export default function WellnessPage() {
   return (
     <main className="min-h-screen bg-white overflow-hidden">
       <Navigation />
-      
+
       {/* Enhanced Hero Section with Parallax */}
       <motion.section
         ref={heroRef}
@@ -64,7 +64,7 @@ export default function WellnessPage() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <motion.div 
+        <motion.div
           style={{ y, opacity }}
           className="absolute inset-0 z-0"
         >
@@ -76,7 +76,7 @@ export default function WellnessPage() {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/90" />
-          
+
           {/* Animated gradient overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-green-900/20 via-transparent to-green-900/20"
@@ -90,7 +90,7 @@ export default function WellnessPage() {
             }}
           />
         </motion.div>
-        
+
         <div className="relative z-20 text-center px-6 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -105,10 +105,10 @@ export default function WellnessPage() {
             >
               <Leaf className="w-16 h-16 text-green-400 drop-shadow-2xl" />
             </motion.div>
-            
+
             <motion.h1
               className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-white leading-tight"
-              style={{ 
+              style={{
                 fontFamily: 'var(--font-playfair)',
                 textShadow: '0 4px 30px rgba(0, 0, 0, 1), 0 2px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8)'
               }}
@@ -118,7 +118,7 @@ export default function WellnessPage() {
             >
               Wellness
             </motion.h1>
-            
+
             <motion.p
               className="text-base md:text-lg lg:text-xl text-white mb-8 max-w-3xl mx-auto leading-relaxed font-medium"
               style={{
@@ -130,7 +130,7 @@ export default function WellnessPage() {
             >
               Rejuvenate Your Mind, Body & Soul
             </motion.p>
-            
+
             <motion.div
               className="w-32 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto mb-8"
               initial={{ width: 0 }}
@@ -196,22 +196,22 @@ export default function WellnessPage() {
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 md:gap-8 items-center group`}
                 >
-                  <motion.div 
+                  <motion.div
                     className="flex-1 relative"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="relative h-[500px] md:h-[600px] rounded-none overflow-hidden border border-gray-100 shadow-sm group-hover:shadow-xl transition-shadow duration-500">
                       <Image
                         src={service.image}
                         alt={service.name}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
                   </motion.div>
-                  
+
                   <div className="flex-1 space-y-6">
                     <motion.div
                       className="flex items-center gap-4"
@@ -227,7 +227,7 @@ export default function WellnessPage() {
                         {service.name}
                       </h3>
                     </motion.div>
-                    
+
                     <motion.p
                       className="text-gray-600 text-lg leading-relaxed"
                       initial={{ opacity: 0 }}
@@ -237,22 +237,19 @@ export default function WellnessPage() {
                     >
                       {service.description}
                     </motion.p>
-                    
+
                     <Link href="/contact">
                       <motion.button
                         whileHover={{ scale: 1.05, y: -3 }}
                         whileTap={{ scale: 0.95 }}
-                        className={`group relative px-8 py-4 bg-gradient-to-r ${service.gradient} text-white font-bold rounded-lg shadow-lg overflow-hidden`}
+                        className={`group relative px-8 py-4 bg-white border border-gray-200 text-gray-900 font-bold tracking-wider rounded-none shadow-sm overflow-hidden`}
                       >
-                        <span className="relative z-10 flex items-center gap-2">
+                        <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors duration-300">
                           Book Appointment
                           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                         <motion.div
-                          className="absolute inset-0 opacity-80"
-                          initial={{ x: '-100%' }}
-                          whileHover={{ x: 0 }}
-                          transition={{ duration: 0.3 }}
+                          className={`absolute inset-0 bg-gradient-to-r ${service.gradient} transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out`}
                         />
                       </motion.button>
                     </Link>
@@ -308,16 +305,16 @@ export default function WellnessPage() {
                   whileHover={{ y: -15, scale: 1.05 }}
                   className="group relative"
                 >
-                  <div className={`absolute inset-0 ${feature.bgHover} rounded-xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                  <div className="relative bg-white rounded-xl p-6 text-center shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-transparent group-hover:border-green-200 h-full">
-                    <motion.div 
-                      className={`w-16 h-16 bg-gradient-to-br ${feature.bgGradient} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}
-                      animate={{ rotate: [0, 15, -15, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, delay: index * 0.3 }}
+                  <div className="relative bg-[#f8f6f0] rounded-none p-8 text-center shadow-sm group-hover:shadow-xl transition-all duration-500 border border-transparent group-hover:border-green-200 flex flex-col items-center h-full">
+                    <motion.div
+                      className={`w-16 h-16 bg-gradient-to-br ${feature.bgGradient} rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm`}
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 4, repeat: Infinity, delay: index * 0.3 }}
                     >
                       <IconComponent className="w-8 h-8 text-white" />
                     </motion.div>
-                    <h3 className="font-semibold text-gray-800 text-sm">{feature.name}</h3>
+                    <h3 className="font-bold text-gray-900 text-lg tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>{feature.name}</h3>
+                    <div className="w-8 h-[1px] bg-green-500/50 mt-4 transition-all duration-500 group-hover:w-16"></div>
                   </div>
                 </motion.div>
               )
@@ -358,7 +355,7 @@ export default function WellnessPage() {
             >
               <Leaf className="w-16 h-16 mx-auto" />
             </motion.div>
-            
+
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
               Begin Your Wellness Journey
             </h2>
@@ -369,17 +366,14 @@ export default function WellnessPage() {
               <motion.button
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-10 py-5 bg-white text-green-600 font-bold text-lg uppercase tracking-wider rounded-lg shadow-2xl overflow-hidden"
+                className="group relative px-10 py-5 bg-white text-gray-900 border border-gray-900 font-bold text-lg uppercase tracking-wider rounded-none shadow-sm overflow-hidden"
               >
-                <span className="relative z-10 flex items-center gap-2">
+                <span className="relative z-10 flex items-center gap-2 group-hover:text-green-700 transition-colors duration-300">
                   Book Your Treatment
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
                 <motion.div
-                  className="absolute inset-0 bg-gray-100"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-green-50 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"
                 />
               </motion.button>
             </Link>

@@ -130,7 +130,7 @@ export default function AccommodationSection() {
 
       {/* Elegant Gradient Overlays */}
       <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-black via-black/50 to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-amber-900/20 via-yellow-900/10 to-transparent blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-gradient-to-tl from-amber-900/20 via-yellow-900/10 to-transparent blur-[120px] pointer-events-none" />
 
       {/* Floating Ambient Orbs */}
       <motion.div
@@ -209,25 +209,25 @@ export default function AccommodationSection() {
           >
             <motion.button
               onClick={goToPrevious}
-              whileHover={{ scale: 1.1, backgroundColor: 'rgba(251, 191, 36, 0.1)' }}
+              whileHover={{ scale: 1.05, backgroundColor: 'rgba(251, 191, 36, 0.05)' }}
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 transition-all duration-300 group backdrop-blur-sm relative overflow-hidden"
+              className="w-14 h-14 rounded-none border border-amber-500/30 flex items-center justify-center hover:border-amber-500 transition-all duration-300 group backdrop-blur-sm relative overflow-hidden"
               aria-label="Previous rooms"
             >
               {/* Button Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/10 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/5 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <ChevronLeft className="w-6 h-6 text-amber-400 group-hover:-translate-x-1 transition-transform relative z-10" />
             </motion.button>
 
             <motion.button
               onClick={goToNext}
-              whileHover={{ scale: 1.1, backgroundColor: 'rgba(251, 191, 36, 0.1)' }}
+              whileHover={{ scale: 1.05, backgroundColor: 'rgba(251, 191, 36, 0.05)' }}
               whileTap={{ scale: 0.95 }}
-              className="w-14 h-14 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 transition-all duration-300 group backdrop-blur-sm relative overflow-hidden"
+              className="w-14 h-14 rounded-none border border-amber-500/30 flex items-center justify-center hover:border-amber-500 transition-all duration-300 group backdrop-blur-sm relative overflow-hidden"
               aria-label="Next rooms"
             >
               {/* Button Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/10 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/5 to-amber-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <ChevronRight className="w-6 h-6 text-amber-400 group-hover:translate-x-1 transition-transform relative z-10" />
             </motion.button>
           </motion.div>
@@ -256,9 +256,9 @@ export default function AccommodationSection() {
                     key={index}
                     onClick={() => goToSlide(index)}
                     whileHover={{ scale: 1.2 }}
-                    className={`h-1.5 transition-all duration-500 rounded-full ${currentIndex === index
-                      ? 'bg-gradient-to-r from-amber-400 to-yellow-500 w-16 shadow-lg shadow-amber-500/50'
-                      : 'bg-white/20 w-6 hover:bg-white/40'
+                    className={`h-[1px] transition-all duration-500 ${currentIndex === index
+                      ? 'bg-amber-400 w-16'
+                      : 'bg-white/20 w-8 hover:bg-white/40'
                       }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -299,14 +299,14 @@ function RoomCard({
         delay: index * 0.15,
         ease: luxuryEasing
       }}
-      whileHover={{ y: -12, scale: 1.02 }}
-      className="group relative h-[550px] w-full cursor-pointer overflow-hidden rounded-2xl"
+      whileHover={{ y: -6 }}
+      className="group relative h-[550px] w-full cursor-pointer overflow-hidden rounded-none"
     >
       {/* Premium Border Glow */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/0 via-amber-500/50 to-amber-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl" />
+      <div className="absolute -inset-1 bg-gradient-to-r from-amber-400/0 via-amber-400/20 to-amber-400/0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl" />
 
       {/* Card Container */}
-      <div className="relative h-full w-full bg-black rounded-2xl overflow-hidden border border-white/5 group-hover:border-amber-500/30 transition-all duration-500">
+      <div className="relative h-full w-full bg-black rounded-none overflow-hidden border border-white/5 group-hover:border-amber-400/30 transition-all duration-500">
         {/* Background Image with Enhanced Overlay */}
         <div className="absolute inset-0 w-full h-full">
           <Image
@@ -336,9 +336,9 @@ function RoomCard({
               transition={{ delay: index * 0.15 + 0.3 }}
               className="opacity-0 group-hover:opacity-100 transition-all duration-500"
             >
-              <div className={`px-4 py-2 bg-gradient-to-r ${getBadgeColor(room.badge)} rounded-full shadow-lg backdrop-blur-sm`}>
-                <span className="text-white text-xs font-bold tracking-widest uppercase flex items-center gap-2">
-                  <Star className="w-3 h-3 fill-current" />
+              <div className={`px-4 py-2 bg-white text-gray-900 rounded-none shadow-xl`}>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase flex items-center gap-2">
+                  <Star className="w-3 h-3 text-amber-600 fill-current" />
                   {room.badge}
                 </span>
               </div>
@@ -366,14 +366,14 @@ function RoomCard({
 
             {/* Room Stats */}
             <div className="flex items-center gap-6 text-sm text-gray-300 mb-6">
-              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-3 py-1.5 rounded-full">
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-4 py-2 rounded-none">
                 <Maximize className="w-4 h-4 text-amber-400" />
-                <span className="font-medium">{room.size}</span>
+                <span className="font-light tracking-wider">{room.size}</span>
               </div>
               <div className="w-px h-4 bg-white/20" />
-              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-3 py-1.5 rounded-full">
+              <div className="flex items-center gap-2 bg-white/5 backdrop-blur-sm px-4 py-2 rounded-none">
                 <User className="w-4 h-4 text-amber-400" />
-                <span className="font-medium">{room.guests}</span>
+                <span className="font-light tracking-wider">{room.guests}</span>
               </div>
             </div>
 
@@ -391,7 +391,7 @@ function RoomCard({
                 {room.features.slice(0, 2).map((feat, i) => (
                   <span
                     key={i}
-                    className="text-[10px] uppercase tracking-wider px-3 py-1 border border-amber-500/30 rounded-full text-amber-300/90 bg-amber-500/5 backdrop-blur-sm font-medium"
+                    className="text-[10px] uppercase tracking-widest px-3 py-2 border border-white/20 rounded-none text-white/80 bg-white/5 backdrop-blur-sm font-light"
                   >
                     {feat}
                   </span>
@@ -401,11 +401,11 @@ function RoomCard({
               {/* CTA Button */}
               <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <motion.div
-                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}
-                  className="w-12 h-12 rounded-full bg-gradient-to-r from-amber-500 to-yellow-500 flex items-center justify-center hover:shadow-lg hover:shadow-amber-500/50 transition-all duration-300 group"
+                  className="w-12 h-12 rounded-none border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 group"
                 >
-                  <ArrowRight className="w-5 h-5 text-white" />
+                  <ArrowRight className="w-5 h-5" />
                 </motion.div>
               </Link>
             </div>
@@ -413,8 +413,8 @@ function RoomCard({
         </div>
 
         {/* Corner Accents */}
-        <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-amber-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-br-full" />
-        <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-yellow-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tl-full" />
+        <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
     </motion.div>
   )

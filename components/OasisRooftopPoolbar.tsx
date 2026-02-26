@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
-import { Waves, Sparkles } from 'lucide-react'
+import { Waves, Sparkles, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 export default function OasisRooftopPoolbar() {
@@ -78,11 +78,11 @@ export default function OasisRooftopPoolbar() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="group relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden rounded-2xl cursor-pointer shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_80px_-10px_rgba(59,130,246,0.4)] transition-all duration-500 border border-blue-200/30 bg-white backdrop-blur-sm"
+            className="group relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 bg-white backdrop-blur-sm"
             style={{ marginBottom: 0 }}
           >
-            {/* Premium card background glow - Enhanced with blue/cyan */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/0 via-cyan-400/30 to-blue-500/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
+            {/* Premium card background glow */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/0 via-blue-200/10 to-blue-500/0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
 
             {/* Image */}
             <div className="absolute inset-0">
@@ -116,9 +116,9 @@ export default function OasisRooftopPoolbar() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={inView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.4, duration: 0.5 }}
-                    className="bg-white/95 backdrop-blur-md px-5 py-3 rounded-lg shadow-xl border border-white/80 inline-block mb-3"
+                    className="bg-white/95 backdrop-blur-md px-6 py-4 rounded-none shadow-xl border border-gray-100 inline-block mb-3"
                   >
-                    <p className="text-xs md:text-sm text-blue-600 font-semibold tracking-wide uppercase">
+                    <p className="text-xs md:text-sm text-blue-600 font-bold tracking-widest uppercase">
                       Where the Sky Meets the Water
                     </p>
                   </motion.div>
@@ -126,10 +126,10 @@ export default function OasisRooftopPoolbar() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={inView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.5, duration: 0.5 }}
-                    className="bg-gradient-to-r from-blue-600/95 to-cyan-600/95 backdrop-blur-md px-5 py-3 rounded-lg shadow-xl border border-blue-400/50 inline-block"
+                    className="bg-gray-900 backdrop-blur-md px-6 py-4 rounded-none shadow-xl border border-white/10 inline-block"
                   >
                     <h3
-                      className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-wide"
+                      className="text-xl md:text-2xl lg:text-3xl font-bold text-white tracking-widest uppercase"
                       style={{ fontFamily: 'var(--font-playfair)' }}
                     >
                       OASIS ROOFTOP POOLBAR
@@ -147,20 +147,19 @@ export default function OasisRooftopPoolbar() {
                 >
                   <Link
                     href="/contact"
-                    className="group/btn relative overflow-hidden bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-6 md:px-8 py-3 md:py-4 rounded-lg shadow-2xl border-2 border-amber-400/50 transition-all duration-300 inline-flex items-center gap-2"
+                    className="group/btn relative overflow-hidden bg-white text-gray-900 font-bold px-10 py-5 rounded-none shadow-2xl border border-gray-100 hover:bg-gray-50 transition-all duration-300 inline-flex items-center gap-3 uppercase tracking-widest text-sm"
                   >
-                    <span className="relative z-10 text-sm md:text-base uppercase tracking-wide">
+                    <span className="relative z-10">
                       Make a reservation
                     </span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left"></div>
+                    <ArrowRight className="w-5 h-5 relative z-10 transition-transform group-hover/btn:translate-x-1" />
                   </Link>
                 </motion.div>
               </motion.div>
             </div>
 
-            {/* Premium Border Glow on Hover - Enhanced with blue/cyan */}
-            <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-400/50 transition-all duration-500 pointer-events-none ring-2 ring-white/0 group-hover:ring-cyan-300/30"></div>
+            {/* Premium Border Glow on Hover */}
+            <div className="absolute inset-0 rounded-none border border-transparent group-hover:border-blue-400/30 transition-all duration-500 pointer-events-none"></div>
 
             {/* Luxury corner accents */}
             <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-500/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

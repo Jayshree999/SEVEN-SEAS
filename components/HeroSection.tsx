@@ -55,7 +55,7 @@ export default function HeroSection() {
         </div>
 
         <motion.div
-          className="w-24 h-1 bg-amber-500 mb-8 mx-auto rounded-full"
+          className="w-24 h-[1px] bg-amber-500/50 mb-8 mx-auto"
           initial={{ width: 0, opacity: 0 }}
           animate={{ width: 96, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
@@ -89,7 +89,7 @@ export default function HeroSection() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-4 bg-white text-black font-bold text-sm tracking-[0.2em] uppercase transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] min-w-[200px]"
+              className="px-10 py-5 bg-white text-black font-bold text-sm tracking-[0.2em] uppercase transition-all duration-300 shadow-xl min-w-[220px] rounded-none border border-transparent hover:border-white/50"
             >
               Book Your Stay
             </motion.button>
@@ -99,7 +99,7 @@ export default function HeroSection() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-4 border border-white text-white font-semibold text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300 min-w-[200px]"
+              className="px-10 py-5 border border-white/50 text-white font-bold text-sm tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300 min-w-[220px] rounded-none"
             >
               Explore
             </motion.button>

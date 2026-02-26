@@ -181,13 +181,13 @@ export default function Navigation() {
                     }}
                   >
                     <motion.div
-                      className="relative group cursor-pointer px-3 py-2 rounded-lg"
-                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="relative group cursor-pointer px-4 py-2 border border-transparent hover:border-white/10"
+                      whileHover={{ y: -1 }}
                       transition={{ type: 'spring', stiffness: 300 }}
                     >
                       {/* Hover background glow */}
                       <motion.div
-                        className="absolute inset-0 bg-gold/10 rounded-sm opacity-0 group-hover:opacity-100"
+                        className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100"
                         transition={{ duration: 0.3 }}
                       />
                       <span className="text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-amber-400 relative z-10 flex items-center gap-1.5">
@@ -207,7 +207,7 @@ export default function Navigation() {
                         </motion.svg>
                       </span>
                       <motion.div
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400 rounded-full group-hover:w-full"
+                        className="absolute bottom-0 left-0 w-0 h-[1px] bg-amber-400 group-hover:w-full"
                         transition={{ duration: 0.4, ease: 'easeOut' }}
                       />
                     </motion.div>
@@ -217,11 +217,11 @@ export default function Navigation() {
                         (item.dropdownKey === 'offers' && isOffersDropdownOpen) ||
                         (item.dropdownKey === 'experiences' && isExperiencesDropdownOpen)) && (
                           <motion.div
-                            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2, ease: 'easeOut' }}
-                            className="absolute top-full left-0 mt-2 w-56 bg-white rounded-sm shadow-xl border border-gold/20 py-2 z-50"
+                            className="absolute top-full left-0 mt-2 w-56 bg-white rounded-none shadow-2xl border border-gray-100 py-2 z-50 text-gray-900"
                           >
                             <div className="relative z-10">
                               {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem, subIndex) => (
@@ -242,7 +242,7 @@ export default function Navigation() {
                                     initial={{ opacity: 0, x: -10 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: subIndex * 0.05 }}
-                                    className="px-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gold hover:bg-gold/5 transition-colors duration-300 mx-2 rounded-sm"
+                                    className="px-4 py-3 text-xs font-bold tracking-widest uppercase text-gray-700 hover:text-amber-600 hover:bg-gray-50 transition-all duration-300 mx-0 rounded-none border-l-2 border-transparent hover:border-amber-500"
                                   >
                                     {subItem.name}
                                   </motion.div>
@@ -256,20 +256,20 @@ export default function Navigation() {
                 ) : (
                   <Link href={item.href}>
                     <motion.div
-                      className="relative group px-3 py-2 rounded-lg"
-                      whileHover={{ scale: 1.05, y: -2 }}
+                      className="relative group px-4 py-2 border border-transparent hover:border-white/10"
+                      whileHover={{ y: -1 }}
                       transition={{ type: 'spring', stiffness: 300 }}
                     >
                       {/* Hover background glow */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-amber-100/50 to-yellow-100/50 rounded-lg opacity-0 group-hover:opacity-100 blur-sm"
+                        className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100"
                         transition={{ duration: 0.3 }}
                       />
                       <span className="text-white text-sm font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10">
                         {item.name}
                       </span>
                       <motion.div
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400 rounded-full group-hover:w-full"
+                        className="absolute bottom-0 left-0 w-0 h-[1px] bg-amber-400 group-hover:w-full"
                         transition={{ duration: 0.4, ease: 'easeOut' }}
                       />
                     </motion.div>
@@ -295,10 +295,10 @@ export default function Navigation() {
                     <img
                       src={user.profileImg}
                       alt={user.fullName || 'User'}
-                      className="w-7 h-7 rounded-full object-cover border-2 border-amber-500"
+                      className="w-7 h-7 rounded-none object-cover border border-amber-500"
                     />
                   ) : (
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 flex items-center justify-center text-white font-semibold text-xs">
+                    <div className="w-7 h-7 rounded-none bg-amber-600 flex items-center justify-center text-white font-bold text-[10px] tracking-tighter">
                       {user?.fullName?.charAt(0).toUpperCase() || 'U'}
                     </div>
                   )}
@@ -314,7 +314,7 @@ export default function Navigation() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                      className="absolute right-0 mt-2 w-48 bg-white rounded-none shadow-2xl border border-gray-100 py-2 z-50"
                     >
                       <div className="px-4 py-2 border-b border-gray-200">
                         <p className="text-sm font-semibold text-gray-800">{user?.fullName}</p>
@@ -353,14 +353,15 @@ export default function Navigation() {
             )}
             <Link href="/rooms">
               <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 whileHover={{
                   scale: 1.05,
-                  backgroundColor: '#1C1C1C',
+                  backgroundColor: '#ffffff',
+                  color: '#000000',
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-8 py-3 text-sm font-medium tracking-widest text-white bg-black hover:bg-charcoal transition-all duration-300 rounded-sm border border-gold/30"
+                className="relative px-8 py-3 text-[10px] font-bold tracking-[0.3em] text-white bg-transparent hover:bg-white transition-all duration-300 rounded-none border border-white/30"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <span>BOOK NOW</span>
@@ -372,9 +373,9 @@ export default function Navigation() {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="lg:hidden w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg bg-amber-50 hover:bg-amber-100 transition-colors relative group min-w-[48px] min-h-[48px]"
+            whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+            whileTap={{ scale: 0.95 }}
+            className="lg:hidden w-12 h-12 flex items-center justify-center rounded-none bg-transparent border border-white/20 transition-all relative group min-w-[48px] min-h-[48px]"
             aria-label="Toggle menu"
           >
             <motion.div
@@ -389,12 +390,11 @@ export default function Navigation() {
                 )}
               </svg>
             </motion.div>
-            {/* Pulse effect */}
+            {/* Subtle border shine */}
             <motion.div
-              className="absolute inset-0 rounded-lg bg-amber-400/20"
+              className="absolute inset-0 rounded-none border border-white/10"
               animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.5, 0, 0.5],
+                opacity: [0.3, 0.6, 0.3],
               }}
               transition={{
                 duration: 2,
@@ -517,7 +517,7 @@ export default function Navigation() {
                   <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
                     <motion.button
                       whileTap={{ scale: 0.95 }}
-                      className="w-full mb-2 px-6 py-3 bg-amber-600 text-white font-bold uppercase rounded-lg"
+                      className="w-full mb-2 px-6 py-4 bg-amber-600 text-white font-bold tracking-widest uppercase rounded-none text-xs"
                     >
                       My Profile
                     </motion.button>
@@ -528,7 +528,7 @@ export default function Navigation() {
                       setIsMenuOpen(false)
                     }}
                     whileTap={{ scale: 0.95 }}
-                    className="w-full px-6 py-3 bg-red-600 text-white font-bold uppercase rounded-lg"
+                    className="w-full px-6 py-4 bg-red-600 text-white font-bold tracking-widest uppercase rounded-none text-xs"
                   >
                     Sign Out
                   </motion.button>
@@ -538,7 +538,7 @@ export default function Navigation() {
                   <Link href="/login" onClick={() => setIsMenuOpen(false)}>
                     <motion.button
                       whileTap={{ scale: 0.95 }}
-                      className="w-full mb-2 px-6 py-3 border-2 border-amber-600 text-amber-600 font-bold uppercase rounded-lg"
+                      className="w-full mb-2 px-6 py-4 border border-amber-600 text-amber-600 font-bold tracking-widest uppercase rounded-none text-xs"
                     >
                       Sign In
                     </motion.button>
@@ -548,7 +548,7 @@ export default function Navigation() {
               <Link href="/rooms" onClick={() => setIsMenuOpen(false)} className="w-full">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
-                  className="w-full mt-6 px-6 py-4 sm:py-3 bg-black text-white font-bold text-sm sm:text-base uppercase rounded-lg min-h-[48px]"
+                  className="w-full mt-6 px-6 py-5 bg-white text-black font-bold text-xs tracking-[0.3em] uppercase rounded-none min-h-[52px]"
                 >
                   BOOK NOW
                 </motion.button>

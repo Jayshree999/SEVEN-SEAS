@@ -149,9 +149,9 @@ export default function Footer() {
                   <a
                     key={social.name}
                     href={social.href}
-                    className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-300 group"
+                    className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-amber-600 hover:border-amber-600 transition-all duration-500 group"
                   >
-                    <Icon className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <Icon className="w-4 h-4" />
                   </a>
                 )
               })}
@@ -239,7 +239,7 @@ export default function Footer() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
+              <div className="w-10 h-10 rounded-none border border-white/10 flex items-center justify-center text-amber-500">
                 <Phone className="w-4 h-4" />
               </div>
               <div>
@@ -256,7 +256,7 @@ export default function Footer() {
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-amber-500">
+              <div className="w-10 h-10 rounded-none border border-white/10 flex items-center justify-center text-amber-500">
                 <Mail className="w-4 h-4" />
               </div>
               <div>

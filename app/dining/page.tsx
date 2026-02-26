@@ -145,7 +145,9 @@ export default function DiningPage() {
               transition={{ duration: 1, type: 'spring', delay: 0.3 }}
               className="inline-block mb-4 sm:mb-6"
             >
-              <Sparkles className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-amber-400 drop-shadow-2xl" />
+              <div className="w-16 h-16 rounded-none bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
+                <Sparkles className="w-8 h-8 text-amber-400" />
+              </div>
             </motion.div>
 
             <motion.h1
@@ -185,22 +187,16 @@ export default function DiningPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+              <Link href="/contact">
                 <motion.button
-                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group relative px-10 py-5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-white font-bold text-lg uppercase tracking-wider rounded-lg shadow-2xl overflow-hidden"
+                  className="group relative px-10 py-5 bg-gray-900 hover:bg-black text-white font-bold text-lg uppercase tracking-widest rounded-none shadow-xl overflow-hidden transition-all duration-300"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Make a reservation
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-amber-600 via-amber-700 to-amber-600"
-                    initial={{ x: '-100%' }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
                 </motion.button>
               </Link>
             </motion.div>
@@ -262,26 +258,21 @@ export default function DiningPage() {
             {fineDiningCategories.map((category, index) => (
               <motion.div
                 key={category.title}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                initial={{ opacity: 0, y: 50, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -15, scale: 1.05 }}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="group relative"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                <div className="relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-transparent group-hover:border-amber-200 h-full">
-                  <motion.div
-                    className="text-6xl mb-6"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
-                  >
-                    {category.icon}
-                  </motion.div>
-                  <h3 className={`text-2xl md:text-3xl font-bold mb-4 bg-gradient-to-r ${category.gradient} bg-clip-text text-transparent`} style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="relative bg-white rounded-none p-10 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 group-hover:border-amber-200/50 h-full flex flex-col items-center text-center">
+                  <div className="w-14 h-14 rounded-none bg-amber-50 border border-amber-100 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <span className="text-2xl filter drop-shadow-sm">{category.icon}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 tracking-wide text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                     {category.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">{category.description}</p>
+                  <div className="w-8 h-[1px] bg-amber-600/50 mb-4 transition-all duration-500 group-hover:w-16"></div>
+                  <p className="text-gray-500 text-sm font-light leading-relaxed">{category.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -329,7 +320,7 @@ export default function DiningPage() {
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="relative h-[500px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl">
+                  <div className="relative h-[500px] md:h-[600px] rounded-none overflow-hidden shadow-xl border border-gray-100">
                     <Image
                       src={restaurant.interiorImage}
                       alt={restaurant.name}
@@ -409,9 +400,9 @@ export default function DiningPage() {
                   >
                     <motion.a
                       href={`tel:${restaurant.phone.replace(/\s/g, '')}`}
-                      whileHover={{ scale: 1.05, y: -3 }}
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                      className="flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-none font-bold uppercase tracking-widest shadow-lg hover:bg-black transition-all"
                     >
                       <Phone className="w-5 h-5" />
                       {restaurant.phone}
@@ -420,9 +411,9 @@ export default function DiningPage() {
                       href={`https://wa.me/${restaurant.whatsapp}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05, y: -3 }}
+                      whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                      className="flex items-center gap-2 px-8 py-4 bg-[#25D366] text-white rounded-none font-bold uppercase tracking-widest shadow-lg hover:brightness-110 transition-all"
                     >
                       <MessageCircle className="w-5 h-5" />
                       WhatsApp
@@ -481,8 +472,7 @@ export default function DiningPage() {
                 whileHover={{ y: -15, scale: 1.05 }}
                 className="group relative"
               >
-                <div className={`absolute inset-0 ${cuisine.bgHover} rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
-                <div className="relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-transparent group-hover:border-amber-200 text-center h-full flex flex-col items-center justify-center">
+                <div className="relative bg-white rounded-none p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group-hover:border-amber-200 text-center h-full flex flex-col items-center justify-center">
                   <motion.div
                     className="text-6xl mb-4"
                     animate={{ rotate: [0, 15, -15, 0] }}
@@ -499,13 +489,13 @@ export default function DiningPage() {
       </section>
 
       {/* Enhanced Contact Section */}
-      <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 relative overflow-hidden">
+      <section className="py-24 md:py-36 px-6 bg-[#1a1a1a] relative overflow-hidden">
         {/* Animated Background Pattern */}
         <motion.div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-10"
           animate={{
-            x: [0, 100],
-            y: [0, 100],
+            x: [0, 50],
+            y: [0, 50],
           }}
           transition={{
             duration: 20,
@@ -525,14 +515,14 @@ export default function DiningPage() {
             transition={{ duration: 0.8 }}
           >
             <motion.div
-              className="inline-block mb-6"
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              className="inline-block mb-8"
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity }}
             >
-              <Phone className="w-16 h-16 mx-auto" />
+              <Phone className="w-12 h-12 mx-auto text-amber-400" />
             </motion.div>
 
-            <h2 className="text-4xl md:text-6xl font-bold mb-12" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-4xl md:text-6xl font-bold mb-16" style={{ fontFamily: 'var(--font-playfair)' }}>
               Reach to us
             </h2>
 
@@ -542,11 +532,11 @@ export default function DiningPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+                whileHover={{ y: -5 }}
+                className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
-                <h3 className="text-xl font-semibold mb-3">Reservation:</h3>
-                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-amber-200 transition-colors block">
+                <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Reservation:</h3>
+                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
                   +971 55 100 9152
                 </a>
               </motion.div>
@@ -555,11 +545,11 @@ export default function DiningPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+                whileHover={{ y: -5 }}
+                className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
-                <h3 className="text-xl font-semibold mb-3">Booking:</h3>
-                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-amber-200 transition-colors block">
+                <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Booking:</h3>
+                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
                   +971 55 100 9152
                 </a>
               </motion.div>
@@ -571,10 +561,11 @@ export default function DiningPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+                whileHover={{ y: -5 }}
+                className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
-                <h3 className="text-xl font-semibold mb-3">Information:</h3>
-                <a href="mailto:info@sevenseashotel.ae" className="text-lg hover:text-amber-200 transition-colors">
+                <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Information:</h3>
+                <a href="mailto:info@sevenseashotel.ae" className="text-xl md:text-2xl font-bold hover:text-white transition-colors">
                   info@sevenseashotel.ae
                 </a>
               </motion.div>
@@ -583,10 +574,11 @@ export default function DiningPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+                whileHover={{ y: -5 }}
+                className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
-                <h3 className="text-xl font-semibold mb-3">Reservations:</h3>
-                <a href="mailto:reservation@sevenseashotel.ae" className="text-lg hover:text-amber-200 transition-colors">
+                <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Reservations:</h3>
+                <a href="mailto:reservation@sevenseashotel.ae" className="text-xl md:text-2xl font-bold hover:text-white transition-colors">
                   reservation@sevenseashotel.ae
                 </a>
               </motion.div>

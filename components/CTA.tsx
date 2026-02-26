@@ -100,7 +100,7 @@ export default function CTA() {
   return (
     <section
       ref={ref}
-      className="relative pt-4 md:pt-6 pb-8 md:pb-10 px-6 overflow-hidden bg-gradient-to-b from-white via-gray-50/30 to-white"
+      className="relative py-24 md:py-36 px-6 overflow-hidden bg-[#111111] text-white"
       id="contact"
     >
       {/* Animated Background Elements */}
@@ -144,7 +144,7 @@ export default function CTA() {
           {/* Title */}
           <motion.h2
             variants={titleVariants}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-3 text-black"
+            className="text-3xl md:text-5xl lg:text-[7rem] font-bold mb-6 text-white uppercase tracking-tighter leading-[0.9]"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             <motion.span
@@ -156,12 +156,12 @@ export default function CTA() {
             </motion.span>
             <br />
             <motion.span
-              className="inline-block bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 bg-clip-text text-transparent"
+              className="inline-block bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 bg-clip-text text-transparent"
               animate={{
                 backgroundPosition: ['0%', '100%', '0%'],
               }}
               transition={{
-                duration: 3,
+                duration: 6,
                 repeat: Infinity,
                 ease: 'linear',
               }}
@@ -176,9 +176,9 @@ export default function CTA() {
           {/* Subtitle */}
           <motion.p
             variants={itemVariants}
-            className="text-base md:text-lg text-gray-600 mb-6 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light"
           >
-            Book your luxury experience today and discover the magic of Dubai
+            Book your luxury experience today and discover the magic of Dubai's premier destination.
           </motion.p>
 
           {/* Buttons */}
@@ -189,37 +189,15 @@ export default function CTA() {
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
                 <motion.button
-                  className="relative px-8 md:px-12 py-4 md:py-5 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 text-white font-bold text-sm md:text-base uppercase tracking-wider rounded-lg overflow-hidden group shadow-lg shadow-amber-500/30"
-                  whileHover={{
-                    boxShadow: '0 20px 40px rgba(245, 158, 11, 0.4)',
-                  }}
+                  className="relative px-12 py-6 bg-white text-black font-bold text-lg uppercase tracking-[0.2em] rounded-none overflow-hidden group shadow-2xl"
                 >
-                  {/* Shimmer Effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                    animate={{
-                      x: ['-100%', '200%'],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 1,
-                      ease: 'linear',
-                    }}
-                  />
                   <span className="relative z-10 flex items-center gap-2">
                     BOOK NOW
                     <motion.svg
-                      className="w-4 h-4"
+                      className="w-5 h-5 transition-transform group-hover:translate-x-1"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }}
                     >
                       <path
                         strokeLinecap="round"
@@ -236,25 +214,15 @@ export default function CTA() {
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
               <Link href="/contact">
                 <motion.button
-                  className="relative px-8 md:px-12 py-4 md:py-5 bg-white text-gray-800 font-bold text-sm md:text-base uppercase tracking-wider rounded-lg border-2 border-amber-500 overflow-hidden group shadow-md hover:shadow-lg transition-shadow"
-                  whileHover={{
-                    backgroundColor: '#FEF3C7',
-                    borderColor: '#F59E0B',
-                  }}
+                  className="relative px-12 py-6 bg-transparent text-white font-bold text-lg uppercase tracking-[0.2em] rounded-none border border-white/30 overflow-hidden group hover:border-white transition-all duration-500"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     CONTACT US
                     <motion.svg
-                      className="w-4 h-4"
+                      className="w-5 h-5 transition-transform group-hover:rotate-12"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
-                      animate={{ rotate: [0, 10, -10, 0] }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }}
                     >
                       <path
                         strokeLinecap="round"
@@ -277,14 +245,13 @@ export default function CTA() {
             <motion.div
               custom={0}
               variants={contactVariants}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2 group cursor-pointer"
             >
               <motion.div
-                className="p-2 bg-amber-50 rounded-full group-hover:bg-amber-100 transition-colors"
-                whileHover={{ scale: 1.1, rotate: [0, -10, 10, 0] }}
-                transition={{ duration: 0.5 }}
+                className="p-2 bg-white/5 rounded-none border border-white/10 group-hover:bg-white/10 transition-colors"
+                whileHover={{ scale: 1.1 }}
               >
-                <MapPin className="w-4 h-4 text-amber-600" />
+                <MapPin className="w-4 h-4 text-amber-400" />
               </motion.div>
               <span className="text-sm md:text-base font-medium">Dubai, UAE</span>
             </motion.div>
@@ -292,14 +259,13 @@ export default function CTA() {
             <motion.div
               custom={1}
               variants={contactVariants}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2 group cursor-pointer"
             >
               <motion.div
-                className="p-2 bg-amber-50 rounded-full group-hover:bg-amber-100 transition-colors"
-                whileHover={{ scale: 1.1, rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 0.5 }}
+                className="p-2 bg-white/5 rounded-none border border-white/10 group-hover:bg-white/10 transition-colors"
+                whileHover={{ scale: 1.1 }}
               >
-                <Phone className="w-4 h-4 text-amber-600" />
+                <Phone className="w-4 h-4 text-amber-400" />
               </motion.div>
               <a
                 href="tel:+971551009152"
@@ -312,14 +278,13 @@ export default function CTA() {
             <motion.div
               custom={2}
               variants={contactVariants}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2 group cursor-pointer"
             >
               <motion.div
-                className="p-2 bg-amber-50 rounded-full group-hover:bg-amber-100 transition-colors"
-                whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-                transition={{ duration: 0.5 }}
+                className="p-2 bg-white/5 rounded-none border border-white/10 group-hover:bg-white/10 transition-colors"
+                whileHover={{ scale: 1.1 }}
               >
-                <Mail className="w-4 h-4 text-amber-600" />
+                <Mail className="w-4 h-4 text-amber-400" />
               </motion.div>
               <a
                 href="mailto:reservation@sevenseashotel.ae"

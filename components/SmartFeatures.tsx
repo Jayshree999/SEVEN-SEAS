@@ -161,7 +161,7 @@ export default function SmartFeatures() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
             SMART FEATURES
           </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400 mx-auto rounded-full mb-6 shadow-lg shadow-amber-500/50" />
+          <div className="h-[1px] w-24 bg-amber-500/50 mx-auto mb-8" />
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-light leading-relaxed">
             Experience the perfect blend of traditional hospitality and modern innovation
           </p>
@@ -199,7 +199,7 @@ function FeatureCard({
       transition={{ duration: 0.4, ease: luxuryEasing }}
       className="group relative"
     >
-      <div className="relative h-full p-8 bg-white rounded-lg border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col items-center text-center overflow-hidden">
+      <div className="relative h-full p-10 bg-white rounded-none border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col items-center text-center overflow-hidden">
 
         {/* Shimmer Effect */}
         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out">
@@ -207,17 +207,17 @@ function FeatureCard({
         </div>
 
         {/* Hover Border Gradient */}
-        <div className="absolute inset-0 border-2 border-transparent group-hover:border-amber-100/70 rounded-lg transition-colors duration-500 pointer-events-none" />
+        <div className="absolute inset-0 border border-transparent group-hover:border-amber-400/30 rounded-none transition-colors duration-500 pointer-events-none" />
 
         {/* Corner Accent */}
-        <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-full" />
+        <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         {/* Icon Container */}
         <div className="relative mb-8">
           <div className="absolute inset-0 bg-amber-100/50 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform group-hover:scale-150" />
           <motion.div
-            className="relative w-24 h-24 rounded-full border-2 border-amber-100 flex items-center justify-center bg-transparent group-hover:bg-amber-50/30 transition-all duration-500"
-            whileHover={{ rotate: 360 }}
+            className="relative w-24 h-24 rounded-none border border-gray-100 flex items-center justify-center bg-transparent group-hover:bg-amber-50/20 transition-all duration-700"
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.8, ease: luxuryEasing }}
           >
             <Icon className="w-10 h-10 text-gray-400 group-hover:text-amber-600 transition-colors duration-500" />

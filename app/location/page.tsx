@@ -144,8 +144,8 @@ export default function LocationPage() {
                             transition={{ duration: 1, type: 'spring' }}
                             className="inline-flex mb-8"
                         >
-                            <div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-400 to-cyan-500 flex items-center justify-center shadow-2xl shadow-blue-500/50">
-                                <MapPin className="w-10 h-10 text-white" />
+                            <div className="w-16 h-16 rounded-none bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg">
+                                <MapPin className="w-8 h-8 text-blue-400" />
                             </div>
                         </motion.div>
 
@@ -182,8 +182,8 @@ export default function LocationPage() {
                                 transition={{ duration: 0.6, delay: index * 0.1, ease: luxuryEasing }}
                                 className="text-center"
                             >
-                                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 mb-4 shadow-lg">
-                                    <highlight.icon className="w-8 h-8 text-white" />
+                                <div className="inline-flex items-center justify-center w-12 h-12 rounded-none bg-blue-50 mb-6 border border-blue-100">
+                                    <highlight.icon className="w-6 h-6 text-blue-600" />
                                 </div>
                                 <h3 className="text-xl font-bold mb-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                                     {highlight.title}
@@ -239,15 +239,15 @@ export default function LocationPage() {
 
                     {/* Walking Score */}
                     <motion.div
-                        className="mt-16 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-3xl p-8 md:p-12 border-2 border-blue-100"
+                        className="mt-16 bg-[#f8f6f0] rounded-none p-10 md:p-14 border border-blue-100 shadow-sm"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: luxuryEasing }}
                     >
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center">
-                                <Star className="w-8 h-8 text-white" />
+                        <div className="flex items-center gap-6 mb-8">
+                            <div className="w-14 h-14 rounded-none bg-blue-600 flex items-center justify-center shadow-md">
+                                <Star className="w-7 h-7 text-white" />
                             </div>
                             <div>
                                 <h3 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>Neighborhood Highlights</h3>
@@ -273,26 +273,24 @@ function AttractionCard({ category, index }: { category: any, index: number }) {
     return (
         <motion.div
             ref={ref}
-            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
             animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
             transition={{ duration: 0.7, delay: index * 0.1, ease: luxuryEasing }}
-            whileHover={{ y: -10, scale: 1.01 }}
+            whileHover={{ y: -8 }}
             className="group relative h-full"
         >
-            <div className={`absolute inset-0 bg-gradient-to-br ${category.color} rounded-3xl blur-2xl opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
-
-            <div className="relative bg-white rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-gray-100 group-hover:border-blue-200 h-full">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out overflow-hidden rounded-2xl">
-                    <div className="h-full w-1/2 bg-gradient-to-r from-transparent via-blue-100/30 to-transparent skew-x-12" />
+            <div className="relative bg-white rounded-none p-8 shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 group-hover:border-blue-400/50 h-full">
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out overflow-hidden">
+                    <div className="h-full w-1/2 bg-gradient-to-r from-transparent via-blue-50/50 to-transparent skew-x-12" />
                 </div>
 
                 <div className="flex items-center gap-4 mb-6 relative z-10">
                     <motion.div
-                        className={`w-14 h-14 bg-gradient-to-br ${category.color} rounded-2xl flex items-center justify-center shadow-lg`}
-                        whileHover={{ rotate: 360, scale: 1.1 }}
-                        transition={{ duration: 0.6 }}
+                        className={`w-12 h-12 bg-white rounded-none flex items-center justify-center shadow-sm border border-gray-100 group-hover:border-blue-200 transition-colors`}
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
                     >
-                        <Icon className="w-7 h-7 text-white" />
+                        <Icon className="w-6 h-6 text-blue-600" />
                     </motion.div>
                     <h3 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                         {category.category}
@@ -317,7 +315,7 @@ function AttractionCard({ category, index }: { category: any, index: number }) {
                     ))}
                 </ul>
 
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-2xl" />
+                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
         </motion.div>
     )

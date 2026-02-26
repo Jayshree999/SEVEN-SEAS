@@ -70,10 +70,10 @@ export default function OffersSection() {
 
         {/* Offers Banner */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-16 max-w-6xl mx-auto shadow-2xl rounded-sm overflow-hidden border border-gray-100"
+          className="mb-16 max-w-6xl mx-auto rounded-none overflow-hidden border border-gray-100"
         >
           <ImageBanner
             imageUrl="/019A3962-Enhanced-NR-1-scaled.jpg"

@@ -613,7 +613,7 @@ export default function FAQPage() {
               placeholder="Search FAQs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-amber-400/50 transition-all"
+              className="w-full pl-12 pr-4 py-4 rounded-none bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-amber-400/50 transition-all"
             />
           </motion.div>
         </div>
@@ -630,12 +630,12 @@ export default function FAQPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-                className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden"
+                className="bg-white rounded-none shadow-sm border border-gray-100 overflow-hidden"
               >
                 {/* Category Header */}
                 <button
                   onClick={() => toggleCategory(category.category)}
-                  className="w-full px-6 py-5 flex items-center justify-between bg-gradient-to-r from-amber-50 to-yellow-50 hover:from-amber-100 hover:to-yellow-100 transition-all"
+                  className="w-full px-6 py-5 flex items-center justify-between bg-white hover:bg-gray-50 transition-all border-b border-gray-100"
                 >
                   <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                     {category.category}
@@ -729,24 +729,24 @@ export default function FAQPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 text-center bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-8 md:p-12 border-2 border-amber-100"
+            className="mt-16 text-center bg-[#f8f6f0] rounded-none p-8 md:p-12 border border-gray-100 shadow-sm"
           >
             <h3 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
               Still Have Questions?
             </h3>
-            <p className="text-lg text-gray-600 mb-6">
+            <p className="text-lg text-gray-600 mb-6 font-light">
               Our team is here to help! Contact us for any additional information.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <a
                 href="tel:+971551009152"
-                className="px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold rounded-2xl hover:shadow-lg hover:scale-105 transition-all"
+                className="px-8 py-4 bg-gray-900 hover:bg-black text-white font-bold tracking-widest uppercase rounded-none transition-all shadow-sm"
               >
                 Call Us: +971-55-100-9152
               </a>
               <a
                 href="mailto:info@sevenseashotel.ae"
-                className="px-8 py-4 bg-white text-amber-600 font-bold rounded-2xl border-2 border-amber-400 hover:bg-amber-50 hover:scale-105 transition-all"
+                className="px-8 py-4 bg-white text-gray-900 hover:bg-gray-50 font-bold tracking-widest uppercase rounded-none border border-gray-300 transition-all shadow-sm"
               >
                 Email Us
               </a>

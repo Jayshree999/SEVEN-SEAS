@@ -38,14 +38,14 @@ export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
-  const filteredImages = selectedCategory === 'All' 
-    ? galleryImages 
+  const filteredImages = selectedCategory === 'All'
+    ? galleryImages
     : galleryImages.filter(img => img.category === selectedCategory)
 
   return (
     <main className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Video Banner */}
       <VideoBanner
         title="PHOTO GALLERY"
@@ -69,11 +69,10 @@ export default function GalleryPage() {
                 onClick={() => setSelectedCategory(category)}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 font-semibold uppercase tracking-wider rounded-lg transition-all duration-300 ${
-                  selectedCategory === category
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white border-2 border-amber-400 shadow-lg shadow-amber-500/30'
-                    : 'bg-white text-gray-900 border-2 border-gray-200 hover:border-amber-400 hover:bg-amber-50 shadow-md hover:shadow-lg'
-                }`}
+                className={`px-6 py-3 font-semibold uppercase tracking-wider rounded-none transition-all duration-300 ${selectedCategory === category
+                    ? 'bg-gray-900 text-white border border-gray-900 shadow-sm'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-900 hover:text-gray-900 shadow-sm'
+                  }`}
               >
                 {category}
               </motion.button>
@@ -102,11 +101,11 @@ export default function GalleryPage() {
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   whileHover={{ scale: 1.05, y: -8 }}
                   onClick={() => setSelectedImage(image.id)}
-                  className="relative h-80 bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden cursor-pointer group border-2 border-gray-200/50 hover:border-amber-400/70 transition-all duration-500 shadow-xl hover:shadow-2xl"
+                  className="relative h-80 bg-gray-100 rounded-none overflow-hidden cursor-pointer group border border-transparent hover:border-amber-200/50 transition-all duration-500 shadow-sm hover:shadow-xl"
                 >
                   {/* Premium glow effect */}
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-amber-400/0 via-amber-300/30 to-amber-400/0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"></div>
-                  
+
                   {/* Image */}
                   <div className="absolute inset-0">
                     <Image
@@ -118,16 +117,16 @@ export default function GalleryPage() {
                     />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-0" />
-                  
+
                   <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                     <div className="text-white/70 text-xs uppercase tracking-wider mb-1 font-semibold">
                       {image.category}
                     </div>
                     <div className="text-white text-xl font-bold">{image.title}</div>
                   </div>
-                  
+
                   {/* Shimmer effect */}
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                     animate={{
                       x: ['-100%', '100%'],
@@ -161,7 +160,7 @@ export default function GalleryPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 
+            <h2
               className="text-3xl md:text-5xl font-bold text-gray-900 mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
@@ -171,9 +170,9 @@ export default function GalleryPage() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {/* Luxury Accommodations - Video Banner with Image Fallback */}
-            <div className="relative rounded-xl overflow-hidden group h-96">
+            <div className="relative rounded-none overflow-hidden group h-96 shadow-sm border border-gray-100">
               {/* Background Image - Always visible */}
-              <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 z-0 bg-black/5">
                 <Image
                   src="/accomodation/royal suit.jpg"
                   alt="Luxury Accommodations"
@@ -289,9 +288,9 @@ export default function GalleryPage() {
               >
                 ×
               </motion.button>
-              
+
               {/* Image Container - Premium */}
-              <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-black rounded-2xl overflow-hidden shadow-2xl border-2 border-white/10">
+              <div className="bg-[#f8f6f0] rounded-none overflow-hidden shadow-2xl border border-gray-200">
                 {(() => {
                   const selectedImg = galleryImages.find(img => img.id === selectedImage);
                   return selectedImg ? (
@@ -310,13 +309,13 @@ export default function GalleryPage() {
                         </div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
                       </div>
-                
+
                       {/* Image Info - Premium */}
-                      <div className="p-6 md:p-8 bg-gradient-to-t from-black/80 to-transparent">
-                        <div className="text-white/70 text-sm uppercase tracking-wider mb-2">
+                      <div className="p-6 md:p-8 bg-white border-t border-gray-100">
+                        <div className="text-gray-500 text-sm uppercase tracking-wider mb-2 font-medium">
                           {selectedImg.category}
                         </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-white">
+                        <h3 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                           {selectedImg.title}
                         </h3>
                       </div>

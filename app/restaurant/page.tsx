@@ -76,22 +76,22 @@ export default function RestaurantPage() {
   return (
     <main className="min-h-screen bg-white">
       <Navigation />
-      
+
       {/* Hero Section - A Culinary Legacy */}
       <HeroSection />
-      
+
       {/* Fine Dining at Seven Seas Restaurants */}
       <FineDiningSection />
-      
+
       {/* Our Legendary Restaurant Brands */}
       <LegendaryRestaurantsSection />
-      
+
       {/* The Modern Dinner */}
       <ModernDinnerSection />
-      
+
       {/* Reach to us */}
       <ContactSection />
-      
+
       <Footer />
     </main>
   )
@@ -124,18 +124,18 @@ function HeroSection() {
             <UtensilsCrossed className="w-8 h-8 text-amber-600" />
             <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
           </motion.div>
-          
-          <h1 
+
+          <h1
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             A Culinary Legacy
           </h1>
-          
+
           <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-8 max-w-3xl mx-auto">
             Discover the epitome of comfort and elegance at Seven Seas Hotel, where luxury meets impeccable hospitality. Nestled in the bustling neighborhood of Al Nahda 1, Dubai, our hotel offers a serene escape with world-class amenities and personalized services.
           </p>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -143,9 +143,10 @@ function HeroSection() {
           >
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold px-8 py-4 rounded-lg shadow-xl border-2 border-amber-400/50 transition-all duration-300 hover:scale-105"
+              className="group relative px-10 py-5 bg-white text-gray-900 hover:text-white font-bold text-lg uppercase tracking-wider rounded-none shadow-sm overflow-hidden border border-gray-900 transition-all duration-300 inline-flex items-center gap-2"
             >
-              Make a reservation
+              <span className="relative z-10 transition-colors duration-300">Make a reservation</span>
+              <div className="absolute inset-0 bg-gray-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out z-0"></div>
             </Link>
           </motion.div>
         </motion.div>
@@ -166,7 +167,7 @@ function FineDiningSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -193,28 +194,29 @@ function FineDiningCard({ restaurant, index, inView }: { restaurant: typeof fine
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      className="group relative h-[350px] md:h-[400px] overflow-hidden rounded-xl cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200"
+      whileHover={{ y: -6 }}
+      className="group relative h-[350px] md:h-[400px] overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 bg-[#f8f6f0]"
     >
-      <div className="absolute inset-0">
+      <div className="absolute inset-2 overflow-hidden">
         <Image
           src={restaurant.image}
           alt={restaurant.name}
           fill
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       </div>
 
-      <div className="absolute inset-0 flex flex-col justify-end p-6 z-10">
-        <h3 
-          className="text-xl md:text-2xl font-bold text-white mb-2"
+      <div className="absolute bottom-4 left-4 right-4 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 text-center">
+        <h3
+          className="text-xl md:text-2xl font-bold text-white tracking-widest mb-2"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           {restaurant.name}
         </h3>
-        <p className="text-sm text-gray-200 leading-relaxed">
+        <div className="w-8 h-[1px] bg-amber-400 mx-auto mb-3"></div>
+        <p className="text-sm text-white/80 font-light leading-relaxed">
           {restaurant.description}
         </p>
       </div>
@@ -234,7 +236,7 @@ function LegendaryRestaurantsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -265,7 +267,7 @@ function LegendaryRestaurantCard({ restaurant, index, inView }: { restaurant: ty
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200 overflow-hidden"
+      className="bg-white rounded-none shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-200 overflow-hidden"
     >
       <div className="grid md:grid-cols-2">
         {/* Interior Image */}
@@ -292,7 +294,7 @@ function LegendaryRestaurantCard({ restaurant, index, inView }: { restaurant: ty
           </div>
         </div>
         <div className="p-6 md:p-8">
-          <h3 
+          <h3
             className="text-2xl md:text-3xl font-bold text-gray-900 mb-3"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -342,7 +344,7 @@ function ModernDinnerSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
@@ -405,7 +407,7 @@ function ContactSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 
+          <h2
             className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >

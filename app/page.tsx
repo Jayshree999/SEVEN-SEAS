@@ -81,7 +81,7 @@ export default function Home() {
         variants={sectionVariants}
       >
         <div className="container mx-auto max-w-7xl">
-          <div className="relative bg-black/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] overflow-hidden">
+          <div className="relative bg-[#111111] backdrop-blur-2xl border border-white/5 rounded-none p-10 md:p-16 shadow-2xl overflow-hidden">
 
             {/* Glossy Overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
@@ -98,10 +98,10 @@ export default function Home() {
               transition={{ duration: 0.6, ease: luxuryEasing }}
               className="text-center mb-10 md:mb-14 relative z-10"
             >
-              <h2 className="text-3xl md:text-5xl font-bold mb-3 text-white drop-shadow-md" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl md:text-5xl lg:text-7xl font-bold mb-4 text-white uppercase tracking-wider" style={{ fontFamily: 'var(--font-playfair)' }}>
                 EXCELLENCE IN NUMBERS
               </h2>
-              <div className="h-1 w-20 bg-amber-500 mx-auto rounded-full mb-4" />
+              <div className="h-[1px] w-24 bg-amber-500/50 mx-auto mb-6" />
               <p className="text-gray-200 text-sm md:text-base tracking-wider uppercase">Our commitment to luxury and service</p>
             </motion.div>
 
@@ -131,16 +131,16 @@ export default function Home() {
                     }
                   }}
                   whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className="group relative text-center p-6"
+                  className="group relative text-center p-8 border border-transparent hover:border-white/10 transition-all duration-500"
                 >
-                  <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-white/10" />
+                  <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   <div className="relative z-10">
-                    <div className="text-4xl md:text-5xl lg:text-6xl font-light text-amber-400 mb-2 font-serif group-hover:scale-110 transition-transform duration-500" style={{ textShadow: '0 0 20px rgba(251, 191, 36, 0.3)' }}>
+                    <div className="text-5xl md:text-6xl lg:text-7xl font-light text-amber-200 mb-4 font-serif group-hover:scale-110 transition-transform duration-700" style={{ fontFamily: 'var(--font-playfair)' }}>
                       <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                     </div>
-                    <div className="h-px w-12 bg-white/20 mx-auto mb-3 group-hover:w-20 transition-all duration-500" />
-                    <div className="text-xs md:text-sm text-gray-300 uppercase tracking-[0.2em]">{stat.label}</div>
+                    <div className="h-[1px] w-12 bg-white/20 mx-auto mb-4 group-hover:w-24 transition-all duration-700" />
+                    <div className="text-xs md:text-sm text-gray-400 uppercase tracking-[0.3em] font-light">{stat.label}</div>
                   </div>
                 </motion.div>
               ))}
@@ -208,12 +208,12 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2, ease: luxuryEasing }}
           >
             <motion.h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
               DISCOVER OUR WORLD
             </motion.h2>
-            <div className="h-1 w-20 bg-amber-500 mx-auto rounded-full mb-6" />
+            <div className="h-[1px] w-24 bg-amber-500/50 mx-auto mb-8" />
             <motion.p
               className="text-base sm:text-lg md:text-xl text-gray-600 px-2"
             >

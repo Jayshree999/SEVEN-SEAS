@@ -43,30 +43,33 @@ export default function ImageGrid({ images, columns = 3, gap = 'medium' }: Image
         {images.map((image, index) => (
           <motion.div
             key={image.id}
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.98, y: 30 }}
             animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-            whileHover={{ scale: 1.05, y: -10, boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)' }}
             onClick={disableLightbox ? undefined : () => setSelectedImage(image.id)}
-            className={`relative h-64 md:h-80 rounded-lg overflow-hidden ${disableLightbox ? '' : 'cursor-pointer'} group premium-border border-2 border-amber-900/20 hover:border-amber-500/50 transition-all duration-300 shadow-lg hover:shadow-2xl`}
+            className={`group relative h-64 md:h-80 rounded-none overflow-hidden ${disableLightbox ? '' : 'cursor-pointer'} transition-all duration-500`}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black">
+            <div className="absolute inset-0 bg-[#f8f6f0]">
               {image.url ? (
-                <div 
-                  className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                <div
+                  className="absolute inset-4 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out shadow-sm"
                   style={{ backgroundImage: `url(${image.url})` }}
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-white/30 text-6xl">
+                <div className="absolute inset-4 flex items-center justify-center bg-gray-100 text-gray-300 text-6xl shadow-sm">
                   {image.title.charAt(0)}
                 </div>
               )}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <h3 className="text-white text-xl font-bold mb-2">{image.title}</h3>
+
+            {/* Elegant overlay */}
+            <div className="absolute inset-4 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            <div className="absolute bottom-4 left-4 right-4 p-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+              <h3 className="text-white text-xl md:text-2xl mb-2 tracking-wide font-medium" style={{ fontFamily: 'var(--font-playfair)' }}>{image.title}</h3>
+              <div className="w-8 h-[1px] bg-amber-400 mb-3"></div>
               {image.description && (
-                <p className="text-white/80 text-sm">{image.description}</p>
+                <p className="text-white/80 text-sm font-light leading-relaxed">{image.description}</p>
               )}
             </div>
           </motion.div>
