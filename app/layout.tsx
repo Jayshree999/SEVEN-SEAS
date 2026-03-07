@@ -9,6 +9,8 @@ import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 import { Toaster } from 'sonner'
 import Providers from './providers'
+import PromotionPopup from '@/components/PromotionPopup'
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -218,6 +220,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
               {children}
               <ScrollToTop />
               <WhatsAppWidget />
+              <PromotionPopup />
               <Toaster position="top-right" richColors />
             </AuthProvider>
           </CurrencyProvider>
