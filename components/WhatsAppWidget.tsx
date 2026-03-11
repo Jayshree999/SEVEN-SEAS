@@ -24,7 +24,7 @@ export default function WhatsAppWidget() {
         return () => clearTimeout(timer)
     }, [])
 
-    const whatsappUrl = "https://wa.me/971551009140?text=Hello!%20I'm%20interested%20in%20booking%20a%20room%20at%20Seven%20Seas%20Hotel%20Dubai.%20Could%20you%20please%20provide%20more%20information?"
+    const whatsappUrl = "https://wa.me/971551009152?text=Hello!%20I'm%20interested%20in%20booking%20a%20room%20at%20Seven%20Seas%20Hotel%20Dubai.%20Could%20you%20please%20provide%20more%20information?"
 
     return (
         <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] flex flex-col items-end gap-4">
