@@ -233,12 +233,12 @@ export default function OffersAndMorePage() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group relative bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
               >
-                <div className="relative aspect-[4/5] bg-[#f8f6f0] overflow-hidden">
+                <div className="relative aspect-square bg-gray-50 overflow-hidden">
                   <Image
                     src={offer.image}
                     alt={offer.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-out"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
