@@ -268,10 +268,10 @@ export default function CTA() {
                 <Phone className="w-4 h-4 text-amber-400" />
               </motion.div>
               <a
-                href="tel:+971551009152"
+                href="tel:+971569756484"
                 className="text-sm md:text-base font-medium hover:text-amber-600 transition-colors"
               >
-                +971 55 100 9152
+                +971 56 975 6484
               </a>
             </motion.div>
 

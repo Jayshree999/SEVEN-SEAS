@@ -245,7 +245,7 @@ const exclusiveOffers = [
     nights: 1,
     description: 'Celebrate Eid with our exclusive offer. Enjoy a luxurious stay starting from AED 299 per night (excluding taxes). Make your celebration memorable.',
     image: '/offer1.jpeg',
-    phone: '+971 55 100 9152',
+    phone: '+971 56 975 6484',
   },
   {
     id: 2,
@@ -255,7 +255,7 @@ const exclusiveOffers = [
     nights: 30,
     description: 'Experience a serene Ramadan with our Long Stay Offer. Book your extended stay starting from AED 5000 per month (excluding taxes).',
     image: '/2.jpeg',
-    phone: '+971 55 100 9152',
+    phone: '+971 56 975 6484',
   },
   {
     id: 3,
@@ -265,7 +265,7 @@ const exclusiveOffers = [
     nights: 1,
     description: 'Embrace the spirit of Ramadan. Enjoy a peaceful and comfortable stay starting from just AED 150 per night (excluding taxes).',
     image: '/3.jpeg',
-    phone: '+971 55 100 9152',
+    phone: '+971 56 975 6484',
   },
 ]
 

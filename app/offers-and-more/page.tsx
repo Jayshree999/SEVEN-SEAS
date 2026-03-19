@@ -6,33 +6,27 @@ import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { useInView } from 'react-intersection-observer'
-import { Tag, Gift, Sparkles, Calendar, Star, Percent, ArrowRight, Phone, CheckCircle } from 'lucide-react'
+import { Tag, Gift, Sparkles, Calendar, Star, Percent, ArrowRight, Phone, CheckCircle, MessageCircle } from 'lucide-react'
 import { useRef } from 'react'
 
 const exclusiveRoomOffers = [
   {
-    title: 'Eid Special Offer',
-    code: 'EID299',
-    discount: 'AED 299',
-    description: 'Celebrate Eid with our exclusive offer. Enjoy a luxurious stay starting from AED 299 per night (excluding taxes). Make your celebration memorable.',
-    image: '/offer1.jpeg',
+    title: 'Stay Longer Save More',
+    code: 'PROMO1',
+    discount: 'Starting from AED 1,999',
+    description: 'Experience the perfect blend of comfort and value. Our "Stay Longer Save More" offer is designed for your extended comfort with world-class hospitality.',
+    image: '/promo-1.png',
     color: 'from-amber-600 to-yellow-600',
+    whatsapp: '971569756484'
   },
   {
-    title: 'Ramadan Long Stay Offer',
-    code: 'RAMADANMONTH',
-    discount: 'AED 5000',
-    description: 'Experience a serene Ramadan with our Long Stay Offer. Book your extended stay starting from AED 5000 per month (excluding taxes).',
-    image: '/2.jpeg',
+    title: 'Stay Longer Save More',
+    code: 'PROMO2',
+    discount: 'Starting from AED 2,999',
+    description: 'Elevate your stay with our premium offer. Enjoy enhanced luxury and exclusive benefits at Seven Seas Hotel with our special extended stay rates.',
+    image: '/promo-2.png',
     color: 'from-amber-500 to-amber-600',
-  },
-  {
-    title: 'Ramadan Special Offer',
-    code: 'RAMADAN150',
-    discount: 'AED 150',
-    description: 'Embrace the spirit of Ramadan. Enjoy a peaceful and comfortable stay starting from just AED 150 per night (excluding taxes).',
-    image: '/3.jpeg',
-    color: 'from-yellow-600 to-amber-700',
+    whatsapp: '971569756484'
   },
 ]
 
@@ -229,44 +223,59 @@ export default function OffersAndMorePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
             {exclusiveRoomOffers.map((offer, index) => (
               <motion.div
-                key={offer.title}
+                key={offer.title + index}
                 initial={{ opacity: 0, y: 30, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100 flex flex-col"
+                className="group relative bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col"
               >
-                <div className="relative aspect-square bg-[#f8f6f0] overflow-hidden">
+                <div className="relative aspect-[4/5] bg-[#f8f6f0] overflow-hidden">
                   <Image
                     src={offer.image}
                     alt={offer.title}
                     fill
-                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-700 ease-out"
-                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
+                    <span className="text-amber-700 font-bold text-sm tracking-wider">{offer.discount}</span>
+                  </div>
                 </div>
-                <div className="p-8 flex flex-col flex-grow items-center text-center">
-                  <h3 className="text-2xl text-gray-900 mb-3 tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="p-10 flex flex-col flex-grow items-center text-center">
+                  <h3 className="text-3xl text-gray-900 mb-4 tracking-wide font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
                     {offer.title}
                   </h3>
-                  <div className="w-12 h-[1px] bg-amber-600 mb-4"></div>
-                  <p className="text-gray-600 mb-6 text-sm font-light leading-relaxed">
+                  <div className="w-16 h-[2px] bg-amber-600 mb-6"></div>
+                  <p className="text-gray-600 mb-8 text-base font-light leading-relaxed">
                     {offer.description}
                   </p>
-                  <div className="mb-6 flex flex-col items-center gap-1">
-                    <span className="text-xs uppercase tracking-widest text-gray-400">Promo Code</span>
-                    <span className="text-sm font-medium tracking-widest text-amber-700">{offer.code}</span>
+                  <div className="mb-8 flex flex-col items-center gap-1">
+                    <span className="text-xs uppercase tracking-[0.2em] text-gray-400 font-bold">Promo Code</span>
+                    <span className="text-lg font-bold tracking-widest text-amber-700">{offer.code}</span>
                   </div>
-                  <a
-                    href="tel:+971551009152"
-                    className="mt-auto flex items-center justify-center gap-2 w-full px-6 py-3 border border-amber-600/30 hover:border-amber-600 hover:bg-amber-50 text-amber-700 font-medium tracking-wide uppercase text-sm rounded transition-all duration-300"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>+971 55 100 9152</span>
-                  </a>
+                  
+                  <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                    <a
+                      href="tel:+971569756484"
+                      className="flex items-center justify-center gap-2 px-6 py-4 bg-gray-900 hover:bg-black text-white font-bold tracking-wide uppercase text-xs rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      <Phone className="w-4 h-4" />
+                      <span>Call Now</span>
+                    </a>
+                    <a
+                      href={`https://wa.me/${offer.whatsapp}?text=${encodeURIComponent(`Hi Seven Seas Hotel! I'm interested in the ${offer.title} (${offer.code}) offer.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 px-6 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold tracking-wide uppercase text-xs rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      <MessageCircle className="w-4 h-4" />
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -323,11 +332,11 @@ export default function OffersAndMorePage() {
                 </div>
                 <div className="flex flex-col gap-3">
                   <a
-                    href="tel:+971551009152"
+                    href="tel:+971569756484"
                     className="flex items-center justify-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors"
                   >
                     <Phone className="w-5 h-5" />
-                    <span>+971 55 100 9152</span>
+                    <span>+971 56 975 6484</span>
                   </a>
                   <Link href="/rooms">
                     <motion.button

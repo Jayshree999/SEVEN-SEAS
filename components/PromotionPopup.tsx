@@ -22,7 +22,7 @@ const PROMOS = [
     },
 ]
 
-const WHATSAPP_NUMBER = '971551009152'
+const WHATSAPP_NUMBER = '971569756484'
 
 export default function PromotionPopup() {
     const [isVisible, setIsVisible] = useState(false)
