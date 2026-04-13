@@ -15,53 +15,87 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
     </svg>
 )
 
+const contacts = [
+    {
+        name: 'Reena',
+        title: 'Reservations',
+        phone: '971524840028',
+        message: "Hello! I'm interested in booking a room at Seven Seas Hotel Dubai. Could you please provide more information?",
+    },
+    {
+        name: 'Mr. Shifat',
+        title: 'Client Manager',
+        phone: '971524840028',
+        message: "Hello! I'm contacting Seven Seas Hotel Dubai. Could you please assist me?",
+    },
+]
+
 export default function WhatsAppWidget() {
     const [isVisible, setIsVisible] = useState(false)
-    const [showTooltip, setShowTooltip] = useState(false)
+    const [showPanel, setShowPanel] = useState(false)
 
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), 2000)
         return () => clearTimeout(timer)
     }, [])
 
-    const whatsappUrl = "https://wa.me/971551009140?text=Hello!%20I'm%20interested%20in%20booking%20a%20room%20at%20Seven%20Seas%20Hotel%20Dubai.%20Could%20you%20please%20provide%20more%20information?"
-
     return (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] flex flex-col items-end gap-4">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] flex flex-col items-end gap-3">
             <AnimatePresence>
                 {isVisible && (
                     <>
-                        {/* Tooltip/Chat Prompt */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.8, x: 20 }}
-                            animate={{ opacity: 1, scale: 1, x: 0 }}
-                            exit={{ opacity: 0, scale: 0.8, x: 20 }}
-                            className="bg-white p-4 rounded-2xl shadow-2xl border border-emerald-500/20 max-w-[240px] relative mb-2"
-                        >
-                            <button
-                                onClick={() => setIsVisible(false)}
-                                className="absolute -top-2 -left-2 bg-charcoal text-white rounded-full p-1 shadow-lg hover:bg-gold transition-colors"
-                            >
-                                <X className="w-3 h-3" />
-                            </button>
-                            <p className="text-xs text-charcoal font-medium leading-relaxed text-right">
-                                Experience the <span className="text-emerald-600 font-bold">Seven Seas</span> hospitality. Chat with us now! 🌊
-                            </p>
-                            <div className="absolute -bottom-2 right-6 w-4 h-4 bg-white border-b border-r border-emerald-500/10 rotate-45" />
-                        </motion.div>
+                        {/* Contact Panel */}
+                        <AnimatePresence>
+                            {showPanel && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.85, y: 10 }}
+                                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.85, y: 10 }}
+                                    className="bg-white rounded-2xl shadow-2xl border border-emerald-500/20 overflow-hidden w-[220px] relative mb-2"
+                                >
+                                    <button
+                                        onClick={() => setShowPanel(false)}
+                                        className="absolute top-2 right-2 bg-gray-100 text-gray-500 hover:bg-red-500 hover:text-white rounded-full p-1 transition-colors z-10"
+                                    >
+                                        <X className="w-3 h-3" />
+                                    </button>
+
+                                    <div className="bg-emerald-600 px-4 py-3">
+                                        <p className="text-white text-xs font-bold uppercase tracking-widest">Seven Seas Hotel</p>
+                                        <p className="text-emerald-100 text-[10px] mt-0.5">Chat with our team</p>
+                                    </div>
+
+                                    <div className="divide-y divide-gray-100">
+                                        {contacts.map((contact) => (
+                                            <a
+                                                key={contact.name}
+                                                href={`https://wa.me/${contact.phone}?text=${encodeURIComponent(contact.message)}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-3 px-4 py-3 hover:bg-emerald-50 transition-colors group"
+                                            >
+                                                <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 group-hover:bg-emerald-500 transition-colors">
+                                                    <WhatsAppIcon className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-charcoal text-xs font-bold leading-tight">{contact.name}</p>
+                                                    <p className="text-gray-400 text-[10px]">{contact.title}</p>
+                                                </div>
+                                            </a>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Main Button */}
-                        <motion.a
-                            href={whatsappUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <motion.button
+                            onClick={() => setShowPanel((prev) => !prev)}
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1 }}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             className="relative group"
-                            onMouseEnter={() => setShowTooltip(true)}
-                            onMouseLeave={() => setShowTooltip(false)}
                         >
                             {/* Pulse Effect */}
                             <motion.div
@@ -80,21 +114,7 @@ export default function WhatsAppWidget() {
                             <div className="relative z-10 w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center shadow-xl shadow-emerald-500/40 group-hover:bg-emerald-600 transition-colors">
                                 <WhatsAppIcon className="w-8 h-8 text-white" />
                             </div>
-
-                            {/* Label */}
-                            <AnimatePresence>
-                                {showTooltip && (
-                                    <motion.div
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: -20 }}
-                                        exit={{ opacity: 0, x: -10 }}
-                                        className="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-charcoal text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest whitespace-nowrap shadow-xl"
-                                    >
-                                        WhatsApp Chat
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </motion.a>
+                        </motion.button>
                     </>
                 )}
             </AnimatePresence>

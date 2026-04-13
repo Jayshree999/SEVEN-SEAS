@@ -7,6 +7,7 @@ import FloatingGoldParticles from '@/components/FloatingGoldParticles'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
+import PromotionPopup from '@/components/PromotionPopup'
 import { Toaster } from 'sonner'
 import Providers from './providers'
 
@@ -218,6 +219,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
               {children}
               <ScrollToTop />
               <WhatsAppWidget />
+              <PromotionPopup />
               <Toaster position="top-right" richColors />
             </AuthProvider>
           </CurrencyProvider>
