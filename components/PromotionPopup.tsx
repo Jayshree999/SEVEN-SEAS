@@ -51,7 +51,7 @@ export default function PromotionPopup() {
     if (!isMounted) return null
 
     const offer = OFFERS[currentOfferIndex]
-    const whatsappUrl = `https://wa.me/971524840028?text=${encodeURIComponent(offer.message)}`
+    const whatsappUrl = `https://wa.me/971551009136?text=${encodeURIComponent(offer.message)}`
 
     return (
         <AnimatePresence>

@@ -19,14 +19,14 @@ const contacts = [
     {
         name: 'Reena',
         title: 'Reservations',
-        phone: '971524840028',
-        message: "Hello! I'm interested in booking a room at Seven Seas Hotel Dubai. Could you please provide more information?",
+        phone: '971551009136',
+        message: "thank you for contacting seven seas, how may i help you",
     },
     {
         name: 'Mr. Shifat',
         title: 'Client Manager',
-        phone: '971524840028',
-        message: "Hello! I'm contacting Seven Seas Hotel Dubai. Could you please assist me?",
+        phone: '971551009136',
+        message: "thank you for contacting seven seas, how may i help you",
     },
 ]
 
