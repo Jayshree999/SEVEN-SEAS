@@ -10,7 +10,6 @@ import WhatsAppWidget from '@/components/WhatsAppWidget'
 import PromotionPopup from '@/components/PromotionPopup'
 import { Toaster } from 'sonner'
 import Providers from './providers'
-import PromotionPopup from '@/components/PromotionPopup'
 
 
 const inter = Inter({
