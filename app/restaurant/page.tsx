@@ -428,8 +428,8 @@ function ContactSection() {
                 <Phone className="w-5 h-5 text-amber-600" />
                 <div>
                   <p className="text-sm text-gray-600">Reservation</p>
-                  <a href="tel:+971551009152" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
-                    +971 55 100 9152
+                  <a href="tel:+971569756484" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
+                    +971 56 975 6484
                   </a>
                 </div>
               </div>
@@ -437,8 +437,8 @@ function ContactSection() {
                 <Phone className="w-5 h-5 text-amber-600" />
                 <div>
                   <p className="text-sm text-gray-600">Booking</p>
-                  <a href="tel:+971551009152" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
-                    +971 55 100 9152
+                  <a href="tel:+971569756484" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
+                    +971 56 975 6484
                   </a>
                 </div>
               </div>

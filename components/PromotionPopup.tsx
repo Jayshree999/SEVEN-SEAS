@@ -5,28 +5,27 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 
-const PROMOS = [
-    {
-        id: 1,
-        src: '/promo-1.png',
-        alt: 'Promotion 1',
-        message: 'Hi Seven Seas Hotel! I saw the "Stay Longer Save More" offer on your website and would like to know more about the AED 1,999 single bed offer.'
-    },
-    {
-        id: 2,
-        src: '/promo-2.png',
-        alt: 'Promotion 2',
-        message: 'Hi Seven Seas Hotel! I saw the AED 2,999 offer on your website and would like to know more.'
-    },
-]
-
-const WHATSAPP_NUMBER = '971551009136'
+const PROMO_IMAGE = '/popup.jpeg'
+const WHATSAPP_NUMBER = '971569756484'
+const WHATSAPP_MESSAGE = 'Hi Seven Seas Hotel! I saw your promotion on the website and would like to know more about the current offers.'
 
 export default function PromotionPopup() {
     const [isVisible, setIsVisible] = useState(false)
-    const [currentIndex, setCurrentIndex] = useState(0)
 
     useEffect(() => {
+        // Check if user has dismissed the popup in this session
+        const isDismissed = localStorage.getItem('promo_dismissed')
+        if (isDismissed) {
+            const dismissedAt = parseInt(isDismissed)
+            const now = new Date().getTime()
+            const twentyFourHours = 24 * 60 * 60 * 1000
+            
+            // If it was dismissed less than 24 hours ago, don't show it
+            if (now - dismissedAt < twentyFourHours) {
+                return
+            }
+        }
+
         // Show popup after 3 seconds
         const timer = setTimeout(() => {
             setIsVisible(true)
@@ -35,25 +34,17 @@ export default function PromotionPopup() {
         return () => clearTimeout(timer)
     }, [])
 
-    useEffect(() => {
-        if (!isVisible) return
-
-        // Auto-slide every 5 seconds
-        const slideTimer = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % PROMOS.length)
-        }, 5000)
-
-        return () => clearInterval(slideTimer)
-    }, [isVisible])
-
     const handleClose = () => {
         setIsVisible(false)
+        // Store dismissal time
+        localStorage.setItem('promo_dismissed', new Date().getTime().toString())
     }
 
     const handlePromoClick = () => {
-        const message = encodeURIComponent(PROMOS[currentIndex].message);
+        const message = encodeURIComponent(WHATSAPP_MESSAGE);
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
         window.open(url, '_blank')
+        handleClose() // Also close on click
     }
 
     return (
@@ -83,43 +74,17 @@ export default function PromotionPopup() {
                             <X size={18} />
                         </button>
 
-                        {/* Content Slider */}
+                        {/* Content */}
                         <div className="relative w-full overflow-hidden cursor-pointer bg-neutral-100" onClick={handlePromoClick}>
-                            <div className="relative w-full h-auto min-h-[400px]">
-                                <AnimatePresence mode="wait">
-                                    <motion.div
-                                        key={currentIndex}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="relative w-full h-auto"
-                                    >
-                                        <Image
-                                            src={PROMOS[currentIndex].src}
-                                            alt={PROMOS[currentIndex].alt}
-                                            width={1000}
-                                            height={1250}
-                                            className="w-full h-auto block"
-                                            priority
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-
-                            {/* Slider Dots */}
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                                {PROMOS.map((_, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={(e) => {
-                                            e.stopPropagation()
-                                            setCurrentIndex(index)
-                                        }}
-                                        className={`w-2 h-2 rounded-full transition-all ${currentIndex === index ? 'w-6 bg-white shadow-sm' : 'bg-white/40'
-                                            }`}
-                                    />
-                                ))}
+                            <div className="relative w-full h-auto">
+                                <Image
+                                    src={PROMO_IMAGE}
+                                    alt="Special Promotion"
+                                    width={1000}
+                                    height={1250}
+                                    className="w-full h-auto block"
+                                    priority
+                                />
                             </div>
                         </div>
 

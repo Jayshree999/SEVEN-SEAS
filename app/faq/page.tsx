@@ -536,7 +536,7 @@ const faqs = [
       },
       {
         q: 'How can I contact the hotel?',
-        a: 'You can reach us by phone at +971-55-100-9152 or email at info@sevenseashotel.ae',
+        a: 'You can reach us by phone at +971 56 975 6484 or email at info@sevenseashotel.ae',
       },
     ],
   },
@@ -739,10 +739,10 @@ export default function FAQPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <a
-                href="tel:+971551009152"
+                href="tel:+971569756484"
                 className="px-8 py-4 bg-gray-900 hover:bg-black text-white font-bold tracking-widest uppercase rounded-none transition-all shadow-sm"
               >
-                Call Us: +971-55-100-9152
+                Call Us: +971 56 975 6484
               </a>
               <a
                 href="mailto:info@sevenseashotel.ae"

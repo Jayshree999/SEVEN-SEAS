@@ -17,16 +17,10 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 const contacts = [
     {
-        name: 'Reena',
-        title: 'Reservations',
-        phone: '971551009136',
-        message: "thank you for contacting seven seas, how may i help you",
-    },
-    {
-        name: 'Mr. Shifat',
-        title: 'Client Manager',
-        phone: '971551009136',
-        message: "thank you for contacting seven seas, how may i help you",
+        name: 'Reservations',
+        title: 'Seven Seas Hotel',
+        phone: '971569756484',
+        message: "Hello! I saw your website and would like to make a reservation.",
     },
 ]
 

@@ -260,7 +260,7 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-gray-900 mb-1">Phone</div>
                       <div className="text-gray-600">
-                        <a href="tel:+971551009152" className="hover:text-amber-600 transition-colors font-medium">+971 55 100 9152</a>
+                        <a href="tel:+971569756484" className="hover:text-amber-600 transition-colors font-medium">+971 56 975 6484</a>
                       </div>
                     </div>
                   </motion.div>

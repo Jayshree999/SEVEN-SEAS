@@ -116,7 +116,7 @@ export default function RootLayout({
     "description": "Premier 4-star luxury hotel in Dubai featuring rooftop pool, world-class spa, halal dining, fitness center, and exceptional service near Dubai International Airport",
     "image": "https://sevenseashotel.ae/hero2.jpg",
     "url": "https://sevenseashotel.ae",
-    "telephone": "+971-55-100-9152",
+    "telephone": "+971 56 975 6484",
     "email": "info@sevenseashotel.ae",
     "address": {
       "@type": "PostalAddress",

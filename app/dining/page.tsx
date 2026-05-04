@@ -536,8 +536,8 @@ export default function DiningPage() {
                 className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
                 <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Reservation:</h3>
-                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
-                  +971 55 100 9152
+                <a href="tel:+971569756484" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
+                  +971 56 975 6484
                 </a>
               </motion.div>
               <motion.div
@@ -549,8 +549,8 @@ export default function DiningPage() {
                 className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
                 <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Booking:</h3>
-                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
-                  +971 55 100 9152
+                <a href="tel:+971569756484" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
+                  +971 56 975 6484
                 </a>
               </motion.div>
             </div>

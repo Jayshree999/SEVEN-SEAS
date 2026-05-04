@@ -389,8 +389,8 @@ export default function AboutUsPage() {
               </div>
               <h3 className="text-xl font-bold mb-3 tracking-wide" style={{ fontFamily: 'var(--font-playfair)' }}>Phone</h3>
               <div className="w-8 h-[1px] bg-amber-600/50 mb-4 transition-all duration-500 group-hover:w-16"></div>
-              <a href="tel:+971551009152" className="text-gray-500 hover:text-amber-600 font-light text-sm transition-colors">
-                +971 55 100 9152
+              <a href="tel:+971569756484" className="text-gray-500 hover:text-amber-600 font-light text-sm transition-colors">
+                +971 56 975 6484
               </a>
             </motion.div>
 
