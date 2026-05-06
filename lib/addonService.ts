@@ -14,7 +14,7 @@ api.interceptors.request.use((config) => {
     config.headers.set('x-organisation', organization);
 
     // Add auth token if available
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('ss_hotel_token') : null;
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }

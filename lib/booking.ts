@@ -21,7 +21,7 @@ export interface BookingData {
 
 export async function getMonthlyRent(propertyId: string): Promise<number> {
   try {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = typeof window !== 'undefined' ? localStorage.getItem('ss_hotel_token') : null
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       'x-organisation': 'sevenseas',
@@ -53,7 +53,7 @@ export async function getMonthlyRent(propertyId: string): Promise<number> {
 
 export async function getYearlyRent(propertyId: string): Promise<number> {
   try {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = typeof window !== 'undefined' ? localStorage.getItem('ss_hotel_token') : null
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
       'x-organisation': 'sevenseas',
@@ -85,7 +85,7 @@ export async function getYearlyRent(propertyId: string): Promise<number> {
 
 export async function createBooking(bookingData: BookingData): Promise<any> {
   try {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = typeof window !== 'undefined' ? localStorage.getItem('ss_hotel_token') : null
 
     if (!token) {
       throw new Error('Please log in to make a booking')
@@ -115,7 +115,7 @@ export async function createBooking(bookingData: BookingData): Promise<any> {
 
 export async function createBookingWithPayment(bookingData: BookingData): Promise<any> {
   try {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null
+    const token = typeof window !== 'undefined' ? localStorage.getItem('ss_hotel_token') : null
 
     if (!token) {
       throw new Error('Please log in to make a booking')

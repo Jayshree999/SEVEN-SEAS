@@ -160,7 +160,7 @@ function CheckoutPage() {
 
             console.log("Submitting order:", payload)
 
-            const authToken = localStorage.getItem('auth_token');
+            const authToken = localStorage.getItem('ss_hotel_token');
 
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings/bulk`, {
                 method: "POST",
