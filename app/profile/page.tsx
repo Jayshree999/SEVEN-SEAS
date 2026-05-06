@@ -167,7 +167,7 @@ export default function ProfilePage() {
       }
       if (authUser) {
         const updatedUser = { ...authUser, profileImg: imageUrl }
-        localStorage.setItem('user', JSON.stringify(updatedUser))
+        localStorage.setItem('ss_hotel_user', JSON.stringify(updatedUser))
         refreshUser()
       }
 
@@ -203,7 +203,7 @@ export default function ProfilePage() {
 
         if (authUser) {
           const updatedUser = { ...authUser, ...userData }
-          localStorage.setItem('user', JSON.stringify(updatedUser))
+          localStorage.setItem('ss_hotel_user', JSON.stringify(updatedUser))
           refreshUser()
         }
       }
