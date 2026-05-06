@@ -73,7 +73,7 @@ export default function Navigation() {
   ]
 
   const navItems = [
-    { name: 'ROOMS', href: '/rooms' },
+    { name: 'ROOMS', href: EXTERNAL_BOOKING_URL, isExternal: true },
     { name: 'EXPERIENCES', href: '/addons', hasDropdown: true, dropdownKey: 'experiences' },
     { name: 'OFFERS & MORE', href: '/offers-and-more', hasDropdown: true, dropdownKey: 'offers' },
   ]
@@ -254,6 +254,27 @@ export default function Navigation() {
                     </AnimatePresence>
                   </div>
                 ) : (
+                  item.isExternal ? (
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                      <motion.div
+                        className="relative group px-4 py-2 border border-transparent hover:border-white/10"
+                        whileHover={{ y: -1 }}
+                        transition={{ type: 'spring', stiffness: 300 }}
+                      >
+                        <motion.div
+                          className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100"
+                          transition={{ duration: 0.3 }}
+                        />
+                        <span className="text-white text-sm font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10">
+                          {item.name}
+                        </span>
+                        <motion.div
+                          className="absolute bottom-0 left-0 w-0 h-[1px] bg-amber-400 group-hover:w-full"
+                          transition={{ duration: 0.4, ease: 'easeOut' }}
+                        />
+                      </motion.div>
+                    </a>
+                  ) : (
                   <Link href={item.href}>
                     <motion.div
                       className="relative group px-4 py-2 border border-transparent hover:border-white/10"
@@ -274,6 +295,7 @@ export default function Navigation() {
                       />
                     </motion.div>
                   </Link>
+                  )
                 )}
               </motion.div>
             ))}
@@ -351,7 +373,7 @@ export default function Navigation() {
                 </motion.button>
               </Link>
             )}
-            <Link href="/rooms">
+            <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
               <motion.button
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -367,7 +389,7 @@ export default function Navigation() {
                   <span>BOOK NOW</span>
                 </span>
               </motion.button>
-            </Link>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -497,13 +519,25 @@ export default function Navigation() {
                     <motion.div
                       whileHover={{ x: 10 }}
                     >
-                      <Link
-                        href={item.href}
-                        onClick={() => setIsMenuOpen(false)}
-                        className="block text-white text-base sm:text-lg font-medium uppercase py-3 min-h-[48px] flex items-center border-b border-white/5 tracking-widest hover:text-amber-400 transition-colors"
-                      >
-                        {item.name}
-                      </Link>
+                      {item.isExternal ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="block text-white text-base sm:text-lg font-medium uppercase py-3 min-h-[48px] flex items-center border-b border-white/5 tracking-widest hover:text-amber-400 transition-colors"
+                        >
+                          {item.name}
+                        </a>
+                      ) : (
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsMenuOpen(false)}
+                          className="block text-white text-base sm:text-lg font-medium uppercase py-3 min-h-[48px] flex items-center border-b border-white/5 tracking-widest hover:text-amber-400 transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                      )}
                     </motion.div>
                   )}
                 </div>
@@ -545,14 +579,14 @@ export default function Navigation() {
                   </Link>
                 </div>
               )}
-              <Link href="/rooms" onClick={() => setIsMenuOpen(false)} className="w-full">
+              <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full" onClick={() => setIsMenuOpen(false)}>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   className="w-full mt-6 px-6 py-5 bg-white text-black font-bold text-xs tracking-[0.3em] uppercase rounded-none min-h-[52px]"
                 >
                   BOOK NOW
                 </motion.button>
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}
