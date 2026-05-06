@@ -5,29 +5,19 @@ import { useRouter } from 'next/navigation'
 import {
   login as loginApi,
   signup as signupApi,
-  partnerSignup as partnerSignupApi,
   logout as logoutApi,
-  googleLogin as googleLoginApi,
   getStoredUser,
   isAuthenticated,
-  type AuthResponse,
+  type User,
   type LoginCredentials,
   type SignupData,
 } from '@/lib/auth'
-
-interface User {
-  _id: string
-  fullName: string
-  email: string
-  phone?: string | null
-  profileImg?: string | null
-}
 
 interface AuthContextType {
   user: User | null
   loading: boolean
   login: (credentials: LoginCredentials) => Promise<void>
-  signup: (userData: SignupData, isPartner?: boolean) => Promise<void>
+  signup: (userData: SignupData) => Promise<void>
   googleLogin: (credential: string) => Promise<void>
   logout: () => void
   isAuth: boolean
@@ -43,12 +33,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    // Set mounted first to prevent hydration errors
     setIsMounted(true)
   }, [])
 
   useEffect(() => {
-    // Check for stored user only after component is mounted
     if (isMounted && typeof window !== 'undefined') {
       const storedUser = getStoredUser()
       if (storedUser && isAuthenticated()) {
@@ -58,7 +46,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [isMounted])
 
-  // Function to refresh user data (can be called from profile page)
   const refreshUser = () => {
     if (typeof window !== 'undefined') {
       const storedUser = getStoredUser()
@@ -69,46 +56,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const login = async (credentials: LoginCredentials) => {
-    try {
-      const response: AuthResponse = await loginApi(credentials)
-      const userData = response.user || response.data?.user
-      if (userData) {
-        setUser(userData)
-        router.push('/')
-      }
-    } catch (error) {
-      throw error
+    const response = await loginApi(credentials)
+    if (response.user) {
+      setUser(response.user)
+      router.push('/')
     }
   }
 
-  const signup = async (userData: SignupData, isPartner: boolean = false) => {
-    try {
-      const response: AuthResponse = isPartner
-        ? await partnerSignupApi(userData)
-        : await signupApi(userData)
-
-      const userDataFromResponse = response.user || response.data?.user
-      if (userDataFromResponse) {
-        setUser(userDataFromResponse)
-        // Redirect to profile page after successful registration
-        router.push('/profile')
-      }
-    } catch (error) {
-      throw error
+  const signup = async (userData: SignupData) => {
+    const response = await signupApi(userData)
+    if (response.user) {
+      setUser(response.user)
+      router.push('/')
     }
   }
 
-  const googleLogin = async (credential: string) => {
-    try {
-      const response: AuthResponse = await googleLoginApi(credential)
-      const userData = response.user || response.data?.user
-      if (userData) {
-        setUser(userData)
-        router.push('/')
-      }
-    } catch (error) {
-      throw error
-    }
+  // Google login is not supported — kept for interface compatibility
+  const googleLogin = async (_credential: string) => {
+    throw new Error('Google login is not supported. Please use email & password.')
   }
 
   const logout = () => {
@@ -142,4 +107,3 @@ export function useAuth() {
   }
   return context
 }
-

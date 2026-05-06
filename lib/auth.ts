@@ -1,8 +1,11 @@
-/**
- * Authentication API service functions
- */
+// lib/auth.ts
+// Connected to live Seven Seas API: https://sevenseas-api.propfusion.io
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io'
+const API_BASE = 'https://sevenseas-api.propfusion.io'
+const USER_KEY = 'ss_hotel_user'
+const TOKEN_KEY = 'ss_hotel_token'
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface LoginCredentials {
   email: string
@@ -13,294 +16,175 @@ export interface SignupData {
   fullName: string
   email: string
   password: string
-  phone: string
+  phone?: string
+  // legacy fields (ignored for live API)
   restaurantName?: string
   token?: string
 }
 
+export interface User {
+  id: number
+  fullName: string
+  email: string
+  phone?: string | null
+  profileImg?: string | null
+  user_type: 'tenant'
+}
+
 export interface AuthResponse {
-  _statusCode?: number
-  statusCode?: number
+  user?: User
+  data?: { user?: User }
+  access_token?: string
+  token_type?: string
+  id?: number
+  user_type?: string
   message?: string
-  data?: {
-    user?: {
-      _id: string
-      fullName: string
-      email: string
-      phone?: string | null
-      role?: string
-      createdAt?: string
-      updatedAt?: string
-    }
-    token?: string
-    accessToken?: string
-  }
-  token?: string
-  user?: {
-    _id: string
-    fullName: string
-    email: string
-    phone?: string | null
-    role?: string
-  }
 }
 
-export interface ForgotPasswordResponse {
-  statusCode?: number
-  message?: string
-  success?: boolean
-}
+// ─── Token helpers ────────────────────────────────────────────────────────────
 
-export interface ResetPasswordData {
-  token: string
-  newPassword: string
-}
-
-/**
- * User login
- */
-export async function login(credentials: LoginCredentials): Promise<AuthResponse> {
-  try {
-    // Use BookingUser login endpoint for frontend users (customers)
-    const response = await fetch(`${API_URL}/api/v1/bookinguser/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-organisation': 'sevenseas',
-      },
-      body: JSON.stringify(credentials),
-    })
-
-    const data: AuthResponse = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Login failed')
-    }
-
-    // Backend returns: { data: { user: {...}, accessToken, refreshToken } }
-    const token = data.token || data.data?.token || data.data?.accessToken
-    const userData = data.user || data.data?.user
-
-    // Store token and user if provided
-    if (token && userData) {
-      localStorage.setItem('auth_token', token)
-      localStorage.setItem('user', JSON.stringify(userData))
-    }
-
-    return data
-  } catch (error) {
-    console.error('Login error:', error)
-    throw error
-  }
-}
-
-/**
- * User signup/registration
- */
-export async function signup(userData: SignupData): Promise<AuthResponse> {
-  try {
-    // Use BookingUser signup endpoint for frontend users (customers/guests)
-    const response = await fetch(`${API_URL}/api/v1/bookinguser/create`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-organisation': 'sevenseas',
-      },
-      body: JSON.stringify({
-        fullName: userData.fullName,
-        email: userData.email,
-        password: userData.password,
-        phone: userData.phone,
-      }),
-    })
-
-    const data: AuthResponse = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Registration failed')
-    }
-
-    // Backend returns: { data: { user: {...}, accessToken, refreshToken } }
-    const token = data.token || data.data?.token || data.data?.accessToken
-    const userDataFromResponse = data.user || data.data?.user
-
-    // Store token and user if provided
-    if (token && userDataFromResponse) {
-      localStorage.setItem('auth_token', token)
-      localStorage.setItem('user', JSON.stringify(userDataFromResponse))
-    } else if (userDataFromResponse) {
-      // If user data exists but no token, still store user (token might be in cookies)
-      localStorage.setItem('user', JSON.stringify(userDataFromResponse))
-    }
-
-    return data
-  } catch (error) {
-    console.error('Signup error:', error)
-    throw error
-  }
-}
-
-/**
- * Partner signup/registration (for F&B Vendors with invitations)
- */
-export async function partnerSignup(userData: SignupData): Promise<AuthResponse> {
-  try {
-    const response = await fetch(`${API_URL}/api/v1/fb-invitations/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-organisation': 'sevenseas',
-      },
-      body: JSON.stringify(userData),
-    })
-
-    const data: AuthResponse = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Partner registration failed')
-    }
-
-    const token = data.token || data.data?.token || data.data?.accessToken
-    const userDataFromResponse = data.user || data.data?.user
-
-    if (token && userDataFromResponse) {
-      localStorage.setItem('auth_token', token)
-      localStorage.setItem('user', JSON.stringify(userDataFromResponse))
-    }
-
-    return data
-  } catch (error) {
-    console.error('Partner signup error:', error)
-    throw error
-  }
-}
-
-/**
- * Forgot password - send reset email
- */
-export async function forgotPassword(email: string): Promise<ForgotPasswordResponse> {
-  try {
-    const response = await fetch(`${API_URL}/api/v1/bookinguser/forget-password`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-organisation': 'sevenseas',
-      },
-      body: JSON.stringify({ email }),
-    })
-
-    const data: ForgotPasswordResponse = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Failed to send reset email')
-    }
-
-    return data
-  } catch (error) {
-    console.error('Forgot password error:', error)
-    throw error
-  }
-}
-
-/**
- * Reset password with token
- */
-export async function resetPassword(resetData: ResetPasswordData): Promise<AuthResponse> {
-  try {
-    const response = await fetch(`${API_URL}/api/v1/auth/host/reset-password`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-organisation': 'sevenseas',
-      },
-      body: JSON.stringify(resetData),
-    })
-
-    const data: AuthResponse = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Password reset failed')
-    }
-
-    return data
-  } catch (error) {
-    console.error('Reset password error:', error)
-    throw error
-  }
-}
-
-/**
- * Logout - clear stored auth data
- */
-export function logout(): void {
-  if (typeof window === 'undefined') return
-  localStorage.removeItem('auth_token')
-  localStorage.removeItem('user')
-}
-
-/**
- * Get stored auth token
- */
-export function getAuthToken(): string | null {
+export function getToken(): string | null {
   if (typeof window === 'undefined') return null
-  return localStorage.getItem('auth_token')
+  return localStorage.getItem(TOKEN_KEY)
 }
 
-/**
- * Get stored user data
- */
-export function getStoredUser(): { _id: string; fullName: string; email: string; phone?: string } | null {
+export function getStoredUser(): User | null {
   if (typeof window === 'undefined') return null
-  const userStr = localStorage.getItem('user')
-  if (!userStr) return null
   try {
-    return JSON.parse(userStr)
+    const raw = localStorage.getItem(USER_KEY)
+    return raw ? JSON.parse(raw) : null
   } catch {
     return null
   }
 }
 
-/**
- * Check if user is authenticated
- */
 export function isAuthenticated(): boolean {
-  return !!getAuthToken()
+  return !!getToken() && !!getStoredUser()
 }
 
+function saveSession(token: string, user: User) {
+  localStorage.setItem(TOKEN_KEY, token)
+  localStorage.setItem(USER_KEY, JSON.stringify(user))
+}
+
+function clearSession() {
+  localStorage.removeItem(TOKEN_KEY)
+  localStorage.removeItem(USER_KEY)
+}
+
+// ─── API helpers ──────────────────────────────────────────────────────────────
+
+async function post(path: string, body: Record<string, unknown>, isFormData = false) {
+  const headers: Record<string, string> = {}
+  let bodyPayload: string | URLSearchParams
+
+  if (isFormData) {
+    // FastAPI OAuth2PasswordRequestForm expects application/x-www-form-urlencoded
+    const params = new URLSearchParams()
+    Object.entries(body).forEach(([k, v]) => params.append(k, String(v)))
+    bodyPayload = params
+    headers['Content-Type'] = 'application/x-www-form-urlencoded'
+  } else {
+    bodyPayload = JSON.stringify(body)
+    headers['Content-Type'] = 'application/json'
+  }
+
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers,
+    body: bodyPayload,
+  })
+
+  const data = await res.json()
+
+  if (!res.ok) {
+    throw new Error(data?.detail || data?.message || 'Request failed')
+  }
+
+  return data
+}
+
+// ─── Auth functions ───────────────────────────────────────────────────────────
+
 /**
- * Google OAuth login
+ * Login — uses /api/login (form-encoded)
+ * Returns a normalised AuthResponse with user & access_token
  */
-export async function googleLogin(credential: string): Promise<AuthResponse> {
-  try {
-    const response = await fetch(`${API_URL}/api/v1/google/auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-organisation': 'sevenseas',
-      },
-      body: JSON.stringify({ token: credential }),
-    })
+export async function login(credentials: LoginCredentials): Promise<AuthResponse> {
+  const data = await post('/api/login', {
+    username: credentials.email,
+    password: credentials.password,
+  }, true /* form-encoded */)
 
-    const data: AuthResponse = await response.json()
+  // Build user object from the token response
+  const user: User = {
+    id: data.id,
+    fullName: credentials.email.split('@')[0], // fallback name until profile loads
+    email: credentials.email,
+    user_type: 'tenant',
+  }
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Google login failed')
-    }
+  saveSession(data.access_token, user)
 
-    // Backend returns: { data: { user: {...}, accessToken, refreshToken } }
-    const token = data.token || data.data?.token || data.data?.accessToken
-    const userData = data.user || data.data?.user
-
-    // Store token and user if provided
-    if (token && userData) {
-      localStorage.setItem('auth_token', token)
-      localStorage.setItem('user', JSON.stringify(userData))
-    }
-
-    return data
-  } catch (error) {
-    console.error('Google login error:', error)
-    throw error
+  return {
+    access_token: data.access_token,
+    user,
   }
 }
 
+/**
+ * Register a new tenant — uses POST /api/tenant/register
+ */
+export async function signup(userData: SignupData): Promise<AuthResponse> {
+  const data = await post('/api/tenant/register', {
+    tenant_name: userData.fullName,
+    tenant_email: userData.email,
+    password: userData.password,
+    tenant_phone: userData.phone || '',
+  })
+
+  const user: User = {
+    id: data.id,
+    fullName: userData.fullName,
+    email: userData.email,
+    phone: userData.phone || null,
+    user_type: 'tenant',
+  }
+
+  saveSession(data.access_token, user)
+
+  return {
+    access_token: data.access_token,
+    user,
+  }
+}
+
+// Keep for backward compat (partner signup no longer used — redirect to normal signup)
+export async function partnerSignup(userData: SignupData): Promise<AuthResponse> {
+  return signup(userData)
+}
+
+/**
+ * Forgot / reset password — uses POST /api/tenant/reset-password (form-encoded)
+ */
+export async function forgotPassword(email: string): Promise<void> {
+  await post('/api/tenant/reset-password', {
+    username: email,
+    password: '',   // required by form schema but unused for reset
+  }, true /* form-encoded */)
+}
+
+/**
+ * Google login — not supported by this backend.
+ * Throw a clear message so the UI can handle it.
+ */
+export async function googleLogin(_credential: string): Promise<AuthResponse> {
+  throw new Error('Google login is not supported. Please use email & password.')
+}
+
+/**
+ * Logout — clears local session
+ */
+export function logout(): void {
+  clearSession()
+}
