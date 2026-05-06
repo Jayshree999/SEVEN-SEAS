@@ -1,8 +1,7 @@
 // lib/auth.ts
 // Connected to live Seven Seas API: https://sevenseas-api.propfusion.io
-// (Currently using localhost for testing)
 
-const API_BASE = 'http://localhost:8000'
+const API_BASE = 'https://sevenseas-api.propfusion.io'
 const USER_KEY = 'ss_hotel_user'
 const TOKEN_KEY = 'ss_hotel_token'
 
