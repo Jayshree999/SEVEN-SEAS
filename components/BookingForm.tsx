@@ -219,7 +219,7 @@ export default function BookingForm({
       // Calculate income (rent - management fees)
       const income = total - manageMentFees;
 
-      if (!user?._id) {
+      if (!user?.id) {
         throw new Error("User not found. Please log in again.");
       }
 
@@ -240,7 +240,7 @@ export default function BookingForm({
       const cancelUrl = `https://sevenseashotel.ae/rooms/${roomId}`;
 
       const bookingData: any = {
-        userId: user._id,
+        userId: user.id,
         // Fallback fields for Stripe Customer Creation
         email: user.email,
         phone: user.phone || "",

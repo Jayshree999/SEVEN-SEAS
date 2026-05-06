@@ -175,6 +175,15 @@ export async function forgotPassword(email: string): Promise<void> {
 }
 
 /**
+ * Token-based reset password.
+ * The current backend generates the password automatically via forgotPassword, 
+ * but this satisfies the UI compiler for the reset-password page.
+ */
+export async function resetPassword(payload: { token: string; newPassword: string }): Promise<void> {
+  throw new Error('Direct token-based password reset is not currently supported. Please use the forgot password flow to receive a generated password via email.')
+}
+
+/**
  * Google login — not supported by this backend.
  * Throw a clear message so the UI can handle it.
  */
