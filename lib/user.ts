@@ -71,7 +71,7 @@ export async function getCurrentUserProfile(): Promise<UserProfileResponse> {
       throw new Error('No authentication token found')
     }
 
-    const response = await fetch(`${API_URL}/api/tenant/profile`, {
+    const response = await fetch(`${API_URL}/tenant/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ export async function updateProfile(profileData: UpdateProfileData): Promise<Use
       profile_pic: profileData.profileImg
     }
 
-    const response = await fetch(`${API_URL}/api/tenant/profile`, {
+    const response = await fetch(`${API_URL}/tenant/profile`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
