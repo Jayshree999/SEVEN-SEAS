@@ -85,7 +85,7 @@ export default function HeroSection() {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="flex flex-col sm:flex-row gap-5 sm:gap-8 justify-center items-center w-full"
         >
-          <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+          <Link href={EXTERNAL_BOOKING_URL}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

@@ -255,7 +255,7 @@ export default function Navigation() {
                   </div>
                 ) : (
                   item.isExternal ? (
-                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                    <a href={item.href}>
                       <motion.div
                         className="relative group px-4 py-2 border border-transparent hover:border-white/10"
                         whileHover={{ y: -1 }}
@@ -373,7 +373,7 @@ export default function Navigation() {
                 </motion.button>
               </Link>
             )}
-            <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            <a href={EXTERNAL_BOOKING_URL}>
               <motion.button
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -522,8 +522,6 @@ export default function Navigation() {
                       {item.isExternal ? (
                         <a
                           href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           onClick={() => setIsMenuOpen(false)}
                           className="block text-white text-base sm:text-lg font-medium uppercase py-3 min-h-[48px] flex items-center border-b border-white/5 tracking-widest hover:text-amber-400 transition-colors"
                         >
@@ -579,7 +577,7 @@ export default function Navigation() {
                   </Link>
                 </div>
               )}
-              <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full" onClick={() => setIsMenuOpen(false)}>
+              <a href={EXTERNAL_BOOKING_URL} className="w-full" onClick={() => setIsMenuOpen(false)}>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   className="w-full mt-6 px-6 py-5 bg-white text-black font-bold text-xs tracking-[0.3em] uppercase rounded-none min-h-[52px]"
