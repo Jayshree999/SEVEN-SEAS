@@ -17,7 +17,7 @@ const exclusiveRoomOffers = [
     description: 'Experience the perfect blend of comfort and value. Our "Stay Longer Save More" offer is designed for your extended comfort with world-class hospitality.',
     image: '/promo-1.png',
     color: 'from-amber-600 to-yellow-600',
-    whatsapp: '971569756484'
+    whatsapp: '971551009152'
   },
   {
     title: 'Stay Longer Save More',
@@ -26,7 +26,7 @@ const exclusiveRoomOffers = [
     description: 'Elevate your stay with our premium offer. Enjoy enhanced luxury and exclusive benefits at Seven Seas Hotel with our special extended stay rates.',
     image: '/promo-2.png',
     color: 'from-amber-500 to-amber-600',
-    whatsapp: '971569756484'
+    whatsapp: '971551009152'
   },
 ]
 
@@ -260,7 +260,7 @@ export default function OffersAndMorePage() {
                   
                   <div className="mt-auto grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                     <a
-                      href="tel:+971569756484"
+                      href="tel:+971551009152"
                       className="flex items-center justify-center gap-2 px-6 py-4 bg-gray-900 hover:bg-black text-white font-bold tracking-wide uppercase text-xs rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
                       <Phone className="w-4 h-4" />
@@ -332,11 +332,11 @@ export default function OffersAndMorePage() {
                 </div>
                 <div className="flex flex-col gap-3">
                   <a
-                    href="tel:+971569756484"
+                    href="tel:+971551009152"
                     className="flex items-center justify-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-colors"
                   >
                     <Phone className="w-5 h-5" />
-                    <span>+971 56 975 6484</span>
+                    <span>+971 55 100 9152</span>
                   </a>
                   <Link href="/rooms">
                     <motion.button

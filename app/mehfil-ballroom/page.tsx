@@ -528,12 +528,12 @@ export default function MehfilBallroomPage() {
               </Link>
 
               <motion.a
-                href="tel:+971569756484"
+                href="tel:+971551009152"
                 whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-10 py-5 bg-white/10 backdrop-blur-sm border-2 border-amber-400/50 text-white font-bold rounded-2xl hover:bg-amber-500/20 hover:border-amber-400 transition-all text-center text-lg"
               >
-                Call: +971 56 975 6484
+                Call: +971 55 100 9152
               </motion.a>
             </div>
           </motion.div>

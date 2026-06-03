@@ -94,7 +94,7 @@ export const metadata: Metadata = {
   other: {
     'geo.region': 'AE-DU',
     'geo.placename': 'Dubai',
-    'geo.position': '25.2631;55.3678', // Approximate coordinates - update with exact location
+    'geo.position': '25.2795;55.3745', // Precise Al Nahda 1 coordinates
   },
 }
 
@@ -113,14 +113,14 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Hotel",
     "name": "Seven Seas Hotel Dubai",
-    "description": "Premier 4-star luxury hotel in Dubai featuring rooftop pool, world-class spa, halal dining, fitness center, and exceptional service near Dubai International Airport",
+    "description": "Premier luxury hotel in Dubai featuring rooftop pool, world-class spa, halal dining, fitness center, and exceptional service near Dubai International Airport",
     "image": "https://sevenseashotel.ae/hero2.jpg",
     "url": "https://sevenseashotel.ae",
-    "telephone": "+971 56 975 6484",
+    "telephone": "+971 55 100 9152",
     "email": "info@sevenseashotel.ae",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Al Qiyadah",
+      "streetAddress": "231 Al Ittihad Road, Al Qusais, Al Nahda 1",
       "addressLocality": "Dubai",
       "addressRegion": "Dubai",
       "postalCode": "",
@@ -128,12 +128,12 @@ export default function RootLayout({
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "25.2631",
-      "longitude": "55.3678"
+      "latitude": "25.2795",
+      "longitude": "55.3745"
     },
     "starRating": {
       "@type": "Rating",
-      "ratingValue": "4"
+      "ratingValue": "5"
     },
     "priceRange": "$$",
     "amenityFeature": [

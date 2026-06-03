@@ -72,10 +72,10 @@ const AUTO_REPLIES: Record<string, { text: string; quickActions?: QuickAction[] 
     ]
   },
   'contact': {
-    text: "We're here to help you 24/7:\n\n📧 Email: info@sevenseashotel.com\n📱 Phone: +971-4-XXX-XXXX\n🌐 Website: www.sevenseashotel.com\n\n📍 Hotel Address:\nSeven Seas Hotel\nDubai, United Arab Emirates\n\nOr chat with us right here anytime! 💬",
+    text: "We're here to help you 24/7:\n\n📧 Email: info@sevenseashotel.ae\n📱 Phone: +971-55-100-9152\n🌐 Website: www.sevenseashotel.net\n\n📍 Hotel Address:\nSeven Seas Hotel\nDubai, United Arab Emirates\n\nOr chat with us right here anytime! 💬",
     quickActions: [
       { label: 'Contact Page', action: () => window.location.href = '/contact', icon: <Mail className="w-4 h-4" /> },
-      { label: 'Call Now', action: () => window.location.href = 'tel:+9714XXXXXXX', icon: <Phone className="w-4 h-4" /> }
+      { label: 'Call Now', action: () => window.location.href = 'tel:+971551009152', icon: <Phone className="w-4 h-4" /> }
     ]
   },
   'dining': {

@@ -67,8 +67,8 @@ export default function CancellationPage() {
                   <p>You can cancel your reservation through:</p>
                   <ul className="list-disc list-inside space-y-2">
                     <li>Your online account or booking confirmation email</li>
-                    <li>Contacting our reservations team at +971 4 XXX XXXX</li>
-                    <li>Emailing us at reservations@sevenseasdubai.com</li>
+                    <li>Contacting our reservations team at +971 55 100 9152</li>
+                    <li>Emailing us at reservation@sevenseashotel.ae</li>
                   </ul>
                 </div>
               </div>

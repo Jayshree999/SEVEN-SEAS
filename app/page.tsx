@@ -114,10 +114,10 @@ export default function Home() {
               viewport={{ once: true }}
             >
               {[
-                { value: 150, suffix: '+', label: 'Luxury Rooms', delay: 0 },
-                { value: 10, suffix: '+', label: 'Years Excellence', delay: 0.1 },
+                { value: 317, suffix: '', label: 'Luxury Rooms', delay: 0 },
+                { value: 2024, suffix: '', label: 'Year Established', delay: 0.1 },
                 { value: 50, suffix: 'K+', label: 'Happy Guests', delay: 0.2 },
-                { value: 4.8, suffix: '', label: 'Average Rating', delay: 0.3 },
+                { value: 5, suffix: '', label: 'Average Rating', delay: 0.3 },
               ].map((stat, index) => (
                 <motion.div
                   key={index}

@@ -15,8 +15,8 @@ const legendaryRestaurants = [
     interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
     description: 'Immerse yourself in a sophisticated dining experience, where elegance meets exquisite flavors. Our menu showcases the finest Russian & Continental cuisine, blending tradition with gourmet artistry. From the rich, hearty borscht to an array of continental delicacies, every dish is a masterpiece crafted to perfection.',
     cuisine: 'Authentic Russian & Continental',
-    phone: '+971 52 322 1162',
-    whatsapp: '+971523221162',
+    phone: '+971 55 100 9152',
+    whatsapp: '+971551009152',
   },
   {
     name: "Julienne's",
@@ -24,17 +24,17 @@ const legendaryRestaurants = [
     interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
     description: "Indulge in an authentic Indian culinary experience at Julienne's Our expertly crafted dishes, from sizzling tandoors to rich, aromatic curries, bring you the true flavors of India. Enjoy every bite in a warm, inviting al fresco setting, perfect for shared moments.",
     cuisine: 'Authentic Indian Flavors',
-    phone: '+971 52 322 1162',
-    whatsapp: '+971523221162',
+    phone: '+971 55 100 9152',
+    whatsapp: '+971551009152',
   },
   {
     name: 'Rovee',
     logo: '/Rovee-LOGO-revrz2lbyaltsjeuq4fg9zffsiexehkw1jsp9dzew0.png',
-    interiorImage: '/Nahas-al-Blad.webp',
+    interiorImage: '/Nahas-al-Balad.webp',
     description: 'Our open-air dining option "Indulge in the rich flavors of Lebanon at Nafas Al Balad Arabic Restaurant. Savor every bite of our mouthwatering Lebanese dishes, made with authentic ingredients and served with warmth. A culinary journey you won\'t forget!',
     cuisine: 'Authentic Arabic Flavors',
-    phone: '+971 52 322 1162',
-    whatsapp: '+971523221162',
+    phone: '+971 55 100 9152',
+    whatsapp: '+971551009152',
   },
   {
     name: 'Chachu Chai',
@@ -42,8 +42,8 @@ const legendaryRestaurants = [
     interiorImage: '/WhatsApp_Image_2024-12-15_at_8.51.06_PM-removebg-preview-e1737565952933-r0e3pnup3j6939020r818shyip234hhmdnyw6ehnhc.png',
     description: 'Chachu Chai: A Cafe for Tea" at Seven Seas Hotel Dubai is the perfect place to unwind with a cup of tea, offering a cozy ambiance and a variety of flavors. Whether you\'re looking for a soothing experience or a place to meet friends, Chachu Chai is the spot to relax and enjoy a warm beverage. Come and enjoy a cup of warmth today!',
     cuisine: 'A Cafe for Tea',
-    phone: '+971 52 322 1162',
-    whatsapp: '+971523221162',
+    phone: '+971 55 100 9152',
+    whatsapp: '+971551009152',
   },
 ]
 
@@ -428,8 +428,8 @@ function ContactSection() {
                 <Phone className="w-5 h-5 text-amber-600" />
                 <div>
                   <p className="text-sm text-gray-600">Reservation</p>
-                  <a href="tel:+971569756484" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
-                    +971 56 975 6484
+                  <a href="tel:+971551009152" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
+                    +971 55 100 9152
                   </a>
                 </div>
               </div>
@@ -437,8 +437,8 @@ function ContactSection() {
                 <Phone className="w-5 h-5 text-amber-600" />
                 <div>
                   <p className="text-sm text-gray-600">Booking</p>
-                  <a href="tel:+971569756484" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
-                    +971 56 975 6484
+                  <a href="tel:+971551009152" className="text-gray-900 font-semibold hover:text-amber-600 transition-colors">
+                    +971 55 100 9152
                   </a>
                 </div>
               </div>

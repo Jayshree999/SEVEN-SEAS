@@ -6,7 +6,7 @@ import { X } from 'lucide-react'
 import Image from 'next/image'
 
 const PROMO_IMAGE = '/popup.jpeg'
-const WHATSAPP_NUMBER = '971569756484'
+const WHATSAPP_NUMBER = '971551009152'
 const WHATSAPP_MESSAGE = 'Hi Seven Seas Hotel! I saw your promotion on the website and would like to know more about the current offers.'
 
 export default function PromotionPopup() {

@@ -9,7 +9,7 @@ export default function PressPage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Navigation />
-      
+
       <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -59,11 +59,11 @@ export default function PressPage() {
                 <div className="bg-gray-50 rounded-lg p-6 space-y-4">
                   <div>
                     <p className="font-semibold text-gray-800 mb-1">Press Inquiries</p>
-                    <p className="text-amber-600">press@sevenseasdubai.com</p>
+                    <p className="text-amber-600">press@sevenseashotel.ae</p>
                   </div>
                   <div>
                     <p className="font-semibold text-gray-800 mb-1">Phone</p>
-                    <p className="text-amber-600">+971 4 XXX XXXX</p>
+                    <p className="text-amber-600">+971 55 100 9152</p>
                   </div>
                   <div>
                     <p className="font-semibold text-gray-800 mb-1">Response Time</p>

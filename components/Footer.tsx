@@ -244,7 +244,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Reservation</p>
-                <a href="tel:+971569756484" className="text-base text-white font-medium hover:text-amber-400 transition-colors">+971 56 975 6484</a>
+                <a href="tel:+971551009152" className="text-base text-white font-medium hover:text-amber-400 transition-colors">+971 55 100 9152</a>
               </div>
             </motion.div>
 

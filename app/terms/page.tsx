@@ -96,7 +96,7 @@ export default function TermsPage() {
             <div>
               <h2 className="text-2xl font-bold text-black mb-4">8. Contact</h2>
               <p className="text-gray-700 leading-relaxed">
-                For questions about these terms, please contact us at info@sevenseasdubai.com or +971 4 XXX XXXX.
+                For questions about these terms, please contact us at info@sevenseashotel.ae or +971 55 100 9152.
               </p>
             </div>
 

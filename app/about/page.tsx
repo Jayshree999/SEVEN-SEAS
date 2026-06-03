@@ -34,8 +34,8 @@ const values = [
 ]
 
 const stats = [
-  { number: '150+', label: 'Luxury Rooms' },
-  { number: '10+', label: 'Years of Excellence' },
+  { number: '317', label: 'Luxury Rooms' },
+  { number: '2024', label: 'Year Established' },
   { number: '50K+', label: 'Happy Guests' },
   { number: '4.8', label: 'Average Rating' },
 ]
@@ -110,7 +110,7 @@ export default function AboutPage() {
                 Nestled in the heart of Dubai, Seven Seas Hotel represents the perfect fusion of modern luxury and traditional Arabian hospitality. Since our opening, we have been committed to providing an unparalleled experience for every guest who walks through our doors.
               </p>
               <p>
-                Our 4-star hotel offers 150+ elegantly designed rooms and suites, each thoughtfully appointed with contemporary amenities and stunning views of the city. Whether you're visiting for business or leisure, our dedicated team ensures your stay is nothing short of exceptional.
+                Our hotel offers 317 elegantly designed rooms and suites, each thoughtfully appointed with contemporary amenities and stunning views of the city. Whether you're visiting for business or leisure, our dedicated team ensures your stay is nothing short of exceptional.
               </p>
               <p>
                 From our award-winning restaurants serving international and local cuisine to our state-of-the-art spa and wellness facilities, every aspect of Seven Seas Hotel is designed to exceed your expectations. We invite you to experience the magic of Dubai with us.

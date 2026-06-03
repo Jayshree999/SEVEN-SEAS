@@ -260,7 +260,7 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-gray-900 mb-1">Phone</div>
                       <div className="text-gray-600">
-                        <a href="tel:+971569756484" className="hover:text-amber-600 transition-colors font-medium">+971 56 975 6484</a>
+                        <a href="tel:+971551009152" className="hover:text-amber-600 transition-colors font-medium">+971 55 100 9152</a>
                       </div>
                     </div>
                   </motion.div>
@@ -290,7 +290,7 @@ export default function ContactPage() {
                     <div>
                       <div className="font-semibold text-gray-900 mb-1">Website</div>
                       <div className="text-gray-600">
-                        <a href="https://sevenseashotel.ae" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors font-medium">www.sevenseashotel.ae</a>
+                        <a href="https://sevenseashotel.net" target="_blank" rel="noopener noreferrer" className="hover:text-amber-600 transition-colors font-medium">www.sevenseashotel.net</a>
                       </div>
                     </div>
                   </motion.div>
@@ -333,9 +333,9 @@ export default function ContactPage() {
                   </a>
                 </div>
                 <GoogleMap
-                  latitude={25.197197}
-                  longitude={55.2707828}
-                  address="Seven Seas Hotel, Dubai, UAE"
+                  latitude={25.2795}
+                  longitude={55.3745}
+                  address="Seven Seas Hotel, 231 Al Ittihad Rd, Al Qusais, Al Nahda 1, Dubai, UAE"
                   zoom={16}
                   height="400px"
                   className="w-full"

@@ -100,8 +100,8 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-2xl font-bold text-black mb-4">7. Contact Us</h2>
               <p className="text-gray-700 leading-relaxed">
-                For privacy-related inquiries or to exercise your rights, please contact us at privacy@sevenseasdubai.com 
-                or +971 4 XXX XXXX.
+                For privacy-related inquiries or to exercise your rights, please contact us at privacy@sevenseashotel.ae 
+                or +971 55 100 9152.
               </p>
             </div>
 

@@ -100,128 +100,325 @@ export interface PropertyApiResponse {
   [key: string]: any
 }
 
+// Curated actual rooms database for Seven Seas Hotel Dubai
+const curatedProperties: Property[] = [
+  {
+    _id: '69487bfdef489742dc309150',
+    title: 'Executive Suite',
+    name: 'Executive Suite',
+    description: 'The Executive Suite offers a perfect blend of luxury and comfort, featuring a spacious living area, a king-sized bed, and a fully equipped kitchen. Enjoy stunning views of the Burj Khalifa and Dubai skyline from your private balcony.',
+    price: 600,
+    size: 915,
+    area: 915,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 3,
+    category: 'SIGNATURE',
+    roomType: 'Executive Suite',
+    amenities: ['Spacious Living Area', 'King-Sized Bed', 'Private Balcony', 'Free WiFi', 'Air Conditioning', 'Fully Equipped Kitchen', 'Burj Khalifa & Skyline View'],
+    photos: [{ url: '/accomodation/executive suites.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 8, totalRevenue: 4800 }
+  },
+  {
+    _id: '69487bfdef489742dc309151',
+    title: 'Premium King Room',
+    name: 'Premium King Room',
+    description: 'A luxurious king bed room featuring a spacious layout with a large, comfortable king-sized bed, designed to offer the perfect blend of relaxation and sophistication.',
+    price: 300,
+    size: 484,
+    area: 484,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 2,
+    category: 'PREMIUM',
+    roomType: 'King Bed',
+    amenities: ['King-Sized Bed', 'Modern Amenities', 'Luxury Design', 'Free WiFi', 'Air Conditioning', 'In-room Safe', 'Mini Bar'],
+    photos: [{ url: '/accomodation/premium king.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 15, totalRevenue: 4500 }
+  },
+  {
+    _id: '69487bfdef489742dc309152',
+    title: 'Premium Twin Room',
+    name: 'Premium Twin Room',
+    description: 'A stylish twin room, elegantly furnished with two single beds, providing a serene and comfortable retreat for guests seeking both relaxation and convenience.',
+    price: 300,
+    size: 484,
+    area: 484,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 2,
+    category: 'PREMIUM',
+    roomType: 'Twin Bed',
+    amenities: ['Two Single Beds', 'Elegant Furnishings', 'Comfortable Retreat', 'Free WiFi', 'Air Conditioning', 'Satellite TV', 'In-room Safe'],
+    photos: [{ url: '/accomodation/premium twin.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 6, totalRevenue: 1800 }
+  },
+  {
+    _id: '69487bfdef489742dc309153',
+    title: 'Premium City King',
+    name: 'Premium City King',
+    description: 'A luxurious king bed room with stunning city views, featuring a spacious layout and a comfortable king-sized bed, complemented by sophisticated decor.',
+    price: 350,
+    size: 538,
+    area: 538,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 2,
+    category: 'PREMIUM',
+    roomType: 'King Bed',
+    amenities: ['City Views', 'King-Sized Bed', 'Sophisticated Decor', 'Free WiFi', 'Air Conditioning', 'Coffee Maker', 'Premium Channels'],
+    photos: [{ url: '/accomodation/premium city king.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 12, totalRevenue: 4200 }
+  },
+  {
+    _id: '69487bfdef489742dc309154',
+    title: 'Premium City Twin',
+    name: 'Premium City Twin',
+    description: 'Featuring two single beds, offering more spacious accommodations with breathtaking city views, complemented by elegant furnishings.',
+    price: 350,
+    size: 538,
+    area: 538,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 2,
+    category: 'PREMIUM',
+    roomType: 'Twin Bed',
+    amenities: ['Two Single Beds', 'City Views', 'Elegant Furnishings', 'Free WiFi', 'Air Conditioning', 'Coffee Maker', 'Desk'],
+    photos: [{ url: '/accomodation/premium city twin.jpeg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 4, totalRevenue: 1400 }
+  },
+  {
+    _id: '69487bfdef489742dc309155',
+    title: 'Premium Sea View King',
+    name: 'Premium Sea View King',
+    description: 'Wake up to refreshing views of the serene sea from your king-sized bed, where you can relax and unwind while enjoying the peaceful, scenic beauty.',
+    price: 400,
+    size: 538,
+    area: 538,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 2,
+    category: 'PREMIUM',
+    roomType: 'King Bed',
+    amenities: ['Sea Views', 'King-Sized Bed', 'Serene Atmosphere', 'Free WiFi', 'Air Conditioning', 'Balcony/Terrace', 'Mini Fridge'],
+    photos: [{ url: '/accomodation/premium sea view king.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 9, totalRevenue: 3600 }
+  },
+  {
+    _id: '69487bfdef489742dc309156',
+    title: 'Deluxe Family 2 Queen',
+    name: 'Deluxe Family 2 Queen',
+    description: 'Our Deluxe Family Room features two spacious queen-sized beds, perfect for a restful stay. Ideal for families, this room offers plenty of space.',
+    price: 450,
+    size: 645,
+    area: 645,
+    bedrooms: 2,
+    washRoom: 1,
+    guest_no: 4,
+    category: 'DELUXE',
+    roomType: 'Two Queen Beds',
+    amenities: ['Two Queen Beds', 'Family-Friendly', 'Spacious', 'Free WiFi', 'Air Conditioning', 'Refrigerator', 'LED TV'],
+    photos: [{ url: '/accomodation/delux family 2 queen bed.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 10, totalRevenue: 4500 }
+  },
+  {
+    _id: '69487bfdef489742dc309157',
+    title: 'Deluxe Balcony King',
+    name: 'Deluxe Balcony King',
+    description: 'A luxurious balcony room with a king-sized bed, offering a private outdoor space with stunning city and stadium views.',
+    price: 420,
+    size: 592,
+    area: 592,
+    bedrooms: 1,
+    washRoom: 1,
+    guest_no: 2,
+    category: 'DELUXE',
+    roomType: 'King Bed',
+    amenities: ['Private Balcony', 'King-Sized Bed', 'City & Stadium Views', 'Free WiFi', 'Air Conditioning', 'Bathrobe & Slippers', 'Espresso Machine'],
+    photos: [{ url: '/accomodation/delux balcony king.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 5, totalRevenue: 2100 }
+  },
+  {
+    _id: '69487bfdef489742dc309158',
+    title: 'Royal Suite',
+    name: 'Royal Suite',
+    description: "The Royal Suite is the hotel's largest and most luxurious room, featuring expansive living areas, a private balcony with stunning views of the Burj Khalifa and city skyline.",
+    price: 1200,
+    size: 1290,
+    area: 1290,
+    bedrooms: 2,
+    washRoom: 2,
+    guest_no: 4,
+    category: 'ROYAL',
+    roomType: 'King Beds',
+    amenities: ['Largest Suite', 'Expansive Living Areas', 'Panoramic Views', 'Free WiFi', 'Air Conditioning', 'Kitchenette', 'Jacuzzi Bath', 'Private Butler Service'],
+    photos: [{ url: '/accomodation/royal suit.jpg' }],
+    createdAt: '2024-01-01T00:00:00.000Z',
+    parking: 'Free Parking',
+    Check_in_time: '15:00',
+    Check_out_time: '12:00',
+    bookingInfo: { totalBookings: 7, totalRevenue: 8400 }
+  }
+];
+
 /**
- * Fetches properties from the Dubai Booking API
- * @param params - Query parameters for the API call
- * @returns Promise with the API response
+ * Fetches properties from the Seven Seas Hotel Dubai local/mock database
+ * Supports client-side sorting, filtering, and search options.
  */
 export async function fetchProperties(params: PropertyApiParams = {}): Promise<PropertyApiResponse> {
   const {
     limit = 100,
     page = 1,
-    activeStatus = true,
     sortBy = 'sno',
     sortOrder = 'asc',
     filters = {},
-  } = params
+  } = params;
 
-  // Build query parameters
-  const queryParams = new URLSearchParams({
-    limit: limit.toString(),
-    page: page.toString(),
-    activeStatus: activeStatus.toString(),
-    sortBy: sortBy,
-    sortOrder: sortOrder,
-  })
+  let result = [...curatedProperties];
 
-  // Add filter parameters directly (not wrapped in filters[])
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== '') {
-      if (Array.isArray(value)) {
-        queryParams.append(key, value.join(','))
-      } else {
-        queryParams.append(key, value.toString())
-      }
-    }
-  })
-
-  const SERVER_URL = process.env.NEXT_PUBLIC_API_URL || 'https://infinitysignaturebackend-api.affworld.io'
-
-  const url = `${SERVER_URL}/api/v1/property/property?${queryParams.toString()}`
-
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'x-organisation': 'sevenseas',
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.status} ${response.statusText}`)
-    }
-
-    const data: PropertyApiResponse = await response.json()
-
-    // Normalize property IDs for easier access
-    if (data.data?.properties) {
-      data.data.properties = data.data.properties.map(prop => ({
-        ...prop,
-        id: prop._id || prop.id,
-        name: prop.title || prop.name || prop.nickname || 'Untitled Property',
-      }))
-    }
-
-    return data
-  } catch (error) {
-    console.error('Error fetching properties:', error)
-    throw error
+  // Apply filters
+  if (filters.search) {
+    const searchLower = filters.search.toLowerCase();
+    result = result.filter(
+      (prop) =>
+        prop.title?.toLowerCase().includes(searchLower) ||
+        prop.description?.toLowerCase().includes(searchLower) ||
+        prop.category?.toLowerCase().includes(searchLower)
+    );
   }
+
+  if (filters.category) {
+    result = result.filter(
+      (prop) => prop.category?.toLowerCase() === filters.category?.toLowerCase()
+    );
+  }
+
+  if (filters.minPrice !== undefined) {
+    result = result.filter((prop) => (prop.price || 0) >= (filters.minPrice || 0));
+  }
+
+  if (filters.maxPrice !== undefined) {
+    result = result.filter((prop) => (prop.price || 0) <= (filters.maxPrice || 0));
+  }
+
+  if (filters.guest_no !== undefined) {
+    const guestsNeeded = parseInt(filters.guest_no.toString()) || 0;
+    result = result.filter((prop) => (prop.guest_no || 0) >= guestsNeeded);
+  }
+
+  if (filters.bedrooms !== undefined) {
+    const roomsNeeded = parseInt(filters.bedrooms.toString()) || 0;
+    result = result.filter((prop) => {
+      const bedrooms = typeof prop.bedrooms === 'string' ? parseInt(prop.bedrooms) || 1 : prop.bedrooms || 1;
+      return bedrooms >= roomsNeeded;
+    });
+  }
+
+  // Apply sorting
+  result.sort((a, b) => {
+    let comparison = 0;
+    if (sortBy === 'price') {
+      comparison = (a.price || 0) - (b.price || 0);
+    } else if (sortBy === 'size' || sortBy === 'area') {
+      comparison = (a.size || a.area || 0) - (b.size || b.area || 0);
+    } else {
+      comparison = curatedProperties.indexOf(a) - curatedProperties.indexOf(b);
+    }
+    return sortOrder === 'desc' ? -comparison : comparison;
+  });
+
+  const total = result.length;
+  const totalPages = Math.ceil(total / limit);
+  const startIndex = (page - 1) * limit;
+  const paginatedResult = result.slice(startIndex, startIndex + limit);
+
+  const normalizedProperties = paginatedResult.map((prop) => ({
+    ...prop,
+    id: prop._id,
+    name: prop.title,
+  }));
+
+  return {
+    statusCode: 200,
+    data: {
+      properties: normalizedProperties,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
+      },
+    },
+    message: 'Properties fetched successfully',
+  };
 }
 
 /**
- * Fetches a single property by ID from the Dubai Booking API
+ * Fetches a single property by ID from the local curated database
  * @param propertyId - The ID of the property to fetch
  * @returns Promise with the property data
  */
 export async function fetchPropertyById(propertyId: string): Promise<Property | null> {
-  try {
-    const response = await fetchProperties({
-      limit: 100,
-      page: 1,
-      activeStatus: true,
-    })
-
-    const property = response.data?.properties?.find(
-      (prop) => prop._id === propertyId || prop.id === propertyId
-    )
-
-    return property || null
-  } catch (error) {
-    console.error('Error fetching property by ID:', error)
-    throw error
-  }
+  const property = curatedProperties.find(
+    (prop) => prop._id === propertyId
+  );
+  return property ? { ...property, id: property._id } : null;
 }
 
 /**
- * Fetches a single property by slug from the Dubai Booking API
- * The slug can be either:
- * - "property-name-{24_char_id}" (preferred, embeds the ID)
- * - A raw MongoDB ObjectId (fallback for old links)
+ * Fetches a single property by slug from the curated database
  * @returns Promise with the property data
  */
 export async function fetchPropertyBySlug(slug: string): Promise<Property | null> {
   try {
-    // Try to extract the ID from the end of the slug first (fastest)
-    const embeddedId = idFromSlug(slug)
+    const embeddedId = idFromSlug(slug);
     if (embeddedId) {
-      return fetchPropertyById(embeddedId)
+      return fetchPropertyById(embeddedId);
     }
 
-    // Fallback: raw ObjectId
     if (/^[a-f0-9]{24}$/.test(slug)) {
-      return fetchPropertyById(slug)
+      return fetchPropertyById(slug);
     }
 
-    // Last resort: match by slug against all properties
-    const response = await fetchProperties({ limit: 100, page: 1, activeStatus: true })
+    const response = await fetchProperties({ limit: 100, page: 1 });
     const property = response.data?.properties?.find(
       (prop) => makeRoomSlug(prop) === slug
-    )
-    return property || null
+    );
+    return property || null;
   } catch (error) {
-    console.error('Error fetching property by slug:', error)
-    throw error
+    console.error('Error fetching property by slug:', error);
+    throw error;
   }
 }

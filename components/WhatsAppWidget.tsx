@@ -19,7 +19,7 @@ const contacts = [
     {
         name: 'Reservations',
         title: 'Seven Seas Hotel',
-        phone: '971569756484',
+        phone: '971551009152',
         message: "Hello! I saw your website and would like to make a reservation.",
     },
 ]

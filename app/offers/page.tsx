@@ -221,16 +221,13 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
           </ul>
         </div>
 
-        <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full mt-auto">
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <RichButton variant="filled" className="w-full px-6 py-3.5 text-base">
-              Book Now
-            </RichButton>
-          </motion.div>
-        </Link>
+        <RichButton 
+          variant="filled" 
+          className="w-full px-6 py-3.5 text-base mt-auto"
+          onClick={() => window.open(EXTERNAL_BOOKING_URL, '_blank')}
+        >
+          Book Now
+        </RichButton>
       </div>
     </motion.div>
   )
@@ -245,7 +242,7 @@ const exclusiveOffers = [
     nights: 1,
     description: 'Celebrate Eid with our exclusive offer. Enjoy a luxurious stay starting from AED 299 per night (excluding taxes). Make your celebration memorable.',
     image: '/offer1.jpeg',
-    phone: '+971 56 975 6484',
+    phone: '+971 55 100 9152',
   },
   {
     id: 2,
@@ -255,7 +252,7 @@ const exclusiveOffers = [
     nights: 30,
     description: 'Experience a serene Ramadan with our Long Stay Offer. Book your extended stay starting from AED 5000 per month (excluding taxes).',
     image: '/2.jpeg',
-    phone: '+971 56 975 6484',
+    phone: '+971 55 100 9152',
   },
   {
     id: 3,
@@ -265,7 +262,7 @@ const exclusiveOffers = [
     nights: 1,
     description: 'Embrace the spirit of Ramadan. Enjoy a peaceful and comfortable stay starting from just AED 150 per night (excluding taxes).',
     image: '/3.jpeg',
-    phone: '+971 56 975 6484',
+    phone: '+971 55 100 9152',
   },
 ]
 

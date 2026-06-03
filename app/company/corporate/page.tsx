@@ -95,8 +95,8 @@ export default function CorporateContactPage() {
                 <div className="space-y-4 text-gray-700">
                   <div>
                     <p className="font-semibold text-gray-800">Corporate Sales</p>
-                    <p className="text-amber-600">corporate@sevenseasdubai.com</p>
-                    <p className="text-amber-600">+971 4 XXX XXXX</p>
+                    <p className="text-amber-600">corporate@sevenseashotel.ae</p>
+                    <p className="text-amber-600">+971 55 100 9152</p>
                   </div>
                   <div>
                     <p className="font-semibold text-gray-800">Business Hours</p>

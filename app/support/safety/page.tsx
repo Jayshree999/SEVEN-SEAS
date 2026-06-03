@@ -67,7 +67,7 @@ export default function SafetyPage() {
                 <div className="bg-gray-50 rounded-lg p-6 space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-gray-800">Hotel Front Desk</span>
-                    <span className="text-amber-600 font-semibold">+971 4 XXX XXXX</span>
+                    <span className="text-amber-600 font-semibold">+971 55 100 9152</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-gray-800">Emergency Services</span>
@@ -75,7 +75,7 @@ export default function SafetyPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="font-medium text-gray-800">Security</span>
-                    <span className="text-amber-600 font-semibold">+971 4 XXX XXXX</span>
+                    <span className="text-amber-600 font-semibold">+971 55 100 9152</span>
                   </div>
                 </div>
               </div>
