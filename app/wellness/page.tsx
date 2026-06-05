@@ -11,22 +11,22 @@ import { useRef } from 'react'
 
 const wellnessServices = [
   {
-    name: 'Seven SPA',
-    description: 'Indulge in a world of relaxation and rejuvenation. Our spa offers a range of therapeutic treatments, massages, and wellness therapies designed to restore your mind, body, and soul.',
-    icon: Droplets,
-    image: '/seven spa.jpeg',
-    gradient: 'from-green-500 to-emerald-500',
-  },
-  {
     name: 'Behnah Spa',
-    description: 'Experience traditional and modern spa treatments in a serene environment. Let our expert therapists pamper you with luxurious treatments.',
+    description: 'A luxurious spa experience in the heart of Dubai, offering rejuvenating treatments that blend traditional techniques with modern wellness.',
     icon: Sparkles,
     image: '/SPA.png',
     gradient: 'from-teal-500 to-cyan-500',
   },
   {
-    name: 'Seven Salon',
-    description: 'Transform your look with our professional hair styling, beauty treatments, and grooming services. Our expert stylists ensure you look and feel your best.',
+    name: 'Gym',
+    description: 'Whether you are traveling for business, enjoying a luxury getaway, or just staying in routine, our state-of-the-art Fitness Centre ensures you don\'t have to pause your progress. It’s designed to energize your body and clear your mind.',
+    icon: Heart,
+    image: '/seven spa.jpeg',
+    gradient: 'from-green-500 to-emerald-500',
+  },
+  {
+    name: 'Seven Unisex Saloon',
+    description: 'A premium unisex salon in the heart of Dubai, offering expert styling, grooming, and beauty services with a blend of creativity and precision.',
     icon: Scissors,
     image: '/seven uni spa.jpeg',
     gradient: 'from-pink-500 to-rose-500',

@@ -12,43 +12,43 @@ import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 const legendaryRestaurants = [
   {
-    name: 'Salt Restaurant',
-    logo: '/Salt.webp',
+    name: 'Fine Dining Restaurant',
+    logo: '/Julline-revrp2l58qx09vxs4atc909w9xpcievp01xqget734.png',
     interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
-    description: 'Immerse yourself in a sophisticated dining experience, where elegance meets exquisite flavors. Our menu showcases the finest Russian & Continental cuisine, blending tradition with gourmet artistry. From the rich, hearty borscht to an array of continental delicacies, every dish is a masterpiece crafted to perfection.',
-    cuisine: 'Authentic Russian & Continental',
-    phone: '+971 55 100 9152',
-    whatsapp: '+971551009152',
+    description: 'Welcome to Seven Seas Restaurants, where exceptional cuisine, elegant ambiance, and impeccable service come together to create a truly memorable dining experience.',
+    cuisine: 'Fine Dining',
+    phone: '+971 4 276 5555',
+    whatsapp: '971526090739',
     rating: 4.8,
   },
   {
-    name: "Julienne's",
-    logo: '/Julline-revrp2l58qx09vxs4atc909w9xpcievp01xqget734.png',
-    interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
-    description: "Indulge in an authentic Indian culinary experience at Julienne's. Our expertly crafted dishes, from sizzling tandoors to rich, aromatic curries, bring you the true flavors of India. Enjoy every bite in a warm, inviting al fresco setting, perfect for shared moments.",
-    cuisine: 'Authentic Indian Flavors',
-    phone: '+971 55 100 9152',
-    whatsapp: '+971551009152',
+    name: "Thamburuu Kerala Restaurant & Bar",
+    logo: '/Rovee-LOGO-revrz2lbyaltsjeuq4fg9zffsiexehkw1jsp9dzew0.png',
+    interiorImage: '/Nahas-al-Blad.webp',
+    description: "Experience the true taste of Kerala. Whether you're planning a romantic dinner, a festive gathering, or a business lunch, our inviting ambiance and exceptional service ensure an unforgettable experience every time.",
+    cuisine: 'Authentic Kerala Cuisine',
+    phone: '+971 4 276 5555',
+    whatsapp: '971526090739',
     rating: 4.9,
   },
   {
-    name: 'Rovee',
-    logo: '/Rovee-LOGO-revrz2lbyaltsjeuq4fg9zffsiexehkw1jsp9dzew0.png',
-    interiorImage: '/Nahas-al-Blad.webp',
-    description: 'Indulge in the rich flavors of Lebanon at Nafas Al Balad Arabic Restaurant. Savor every bite of our mouthwatering Lebanese dishes, made with authentic ingredients and served with warmth. A culinary journey you won\'t forget!',
-    cuisine: 'Authentic Arabic Flavors',
-    phone: '+971 55 100 9152',
-    whatsapp: '+971551009152',
+    name: 'Salt All Day Dining',
+    logo: '/Salt.webp',
+    interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
+    description: 'Every dish reflects our dedication to craftsmanship, combining time-honored traditions with contemporary culinary innovation.',
+    cuisine: 'International Specialties',
+    phone: '+971 4 276 5555',
+    whatsapp: '971526090739',
     rating: 4.7,
   },
   {
-    name: 'Chachu Chai',
+    name: 'Geoffrey\'s Resto bar',
     logo: '/WhatsApp_Image_2024-12-15_at_8.51.06_PM-removebg-preview-e1737565952933-r0e3pnup3j6939020r818shyip234hhmdnyw6ehnhc.png',
     interiorImage: '/Chahu-cai.png',
-    description: 'Chachu Chai: A Cafe for Tea at Seven Seas Hotel Dubai is the perfect place to unwind with a cup of tea, offering a cozy ambiance and a variety of flavors. Whether you\'re looking for a soothing experience or a place to meet friends, Chachu Chai is the spot to relax and enjoy a warm beverage. Come and enjoy a cup of warmth today!',
-    cuisine: 'A Cafe for Tea',
-    phone: '+971 55 100 9152',
-    whatsapp: '+971551009152',
+    description: 'Experience the perfect blend of live music, shisha, and refreshing drinks at Geoffrey’s Bar, nestled inside the iconic Seven Seas Hotel. Join us for unforgettable Dubai nights!',
+    cuisine: 'Resto Bar',
+    phone: '+971 4 276 5555',
+    whatsapp: '971526090739',
     rating: 4.6,
   },
 ]
@@ -536,8 +536,8 @@ export default function DiningPage() {
                 className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
                 <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Reservation:</h3>
-                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
-                  +971 55 100 9152
+                <a href="tel:+97142765555" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
+                  +971 4 276 5555
                 </a>
               </motion.div>
               <motion.div
@@ -549,8 +549,8 @@ export default function DiningPage() {
                 className="bg-white/5 backdrop-blur-md rounded-none p-8 border border-white/10"
               >
                 <h3 className="text-lg font-light text-amber-200 uppercase tracking-widest mb-4">Booking:</h3>
-                <a href="tel:+971551009152" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
-                  +971 55 100 9152
+                <a href="tel:+971526090739" className="text-2xl md:text-3xl font-bold hover:text-white transition-colors block">
+                  +971 52 609 0739
                 </a>
               </motion.div>
             </div>

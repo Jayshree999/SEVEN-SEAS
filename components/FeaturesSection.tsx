@@ -119,7 +119,7 @@ export default function FeaturesSection() {
               className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-amber-100 to-white drop-shadow-[0_0_40px_rgba(251,191,36,0.5)]"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
-              UNFORGETTABLE EXPERIENCES
+              Enjoy a luxury experience
             </h2>
 
             {/* Premium Underline */}
@@ -135,9 +135,9 @@ export default function FeaturesSection() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto font-light leading-relaxed"
+            className="text-lg md:text-xl text-gray-200 max-w-4xl mx-auto font-light leading-relaxed"
           >
-            Discover what makes Seven Seas Hotel the perfect choice for your Dubai stay
+            Discover the epitome of comfort and elegance at Seven Seas Hotel, where luxury meets impeccable hospitality. Nestled in the bustling neighborhood of Al Nahda 1, Dubai, our hotel offers a serene escape with world-class amenities and personalized services.
           </motion.p>
         </motion.div>
 

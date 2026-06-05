@@ -11,21 +11,23 @@ import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 const roomTypes = [
   {
     title: 'Executive Suites',
-    description: 'The Executive Suite offers a perfect blend of luxury and comfort, featuring a spacious living area, a king-sized bed, and a fully equipped kitchen. Enjoy stunning views of the Burj Khalifa and Dubai skyline from your private balcony.',
+    description: 'The Executive Suite offers a perfect blend of luxury and comfort, featuring a spacious living area, a king-sized bed, and a fully equipped kitchen. Enjoy stunning views of the Burj Khalifa and Dubai skyline from your private balcony, providing an unparalleled experience of elegance and convenience.',
     image: '/accomodation/executive suites.jpg',
     features: ['Spacious Living Area', 'King-Sized Bed', 'Private Balcony'],
     size: '85 m²',
     guests: '3 Adults',
     badge: 'SIGNATURE',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048564',
   },
   {
     title: 'Premium King',
-    description: 'A luxurious king bed room featuring a spacious layout with a large, comfortable king-sized bed, designed to offer the perfect blend of relaxation and sophistication.',
+    description: 'A luxurious king bed room featuring a spacious layout with a large, comfortable king-sized bed, designed to offer the perfect blend of relaxation and sophistication, along with modern amenities for an exceptional stay.',
     image: '/accomodation/premium king.jpg',
     features: ['King-Sized Bed', 'Modern Amenities', 'Luxury Design'],
     size: '45 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048568',
   },
   {
     title: 'Premium Twin',
@@ -35,61 +37,68 @@ const roomTypes = [
     size: '45 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048569',
   },
   {
     title: 'Premium City King',
-    description: 'A luxurious king bed room with stunning city views, featuring a spacious layout and a comfortable king-sized bed, complemented by sophisticated decor.',
+    description: 'A luxurious king bed room with stunning city views, featuring a spacious layout and a comfortable king-sized bed, complemented by sophisticated decor and modern amenities for an unforgettable stay.',
     image: '/accomodation/premium city king.jpg',
     features: ['City Views', 'King-Sized Bed', 'Sophisticated Decor'],
     size: '50 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048563',
   },
   {
     title: 'Premium City Twin',
-    description: 'Featuring two single beds, offering more spacious accommodations with breathtaking city views, complemented by elegant furnishings.',
+    description: 'Featuring two single beds, offering more spacious accommodations with breathtaking city views, complemented by elegant furnishings and modern amenities for a truly comfortable and elevated stay.',
     image: '/accomodation/premium city twin.jpeg',
     features: ['Two Single Beds', 'City Views', 'Elegant Furnishings'],
     size: '50 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048567',
   },
   {
     title: 'Premium Sea View King',
-    description: 'Wake up to refreshing views of the serene sea from your king-sized bed, where you can relax and unwind while enjoying the peaceful, scenic beauty.',
+    description: 'Wake up to refreshing views of the serene sea from your king-sized bed, where you can relax and unwind while enjoying the peaceful, scenic beauty right outside your window.',
     image: '/accomodation/premium sea view king.jpg',
     features: ['Sea Views', 'King-Sized Bed', 'Serene Atmosphere'],
     size: '50 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048566',
   },
   {
-    title: 'Deluxe Family 2 Queen',
-    description: 'Our Deluxe Family Room features two spacious queen-sized beds, perfect for a restful stay. Ideal for families, this room offers plenty of space.',
+    title: 'Deluxe Family 2 Queen Bed',
+    description: 'Our Deluxe Family Room features two spacious queen-sized beds, perfect for a restful stay. Ideal for families, this room offers plenty of space, modern amenities, and a comfortable setting for all.',
     image: '/accomodation/delux family 2 queen bed.jpg',
     features: ['Two Queen Beds', 'Family-Friendly', 'Spacious'],
     size: '60 m²',
     guests: '2 Adults, 2 Kids',
     badge: 'DELUXE',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048573,5048562',
   },
   {
     title: 'Deluxe Balcony King',
-    description: 'A luxurious balcony room with a king-sized bed, offering a private outdoor space with stunning city and stadium views.',
+    description: 'A luxurious balcony room with a king-sized bed, offering a private outdoor space with stunning city and stadium, combining comfort, elegance, and modern amenities for an unforgettable stay.',
     image: '/accomodation/delux balcony king.jpg',
     features: ['Private Balcony', 'King-Sized Bed', 'City Views'],
     size: '55 m²',
     guests: '2 Adults',
     badge: 'DELUXE',
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048565',
   },
   {
     title: 'Royal Suite',
-    description: 'The Presidential Suite is the hotel\'s largest and most luxurious room, featuring expansive living areas, a private balcony with stunning views of the Burj Khalifa.',
+    description: 'The Presidential Suite is the hotel\'s largest and most luxurious room, featuring expansive living areas, a private balcony with stunning views of the Burj Khalifa, Dubai skyline, and the Arabian Sea, offering the ultimate in comfort and sophistication.',
     image: '/accomodation/royal suit.jpg',
     features: ['Largest Suite', 'Expansive Living Areas', 'Panormaic Views'],
     size: '120 m²',
     guests: '4 Adults',
     badge: 'ROYAL',
-  },
+    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5049491',
+  }
 ]
 
 const luxuryEasing = [0.22, 1, 0.36, 1]
@@ -399,7 +408,7 @@ function RoomCard({
               </div>
 
               {/* CTA Button */}
-              <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+              <Link href={room.bookingUrl} target="_blank" rel="noopener noreferrer">
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}

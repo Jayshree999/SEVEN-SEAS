@@ -49,7 +49,7 @@ export default function Footer() {
   }
 
   const socialLinks = [
-    { name: 'Facebook', icon: Facebook, href: '#' },
+    { name: 'Facebook', icon: Facebook, href: 'https://www.facebook.com/geoffreyrestobar' },
     { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/sevenseashoteldubai/?hl=en' },
     { name: 'Twitter', icon: Twitter, href: '#' },
     { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/company/seven-seas-hotel-dubai' },

@@ -11,32 +11,25 @@ import { useRef } from 'react'
 
 const entertainmentVenues = [
   {
-    name: 'OVO Nightclub',
-    description: 'Experience Dubai\'s premier nightlife destination. Dance the night away to world-class DJs, enjoy premium cocktails, and immerse yourself in an electrifying atmosphere.',
+    name: 'Geoffrey\'s Resto Bar',
+    description: 'Your Ultimate Hangout Spot. Experience the perfect blend of live music, shisha, and refreshing drinks at Geoffrey’s Bar, nestled inside the iconic Seven Seas Hotel. Join us for unforgettable Dubai nights!',
+    icon: Coffee,
+    image: '/Jeoffrey.png',
+    gradient: 'from-amber-500 to-orange-500',
+  },
+  {
+    name: 'Vibe Nation',
+    description: 'The Rhythm of Africa. The Pulse of the Night. Step into Vibe Nation, where the energy never sleeps and the culture comes alive. Bringing you the absolute best of Afrobeats, Amapiano, Dancehall, and urban hits, Vibe Nation is your ultimate weekend escape.',
     icon: Music,
     image: '/entovee.jpg',
     gradient: 'from-purple-500 to-pink-500',
   },
   {
-    name: 'Rovee Club',
-    description: 'A vibrant entertainment venue featuring live performances, music, and an energetic atmosphere perfect for socializing and celebrating.',
-    icon: Mic,
-    image: '/ent1.jpg',
-    gradient: 'from-blue-500 to-cyan-500',
-  },
-  {
-    name: 'Bazigar',
-    description: 'An exciting entertainment destination offering live shows, performances, and unforgettable experiences.',
+    name: 'Baazigar',
+    description: '"Naam toh suna hoga..." But you haven\'t experienced it like this. Bazigar isn’t just a nightclub; it’s a nightly celebration of rhythm, luxury, and unforgettable memories. We invite you to lose yourself to the music, the lights, and the unmatched energy of the city\'s premier Indian nightlife destination.',
     icon: Sparkles,
     image: '/bazigar.png',
-    gradient: 'from-amber-500 to-orange-500',
-  },
-  {
-    name: 'Geoffrey\'s Sports Bar',
-    description: 'Catch the latest games on big screens while enjoying great food, drinks, and a lively sports atmosphere.',
-    icon: Users,
-    image: '/Jeoffrey.png',
-    gradient: 'from-green-500 to-emerald-500',
+    gradient: 'from-red-500 to-pink-500',
   },
 ]
 

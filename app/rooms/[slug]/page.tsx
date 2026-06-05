@@ -4,7 +4,6 @@ import { use, useState, useEffect, useLayoutEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import BookingModal from '@/components/BookingModal'
 import { PropertyGallery } from '@/components/property/PropertyGallery'
 import { PropertyInfo } from '@/components/property/PropertyInfo'
 import { PropertyAmenities } from '@/components/property/PropertyAmenities'
@@ -405,14 +404,15 @@ export default function PropertyPage({ params }: PageProps) {
                                         {/* Ultra-Premium Price Section */}
                                         {/* Price display hidden as per request */}
 
-                                        <BookingModal
-                                            roomId={property?._id || property?.id || ''}
-                                            roomName={property?.title || property?.name || 'Property'}
-                                            price={property?.price || 0}
-                                            monthlyRent={monthlyRent}
-                                            yearlyRent={yearlyRent}
-                                            property={property}
-                                        />
+                                        <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                                            <motion.button
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                                className="w-full px-6 sm:px-8 py-3 sm:py-4 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 relative overflow-hidden rounded-lg sm:rounded-xl text-sm sm:text-base whitespace-nowrap"
+                                            >
+                                                Book This Room
+                                            </motion.button>
+                                        </Link>
 
                                         {/* Premium Trust Badges - Monochromatic */}
                                         <div className="mt-8 pt-8 border-t border-gold/20">
@@ -577,14 +577,15 @@ export default function PropertyPage({ params }: PageProps) {
                             {/* Price hidden */}
                         </div>
                         <div className="flex-shrink-0">
-                            <BookingModal
-                                roomId={property?._id || property?.id || ''}
-                                roomName={property?.title || property?.name || 'Property'}
-                                price={property?.price || 0}
-                                monthlyRent={monthlyRent}
-                                yearlyRent={yearlyRent}
-                                property={property}
-                            />
+                            <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                                <motion.button
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="w-full px-4 py-2 bg-black text-white font-semibold uppercase tracking-wider hover:bg-gray-900 transition-all duration-300 rounded-lg text-sm whitespace-nowrap"
+                                >
+                                    Book This Room
+                                </motion.button>
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -57,25 +57,15 @@ export default function Navigation() {
     { name: 'Explore Venue', href: '/mehfil-ballroom' },
   ]
 
-  const offersSubmenu = [
-    { name: 'About', href: '/about-us' },
-    { name: 'Special Offers', href: '/offers-and-more' }
-  ]
-
-  const experiencesSubmenu = [
-    { name: 'Dining', href: '/dining' },
-    { name: 'Wellness', href: '/wellness' },
-    { name: 'Entertainment', href: '/entertainment' },
-    { name: 'Meetings', href: '/meetings' },
-    { name: 'Weddings', href: '/weddings' },
-    { name: 'Events', href: '/events-3' },
-    { name: 'Mehfil Ballroom', href: '/mehfil-ballroom' },
-  ]
-
   const navItems = [
-    { name: 'ROOMS', href: EXTERNAL_BOOKING_URL, isExternal: true },
-    { name: 'EXPERIENCES', href: '/addons', hasDropdown: true, dropdownKey: 'experiences' },
-    { name: 'OFFERS & MORE', href: '/offers-and-more', hasDropdown: true, dropdownKey: 'offers' },
+    { name: 'HOME', href: '/' },
+    { name: 'ROOMS', href: '/rooms' },
+    { name: 'DINING', href: '/dining' },
+    { name: 'MEHFIL BALLROOM', href: '/mehfil-ballroom', hasDropdown: true, dropdownKey: 'mehfil' },
+    { name: 'ENTERTAINMENT', href: '/entertainment' },
+    { name: 'WELLNESS', href: '/wellness' },
+    { name: 'OFFERS & MORE', href: '/offers-and-more' },
+    { name: 'ABOUT US', href: '/about-us' },
   ]
 
   return (
@@ -132,7 +122,7 @@ export default function Navigation() {
         )}
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+      <div className="w-full max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-2 xl:px-4 relative z-10">
         <div className="flex items-center justify-between min-h-[50px] sm:min-h-[52px]">
           {/* Logo */}
           <Link href="/">
@@ -149,7 +139,7 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+          <div className="hidden lg:flex items-center space-x-0 xl:space-x-2">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.name}
@@ -181,7 +171,7 @@ export default function Navigation() {
                     }}
                   >
                     <motion.div
-                      className="relative group cursor-pointer px-4 py-2 border border-transparent hover:border-white/10"
+                      className="relative group cursor-pointer px-1 py-1 xl:px-2 xl:py-1.5 border border-transparent hover:border-white/10"
                       whileHover={{ y: -1 }}
                       transition={{ type: 'spring', stiffness: 300 }}
                     >
@@ -190,7 +180,7 @@ export default function Navigation() {
                         className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100"
                         transition={{ duration: 0.3 }}
                       />
-                      <span className="text-white text-sm font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-amber-400 relative z-10 flex items-center gap-1.5">
+                      <span className="text-white text-[11px] xl:text-xs font-semibold tracking-wider uppercase transition-all duration-300 group-hover:text-amber-400 relative z-10 flex items-center gap-1.5 whitespace-nowrap">
                         {item.name}
                         <motion.svg
                           className="w-4 h-4"
@@ -224,7 +214,7 @@ export default function Navigation() {
                             className="absolute top-full left-0 mt-2 w-56 bg-white rounded-none shadow-2xl border border-gray-100 py-2 z-50 text-gray-900"
                           >
                             <div className="relative z-10">
-                              {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem, subIndex) => (
+                              {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : []).map((subItem, subIndex) => (
                                 <Link
                                   key={subItem.name}
                                   href={subItem.href}
@@ -257,7 +247,7 @@ export default function Navigation() {
                   item.isExternal ? (
                     <a href={item.href}>
                       <motion.div
-                        className="relative group px-4 py-2 border border-transparent hover:border-white/10"
+                        className="relative group px-1 py-1 xl:px-2 xl:py-1.5 border border-transparent hover:border-white/10"
                         whileHover={{ y: -1 }}
                         transition={{ type: 'spring', stiffness: 300 }}
                       >
@@ -265,7 +255,7 @@ export default function Navigation() {
                           className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100"
                           transition={{ duration: 0.3 }}
                         />
-                        <span className="text-white text-sm font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10">
+                        <span className="text-white text-[11px] xl:text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10 whitespace-nowrap">
                           {item.name}
                         </span>
                         <motion.div
@@ -277,7 +267,7 @@ export default function Navigation() {
                   ) : (
                   <Link href={item.href}>
                     <motion.div
-                      className="relative group px-4 py-2 border border-transparent hover:border-white/10"
+                      className="relative group px-1 py-1 xl:px-2 xl:py-1.5 border border-transparent hover:border-white/10"
                       whileHover={{ y: -1 }}
                       transition={{ type: 'spring', stiffness: 300 }}
                     >
@@ -286,7 +276,7 @@ export default function Navigation() {
                         className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100"
                         transition={{ duration: 0.3 }}
                       />
-                      <span className="text-white text-sm font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10">
+                      <span className="text-white text-[11px] xl:text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 group-hover:text-amber-400 relative z-10 whitespace-nowrap">
                         {item.name}
                       </span>
                       <motion.div
@@ -302,7 +292,7 @@ export default function Navigation() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-1">
             {/* Currency Selector */}
             <CurrencySelector />
             {isMounted && isAuth ? (
@@ -367,7 +357,7 @@ export default function Navigation() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-5 py-2 text-sm font-semibold text-amber-600 hover:text-amber-700 border-2 border-amber-600 hover:border-amber-700 rounded-lg transition-all"
+                  className="px-3 py-1.5 text-xs xl:text-sm font-semibold text-amber-600 hover:text-amber-700 border-2 border-amber-600 hover:border-amber-700 rounded-lg transition-all"
                 >
                   Sign In
                 </motion.button>
@@ -383,7 +373,7 @@ export default function Navigation() {
                   color: '#000000',
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-8 py-3 text-[10px] font-bold tracking-[0.3em] text-white bg-transparent hover:bg-white transition-all duration-300 rounded-none border border-white/30"
+                className="relative px-3 py-1.5 xl:px-4 xl:py-2 text-[10px] font-bold tracking-[0.1em] xl:tracking-[0.2em] text-white bg-transparent hover:bg-white transition-all duration-300 rounded-none border border-white/30"
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <span>BOOK NOW</span>
@@ -492,7 +482,7 @@ export default function Navigation() {
                               exit={{ opacity: 0, height: 0 }}
                               className="ml-4 mt-2 space-y-3 pl-4 border-l border-white/10"
                             >
-                              {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : item.dropdownKey === 'experiences' ? experiencesSubmenu : offersSubmenu).map((subItem) => (
+                              {(item.dropdownKey === 'mehfil' ? mehfilSubmenu : []).map((subItem) => (
                                 <Link
                                   key={subItem.name}
                                   href={subItem.href}
