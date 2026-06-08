@@ -17,7 +17,7 @@ const roomTypes = [
     size: '85 m²',
     guests: '3 Adults',
     badge: 'SIGNATURE',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048564',
+    bookingUrl: '/booking?room-type=5048564',
   },
   {
     title: 'Premium King',
@@ -27,7 +27,7 @@ const roomTypes = [
     size: '45 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048568',
+    bookingUrl: '/booking?room-type=5048568',
   },
   {
     title: 'Premium Twin',
@@ -37,7 +37,7 @@ const roomTypes = [
     size: '45 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048569',
+    bookingUrl: '/booking?room-type=5048569',
   },
   {
     title: 'Premium City King',
@@ -47,7 +47,7 @@ const roomTypes = [
     size: '50 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048563',
+    bookingUrl: '/booking?room-type=5048563',
   },
   {
     title: 'Premium City Twin',
@@ -57,7 +57,7 @@ const roomTypes = [
     size: '50 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048567',
+    bookingUrl: '/booking?room-type=5048567',
   },
   {
     title: 'Premium Sea View King',
@@ -67,7 +67,7 @@ const roomTypes = [
     size: '50 m²',
     guests: '2 Adults',
     badge: 'PREMIUM',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048566',
+    bookingUrl: '/booking?room-type=5048566',
   },
   {
     title: 'Deluxe Family 2 Queen Bed',
@@ -77,7 +77,7 @@ const roomTypes = [
     size: '60 m²',
     guests: '2 Adults, 2 Kids',
     badge: 'DELUXE',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048573,5048562',
+    bookingUrl: '/booking?room-type=5048573,5048562',
   },
   {
     title: 'Deluxe Balcony King',
@@ -87,7 +87,7 @@ const roomTypes = [
     size: '55 m²',
     guests: '2 Adults',
     badge: 'DELUXE',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5048565',
+    bookingUrl: '/booking?room-type=5048565',
   },
   {
     title: 'Royal Suite',
@@ -97,7 +97,7 @@ const roomTypes = [
     size: '120 m²',
     guests: '4 Adults',
     badge: 'ROYAL',
-    bookingUrl: 'https://www.sevenseashotel.net/booking?room-type=5049491',
+    bookingUrl: '/booking?room-type=5049491',
   }
 ]
 
@@ -408,7 +408,7 @@ function RoomCard({
               </div>
 
               {/* CTA Button */}
-              <Link href={room.bookingUrl} target="_blank" rel="noopener noreferrer">
+              <Link href={room.bookingUrl}>
                 <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.3 }}

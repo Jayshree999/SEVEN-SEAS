@@ -58,9 +58,9 @@ export default function OffersSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <span className="text-amber-600 text-sm font-bold tracking-[0.2em] uppercase mb-4 block">Exclusive Privileges</span>
+          <span className="text-amber-600 text-sm font-bold tracking-[0.2em] uppercase mb-4 block">Exclusively for You</span>
           <h2 className="text-4xl md:text-6xl font-bold text-black mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
-            SPECIAL OFFERS
+            LATEST OFFERS
           </h2>
           <div className="h-1 w-24 bg-amber-500 mx-auto rounded-full mb-6" />
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto font-light">

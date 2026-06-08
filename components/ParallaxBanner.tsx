@@ -70,7 +70,7 @@ export default function ParallaxBanner({ imageUrl, title, subtitle, height = 500
             transition={{ delay: 0.4 }}
             className="mt-8"
           >
-            <Link href={ctaLink} target="_blank" rel="noopener noreferrer">
+            <Link href={ctaLink}>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

@@ -3,32 +3,30 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
-import { UtensilsCrossed, Sparkles } from 'lucide-react'
+import { Calendar, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 
-const restaurants = [
+const events = [
   {
-    title: 'Caffine Coffee Shop',
-    image: '/Nahas-al-Blad.webp',
-    description: 'Enjoy a selection of premium coffees and light bites in a relaxed atmosphere.',
-    link: '/dining',
+    title: 'Destination Wedding',
+    image: '/Wedding.png',
+    link: '/weddings',
   },
   {
-    title: 'Thamburuu Kerala resturant & bar',
-    image: '/Delhi-6.png',
-    description: 'Experience the authentic taste of Kerala with our traditional dishes and refreshing beverages.',
-    link: '/dining',
+    title: 'Mehfil Ballroom',
+    image: '/banquet-4.png',
+    link: '/weddings',
   },
 ]
 
-export default function SignatureDining() {
+export default function WeddingsSection() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
 
   return (
-    <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-amber-50/30 via-white to-amber-50/30 relative overflow-hidden">
+    <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
       {/* Ultra Premium Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Luxury gradient orbs - Enhanced */}
@@ -40,7 +38,7 @@ export default function SignatureDining() {
         <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-transparent rounded-full blur-2xl"></div>
         <div className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-tr from-amber-400/20 to-transparent rounded-full blur-2xl"></div>
 
-        {/* Premium pattern overlay - More visible */}
+        {/* Premium pattern overlay */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -69,7 +67,7 @@ export default function SignatureDining() {
               className="flex-shrink-0 flex items-center gap-3"
             >
               <div className="relative">
-                <UtensilsCrossed className="w-8 h-8 md:w-10 md:h-10 text-amber-600" />
+                <Calendar className="w-8 h-8 md:w-10 md:h-10 text-amber-600" />
                 <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-amber-400 animate-pulse" />
               </div>
               <div>
@@ -77,9 +75,9 @@ export default function SignatureDining() {
                   className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight tracking-tight"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                 >
-                  SIGNATURE
+                  Dubai Iconic City
                   <br />
-                  DINING
+                  Weddings
                 </h2>
               </div>
             </motion.div>
@@ -92,16 +90,16 @@ export default function SignatureDining() {
               className="flex-1 max-w-2xl"
             >
               <p className="text-xs md:text-sm text-gray-700 leading-relaxed font-medium">
-                Embark on a journey of exquisite experiences, encompassing impeccable service, sophisticated ambience and masterful culinary artistry.
+                Seven Seas Hotel elevates every occasion into an awe-inspiring, immersive experience to cherish forever.
               </p>
             </motion.div>
           </div>
         </div>
 
-        {/* Restaurants Grid - Ultra Premium & Super Rich */}
+        {/* Events Grid - Ultra Premium & Super Rich */}
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-4 md:gap-5">
-          {restaurants.map((restaurant, index) => (
-            <RestaurantCard key={restaurant.title} restaurant={restaurant} index={index} inView={inView} />
+          {events.map((event, index) => (
+            <EventCard key={event.title} event={event} index={index} inView={inView} />
           ))}
         </div>
       </div>
@@ -109,17 +107,17 @@ export default function SignatureDining() {
   )
 }
 
-function RestaurantCard({
-  restaurant,
+function EventCard({
+  event,
   index,
   inView
 }: {
-  restaurant: typeof restaurants[0]
+  event: typeof events[0]
   index: number
   inView: boolean
 }) {
   return (
-    <Link href={restaurant.link}>
+    <Link href={event.link}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -133,8 +131,8 @@ function RestaurantCard({
         {/* Image */}
         <div className="absolute inset-0">
           <Image
-            src={restaurant.image}
-            alt={restaurant.title}
+            src={event.image}
+            alt={event.title}
             fill
             className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
@@ -149,34 +147,22 @@ function RestaurantCard({
 
         {/* Content Overlay - Premium Design */}
         <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6 z-10">
-          {/* Restaurant Name Badge */}
+          {/* Event Name Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 15 }}
             animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
             transition={{ delay: index * 0.1 + 0.2, type: 'spring', stiffness: 200 }}
             whileHover={{ scale: 1.05 }}
-            className="mb-3"
+            className="w-full"
           >
-            <div className="bg-white/95 backdrop-blur-md px-6 py-4 rounded-none shadow-xl border border-gray-100 inline-block">
+            <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-none shadow-2xl border border-white/20 text-center">
               <h3
-                className="text-sm md:text-base font-bold text-gray-900 whitespace-nowrap tracking-wide"
+                className="text-sm md:text-base font-bold text-white tracking-wide"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
-                {restaurant.title}
+                {event.title}
               </h3>
             </div>
-          </motion.div>
-
-          {/* Description */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
-            className="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-none shadow-lg border border-white/20"
-          >
-            <p className="text-[10px] md:text-xs text-gray-700 leading-relaxed font-medium">
-              {restaurant.description}
-            </p>
           </motion.div>
         </div>
 

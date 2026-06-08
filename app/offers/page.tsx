@@ -224,7 +224,7 @@ function OfferCard({ offer, index }: { offer: typeof offers[0], index: number })
         <RichButton 
           variant="filled" 
           className="w-full px-6 py-3.5 text-base mt-auto"
-          onClick={() => window.open(EXTERNAL_BOOKING_URL, '_blank')}
+          onClick={() => window.location.href = EXTERNAL_BOOKING_URL}
         >
           Book Now
         </RichButton>

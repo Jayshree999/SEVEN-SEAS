@@ -154,7 +154,7 @@ function RoomCard({ room, index }: { room: Room; index: number }) {
             </span>
           ))}
         </div>
-        <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="mt-auto w-full">
+        <Link href={EXTERNAL_BOOKING_URL} className="mt-auto w-full">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

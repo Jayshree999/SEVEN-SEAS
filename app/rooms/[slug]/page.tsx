@@ -66,9 +66,7 @@ export default function PropertyPage({ params }: PageProps) {
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
 
-    useLayoutEffect(() => {
-        window.location.href = EXTERNAL_BOOKING_URL
-    }, [])
+
     const { scrollYProgress } = useScroll()
     const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0])
     const { formatPrice: formatPriceCurrency } = useCurrency()
@@ -404,7 +402,7 @@ export default function PropertyPage({ params }: PageProps) {
                                         {/* Ultra-Premium Price Section */}
                                         {/* Price display hidden as per request */}
 
-                                        <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                                        <Link href={`/booking?room=${property?._id || ''}`}>
                                             <motion.button
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
@@ -577,7 +575,7 @@ export default function PropertyPage({ params }: PageProps) {
                             {/* Price hidden */}
                         </div>
                         <div className="flex-shrink-0">
-                            <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+                            <Link href={`/booking?room=${property?._id || ''}`}>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}

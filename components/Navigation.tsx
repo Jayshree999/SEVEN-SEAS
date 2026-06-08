@@ -57,7 +57,15 @@ export default function Navigation() {
     { name: 'Explore Venue', href: '/mehfil-ballroom' },
   ]
 
-  const navItems = [
+  interface NavItem {
+    name: string
+    href: string
+    hasDropdown?: boolean
+    dropdownKey?: string
+    isExternal?: boolean
+  }
+
+  const navItems: NavItem[] = [
     { name: 'HOME', href: '/' },
     { name: 'ROOMS', href: '/rooms' },
     { name: 'DINING', href: '/dining' },
@@ -363,7 +371,7 @@ export default function Navigation() {
                 </motion.button>
               </Link>
             )}
-            <a href={EXTERNAL_BOOKING_URL}>
+            <Link href={EXTERNAL_BOOKING_URL}>
               <motion.button
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -379,7 +387,7 @@ export default function Navigation() {
                   <span>BOOK NOW</span>
                 </span>
               </motion.button>
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -567,14 +575,14 @@ export default function Navigation() {
                   </Link>
                 </div>
               )}
-              <a href={EXTERNAL_BOOKING_URL} className="w-full" onClick={() => setIsMenuOpen(false)}>
+              <Link href={EXTERNAL_BOOKING_URL} className="w-full" onClick={() => setIsMenuOpen(false)}>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   className="w-full mt-6 px-6 py-5 bg-white text-black font-bold text-xs tracking-[0.3em] uppercase rounded-none min-h-[52px]"
                 >
                   BOOK NOW
                 </motion.button>
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

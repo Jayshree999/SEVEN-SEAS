@@ -8,17 +8,17 @@ import Link from 'next/link'
 
 const events = [
   {
-    title: 'MEETINGS & CONFERENCES',
+    title: 'Meetings & Confrences',
     image: '/Meeting-Room.png',
     link: '/meetings',
   },
   {
-    title: 'EVENTS',
+    title: 'Event',
     image: '/banquet-4.png',
     link: '/events-3',
   },
   {
-    title: 'TIMELESS WEDDINGS',
+    title: 'Timesless Weddings',
     image: '/Wedding.png',
     link: '/weddings',
   },
@@ -80,9 +80,9 @@ export default function EventsConferences() {
                   className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight tracking-tight"
                   style={{ fontFamily: 'var(--font-playfair)' }}
                 >
-                  EVENTS &
+                  Events &
                   <br />
-                  CONFERENCES
+                  Confrences
                 </h2>
               </div>
             </motion.div>

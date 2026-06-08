@@ -218,7 +218,7 @@ export default function BrandsOutlets() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                Dubai's Best Restaurant & Nightlife Experiences Across 21 Venues in Hotel
+                Dubai's Best Restaurant & Nightlife Experiences Across 10 Venues in Hotel
               </motion.p>
               <motion.p
                 className="text-sm md:text-base text-gray-600 leading-relaxed"
@@ -313,7 +313,7 @@ export default function BrandsOutlets() {
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               >
                 <h3 className="text-5xl md:text-7xl font-bold bg-gradient-to-b from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent mb-4 drop-shadow-sm" style={{ fontFamily: 'var(--font-playfair)' }}>
-                  21+ Venues
+                  10+ Venues
                 </h3>
               </motion.div>
 

@@ -187,7 +187,7 @@ export default function CTA() {
             className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
           >
             <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
-              <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
+              <Link href={EXTERNAL_BOOKING_URL}>
                 <motion.button
                   className="relative px-12 py-6 bg-white text-black font-bold text-lg uppercase tracking-[0.2em] rounded-none overflow-hidden group shadow-2xl"
                 >

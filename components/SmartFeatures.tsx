@@ -67,17 +67,17 @@ const smartFeatures = [
   },
   {
     icon: StorageLuggageIcon,
-    title: 'Secure Storage',
+    title: 'Store Luggage',
     description: 'Digital lockers for your valuables',
   },
   {
     icon: RoomServiceIcon,
-    title: 'In-Room Dining',
+    title: 'Room Service',
     description: 'Service at your fingertips',
   },
   {
     icon: DisinfectionIcon,
-    title: 'Hygiene Promise',
+    title: 'Disinfection',
     description: 'Certified sanitization standards',
   },
 ]
