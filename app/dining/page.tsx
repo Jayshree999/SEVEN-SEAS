@@ -6,50 +6,34 @@ import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { useInView } from 'react-intersection-observer'
-import { UtensilsCrossed, Phone, MessageCircle, Sparkles, ChefHat, Coffee, Star, ArrowRight, Clock } from 'lucide-react'
+import { UtensilsCrossed, Phone, MessageCircle, Sparkles, ChefHat, Coffee, Star, ArrowRight, Clock, Wifi } from 'lucide-react'
 import { useRef } from 'react'
 import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 const legendaryRestaurants = [
   {
-    name: 'Fine Dining Restaurant',
-    logo: '/Julline-revrp2l58qx09vxs4atc909w9xpcievp01xqget734.png',
-    interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
-    description: 'Welcome to Seven Seas Restaurants, where exceptional cuisine, elegant ambiance, and impeccable service come together to create a truly memorable dining experience.',
-    cuisine: 'Fine Dining',
-    phone: '+971 4 276 5555',
-    whatsapp: '971526090739',
-    rating: 4.8,
+    name: 'Thamburuu Kerala Resturant & Bar',
+    logo: '/thamburuu-logo.jpg',
+    interiorImage: '/thamburuu-dining.jpg',
+    description: "Step into a world where the rich traditions of God's Own Country come alive. Inspired by the serene rhythm of Kerala's iconic houseboats and the soul-stirring melodies of the traditional thamburu, Thamburuu offers a fine dining experience crafted for the discerning palate. Nestled within the hotel, our restaurant pairs timeless coastal recipes with a sophisticated, modern ambiance. Whether you are starting your evening with a curated cocktail or indulging in a multi-course feast, Thamburuu promises a journey of flavors that lingers long after the last bite.",
+    phone: '+971 526691891',
+    whatsapp: '971526691891',
   },
   {
-    name: "Thamburuu Kerala Restaurant & Bar",
-    logo: '/Rovee-LOGO-revrz2lbyaltsjeuq4fg9zffsiexehkw1jsp9dzew0.png',
-    interiorImage: '/Nahas-al-Blad.webp',
-    description: "Experience the true taste of Kerala. Whether you're planning a romantic dinner, a festive gathering, or a business lunch, our inviting ambiance and exceptional service ensure an unforgettable experience every time.",
-    cuisine: 'Authentic Kerala Cuisine',
-    phone: '+971 4 276 5555',
-    whatsapp: '971526090739',
-    rating: 4.9,
+    name: 'Salt All Day Dinning',
+    logo: '/salt-logo.png',
+    interiorImage: '/salt-dining.jpeg',
+    description: "From the first light of dawn to late-night cravings, Salt offers a seamless, sophisticated dining experience that evolves with the rhythm of your day. Named after the world's most essential element of flavor, Salt celebrates culinary clarity, sourcing premium global ingredients to craft a menu that is both comfortingly familiar and delightfully innovative. Set in a bright, sun-lit architectural space with panoramic views, Salt is the vibrant heart of the hotel—a place where casual breakfasts transition effortlessly into power lunches, and intimate dinners unfold into evening drinks.",
+    phone: '+971 525703016',
+    whatsapp: '971525703016',
   },
   {
-    name: 'Salt All Day Dining',
-    logo: '/Salt.webp',
-    interiorImage: '/019A3962-Enhanced-NR-1-scaled.jpg',
-    description: 'Every dish reflects our dedication to craftsmanship, combining time-honored traditions with contemporary culinary innovation.',
-    cuisine: 'International Specialties',
-    phone: '+971 4 276 5555',
-    whatsapp: '971526090739',
-    rating: 4.7,
-  },
-  {
-    name: 'Geoffrey\'s Resto bar',
-    logo: '/WhatsApp_Image_2024-12-15_at_8.51.06_PM-removebg-preview-e1737565952933-r0e3pnup3j6939020r818shyip234hhmdnyw6ehnhc.png',
-    interiorImage: '/Chahu-cai.png',
-    description: 'Experience the perfect blend of live music, shisha, and refreshing drinks at Geoffrey’s Bar, nestled inside the iconic Seven Seas Hotel. Join us for unforgettable Dubai nights!',
-    cuisine: 'Resto Bar',
-    phone: '+971 4 276 5555',
-    whatsapp: '971526090739',
-    rating: 4.6,
+    name: "Geoffrey's Resto bar",
+    logo: '/geoffreys-logo.jpg',
+    interiorImage: '/geoffreys-dining.png',
+    description: "Welcome to Geoffrey's, where the timeless charm of a classic gentleman's lounge meets the vibrant energy of modern nightlife. With its rich wood paneling, plush leather seating, and warm, ambient lighting, Geoffrey's offers an intimate yet lively sanctuary for hotel guests and local connoisseurs alike. Whether you are winding down after a day of business, celebrating a milestone, or catching up over flawlessly poured classics, Geoffrey's provides the perfect backdrop of effortless luxury and old-world sophistication.",
+    phone: '+971 551009150',
+    whatsapp: '971551009150',
   },
 ]
 
@@ -306,119 +290,109 @@ export default function DiningPage() {
             </p>
           </motion.div>
 
-          <div className="space-y-32">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {legendaryRestaurants.map((restaurant, index) => (
               <motion.div
                 key={restaurant.name}
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, y: 50 }}
                 animate={restaurantsInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-6 md:gap-8 items-center group`}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="bg-white border border-gray-100 shadow-sm flex flex-col justify-between group h-full relative"
               >
-                <motion.div
-                  className="flex-1 relative"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="relative h-[500px] md:h-[600px] rounded-none overflow-hidden shadow-xl border border-gray-100">
+                {/* Image Section */}
+                <div className="relative h-64 w-full">
+                  {/* Image wrapper with overflow-hidden to contain the zoom effect */}
+                  <div className="relative w-full h-full overflow-hidden">
                     <Image
                       src={restaurant.interiorImage}
                       alt={restaurant.name}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-
-                    {/* Rating Badge */}
-                    <motion.div
-                      className="absolute top-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 shadow-lg"
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 + 0.3, type: 'spring' }}
-                    >
-                      <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-                      <span className="font-bold text-gray-900">{restaurant.rating}</span>
-                    </motion.div>
                   </div>
-                </motion.div>
+                  {/* Circular logo badge overlapping the bottom-right of the image (placed outside overflow-hidden) */}
+                  <div className="absolute bottom-0 right-6 translate-y-1/2 z-10">
+                    <div className="relative w-20 h-20 bg-white rounded-full p-2 flex items-center justify-center shadow-lg border border-gray-100">
+                      <div className="relative w-full h-full rounded-full overflow-hidden">
+                        <Image
+                          src={restaurant.logo}
+                          alt={`${restaurant.name} Logo`}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                <div className="flex-1 space-y-6">
-                  <motion.div
-                    className="relative h-24 w-auto"
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.2 }}
-                  >
-                    <Image
-                      src={restaurant.logo}
-                      alt={`${restaurant.name} Logo`}
-                      fill
-                      className="object-contain"
-                    />
-                  </motion.div>
+                {/* Content Section */}
+                <div className="p-6 pt-12 flex-1 flex flex-col justify-between">
+                  <div>
+                    {/* 4.5 Stars Rating */}
+                    <div className="flex items-center gap-0.5 mb-3">
+                      {[1, 2, 3, 4].map((star) => (
+                        <svg
+                          key={star}
+                          className="w-5 h-5 fill-amber-500 text-amber-500"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                        </svg>
+                      ))}
+                      {/* 5th Star: Half-filled */}
+                      <svg className="w-5 h-5 text-amber-500" viewBox="0 0 24 24">
+                        <defs>
+                          <linearGradient id={`halfGrad-${index}`}>
+                            <stop offset="50%" stopColor="#f59e0b" />
+                            <stop offset="50%" stopColor="#e5e7eb" />
+                          </linearGradient>
+                        </defs>
+                        <path
+                          fill={`url(#halfGrad-${index})`}
+                          d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                        />
+                      </svg>
+                    </div>
 
-                  <motion.h3
-                    className="text-4xl md:text-5xl font-bold"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.2 + 0.1 }}
-                  >
-                    {restaurant.name}
-                  </motion.h3>
+                    <h3
+                      className="text-lg font-bold text-gray-900 mb-3"
+                      style={{ fontFamily: 'var(--font-playfair)' }}
+                    >
+                      {restaurant.name}
+                    </h3>
 
-                  <motion.p
-                    className="text-gray-600 text-lg md:text-xl leading-relaxed"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.2 + 0.2 }}
-                  >
-                    {restaurant.description}
-                  </motion.p>
+                    <p className="text-gray-500 text-sm font-light leading-relaxed mb-6">
+                      {restaurant.description}
+                    </p>
+                  </div>
 
-                  <motion.div
-                    className="flex items-center gap-3 text-amber-600 font-semibold text-lg"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.2 + 0.3 }}
-                  >
-                    <ChefHat className="w-6 h-6" />
-                    <span>Cuisine: {restaurant.cuisine}</span>
-                  </motion.div>
-
-                  <motion.div
-                    className="flex flex-wrap gap-4 pt-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.2 + 0.4 }}
-                  >
-                    <motion.a
+                  <div>
+                    {/* Phone link */}
+                    <a
                       href={`tel:${restaurant.phone.replace(/\s/g, '')}`}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-8 py-4 bg-gray-900 text-white rounded-none font-bold uppercase tracking-widest shadow-lg hover:bg-black transition-all"
+                      className="flex items-center gap-2 text-gray-500 hover:text-[#b8860b] transition-colors text-sm mb-6 font-medium"
                     >
-                      <Phone className="w-5 h-5" />
-                      {restaurant.phone}
-                    </motion.a>
-                    <motion.a
-                      href={`https://wa.me/${restaurant.whatsapp}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex items-center gap-2 px-8 py-4 bg-[#25D366] text-white rounded-none font-bold uppercase tracking-widest shadow-lg hover:brightness-110 transition-all"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      WhatsApp
-                    </motion.a>
-                  </motion.div>
+                      <Phone className="w-4 h-4 text-gray-500" />
+                      <span>{restaurant.phone}</span>
+                    </a>
+
+                    {/* Bottom action bar */}
+                    <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+                      <a
+                        href={`https://wa.me/${restaurant.whatsapp}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-2.5 bg-[#b8860b] hover:bg-[#997008] text-white text-xs md:text-sm font-bold uppercase tracking-widest transition-colors duration-300 rounded-none shadow-sm inline-block text-center"
+                      >
+                        WhatsApp
+                      </a>
+
+                      <div className="flex items-center gap-3 text-[#b8860b]">
+                        <UtensilsCrossed className="w-5 h-5" />
+                        <Wifi className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
