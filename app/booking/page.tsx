@@ -10,7 +10,7 @@ import { useCurrency } from '@/contexts/CurrencyContext'
 import { fetchProperties, Property } from '@/lib/api'
 import { createBooking, createBookingWithPayment, BookingData } from '@/lib/booking'
 import { toast } from 'sonner'
-import { Calendar, Users, CreditCard, User, CheckCircle2, Lock, ArrowRight, ArrowLeft, KeyRound } from 'lucide-react'
+import { Calendar, Users, CreditCard, User, CheckCircle2, Lock, ArrowRight, ArrowLeft, KeyRound, Utensils, Coffee, RotateCcw, ChevronDown, ChevronUp } from 'lucide-react'
 import Link from 'next/link'
 
 // Mapping of external Exely room-types to our local property IDs
@@ -27,6 +27,54 @@ const EXELY_ROOM_MAPPING: { [key: string]: string } = {
   '5049491': '69487bfdef489742dc309158', // Royal Suite
 }
 
+interface RatePlan {
+  id: string
+  name: string
+  meals: string
+  mealsDetail: string
+  cancellation: string
+  payment: string
+  multiplier: number
+  discount: string
+  originalPriceMultiplier: number
+}
+
+const RATE_PLANS: { [key: string]: RatePlan } = {
+  half_board: {
+    id: 'half_board',
+    name: 'NONREFUNDABLE HALF BOARD',
+    meals: 'Half Board',
+    mealsDetail: 'Half Board (Breakfast & Dinner included)',
+    cancellation: 'Non-refundable. In case of cancellation or no-show, 100% of the booking amount is charged.',
+    payment: 'Payment: at check-in',
+    multiplier: 0.95,
+    discount: '55%',
+    originalPriceMultiplier: 0.95 / 0.45
+  },
+  bed_breakfast: {
+    id: 'bed_breakfast',
+    name: 'FLEXIBLE BED AND BREAKFAST',
+    meals: 'Breakfast',
+    mealsDetail: 'Breakfast included',
+    cancellation: 'Free cancellation up to 24 hours before check-in.',
+    payment: 'Payment: at check-in, bank transfer',
+    multiplier: 1.0,
+    discount: '55%',
+    originalPriceMultiplier: 1.0 / 0.45
+  },
+  room_only: {
+    id: 'room_only',
+    name: 'NONREFUNDABLE ROOM ONLY',
+    meals: 'Meals can be added',
+    mealsDetail: 'Meals not included (can be added for an extra fee at the hotel)',
+    cancellation: 'Non-refundable. In case of cancellation or no-show, 100% of the booking amount is charged.',
+    payment: 'Payment: at check-in',
+    multiplier: 1.5,
+    discount: '36%',
+    originalPriceMultiplier: 1.5 / 0.64
+  }
+}
+
 function BookingContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -36,6 +84,8 @@ function BookingContent() {
   const [properties, setProperties] = useState<Property[]>([])
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
   const [loadingRooms, setLoadingRooms] = useState(true)
+  const [selectedRatePlan, setSelectedRatePlan] = useState<'half_board' | 'bed_breakfast' | 'room_only'>('bed_breakfast')
+  const [expandedPlan, setExpandedPlan] = useState<string | null>(null)
 
   // Booking Form State
   const [step, setStep] = useState(1)
@@ -114,7 +164,9 @@ function BookingContent() {
   }
 
   const nights = calculateNights()
-  const pricePerNight = selectedProperty?.price || 0
+  const selectedPlanObj = RATE_PLANS[selectedRatePlan]
+  const basePrice = selectedProperty?.price || 0
+  const pricePerNight = basePrice * selectedPlanObj.multiplier
   const totalAmount = pricePerNight * nights
 
   const handleNextStep = () => {
@@ -378,6 +430,152 @@ function BookingContent() {
                       </div>
                     )}
                   </div>
+
+                  {/* Rate Plan Selection */}
+                  {selectedProperty && (
+                    <div className="space-y-4 pt-6 border-t border-gray-100">
+                      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                        Select a Rate Plan
+                      </label>
+                      <div className="space-y-4">
+                        {Object.values(RATE_PLANS).map((plan) => {
+                          const isSelected = selectedRatePlan === plan.id
+                          const planPrice = (selectedProperty.price || 0) * plan.multiplier
+                          const originalPrice = (selectedProperty.price || 0) * plan.originalPriceMultiplier
+                          const isExpanded = expandedPlan === plan.id
+
+                          return (
+                            <div
+                              key={plan.id}
+                              className={`border rounded-xl transition-all overflow-hidden ${
+                                isSelected
+                                  ? 'border-amber-600 bg-amber-50/10 shadow-md'
+                                  : 'border-gray-200 hover:border-gray-300 bg-white'
+                              }`}
+                            >
+                              <div 
+                                onClick={() => setSelectedRatePlan(plan.id as any)}
+                                className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer"
+                              >
+                                <div className="space-y-3 flex-grow">
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <h4 className="font-bold text-charcoal text-sm tracking-wide uppercase">
+                                      {plan.name}
+                                    </h4>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        setExpandedPlan(isExpanded ? null : plan.id)
+                                      }}
+                                      className="text-[10px] font-bold text-amber-800 hover:text-amber-600 uppercase tracking-wider flex items-center gap-0.5 ml-2"
+                                    >
+                                      {isExpanded ? 'Hide info' : 'Show more'}
+                                      {isExpanded ? (
+                                        <ChevronUp className="w-3.5 h-3.5" />
+                                      ) : (
+                                        <ChevronDown className="w-3.5 h-3.5" />
+                                      )}
+                                    </button>
+                                  </div>
+
+                                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-gray-600">
+                                    <div className="flex items-center gap-2">
+                                      {plan.id === 'half_board' ? (
+                                        <Utensils className="w-4 h-4 text-amber-800 flex-shrink-0" />
+                                      ) : plan.id === 'bed_breakfast' ? (
+                                        <Coffee className="w-4 h-4 text-amber-800 flex-shrink-0" />
+                                      ) : (
+                                        <Utensils className="w-4 h-4 text-amber-800 flex-shrink-0" />
+                                      )}
+                                      <span>{plan.meals}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <RotateCcw className="w-4 h-4 text-amber-800 flex-shrink-0" />
+                                      <span>Cancellation policy</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <CreditCard className="w-4 h-4 text-amber-800 flex-shrink-0" />
+                                      <span>Payment: at check-in</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="text-[11px] text-gray-400 font-medium flex items-center flex-wrap gap-2 pt-2 border-t border-gray-100">
+                                    <span>Wi-Fi</span>
+                                    <span>•</span>
+                                    <span>Outdoor swimming pool</span>
+                                    <span>•</span>
+                                    <span>Prime location</span>
+                                    <span>•</span>
+                                    <span>Tea set and bottled water</span>
+                                  </div>
+                                </div>
+
+                                <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 border-t md:border-t-0 pt-3 md:pt-0 border-gray-100 min-w-[160px]">
+                                  <div className="text-left md:text-right">
+                                    <div className="flex items-center gap-1.5 justify-start md:justify-end">
+                                      <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center justify-center">
+                                        -{plan.discount}
+                                      </span>
+                                      <span className="text-xs text-gray-400 line-through">
+                                        {formatPrice(originalPrice)}
+                                      </span>
+                                    </div>
+                                    <div className="font-black text-amber-700 text-xl mt-0.5">
+                                      {formatPrice(planPrice)}
+                                    </div>
+                                    <span className="text-[10px] block text-gray-400 font-bold uppercase tracking-wider">
+                                      Price for 1 night
+                                    </span>
+                                  </div>
+
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      setSelectedRatePlan(plan.id as any)
+                                    }}
+                                    className={`px-5 py-2.5 text-xs font-bold rounded-lg uppercase tracking-wider transition-all w-full md:w-auto text-center ${
+                                      isSelected
+                                        ? 'bg-amber-600 hover:bg-amber-700 text-white shadow-sm'
+                                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                                    }`}
+                                  >
+                                    {isSelected ? 'Selected' : 'Select'}
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Expanded Detail Panel */}
+                              <AnimatePresence>
+                                {isExpanded && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="bg-gray-50 border-t border-gray-100 px-5 py-4 space-y-3 text-xs text-gray-600"
+                                  >
+                                    <div>
+                                      <h5 className="font-bold text-charcoal uppercase tracking-wider text-[10px] mb-1">Meal Plan Details</h5>
+                                      <p>{plan.mealsDetail}</p>
+                                    </div>
+                                    <div>
+                                      <h5 className="font-bold text-charcoal uppercase tracking-wider text-[10px] mb-1">Cancellation Policy</h5>
+                                      <p>{plan.cancellation}</p>
+                                    </div>
+                                    <div>
+                                      <h5 className="font-bold text-charcoal uppercase tracking-wider text-[10px] mb-1">Payment Method Details</h5>
+                                      <p>{plan.payment}</p>
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Actions */}
                   <div className="pt-4 flex justify-end">
@@ -748,16 +946,35 @@ function BookingContent() {
                       <span className="font-semibold text-gray-900">{nights} {nights === 1 ? 'Night' : 'Nights'}</span>
                     </div>
                   )}
+                  {/* Rate Plan */}
+                  <div className="flex justify-between border-t border-gray-100 pt-2 mt-2">
+                    <span className="text-gray-500">Rate Plan</span>
+                    <span className="font-semibold text-amber-800 text-right max-w-[170px] truncate text-xs uppercase tracking-wider">
+                      {RATE_PLANS[selectedRatePlan].name}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="border-t border-gray-100 pt-4 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Rate per night</span>
-                    <span className="font-semibold text-gray-900">{formatPrice(pricePerNight)}</span>
+                    <div className="text-right">
+                      <span className="text-xs text-gray-400 line-through mr-2">
+                        {formatPrice((selectedProperty?.price || 0) * RATE_PLANS[selectedRatePlan].originalPriceMultiplier)}
+                      </span>
+                      <span className="font-semibold text-gray-900">{formatPrice(pricePerNight)}</span>
+                    </div>
                   </div>
                   <div className="flex justify-between text-base font-black border-t border-dashed border-gray-200 pt-3">
                     <span className="text-charcoal uppercase tracking-wider text-xs font-bold">Total Est. Price</span>
-                    <span className="text-amber-700 text-xl">{formatPrice(totalAmount)}</span>
+                    <div className="text-right">
+                      {nights > 0 && (
+                        <div className="text-xs text-gray-400 line-through font-normal mb-0.5">
+                          {formatPrice(((selectedProperty?.price || 0) * RATE_PLANS[selectedRatePlan].originalPriceMultiplier) * nights)}
+                        </div>
+                      )}
+                      <span className="text-amber-700 text-xl">{formatPrice(totalAmount)}</span>
+                    </div>
                   </div>
                   <p className="text-[10px] text-gray-400 text-right font-medium">Excluding 10% service charge & Tourism Dirham</p>
                 </div>
