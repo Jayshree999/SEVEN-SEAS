@@ -11,10 +11,9 @@ import Link from 'next/link'
 const brands = [
   { name: 'Salt', image: '/partners/Salt.png', category: 'Restaurant', link: '/dining' },
   { name: 'Rovee', image: '/partners/Rovee.jpeg', category: 'Restaurant', link: '/restaurant' },
-  { name: 'Behnah Wellness', image: '/partners/Behnah.png', category: 'Wellness', link: '/wellness' },
+  { name: 'Behnah Wellness', image: '/partners/Vibenation.jpeg', category: 'Wellness', link: '/wellness' },
   { name: "Geoffrey's", image: '/partners/Geoffreys.png', category: 'Sports Bar', link: '/entertainment' },
-  { name: 'Dolly Chai Wala', image: '/partners/Dolly.png', category: 'Café', link: '#' },
-  { name: 'Vibe Nation', image: '/partners/Vibenation.jpeg', category: 'Nightlife', link: '/entertainment' },
+  { name: 'Vibe Nation', image: '/partners/Behnah.png', category: 'Nightlife', link: '/entertainment' },
   { name: 'Thamburu', image: '/partners/Thamburu.jpeg', category: 'Restaurant', link: '/dining' },
   { name: 'Naughty Restobar', image: '/partners/Naughty.jpeg', category: 'Restobar', link: '/entertainment' },
 ]

@@ -48,18 +48,6 @@ const RoomServiceIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
-const DisinfectionIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g>
-      <path d="M32 10L14 18C14 18 12 28 14 38C16 48 32 54 32 54C32 54 48 48 50 38C52 28 50 18 50 18L32 10Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M32 16L20 22C20 22 19 29 20 36C21 43 32 48 32 48C32 48 43 43 44 36C45 29 44 22 44 22L32 16Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M26 32L30 36L38 26" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M48 22L50 24L52 22L50 20L48 22Z" fill="currentColor" />
-      <path d="M14 30L15.5 31.5L17 30L15.5 28.5L14 30Z" fill="currentColor" opacity="0.8" />
-    </g>
-  </svg>
-)
-
 const EVChargingIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g>
@@ -96,8 +84,8 @@ const smartFeatures = [
   },
   {
     image: '/icons/icon-18.png',
-    title: 'Disinfection',
-    description: 'Certified sanitization standards',
+    title: 'All Day Dining',
+    description: '24/7 dining experience',
   },
 ]
 

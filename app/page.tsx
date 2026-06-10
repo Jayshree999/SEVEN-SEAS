@@ -107,14 +107,14 @@ export default function Home() {
         <AccommodationSection />
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={sectionVariants}
       >
         <OffersSection />
-      </motion.div>
+      </motion.div> */}
 
       {/* Weddings */}
       <motion.div
