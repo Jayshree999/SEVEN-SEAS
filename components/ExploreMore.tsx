@@ -7,19 +7,34 @@ import { useInView } from 'react-intersection-observer'
 
 const amenities = [
   {
-    title: 'SPA & WELLNESS',
-    image: '/SPA.png',
-    link: '/wellness',
+    title: 'LONG STAY OFFERS',
+    image: '/explore/explore-1.jpeg',
+    link: '/offers-and-more',
   },
   {
-    title: 'FITNESS & GYM',
-    image: '/Gym.png',
-    link: '/wellness',
+    title: 'STAYCATION OFFER',
+    image: '/explore/explore-2.jpeg',
+    link: '/offers-and-more',
   },
   {
-    title: 'SWIMMING POOL',
-    image: '/DSC02661-2048x1365.jpg',
-    link: '/wellness',
+    title: 'LUNCH & DINNER BUFFET',
+    image: '/explore/explore-3.jpeg',
+    link: '/offers-and-more',
+  },
+  {
+    title: 'THAMBURUU RESTOBAR',
+    image: '/explore/explore-4.jpeg',
+    link: '/offers-and-more',
+  },
+  {
+    title: 'WEEKEND DRUNCH',
+    image: '/explore/explore-5.jpeg',
+    link: '/offers-and-more',
+  },
+  {
+    title: 'BANQUETS & CELEBRATIONS',
+    image: '/explore/explore-6.jpeg',
+    link: '/offers-and-more',
   },
 ]
 
@@ -66,9 +81,9 @@ export default function ExploreMore() {
                 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight tracking-tight"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
-                EXPLORE
+                LATEST
                 <br />
-                MORE
+                OFFERS
               </h2>
             </motion.div>
 
@@ -80,7 +95,7 @@ export default function ExploreMore() {
               className="flex-1 max-w-lg"
             >
               <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
-                Relaxing beach paradises, thrilling urban getaways, exotic hill stations and historic homes of royalty are all within reach.
+                Dive into cool adventures at our picture-perfect destinations with Seven Seas Hotel.
               </p>
             </motion.div>
           </div>
@@ -113,7 +128,7 @@ function AmenityCard({
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.4, delay: index * 0.08 }}
         whileHover={{ y: -4, scale: 1.02 }}
-        className="group relative h-[280px] md:h-[320px] lg:h-[360px] overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent bg-white"
+        className="group relative aspect-square w-full overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent bg-white"
       >
         <div className="absolute inset-0 bg-[#f8f6f0]">
           <Image

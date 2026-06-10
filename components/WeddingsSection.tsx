@@ -9,12 +9,12 @@ import Link from 'next/link'
 const events = [
   {
     title: 'Destination Wedding',
-    image: '/Wedding.png',
+    image: '/destination-wedding.jpg',
     link: '/weddings',
   },
   {
     title: 'Mehfil Ballroom',
-    image: '/banquet-4.png',
+    image: '/banquet-mehfil.jpeg',
     link: '/weddings',
   },
 ]

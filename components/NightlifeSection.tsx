@@ -9,19 +9,19 @@ import Link from 'next/link'
 const venues = [
   {
     title: 'Baazigar',
-    image: '/russian-belly-dancer-r1n13tqyv4wa4d8wi79pk0zwuej9wxn0rzr4nczv1q.jpg',
+    image: '/nightlife/baazigar.jpg',
     description: 'Catch every game live with an unbeatable atmosphere & refreshing drinks. The ultimate destination for sports lovers!',
     link: '/entertainment',
   },
   {
     title: "Geofrey's Resto bar",
-    image: '/WhatsApp-Image-2025-02-17-at-5.41.40-PM-r1n18v5ti5smd3xe2vopf97vhrp46in7sxnu9rivou.jpeg',
+    image: '/nightlife/geoffreys.jpeg',
     description: 'Feel the beat, own the night! Experience electrifying music, dazzling lights, and an unforgettable party vibe at Rhythm Nightclub.',
     link: '/entertainment',
   },
   {
     title: 'Vibe Nation',
-    image: '/OVO-revnlf3x7tabbdepouclc6803qagbm0zetfdwyr7ce.png',
+    image: '/nightlife/vibenation.jpeg',
     description: 'Sip, savor, and unwind with a premium selection of spirits and cocktails in a stylish, laid-back ambiance.',
     link: '/entertainment',
   },

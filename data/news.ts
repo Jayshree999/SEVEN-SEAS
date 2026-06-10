@@ -20,7 +20,7 @@ export const newsItems = [
       
       <p>Discover a new standard of luxury at Seven Seas Hotel, where every stay is a memorable experience.</p>
     `,
-    image: '/019A3962-Enhanced-NR-1-scaled.jpg',
+    image: '/news/news-1.jpg',
     category: 'Luxury',
   },
   {
@@ -43,7 +43,7 @@ export const newsItems = [
       
       <p>Join us for an unforgettable dining experience that will leave you craving for more.</p>
     `,
-    image: '/Salt.webp',
+    image: '/news/news-2.webp',
     category: 'Dining',
   },
   {
@@ -58,7 +58,7 @@ export const newsItems = [
       
       <p>Whether you are here for a weekend getaway or an extended stay, Seven Seas Hotel promises a comfortable and memorable experience. We look forward to welcoming you to your home away from home in Dubai.</p>
     `,
-    image: '/hero2.jpg',
+    image: '/news/news-3.jpg',
     category: 'Hotel',
   },
   {
@@ -73,7 +73,7 @@ export const newsItems = [
       
       <p>Experience the warmth of Arabian hospitality combined with modern luxury at Seven Seas Hotel. Book your stay today and discover your own private oasis in Dubai.</p>
     `,
-    image: '/DSC02661-2048x1365.jpg',
+    image: '/news/news-4.jpg',
     category: 'Luxury',
   },
   {
@@ -88,7 +88,7 @@ export const newsItems = [
       
       <p>Come and experience the perfect harmony of luxury and comfort at Seven Seas Hotel, Dubai.</p>
     `,
-    image: '/019A3962-Enhanced-NR-1-scaled.jpg',
+    image: '/news/news-5.jpg',
     category: 'Experience',
   },
   {
@@ -103,7 +103,7 @@ export const newsItems = [
       
       <p>Make your special moments truly unforgettable at the Mehfil Ballroom, where luxury and celebration come together.</p>
     `,
-    image: '/banquet-4.png',
+    image: '/news/news-6.jpg',
     category: 'Events',
   },
 ]

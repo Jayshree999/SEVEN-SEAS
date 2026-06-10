@@ -8,15 +8,21 @@ import Link from 'next/link'
 
 const restaurants = [
   {
-    title: 'Caffine Coffee Shop',
-    image: '/Nahas-al-Blad.webp',
-    description: 'Enjoy a selection of premium coffees and light bites in a relaxed atmosphere.',
+    title: 'Juliennes Indian Restaurant',
+    image: '/dining/juliennes.png',
+    description: 'A celebration of Indian culinary heritage with a modern twist, serving exquisite gourmet dishes.',
     link: '/dining',
   },
   {
-    title: 'Thamburuu Kerala resturant & bar',
-    image: '/Delhi-6.png',
-    description: 'Experience the authentic taste of Kerala with our traditional dishes and refreshing beverages.',
+    title: 'Rovee Arabic Cuisine',
+    image: '/dining/rovee.png',
+    description: 'Authentic Arabic cuisine served in a traditional setting, capturing the true heritage of the region.',
+    link: '/dining',
+  },
+  {
+    title: 'Caffeine Coffee Shop',
+    image: '/dining/caffeine.jpg',
+    description: 'At Caffeine Coffee Shop, every cup tells a story. Enjoy exceptional coffee experiences in a warm, relaxing atmosphere.',
     link: '/dining',
   },
 ]
@@ -99,7 +105,7 @@ export default function SignatureDining() {
         </div>
 
         {/* Restaurants Grid - Ultra Premium & Super Rich */}
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-4 md:gap-5">
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto gap-4 md:gap-5">
           {restaurants.map((restaurant, index) => (
             <RestaurantCard key={restaurant.title} restaurant={restaurant} index={index} inView={inView} />
           ))}

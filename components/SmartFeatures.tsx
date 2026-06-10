@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useInView } from 'react-intersection-observer'
 
 // Custom Premium SVG Icons
@@ -74,17 +75,17 @@ const EVChargingIcon = ({ className }: { className?: string }) => (
 
 const smartFeatures = [
   {
-    icon: SmartKeyIcon,
+    image: '/icons/icon-16.png',
     title: 'Smart Key',
     description: 'Touch-free access to your room',
   },
   {
-    icon: StorageLuggageIcon,
+    image: '/icons/icon-15.png',
     title: 'Store Luggage',
     description: 'Digital lockers for your valuables',
   },
   {
-    icon: RoomServiceIcon,
+    image: '/icons/icon-17.png',
     title: 'Room Service',
     description: 'Service at your fingertips',
   },
@@ -94,7 +95,7 @@ const smartFeatures = [
     description: 'On-site electric vehicle charging',
   },
   {
-    icon: DisinfectionIcon,
+    image: '/icons/icon-18.png',
     title: 'Disinfection',
     description: 'Certified sanitization standards',
   },
@@ -208,7 +209,7 @@ function FeatureCard({
   feature: typeof smartFeatures[0]
   index: number
 }) {
-  const Icon = feature.icon
+  const Icon = 'icon' in feature ? feature.icon : null
 
   return (
     <motion.div
@@ -234,11 +235,21 @@ function FeatureCard({
         <div className="relative mb-8">
           <div className="absolute inset-0 bg-amber-100/50 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform group-hover:scale-150" />
           <motion.div
-            className="relative w-24 h-24 rounded-none border border-gray-100 flex items-center justify-center bg-transparent group-hover:bg-amber-50/20 transition-all duration-700"
+            className="relative w-24 h-24 rounded-none border border-gray-100 flex items-center justify-center bg-transparent group-hover:bg-amber-50/20 transition-all duration-700 p-4"
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.8, ease: luxuryEasing }}
           >
-            <Icon className="w-10 h-10 text-gray-400 group-hover:text-amber-600 transition-colors duration-500" />
+            {feature.image ? (
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-500"
+              />
+            ) : Icon ? (
+              <Icon className="w-10 h-10 text-gray-400 group-hover:text-amber-600 transition-colors duration-500" />
+            ) : null}
           </motion.div>
         </div>
 

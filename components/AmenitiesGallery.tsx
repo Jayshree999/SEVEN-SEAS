@@ -7,39 +7,39 @@ import { useInView } from 'react-intersection-observer'
 const amenities = [
   {
     title: 'SPA & WELLNESS',
-    image: '/SPA.png',
+    image: '/explore/explore-1.jpeg',
   },
   {
     title: 'FITNESS & GYM',
-    image: '/Gym.png',
+    image: '/explore/explore-2.jpeg',
   },
   {
     title: 'SWIMMING POOL',
-    image: '/DSC02661-2048x1365.jpg',
+    image: '/explore/explore-3.jpeg',
   },
   {
     title: 'SIGNATURE DINING',
-    image: '/Salt.webp',
+    image: '/dining/juliennes.png',
   },
   {
     title: 'ARABIC CUISINE',
-    image: '/Nahas-al-Blad.webp',
+    image: '/dining/rovee.png',
   },
   {
     title: 'INDIAN CUISINE',
-    image: '/Delhi-6.png',
+    image: '/dining/caffeine.jpg',
   },
   {
     title: 'MEETINGS & CONFERENCES',
-    image: '/Meeting-Room.png',
+    image: '/meeting-conferences.jpeg',
   },
   {
     title: 'EVENTS & BANQUETS',
-    image: '/banquet-4.png',
+    image: '/banquet-event.jpeg',
   },
   {
     title: 'TIMELESS WEDDINGS',
-    image: '/Wedding.png',
+    image: '/wedding-event.jpg',
   },
 ]
 
