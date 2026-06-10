@@ -508,6 +508,8 @@ function BookingContent() {
                                     <span>Prime location</span>
                                     <span>•</span>
                                     <span>Tea set and bottled water</span>
+                                    <span>•</span>
+                                    <span>EV charging station</span>
                                   </div>
                                 </div>
 

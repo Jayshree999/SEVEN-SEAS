@@ -10,16 +10,13 @@ import Link from 'next/link'
 
 const brands = [
   { name: 'Salt', image: '/partners/Salt.png', category: 'Restaurant', link: '/dining' },
+  { name: 'Rovee', image: '/partners/Rovee.jpeg', category: 'Restaurant', link: '/restaurant' },
+  { name: 'Behnah Wellness', image: '/partners/Behnah.png', category: 'Wellness', link: '/wellness' },
   { name: "Geoffrey's", image: '/partners/Geoffreys.png', category: 'Sports Bar', link: '/entertainment' },
-  { name: 'Seven SPA', image: '/partners/Seven-SPA.png', category: 'Wellness', link: '/wellness' },
-  { name: 'Pool23', image: '/partners/Pool23.png', category: 'Pool', link: '/wellness' },
-  { name: 'Behnah spa', image: '/partners/Behnah-spa3.png', category: 'Wellness', link: '/wellness' },
-  { name: 'Mehfil Ballroom', image: '/partners/Mehfillballroom2.png', category: 'Events', link: '/mehfil-ballroom' },
-  { name: 'Seven Salon', image: '/partners/Seven-Salon.png', category: 'Beauty', link: '/wellness' },
-  { name: 'Rovee Club', image: '/partners/Rovee-Club.png', category: 'Entertainment', link: '/entertainment' },
-  { name: 'Bazigar', image: '/partners/Bazigar.png', category: 'Entertainment', link: '/entertainment' },
-  { name: 'Partner 1', image: '/partners/Untitled-design.png', category: 'Partner', link: '#' },
-  { name: 'Partner 2', image: '/partners/Untitled-design-1.png', category: 'Partner', link: '#' },
+  { name: 'Dolly Chai Wala', image: '/partners/Dolly.png', category: 'Café', link: '#' },
+  { name: 'Vibe Nation', image: '/partners/Vibenation.jpeg', category: 'Nightlife', link: '/entertainment' },
+  { name: 'Thamburu', image: '/partners/Thamburu.jpeg', category: 'Restaurant', link: '/dining' },
+  { name: 'Naughty Restobar', image: '/partners/Naughty.jpeg', category: 'Restobar', link: '/entertainment' },
 ]
 
 export default function BrandsOutlets() {

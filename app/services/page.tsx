@@ -88,6 +88,7 @@ const services = {
       'Parking costs AED 20 per day',
       'Valet parking',
       'Secure parking garage',
+      'EV charging stations available',
       'Airport proximity (2.1 km from Dubai International Airport)'
     ]
   },

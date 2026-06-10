@@ -59,6 +59,19 @@ const DisinfectionIcon = ({ className }: { className?: string }) => (
   </svg>
 )
 
+const EVChargingIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <rect x="16" y="22" width="32" height="30" rx="3" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M26 22V18C26 17.4477 26.4477 17 27 17H37C37.5523 17 38 17.4477 38 18V22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M32 26 L26 35 H32 L29 45 L36 33 H30 Z" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M48 34H51C52.1046 34 53 34.8954 53 36V40C53 41.1046 52.1046 42 51 42H48" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="48" cy="34" r="1" fill="currentColor" />
+      <circle cx="48" cy="42" r="1" fill="currentColor" />
+    </g>
+  </svg>
+)
+
 const smartFeatures = [
   {
     icon: SmartKeyIcon,
@@ -76,13 +89,18 @@ const smartFeatures = [
     description: 'Service at your fingertips',
   },
   {
+    icon: EVChargingIcon,
+    title: 'EV Charging',
+    description: 'On-site electric vehicle charging',
+  },
+  {
     icon: DisinfectionIcon,
     title: 'Disinfection',
     description: 'Certified sanitization standards',
   },
 ]
 
-const luxuryEasing = [0.22, 1, 0.36, 1]
+const luxuryEasing = [0.22, 1, 0.36, 1] // Custom ease-out curve for luxury feel
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -169,7 +187,7 @@ export default function SmartFeatures() {
 
         <motion.div
           ref={ref}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}

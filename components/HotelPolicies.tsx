@@ -48,7 +48,7 @@ const policies = [
   {
     icon: Car,
     title: 'Parking',
-    details: 'Parking is available at AED 20 per day.',
+    details: 'Parking is available at AED 20 per day. EV charging stations are available on site for guest use.',
     color: 'text-amber-600',
     bg: 'bg-amber-50',
     border: 'border-amber-100'

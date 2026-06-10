@@ -176,6 +176,11 @@ export default function RootLayout({
         "@type": "LocationFeatureSpecification",
         "name": "Parking",
         "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "EV Charging Station",
+        "value": true
       }
     ],
     "checkinTime": "15:00",

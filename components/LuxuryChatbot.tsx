@@ -60,7 +60,7 @@ const AUTO_REPLIES: Record<string, { text: string; quickActions?: QuickAction[] 
     ]
   },
   'amenities': {
-    text: "Seven Seas Hotel features world-class amenities:\n\n✨ Luxury spa & wellness center\n🏊 Infinity pool with poolside service\n🍽️ Fine dining restaurants\n🍸 Rooftop bar & lounge\n💆 Full-service spa\n🏋️ State-of-the-art fitness center\n🚗 Valet parking\n🛎️ 24/7 concierge service\n📶 High-speed WiFi\n🎮 Entertainment & gaming room\n🌴 Beautiful gardens\n\nWhich amenities matter most to you?",
+    text: "Seven Seas Hotel features world-class amenities:\n\n✨ Luxury spa & wellness center\n🏊 Infinity pool with poolside service\n🍽️ Fine dining restaurants\n🍸 Rooftop bar & lounge\n💆 Full-service spa\n🏋️ State-of-the-art fitness center\n🚗 Valet parking & EV charging\n🛎️ 24/7 concierge service\n📶 High-speed WiFi\n🎮 Entertainment & gaming room\n🌴 Beautiful gardens\n\nWhich amenities matter most to you?",
     quickActions: [
       { label: 'Explore Rooms', action: () => window.location.href = EXTERNAL_BOOKING_URL, icon: <Home className="w-4 h-4" /> }
     ]

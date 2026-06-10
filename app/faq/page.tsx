@@ -261,7 +261,7 @@ const faqs = [
       },
       {
         q: 'Is parking available?',
-        a: 'Yes, private parking is available on site (reservation needed) and costs AED 20 per day.',
+        a: 'Yes, private parking is available on site (reservation needed) and costs AED 20 per day. EV charging stations are also available.',
       },
       {
         q: 'Do you offer valet parking?',
@@ -270,6 +270,10 @@ const faqs = [
       {
         q: 'Is there a parking garage?',
         a: 'Yes, we have a secure parking garage with CCTV surveillance.',
+      },
+      {
+        q: 'Are there EV charging stations available?',
+        a: 'Yes, electric vehicle (EV) charging stations are available in our secure parking garage for all hotel guests.',
       },
       {
         q: 'Do you offer airport transfers?',

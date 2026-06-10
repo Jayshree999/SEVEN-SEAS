@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Wifi, Bath, Car, TreePine, Mountain, Shield, Home, Tv, Briefcase, Waves, Flame, Heart, BellRing, Timer, Snowflake, WashingMachine, Droplets, ChevronRight, X } from 'lucide-react'
+import { Wifi, Bath, Car, TreePine, Mountain, Shield, Home, Tv, Briefcase, Waves, Flame, Heart, BellRing, Timer, Snowflake, WashingMachine, Droplets, ChevronRight, X, Zap } from 'lucide-react'
 
 // Amenity categories with icons
 const amenityCategories = {
@@ -11,6 +11,7 @@ const amenityCategories = {
     { name: 'air_conditioning', icon: Snowflake },
     { name: 'parking', icon: Car },
     { name: 'swimming_pool', icon: Waves },
+    { name: 'ev_charging', icon: Zap },
   ],
   Bathroom: [
     { name: 'Hairdryer', icon: Home },
