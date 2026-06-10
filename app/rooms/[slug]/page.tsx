@@ -402,7 +402,7 @@ export default function PropertyPage({ params }: PageProps) {
                                         {/* Ultra-Premium Price Section */}
                                         {/* Price display hidden as per request */}
 
-                                        <Link href={`/booking?room=${property?._id || ''}`}>
+                                        <Link href={EXTERNAL_BOOKING_URL}>
                                             <motion.button
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
@@ -575,7 +575,7 @@ export default function PropertyPage({ params }: PageProps) {
                             {/* Price hidden */}
                         </div>
                         <div className="flex-shrink-0">
-                            <Link href={`/booking?room=${property?._id || ''}`}>
+                            <Link href={EXTERNAL_BOOKING_URL}>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
