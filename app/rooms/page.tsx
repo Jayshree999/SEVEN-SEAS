@@ -251,10 +251,247 @@ export default function RoomsPage() {
         </div>
       </section>
 
+
+      {/* ── AMENITIES ICON BAR ─────────────────────────────────────── */}
+      <section className="bg-[#1a1a2e] py-12 px-4 sm:px-6 md:px-12 lg:px-24">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+          {[
+            { icon: '/rooms/amenity-smartkey.png',    label: 'Smart Key' },
+            { icon: '/rooms/amenity-luggage.png',     label: 'Luggage Storage' },
+            { icon: '/rooms/amenity-roomservice.png', label: '24/7 Room Service' },
+            { icon: '/rooms/amenity-dining.jpg',      label: '24/7 All Day Dining' },
+          ].map((item) => (
+            <div key={item.label} className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 relative">
+                <Image
+                  src={item.icon}
+                  alt={item.label}
+                  fill
+                  unoptimized
+                  className="object-contain"
+                />
+              </div>
+              <span className="text-white text-sm font-medium tracking-wider uppercase">{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── LONG STAY ROOMS ────────────────────────────────────────── */}
+      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#f7f3ee]">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] mb-3 text-center" style={{ fontFamily: 'var(--font-playfair)' }}>
+            Long Stay Rooms
+          </h2>
+          <p className="text-center text-gray-600 mb-12 text-base">
+            Explore spaces thoughtfully designed to welcome you the moment you step inside
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Premium Room',
+                image: '/rooms/longstay-premium.jpg',
+                subtitle: 'Stay A Bit Longer - Room Only',
+                perks: [
+                  'Paid parking',
+                  'Bi-weekly housekeeping service',
+                  'Free WiFi & Utility Bills',
+                  'Complimentary access to Swimming Pool, Gym, Steam room, Sauna & Jacuzzi.',
+                  '15% discount on food & beverages except promotions.',
+                  '20% Disc on (21st Floor Spa).',
+                ],
+                validity: 'Monthly / Round the Year',
+                phone: '+971 55 1009136',
+              },
+              {
+                title: 'Premium King Room',
+                image: '/rooms/longstay-king.jpg',
+                subtitle: 'Stay A Bit Longer - Room Only',
+                perks: [
+                  'Paid parking',
+                  'Bi-weekly housekeeping service',
+                  'Free WiFi & Utility Bills',
+                  'Complimentary access to Swimming Pool, Gym, Steam room, Sauna & Jacuzzi.',
+                  '15% discount on food & beverages except promotions.',
+                  '15% Disc on (21st Floor Spa).',
+                ],
+                validity: 'Monthly / Round the Year.',
+                phone: '+971 55 100 9136',
+              },
+              {
+                title: 'Executive Suite',
+                image: '/rooms/longstay-suite.jpg',
+                subtitle: 'Stay A Bit Longer - Room Only',
+                perks: [
+                  'Paid parking',
+                  'Bi-weekly housekeeping service',
+                  'Free WiFi & Utility Bills',
+                  'Complimentary access to Swimming Pool, Gym, Steam room, Sauna & Jacuzzi.',
+                  '15% discount on food & beverages except promotions.',
+                  '15% Disc on (21st Floor Spa).',
+                ],
+                validity: 'Monthly / Round the Year.',
+                phone: '+971 55 100 9136',
+              },
+            ].map((pkg) => (
+              <div key={pkg.title} className="bg-white shadow-md overflow-hidden flex flex-col">
+                <div className="relative h-56 w-full">
+                  <Image src={pkg.image} alt={pkg.title} fill unoptimized className="object-cover" />
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    {pkg.title}
+                  </h3>
+                  <p className="text-[#b3832b] text-sm font-semibold mb-4">{pkg.subtitle}</p>
+                  <ul className="space-y-2 mb-4 flex-1">
+                    {pkg.perks.map((p) => (
+                      <li key={p} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="text-[#b3832b] mt-0.5">✓</span>
+                        <span>{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-xs text-gray-500 mb-4">
+                    <span className="font-semibold">Validity:</span> {pkg.validity}
+                  </p>
+                  <a
+                    href={`tel:${pkg.phone.replace(/\s/g, '')}`}
+                    className="text-[#b3832b] font-bold text-sm mb-3 block"
+                  >
+                    {pkg.phone}
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="block text-center bg-[#1a1a2e] hover:bg-[#b3832b] text-white text-sm font-semibold py-3 px-6 transition-colors duration-300 tracking-wider uppercase"
+                  >
+                    Book now
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── KEY FEATURES & AMENITIES ───────────────────────────────── */}
+      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Text side */}
+          <div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] mb-10" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Key Features &amp; Amenities
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                '24 hours Front Desk', 'Valet Parking', 'Concierge Service', 'Travel Assistance',
+                '24 hours Room Service', '24 hours All Day Dining', 'Individually Controlled AC',
+                'Minibar & Tea Coffee Maker', 'Wake Up Call Service', 'Laundry Service',
+                'Free WI-FI & Safe Deposit', 'Hairdryer', 'Satellite TV', 'Saloon',
+                'Gift Shop', 'Luggage Assistance', 'Car Rental',
+              ].map((feat) => (
+                <div key={feat} className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-[#b3832b] flex-shrink-0 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  <span className="text-gray-700 text-sm">{feat}</span>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/contact"
+              className="inline-block mt-10 bg-[#1a1a2e] hover:bg-[#b3832b] text-white text-sm font-semibold py-3 px-8 transition-colors duration-300 tracking-wider uppercase"
+            >
+              Make a reservation
+            </Link>
+          </div>
+          {/* Image side */}
+          <div className="relative h-[480px] w-full">
+            <Image
+              src="/rooms/key-features.jpg"
+              alt="Key Features & Amenities"
+              fill
+              unoptimized
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ── REACH TO US / DROP A LINE ──────────────────────────────── */}
+      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#f7f3ee]">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Reach to us */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a2e] mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Reach to us
+            </h2>
+            <div className="space-y-5">
+              <div className="flex items-center gap-4">
+                <div className="relative w-10 h-10 flex-shrink-0">
+                  <Image src="/rooms/contact-phone.png" alt="Phone" fill unoptimized className="object-contain" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">Reservation:</p>
+                  <a href="tel:+971551009152" className="text-[#1a1a2e] font-bold text-base hover:text-[#b3832b] transition-colors">
+                    + 971 55 100 9152
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="relative w-10 h-10 flex-shrink-0">
+                  <Image src="/rooms/contact-phone.png" alt="Phone" fill unoptimized className="object-contain" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">Booking:</p>
+                  <a href="tel:+971551009152" className="text-[#1a1a2e] font-bold text-base hover:text-[#b3832b] transition-colors">
+                    + 971 55 100 9152
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Drop a line */}
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a2e] mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+              Drop a line
+            </h2>
+            <div className="space-y-5">
+              <div className="flex items-center gap-4">
+                <div className="relative w-10 h-10 flex-shrink-0">
+                  <Image src="/rooms/contact-email.png" alt="Email" fill unoptimized className="object-contain" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">Information:</p>
+                  <a href="mailto:info@sevenseashotel.ae" className="text-[#1a1a2e] font-bold text-base hover:text-[#b3832b] transition-colors">
+                    info@sevenseashotel.ae
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="relative w-10 h-10 flex-shrink-0">
+                  <Image src="/rooms/contact-email.png" alt="Email" fill unoptimized className="object-contain" />
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider font-medium">Reservations:</p>
+                  <a href="mailto:reservation@sevenseashotel.ae" className="text-[#1a1a2e] font-bold text-base hover:text-[#b3832b] transition-colors">
+                    reservation@sevenseashotel.ae
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </main>
   )
 }
+
 
 function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
   const { isAuth, user } = useAuth()

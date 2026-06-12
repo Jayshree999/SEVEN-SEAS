@@ -51,12 +51,12 @@ export default function Navigation() {
   }, [isUserMenuOpen, isMehfilDropdownOpen, isOffersDropdownOpen, isExperiencesDropdownOpen])
 
   const mehfilSubmenu = [
-    { name: 'Mehfil Ballroom', href: '/mehfil-ballroom' },
     { name: 'Meetings', href: '/meetings' },
     { name: 'Weddings', href: '/weddings' },
     { name: 'Events', href: '/events-3' },
     { name: 'Explore Venue', href: '/mehfil-ballroom' },
   ]
+
 
   interface NavItem {
     name: string
