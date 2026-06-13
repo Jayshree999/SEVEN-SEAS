@@ -118,7 +118,7 @@ const curatedProperties: Property[] = [
     amenities: ['Spacious Living Area', 'King-Sized Bed', 'Private Balcony', 'Free WiFi', 'Air Conditioning', 'Fully Equipped Kitchen', 'Dubai Skyline View', 'EV Charging'],
     photos: [{ url: '/accomodation/executive suites.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 8, totalRevenue: 4800 }
@@ -139,7 +139,7 @@ const curatedProperties: Property[] = [
     amenities: ['King-Sized Bed', 'Modern Amenities', 'Luxury Design', 'Free WiFi', 'Air Conditioning', 'In-room Safe', 'Mini Bar', 'EV Charging'],
     photos: [{ url: '/accomodation/premium king.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 15, totalRevenue: 4500 }
@@ -160,7 +160,7 @@ const curatedProperties: Property[] = [
     amenities: ['Two Single Beds', 'Elegant Furnishings', 'Comfortable Retreat', 'Free WiFi', 'Air Conditioning', 'Satellite TV', 'In-room Safe', 'EV Charging'],
     photos: [{ url: '/accomodation/premium twin.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 6, totalRevenue: 1800 }
@@ -181,7 +181,7 @@ const curatedProperties: Property[] = [
     amenities: ['City Views', 'King-Sized Bed', 'Sophisticated Decor', 'Free WiFi', 'Air Conditioning', 'Coffee Maker', 'Premium Channels', 'EV Charging'],
     photos: [{ url: '/accomodation/premium city king.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 12, totalRevenue: 4200 }
@@ -202,7 +202,7 @@ const curatedProperties: Property[] = [
     amenities: ['Two Single Beds', 'City Views', 'Elegant Furnishings', 'Free WiFi', 'Air Conditioning', 'Coffee Maker', 'Desk', 'EV Charging'],
     photos: [{ url: '/accomodation/premium city twin.jpeg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 4, totalRevenue: 1400 }
@@ -223,7 +223,7 @@ const curatedProperties: Property[] = [
     amenities: ['Sea Views', 'King-Sized Bed', 'Serene Atmosphere', 'Free WiFi', 'Air Conditioning', 'Balcony/Terrace', 'Mini Fridge', 'EV Charging'],
     photos: [{ url: '/accomodation/premium sea view king.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 9, totalRevenue: 3600 }
@@ -244,7 +244,7 @@ const curatedProperties: Property[] = [
     amenities: ['Two Queen Beds', 'Family-Friendly', 'Spacious', 'Free WiFi', 'Air Conditioning', 'Refrigerator', 'LED TV', 'EV Charging'],
     photos: [{ url: '/accomodation/delux family 2 queen bed.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 10, totalRevenue: 4500 }
@@ -265,7 +265,7 @@ const curatedProperties: Property[] = [
     amenities: ['Private Balcony', 'King-Sized Bed', 'City & Stadium Views', 'Free WiFi', 'Air Conditioning', 'Bathrobe & Slippers', 'Espresso Machine', 'EV Charging'],
     photos: [{ url: '/accomodation/delux balcony king.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 5, totalRevenue: 2100 }
@@ -286,7 +286,7 @@ const curatedProperties: Property[] = [
     amenities: ['Largest Suite', 'Expansive Living Areas', 'Panoramic Views', 'Free WiFi', 'Air Conditioning', 'Kitchenette', 'Jacuzzi Bath', 'Private Butler Service', 'EV Charging'],
     photos: [{ url: '/accomodation/royal suit.jpg' }],
     createdAt: '2024-01-01T00:00:00.000Z',
-    parking: 'Free Parking',
+    parking: 'Vehicle Parking ',
     Check_in_time: '15:00',
     Check_out_time: '12:00',
     bookingInfo: { totalBookings: 7, totalRevenue: 8400 }

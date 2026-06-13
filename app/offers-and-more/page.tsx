@@ -357,7 +357,7 @@ export default function OffersAndMorePage() {
                     </p>
                     <ul className="space-y-3">
                       {[
-                        '1 free parking',
+                        '1 Vehicle Parking ',
                         'Bi-weekly housekeeping service',
                         'Free WiFi & Utility Bills',
                         'Complimentary access to Pool, Gym, Sauna & Jacuzzi.',
@@ -406,7 +406,7 @@ export default function OffersAndMorePage() {
                     </p>
                     <ul className="space-y-3">
                       {[
-                        '1 free parking',
+                        '1 Vehicle Parking ',
                         'Bi-weekly housekeeping service',
                         'Free WiFi & Utility Bills',
                         'Complimentary access to Pool, Gym, Sauna & Jacuzzi.',
@@ -455,7 +455,7 @@ export default function OffersAndMorePage() {
                     </p>
                     <ul className="space-y-3">
                       {[
-                        '1 free parking',
+                        '1 Vehicle Parking ',
                         'Bi-weekly housekeeping service',
                         'Free WiFi & Utility Bills',
                         'Complimentary access to Pool, Gym, Sauna & Jacuzzi.',
