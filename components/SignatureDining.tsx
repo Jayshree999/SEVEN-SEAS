@@ -8,21 +8,15 @@ import Link from 'next/link'
 
 const restaurants = [
   {
-    title: 'Juliennes Indian Restaurant',
-    image: '/dining/juliennes.png',
-    description: 'A celebration of Indian culinary heritage with a modern twist, serving exquisite gourmet dishes.',
-    link: '/dining',
+    title: 'Caffine Coffee Shop',
+    image: '/dining/caffine-shop.jpg',
+    description: 'At Caffine Coffee Shop, every cup tells a story. We are passionate about creating exceptional coffee experiences that bring people together in a warm, relaxing, and inspiring atmosphere. Whether you are starting your morning, catching up with friends, working remotely, or simply taking a break from a busy day, Caffine is your perfect destination. Our café is built around a love for premium coffee, handcrafted beverages, fresh bites, and genuine hospitality. From rich espresso blends and creamy cappuccinos to refreshing cold brews and signature specialty drinks, every beverage is prepared with carefully selected beans and expert craftsmanship. At Caffine Coffee Shop, we believe coffee is more than just a drink - it is a daily ritual, a source of comfort, and a way to connect with people and moments that matter.',
+    link: '/',
   },
   {
-    title: 'Rovee Arabic Cuisine',
-    image: '/dining/rovee.png',
-    description: 'Authentic Arabic cuisine served in a traditional setting, capturing the true heritage of the region.',
-    link: '/dining',
-  },
-  {
-    title: 'Caffeine Coffee Shop',
-    image: '/dining/caffeine.jpg',
-    description: 'At Caffeine Coffee Shop, every cup tells a story. Enjoy exceptional coffee experiences in a warm, relaxing atmosphere.',
+    title: 'Thamburuu Kerala resturant & bar',
+    image: '/dining/thamburuu-kerala.jpg',
+    description: 'Experience the soul of Kerala in the heart of Dubai. At Thamburu Restaurant & Bar, we bring together authentic Kerala flavors, vibrant hospitality, refreshing beverages, and unforgettable dining experiences under one roof. Inspired by the rich culinary heritage of God\'s Own Country, our restaurant is a destination where tradition meets modern comfort. From spicy seafood delicacies and signature Malabar dishes to flavorful grills and handcrafted beverages, every plate at Thamburu is prepared with passion and authenticity. Whether you are craving a comforting Kerala meal, planning a family dinner, or looking for a lively evening with music and friends, Thamburu offers the perfect atmosphere for every occasion. Our menu celebrates the true essence of Kerala cuisine with favorites like fish curry, kappa specials, beef roast, chicken fry, seafood platters, and traditional toddy-shop-inspired recipes loved by food enthusiasts across the UAE. Guests also enjoy our warm ambiance, attentive service, and live entertainment that create a memorable dining experience.',
     link: '/dining',
   },
 ]
@@ -104,8 +98,8 @@ export default function SignatureDining() {
           </div>
         </div>
 
-        {/* Restaurants Grid - Ultra Premium & Super Rich */}
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto gap-4 md:gap-5">
+        {/* Restaurants - Alternating Layout */}
+        <div ref={ref} className="space-y-12 md:space-y-16">
           {restaurants.map((restaurant, index) => (
             <RestaurantCard key={restaurant.title} restaurant={restaurant} index={index} inView={inView} />
           ))}
@@ -124,81 +118,83 @@ function RestaurantCard({
   index: number
   inView: boolean
 }) {
+  const isEven = index % 2 === 0
+
   return (
     <Link href={restaurant.link}>
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 50 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.5, delay: index * 0.1 }}
-        whileHover={{ y: -6 }}
-        className="group relative h-[320px] md:h-[380px] lg:h-[420px] overflow-hidden rounded-none cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 bg-white"
+        transition={{ duration: 0.7, delay: index * 0.2 }}
+        className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
       >
-        {/* Premium card background glow */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-amber-300/0 via-amber-200/10 to-amber-300/0 rounded-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md"></div>
-
-        {/* Image */}
-        <div className="absolute inset-0">
-          <Image
-            src={restaurant.image}
-            alt={restaurant.title}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
-          />
-          {/* Ultra Premium Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/5"></div>
-          {/* Enhanced inner glow */}
-          <div className="absolute inset-0 ring-2 ring-white/15"></div>
-          {/* Subtle shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-        </div>
-
-        {/* Content Overlay - Premium Design */}
-        <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6 z-10">
-          {/* Restaurant Name Badge */}
+        <div className={`flex flex-col md:flex-row ${isEven ? '' : 'md:flex-row-reverse'}`}>
+          {/* Image Section */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 15 }}
-            animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
-            transition={{ delay: index * 0.1 + 0.2, type: 'spring', stiffness: 200 }}
-            whileHover={{ scale: 1.05 }}
-            className="mb-3"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={inView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.1 }}
+            className="relative w-full md:w-1/2 h-64 md:h-auto min-h-[300px]"
           >
-            <div className="bg-white/95 backdrop-blur-md px-6 py-4 rounded-none shadow-xl border border-gray-100 inline-block">
-              <h3
-                className="text-sm md:text-base font-bold text-gray-900 whitespace-nowrap tracking-wide"
-                style={{ fontFamily: 'var(--font-playfair)' }}
+            <Image
+              src={restaurant.image}
+              alt={restaurant.title}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-700"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+          </motion.div>
+
+          {/* Content Section */}
+          <motion.div
+            initial={{ opacity: 0, x: isEven ? 30 : -30 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }}
+            className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center"
+          >
+            <div className="mb-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.2 + 0.3 }}
               >
-                {restaurant.title}
-              </h3>
+                <h3
+                  className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  {restaurant.title}
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-amber-500 to-amber-300 rounded-full mb-6"></div>
+              </motion.div>
             </div>
-          </motion.div>
 
-          {/* Description */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
-            className="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-none shadow-lg border border-white/20"
-          >
-            <p className="text-[10px] md:text-xs text-gray-700 leading-relaxed font-medium">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.2 + 0.4 }}
+              className="text-gray-600 leading-relaxed text-sm md:text-base mb-6"
+            >
               {restaurant.description}
-            </p>
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: index * 0.2 + 0.5 }}
+            >
+              <span className="inline-flex items-center text-amber-600 font-semibold group-hover:text-amber-700 transition-colors">
+                Explore More
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* Premium Border Glow on Hover */}
-        <div className="absolute inset-0 rounded-none border border-transparent group-hover:border-amber-400/30 transition-all duration-500 pointer-events-none"></div>
-
-        {/* Luxury corner accents */}
-        <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-amber-400/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-amber-400/20 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-        {/* Floating particles effect on hover */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-amber-300/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.2s' }}></div>
-          <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 bg-amber-200/50 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.4s' }}></div>
-          <div className="absolute bottom-1/4 left-1/3 w-2 h-2 bg-amber-300/40 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping" style={{ animationDelay: '0.6s' }}></div>
-        </div>
+        {/* Decorative Elements */}
+        <div className={`absolute top-0 ${isEven ? 'left-0' : 'right-0'} w-32 h-32 bg-gradient-to-br from-amber-400/10 to-transparent rounded-bl-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
       </motion.div>
     </Link>
   )
