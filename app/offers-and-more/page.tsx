@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import ExploreMore from '@/components/ExploreMore'
 import { useInView } from 'react-intersection-observer'
 import { CheckCircle, Phone, Mail, ArrowRight, Percent, Sparkles, Shield, Clock } from 'lucide-react'
 
@@ -30,7 +31,6 @@ const staggerContainer = {
 }
 
 export default function OffersAndMorePage() {
-  const [ramadanRef, ramadanInView] = useInView({ triggerOnce: true, threshold: 0.1 })
   const [membersRef, membersInView] = useInView({ triggerOnce: true, threshold: 0.1 })
   const [stayLongerRef, stayLongerInView] = useInView({ triggerOnce: true, threshold: 0.1 })
   const [longStayRef, longStayInView] = useInView({ triggerOnce: true, threshold: 0.1 })
@@ -78,123 +78,7 @@ export default function OffersAndMorePage() {
         </div>
       </section>
 
-      {/* --- RAMADAN OFFERS --- */}
-      <section ref={ramadanRef} className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate={ramadanInView ? "visible" : "hidden"}
-          className="space-y-12"
-        >
-          <motion.div variants={fadeInUp} className="text-center max-w-3xl mx-auto">
-            <span className="text-amber-600 text-xs font-bold tracking-[0.2em] uppercase mb-3 block">
-              Holy Month Celebrations
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Ramadan Offers
-            </h2>
-            <div className="h-[1px] w-20 bg-amber-500/40 mx-auto mb-6" />
-            <p className="text-gray-600 leading-relaxed text-sm sm:text-base font-light">
-              Experience a peaceful and fulfilling stay with our exclusive Stay with Iftar and Suhoor package. Break your fast with a delightful Iftar spread, rest in comfort, and wake up to a nourishing Suhoor to start your day.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-6">
-            {/* Offer 1 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-gray-100 flex flex-col justify-between hover:shadow-2xl transition-all duration-500 group">
-              <div>
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src="/offers/ramadan-stay.jpg"
-                    alt="Stay with Iftar and Suhoor"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors" style={{ fontFamily: 'var(--font-playfair)' }}>
-                    Stay with Iftar and Suhoor
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed font-light mb-6">
-                    Experience a peaceful and fulfilling stay with our exclusive Stay with Iftar and Suhoor package. Break your fast with a delightful Iftar spread, rest in comfort, and wake up to a nourishing Suhoor to start your day.
-                  </p>
-                </div>
-              </div>
-              <div className="p-8 pt-0 border-t border-gray-50 flex flex-col gap-3">
-                <a href="tel:+971551009140" className="flex items-center justify-center gap-2 py-3 border border-amber-600/30 text-amber-700 text-sm font-semibold hover:bg-amber-50 transition-colors">
-                  <Phone className="w-4 h-4" />
-                  <span>+971 55 100 9140</span>
-                </a>
-                <Link href="/booking" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
-                  Book now
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Offer 2 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-gray-100 flex flex-col justify-between hover:shadow-2xl transition-all duration-500 group">
-              <div>
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src="/offers/ramadan-gathering.jpg"
-                    alt="Iftar & Suhoor Gathering"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors" style={{ fontFamily: 'var(--font-playfair)' }}>
-                    Iftar &amp; Suhoor Gathering at Mehfil Ballroom
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed font-light mb-6">
-                    Celebrate the spirit of Ramadan with an elegant Iftar &amp; Suhoor Gathering at Mehfil Ballroom. Indulge in a lavish spread of traditional and international delicacies in a warm and inviting ambiance.
-                  </p>
-                </div>
-              </div>
-              <div className="p-8 pt-0 border-t border-gray-50 flex flex-col gap-3">
-                <a href="tel:+971551009140" className="flex items-center justify-center gap-2 py-3 border border-amber-600/30 text-amber-700 text-sm font-semibold hover:bg-amber-50 transition-colors">
-                  <Phone className="w-4 h-4" />
-                  <span>+971 55 100 9140</span>
-                </a>
-                <Link href="/booking" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
-                  Book now
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Offer 3 */}
-            <motion.div variants={fadeInUp} className="bg-white border border-gray-100 flex flex-col justify-between hover:shadow-2xl transition-all duration-500 group">
-              <div>
-                <div className="relative aspect-[4/3] w-full overflow-hidden">
-                  <Image
-                    src="/offers/ramadan-salt.webp"
-                    alt="Iftar Scene at Salt"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                </div>
-                <div className="p-8">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors" style={{ fontFamily: 'var(--font-playfair)' }}>
-                    A Star-Studded Iftar Scene at Salt Restaurant
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed font-light mb-6">
-                    Experience a Star-Studded Iftar Scene at Salt Restaurant, where exquisite flavors meet unmatched elegance. Indulge in a gourmet Iftar feast curated to perfection, surrounded by a sophisticated ambiance.
-                  </p>
-                </div>
-              </div>
-              <div className="p-8 pt-0 border-t border-gray-50 flex flex-col gap-3">
-                <a href="tel:+971551009140" className="flex items-center justify-center gap-2 py-3 border border-amber-600/30 text-amber-700 text-sm font-semibold hover:bg-amber-50 transition-colors">
-                  <Phone className="w-4 h-4" />
-                  <span>+971 55 100 9140</span>
-                </a>
-                <Link href="/booking" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
-                  Book now
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
+      <ExploreMore />
 
       {/* --- MEMBER RATES --- */}
       <section ref={membersRef} className="py-20 bg-white border-y border-gray-100">
