@@ -68,7 +68,7 @@ export default function Navigation() {
 
   const navItems: NavItem[] = [
     { name: 'HOME', href: '/' },
-    { name: 'ROOMS', href: '/rooms' },
+    { name: 'ROOMS', href: EXTERNAL_BOOKING_URL, isExternal: true },
     { name: 'DINING', href: '/dining' },
     { name: 'MEHFIL BALLROOM', href: '/mehfil-ballroom', hasDropdown: true, dropdownKey: 'mehfil' },
     { name: 'ENTERTAINMENT', href: '/entertainment' },

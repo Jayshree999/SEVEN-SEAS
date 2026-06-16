@@ -14,6 +14,7 @@ import { useCurrency } from '@/contexts/CurrencyContext'
 import { toggleWatchlist, getCurrentUserProfile } from '@/lib/user'
 import { toast } from 'sonner'
 import Filters from '@/components/Filters'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 interface RoomDisplay {
   id: string
@@ -361,12 +362,12 @@ export default function RoomsPage() {
                   >
                     {pkg.phone}
                   </a>
-                  <Link
-                    href="/contact"
+                  <a
+                    href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer"
                     className="block text-center bg-[#1a1a2e] hover:bg-[#b3832b] text-white text-sm font-semibold py-3 px-6 transition-colors duration-300 tracking-wider uppercase"
                   >
                     Book now
-                  </Link>
+                  </a>
                 </div>
               </div>
             ))}
@@ -584,7 +585,7 @@ function RoomCard({ room, index }: { room: RoomDisplay, index: number }) {
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className="group cursor-pointer"
     >
-      <Link href={`/rooms/${makeRoomSlug(room.property)}`}>
+      <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
         {/* Premium Card Container */}
         <div className="relative bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-700 border border-gold/10 hover:border-gold/30 group-hover:scale-[1.01]">
 

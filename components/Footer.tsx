@@ -46,6 +46,12 @@ export default function Footer() {
       { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '/terms' },
     ],
+    partners: [
+      { name: 'Booking.com', href: 'https://www.booking.com/hotel/in/seven-seas-delhi1.en.html?aid=311984;label=seven-seas-delhi1-B*7MhB15v3GhygRVlIGO6AS481321388072:pl:ta:p1:p2:ac:ap:neg:fi:tikwd-3276735127:lp9240479:li:dec:dm:ppccp=UmFuZG9tSVYkc2RlIyh9YbSsBl3MCvHsD8UKUHIRFxY;ws=&gad_source=1&gad_campaignid=1395031335&gbraid=0AAAAAD_Ls1JWqad4mpJwgm4TWSAPgVytR&gclid=CjwKCAjw6MPRBhBTEiwAd-7Mr-vlWC9HvvkY4tfDf94Xu-vrnZasTN5p0Lk8uZcqy2Shh16wo2PyARoCSogQAvD_BwE' },
+      { name: 'Trip.com', href: 'https://ae.trip.com/hotels/dubai-hotel-detail-123753351/seven-seas-hotel/?locale=en-AE&allianceid=1052763&sid=217504358&ppcid=adid-794179652615_akid-dsa-1556324067513_adgid-197745743491&utm_source=google&utm_medium=cpc&utm_campaign=23496053947&gad_source=1&gad_campaignid=23496053947&gbraid=0AAAAABn2eFIzengcbyUORToO60X0Ptrg7&gclid=CjwKCAjw6MPRBhBTEiwAd-7Mr1teE0qDJVVSu-waOi2HXTeGRKTW2_ZbpSzL0MGT3mv8ZW5D7MmGZhoCZwMQAvD_BwE' },
+      { name: 'Agoda', href: 'https://www.agoda.com/pages/agoda/default/DestinationSearchResult.aspx?selectedproperty=2269250&city=2679&hid=2269250&site_id=1922861&tag=b8d8090f-5e75-4d97-803a-2fcd92b39966&gad_source=1&gad_campaignid=23502927527&gbraid=0AAAAA9_WXQpDQYpDGZR6yq6KNVVrkuxE0&gclid=CjwKCAjw6MPRBhBTEiwAd-7Mr6WY-9felhe9zoNaKtAX4TBLCsxVPvsv80bh6lw6R5REOYg2Sc8C2BoCbX8QAvD_BwE' },
+      { name: 'MakeMyTrip', href: 'https://ae.makemytrip.global/hotels-international/en-ae/united_arab_emirates/dubai-hotels/seven_seas_hotel-details.html' }
+    ]
   }
 
   const socialLinks = [
@@ -162,11 +168,12 @@ export default function Footer() {
           <div className="hidden lg:block lg:col-span-1"></div>
 
           {/* Links Sections */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8">
             {[
               { title: 'Discover', links: footerLinks.discover },
               { title: 'Services', links: footerLinks.services },
               { title: 'Support', links: footerLinks.support },
+              { title: 'Book With Us', links: footerLinks.partners },
             ].map((section, idx) => (
               <motion.div
                 key={section.title}
@@ -178,7 +185,7 @@ export default function Footer() {
                 <ul className="space-y-4">
                   {section.links.map((link) => (
                     <li key={link.name}>
-                      <Link href={link.href} className="text-gray-400 hover:text-amber-400 text-sm transition-colors duration-300 flex items-center group">
+                      <Link href={link.href} target={link.href.startsWith('http') ? "_blank" : "_self"} rel={link.href.startsWith('http') ? "noopener noreferrer" : ""} className="text-gray-400 hover:text-amber-400 text-sm transition-colors duration-300 flex items-center group">
                         <span className="w-0 overflow-hidden group-hover:w-3 transition-all duration-300 mr-0 group-hover:mr-2 text-amber-500">
                           <ChevronRight className="w-3 h-3" />
                         </span>

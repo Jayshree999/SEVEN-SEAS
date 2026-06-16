@@ -12,6 +12,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import Image from 'next/image'
 import SSCoinsWallet from '@/components/SSCoinsWallet'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 type TabType = 'bookings' | 'saved' | 'history' | 'rewards'
 
@@ -671,7 +672,7 @@ export default function ProfilePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="relative group"
                           >
-                            <Link href={`/rooms/${makeRoomSlug(property)}`}>
+                            <Link href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer">
                               <div className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200 hover:border-amber-300 transition-all cursor-pointer">
                                 {property.photos && Array.isArray(property.photos) && property.photos.length > 0 && (
                                   <div className="relative h-48 overflow-hidden">

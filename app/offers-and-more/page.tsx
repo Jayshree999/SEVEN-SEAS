@@ -8,6 +8,7 @@ import Footer from '@/components/Footer'
 import ExploreMore from '@/components/ExploreMore'
 import { useInView } from 'react-intersection-observer'
 import { CheckCircle, Phone, Mail, ArrowRight, Percent, Sparkles, Shield, Clock } from 'lucide-react'
+import { EXTERNAL_BOOKING_URL } from '@/lib/constants'
 
 // Easing curve for luxury feel
 const luxuryEasing = [0.22, 1, 0.36, 1]
@@ -148,10 +149,10 @@ export default function OffersAndMorePage() {
                       Enjoy a perfect morning with our Breakfast Inclusive Rates. Wake up to a delicious spread of fresh & healthy options, all included in your stay. Whether you're in the mood for a light bite or a full breakfast feast, we've got you covered to kickstart your day with energy and flavor!
                     </p>
                   </div>
-                  <Link href="/rooms" className="inline-flex items-center gap-2 text-amber-700 font-semibold text-sm hover:text-amber-800 group/link">
+                  <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-amber-700 font-semibold text-sm hover:text-amber-800 group/link">
                     <span>View Rates</span>
                     <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                  </Link>
+                  </a>
                 </div>
               </motion.div>
             </div>
@@ -189,9 +190,9 @@ export default function OffersAndMorePage() {
                 Spend time making even more memories together on your next getaway with the help of great savings. Simply stay for 2 nights or more and save up to 20%* off your entire stay.
               </p>
               <div className="pt-2">
-                <Link href="/rooms" className="inline-flex items-center gap-3 bg-amber-500 text-black px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-amber-600 transition-colors">
+                <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-amber-500 text-black px-8 py-4 text-sm font-bold uppercase tracking-wider hover:bg-amber-600 transition-colors">
                   Book now <ArrowRight className="w-4 h-4" />
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -264,9 +265,9 @@ export default function OffersAndMorePage() {
                     <Phone className="w-4 h-4" />
                     <span>+971 55 100 9140</span>
                   </a>
-                  <Link href="/rooms" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
+                  <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
                     Book now
-                  </Link>
+                  </a>
                 </div>
               </motion.div>
 
@@ -313,9 +314,9 @@ export default function OffersAndMorePage() {
                     <Phone className="w-4 h-4" />
                     <span>+971 55 100 9140</span>
                   </a>
-                  <Link href="/rooms" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
+                  <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
                     Book now
-                  </Link>
+                  </a>
                 </div>
               </motion.div>
 
@@ -362,9 +363,9 @@ export default function OffersAndMorePage() {
                     <Phone className="w-4 h-4" />
                     <span>+971 55 100 9140</span>
                   </a>
-                  <Link href="/rooms" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
+                  <a href={EXTERNAL_BOOKING_URL} target="_blank" rel="noopener noreferrer" className="w-full text-center py-3 bg-black text-white hover:bg-amber-600 transition-colors font-medium text-sm tracking-wider uppercase">
                     Book now
-                  </Link>
+                  </a>
                 </div>
               </motion.div>
             </div>

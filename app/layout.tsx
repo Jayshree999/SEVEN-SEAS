@@ -190,6 +190,18 @@ export default function RootLayout({
     "availableLanguage": ["en", "ar", "hi", "ur", "ru", "fr"]
   }
 
+  const webSiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Seven Seas Hotel Dubai",
+    "url": "https://sevenseashotel.ae",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://sevenseashotel.ae/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <head>
@@ -225,6 +237,10 @@ fbq('track', 'PageView');`
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(hotelSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
         />
       </head>
       <body className={inter.className}>
