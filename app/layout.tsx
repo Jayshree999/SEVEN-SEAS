@@ -6,7 +6,6 @@ import ScrollToTop from '@/components/ScrollToTop'
 import FloatingGoldParticles from '@/components/FloatingGoldParticles'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { CurrencyProvider } from '@/contexts/CurrencyContext'
-import WhatsAppWidget from '@/components/WhatsAppWidget'
 import PromotionPopup from '@/components/PromotionPopup'
 import { Toaster } from 'sonner'
 import Providers from './providers'
@@ -268,12 +267,29 @@ src="https://www.facebook.com/tr?id=1346903720826914&ev=PageView&noscript=1"
               <LoadingScreen />
               {children}
               <ScrollToTop />
-              <WhatsAppWidget />
               <PromotionPopup />
               <Toaster position="top-right" richColors />
             </AuthProvider>
           </CurrencyProvider>
         </Providers>
+        {/* This is start of the Website AI Chatbot Widget code */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              var BMB_MESSENGER_domain = 'https://messenger.myma.ai/';
+              var BMB_messengerHTMLPath = BMB_MESSENGER_domain + 'index.html'; 
+              var BMB_MESSENGER_head = document.getElementsByTagName('head')[0];
+              var BMB_MESSENGER_script = document.createElement('script');  
+              BMB_MESSENGER_script.type = 'text/javascript';
+              BMB_MESSENGER_script.src = BMB_MESSENGER_domain + 'msgplugin.js';
+              BMB_MESSENGER_head.appendChild(BMB_MESSENGER_script);
+              var BMB_MESSENGER_gid = '7367f665-f0de-4d38-b45d-b47f01328d7e';
+              var BMB_MESSENGER_iid = '41d543e6-54af-41e1-9dc0-c110ada5bd40';
+              var BMB_MESSENGER_pid = '';
+            `
+          }}
+        />
+        {/* This is end of the Website AI Chatbot Widget code */}
       </body>
     </html>
   )
