@@ -53,7 +53,7 @@ npm run dev
 
 ## Project Structure
 
-```
+``
 ├── app/
 │   ├── layout.tsx           # Root layout with SEO metadata
 │   ├── page.tsx             # Homepage
