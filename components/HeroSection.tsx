@@ -13,7 +13,7 @@ export default function HeroSection() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Background Video */}
-      <BackgroundVideo videoUrl="/hero.mp4" opacity={1.0} isMuted={isMuted} />
+      <BackgroundVideo videoUrl="https://res.cloudinary.com/duvu0rlis/video/upload/v1784876605/hero_kqofye.mp4" opacity={1.0} isMuted={isMuted} />
 
       {/* Sound Toggle Button */}
       <div className="absolute top-24 right-6 z-30">

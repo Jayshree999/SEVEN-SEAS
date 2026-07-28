@@ -105,7 +105,7 @@ export default function Footer() {
       {/* Video Background */}
       <div className="absolute inset-0 overflow-hidden z-0 pointer-events-none">
         <BackgroundVideo
-          videoUrl="/footer.mp4"
+          videoUrl="https://res.cloudinary.com/duvu0rlis/video/upload/v1784876616/footer_zx3zht.mp4"
           opacity={0.7}
           isMuted={true}
           className="brightness-[0.8]"

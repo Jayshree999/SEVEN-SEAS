@@ -2,15 +2,37 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, BedDouble, Utensils } from 'lucide-react'
 import Image from 'next/image'
 
-const PROMO_IMAGE = '/popup.jpeg'
-const WHATSAPP_NUMBER = '971551009152'
-const WHATSAPP_MESSAGE = 'Hi Seven Seas Hotel! I saw your promotion on the website and would like to know more about the current offers.'
+const WHATSAPP_NUMBER = '971569756484'
+
+const PROMOTIONS = [
+    {
+        id: 'room',
+        badge: 'Room Offer',
+        title: 'Premium King Room',
+        price: 'AED 2,999 / 30 Nights',
+        image: '/promo-room.jpg',
+        alt: 'Luxury Long Stay Offer for Premium King Room - AED 2,999 for 30 nights',
+        icon: BedDouble,
+        whatsappMessage: 'Hi Seven Seas Hotel! I saw your Luxury Long Stay Offer for Premium King Room (AED 2,999 / 30 nights) on your website and would like to know more.'
+    },
+    {
+        id: 'meals',
+        badge: 'Food & Meals',
+        title: 'Long Stay Food Meals',
+        price: 'Starting from AED 300',
+        image: '/promo-meals.jpg',
+        alt: 'Long Stay Food Meals - Fresh Meals Every Day starting from AED 300',
+        icon: Utensils,
+        whatsappMessage: 'Hi Seven Seas Hotel! I saw your Long Stay Food Meals offer (Starting from AED 300) on your website and would like to know more.'
+    }
+]
 
 export default function PromotionPopup() {
     const [isVisible, setIsVisible] = useState(false)
+    const [activeIndex, setActiveIndex] = useState(0)
 
     useEffect(() => {
         // Check if user has dismissed the popup in this session
@@ -26,25 +48,33 @@ export default function PromotionPopup() {
             }
         }
 
-        // Show popup after 3 seconds
+        // Show popup after 2 seconds
         const timer = setTimeout(() => {
             setIsVisible(true)
-        }, 3000)
+        }, 2000)
 
         return () => clearTimeout(timer)
     }, [])
 
     const handleClose = () => {
         setIsVisible(false)
-        // Store dismissal time
         localStorage.setItem('promo_dismissed', new Date().getTime().toString())
     }
 
-    const handlePromoClick = () => {
-        const message = encodeURIComponent(WHATSAPP_MESSAGE);
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    const handlePromoClick = (index: number) => {
+        const promo = PROMOTIONS[index]
+        const message = encodeURIComponent(promo.whatsappMessage)
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`
         window.open(url, '_blank')
-        handleClose() // Also close on click
+        handleClose()
+    }
+
+    const nextPromo = () => {
+        setActiveIndex((prev) => (prev + 1) % PROMOTIONS.length)
+    }
+
+    const prevPromo = () => {
+        setActiveIndex((prev) => (prev - 1 + PROMOTIONS.length) % PROMOTIONS.length)
     }
 
     return (
@@ -55,7 +85,7 @@ export default function PromotionPopup() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={handleClose}
-                    className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md cursor-pointer"
+                    className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/75 backdrop-blur-md cursor-pointer overflow-y-auto"
                 >
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -63,42 +93,151 @@ export default function PromotionPopup() {
                         exit={{ scale: 0.9, opacity: 0, y: 20 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="relative w-auto max-w-[95%] sm:max-w-md max-h-[95vh] overflow-hidden bg-white rounded-2xl shadow-2xl flex flex-col cursor-auto"
+                        className="relative w-full max-w-[95%] sm:max-w-xl md:max-w-4xl lg:max-w-5xl max-h-[92vh] my-auto bg-neutral-900 border border-amber-500/30 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col cursor-auto overflow-hidden text-white"
                     >
                         {/* Close Button */}
                         <button
                             onClick={handleClose}
-                            className="absolute top-3 right-3 z-30 p-1.5 text-white bg-black/50 hover:bg-black/70 rounded-full transition-colors backdrop-blur-md shadow-lg"
+                            className="absolute top-3 right-3 z-30 p-2 text-white/90 bg-black/60 hover:bg-black/90 hover:text-white rounded-full transition-all backdrop-blur-md shadow-lg border border-white/10"
                             aria-label="Close promotion"
                         >
-                            <X size={18} />
+                            <X size={20} />
                         </button>
 
-                        {/* Content */}
-                        <div className="relative w-full overflow-hidden cursor-pointer bg-neutral-100" onClick={handlePromoClick}>
-                            <div className="relative w-full h-auto">
-                                <Image
-                                    src={PROMO_IMAGE}
-                                    alt="Special Promotion"
-                                    width={1000}
-                                    height={1250}
-                                    className="w-full h-auto block"
-                                    priority
-                                />
+                        {/* Top Header */}
+                        <div className="pt-4 px-4 sm:pt-5 sm:px-6 text-center border-b border-white/10 pb-3 bg-gradient-to-b from-neutral-800 to-neutral-900">
+                            <span className="inline-block px-3 py-1 bg-[#B89146]/20 border border-[#B89146]/40 text-[#D4AF37] text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-full mb-1">
+                                Exclusive Special Offers
+                            </span>
+                            <h3 className="text-lg sm:text-2xl font-bold text-amber-100 font-serif">
+                                Seven Seas Hotel Promotions
+                            </h3>
+                        </div>
+
+                        {/* Mobile Switcher Tabs */}
+                        <div className="flex md:hidden items-center justify-center gap-2 p-2 bg-neutral-950/60 border-b border-white/5">
+                            {PROMOTIONS.map((promo, idx) => {
+                                const Icon = promo.icon
+                                const isActive = activeIndex === idx
+                                return (
+                                    <button
+                                        key={promo.id}
+                                        onClick={() => setActiveIndex(idx)}
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                            isActive
+                                                ? 'bg-[#B89146] text-white shadow-md'
+                                                : 'bg-neutral-800/80 text-neutral-300 hover:bg-neutral-800'
+                                        }`}
+                                    >
+                                        <Icon size={14} />
+                                        <span>{promo.badge}</span>
+                                    </button>
+                                )
+                            })}
+                        </div>
+
+                        {/* Content Area */}
+                        <div className="p-3 sm:p-4 sm:pb-5 overflow-y-auto max-h-[calc(92vh-160px)]">
+                            {/* Desktop View: Side-by-Side (2 Columns) */}
+                            <div className="hidden md:grid grid-cols-2 gap-4 lg:gap-6">
+                                {PROMOTIONS.map((promo, idx) => (
+                                    <div
+                                        key={promo.id}
+                                        onClick={() => handlePromoClick(idx)}
+                                        className="group relative flex flex-col bg-neutral-800/50 rounded-xl sm:rounded-2xl overflow-hidden border border-amber-500/20 hover:border-[#B89146] transition-all duration-300 hover:shadow-xl hover:shadow-[#B89146]/10 cursor-pointer"
+                                    >
+                                        <div className="relative w-full aspect-[1/1] overflow-hidden bg-neutral-950">
+                                            <Image
+                                                src={promo.image}
+                                                alt={promo.alt}
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                                className="object-contain group-hover:scale-[1.03] transition-transform duration-500"
+                                                priority
+                                            />
+                                        </div>
+                                        <div className="p-3.5 bg-neutral-900/90 border-t border-white/5 flex items-center justify-between gap-2">
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-white group-hover:text-[#D4AF37] transition-colors">
+                                                    {promo.title}
+                                                </h4>
+                                                <p className="text-xs text-amber-200/80 font-medium">
+                                                    {promo.price}
+                                                </p>
+                                            </div>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handlePromoClick(idx)
+                                                }}
+                                                className="px-3 py-1.5 bg-[#B89146] hover:bg-[#A37F3D] text-white text-xs font-semibold rounded-lg transition-colors shadow flex items-center gap-1 shrink-0"
+                                            >
+                                                <span>Book Now</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Mobile View: Single Active Card with Navigation Controls */}
+                            <div className="block md:hidden">
+                                <div className="relative w-full rounded-xl overflow-hidden bg-neutral-950 border border-amber-500/20 shadow-lg">
+                                    <div 
+                                        onClick={() => handlePromoClick(activeIndex)}
+                                        className="relative w-full aspect-[1/1] cursor-pointer"
+                                    >
+                                        <Image
+                                            src={PROMOTIONS[activeIndex].image}
+                                            alt={PROMOTIONS[activeIndex].alt}
+                                            fill
+                                            sizes="95vw"
+                                            className="object-contain"
+                                            priority
+                                        />
+                                    </div>
+
+                                    {/* Navigation Arrows on Mobile */}
+                                    <button
+                                        onClick={prevPromo}
+                                        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors backdrop-blur-sm border border-white/10 shadow-lg"
+                                        aria-label="Previous promotion"
+                                    >
+                                        <ChevronLeft size={20} />
+                                    </button>
+                                    <button
+                                        onClick={nextPromo}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors backdrop-blur-sm border border-white/10 shadow-lg"
+                                        aria-label="Next promotion"
+                                    >
+                                        <ChevronRight size={20} />
+                                    </button>
+
+                                    {/* Bottom indicator dots on Mobile */}
+                                    <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
+                                        {PROMOTIONS.map((_, idx) => (
+                                            <span
+                                                key={idx}
+                                                className={`h-1.5 rounded-full transition-all ${
+                                                    activeIndex === idx ? 'w-6 bg-[#B89146]' : 'w-1.5 bg-white/50'
+                                                }`}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Bottom CTA Area */}
-                        <div className="p-4 bg-white">
+                        {/* Bottom Main WhatsApp CTA */}
+                        <div className="p-3 sm:p-4 bg-neutral-950 border-t border-white/10">
                             <button
-                                onClick={handlePromoClick}
-                                className="w-full py-3.5 bg-[#B89146] hover:bg-[#A37F3D] text-white font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 group"
+                                onClick={() => handlePromoClick(activeIndex)}
+                                className="w-full py-3 sm:py-3.5 bg-[#B89146] hover:bg-[#A37F3D] active:scale-[0.99] text-white font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 group text-sm sm:text-base"
                             >
-                                <span className="text-lg">Chat with us on WhatsApp</span>
+                                <span>Chat with us on WhatsApp</span>
                                 <svg
                                     viewBox="0 0 24 24"
-                                    width="22"
-                                    height="22"
+                                    width="20"
+                                    height="20"
                                     fill="currentColor"
                                     className="group-hover:scale-110 transition-transform"
                                 >

@@ -31,11 +31,15 @@ export default function BackgroundVideo({
 
   useEffect(() => {
     if (videoRef.current && inView && isMounted) {
+      if (isMuted) {
+        videoRef.current.muted = true
+        videoRef.current.defaultMuted = true
+      }
       videoRef.current.play().catch(() => {
         // Handle autoplay restrictions
       })
     }
-  }, [inView, isMounted])
+  }, [inView, isMounted, isMuted])
 
   if (!videoUrl) {
     return (
