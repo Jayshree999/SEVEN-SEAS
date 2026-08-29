@@ -2,21 +2,22 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, BedDouble, Utensils } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Building2, Utensils, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 
-const WHATSAPP_NUMBER = '971569756484'
+const DEFAULT_WHATSAPP_NUMBER = '971569756484'
 
 const PROMOTIONS = [
     {
-        id: 'room',
-        badge: 'Room Offer',
-        title: 'Premium King Room',
-        price: 'AED 2,999 / 30 Nights',
-        image: '/promo-room.jpg',
-        alt: 'Luxury Long Stay Offer for Premium King Room - AED 2,999 for 30 nights',
-        icon: BedDouble,
-        whatsappMessage: 'Hi Seven Seas Hotel! I saw your Luxury Long Stay Offer for Premium King Room (AED 2,999 / 30 nights) on your website and would like to know more.'
+        id: 'long-term-rentals',
+        badge: 'Long-Term Stay',
+        title: 'Long-Term Rentals',
+        price: '1 BHK & Luxury Rooms',
+        image: '/promo-long-term.jpg',
+        alt: 'Seven Seas Hotel Long-Term Rentals - 1 BHK Hotel Apartment & Luxury Rooms',
+        icon: Building2,
+        whatsappNumber: '971569756484',
+        whatsappMessage: 'Hi Seven Seas Hotel! I saw your Long-Term Rentals offer (1 BHK & Rooms) on your website and would like to know more.'
     },
     {
         id: 'meals',
@@ -26,7 +27,19 @@ const PROMOTIONS = [
         image: '/promo-meals.jpg',
         alt: 'Long Stay Food Meals - Fresh Meals Every Day starting from AED 300',
         icon: Utensils,
+        whatsappNumber: '971569756484',
         whatsappMessage: 'Hi Seven Seas Hotel! I saw your Long Stay Food Meals offer (Starting from AED 300) on your website and would like to know more.'
+    },
+    {
+        id: 'staycation',
+        badge: 'Staycation',
+        title: 'Staycation Offer',
+        price: 'Starting from AED 100',
+        image: '/promo-staycation.jpg',
+        alt: 'Seven Seas Hotel Staycation Offer - Room Only starting from AED 100 with breakfast & half board options',
+        icon: Sparkles,
+        whatsappNumber: '971551009152',
+        whatsappMessage: 'Hi Seven Seas Hotel! I saw your Staycation Offer (Starting from AED 100) on your website and would like to know more.'
     }
 ]
 
@@ -35,20 +48,17 @@ export default function PromotionPopup() {
     const [activeIndex, setActiveIndex] = useState(0)
 
     useEffect(() => {
-        // Check if user has dismissed the popup in this session
         const isDismissed = localStorage.getItem('promo_dismissed')
         if (isDismissed) {
             const dismissedAt = parseInt(isDismissed)
             const now = new Date().getTime()
             const twentyFourHours = 24 * 60 * 60 * 1000
             
-            // If it was dismissed less than 24 hours ago, don't show it
             if (now - dismissedAt < twentyFourHours) {
                 return
             }
         }
 
-        // Show popup after 2 seconds
         const timer = setTimeout(() => {
             setIsVisible(true)
         }, 2000)
@@ -63,8 +73,9 @@ export default function PromotionPopup() {
 
     const handlePromoClick = (index: number) => {
         const promo = PROMOTIONS[index]
+        const number = promo.whatsappNumber || DEFAULT_WHATSAPP_NUMBER
         const message = encodeURIComponent(promo.whatsappMessage)
-        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`
+        const url = `https://wa.me/${number}?text=${message}`
         window.open(url, '_blank')
         handleClose()
     }
@@ -85,7 +96,7 @@ export default function PromotionPopup() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={handleClose}
-                    className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/75 backdrop-blur-md cursor-pointer overflow-y-auto"
+                    className="fixed inset-0 z-[9999] flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-black/75 backdrop-blur-md cursor-pointer overflow-y-auto"
                 >
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -93,9 +104,8 @@ export default function PromotionPopup() {
                         exit={{ scale: 0.9, opacity: 0, y: 20 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
                         onClick={(e) => e.stopPropagation()}
-                        className="relative w-full max-w-[95%] sm:max-w-xl md:max-w-4xl lg:max-w-5xl max-h-[92vh] my-auto bg-neutral-900 border border-amber-500/30 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col cursor-auto overflow-hidden text-white"
+                        className="relative w-full max-w-[96%] sm:max-w-xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl max-h-[94vh] my-auto bg-neutral-900 border border-amber-500/30 rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col cursor-auto overflow-hidden text-white"
                     >
-                        {/* Close Button */}
                         <button
                             onClick={handleClose}
                             className="absolute top-3 right-3 z-30 p-2 text-white/90 bg-black/60 hover:bg-black/90 hover:text-white rounded-full transition-all backdrop-blur-md shadow-lg border border-white/10"
@@ -104,9 +114,8 @@ export default function PromotionPopup() {
                             <X size={20} />
                         </button>
 
-                        {/* Top Header */}
-                        <div className="pt-4 px-4 sm:pt-5 sm:px-6 text-center border-b border-white/10 pb-3 bg-gradient-to-b from-neutral-800 to-neutral-900">
-                            <span className="inline-block px-3 py-1 bg-[#B89146]/20 border border-[#B89146]/40 text-[#D4AF37] text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-full mb-1">
+                        <div className="pt-3.5 px-4 sm:pt-4 sm:px-6 text-center border-b border-white/10 pb-2.5 bg-gradient-to-b from-neutral-800 to-neutral-900">
+                            <span className="inline-block px-3 py-0.5 bg-[#B89146]/20 border border-[#B89146]/40 text-[#D4AF37] text-xs sm:text-sm font-semibold tracking-wider uppercase rounded-full mb-1">
                                 Exclusive Special Offers
                             </span>
                             <h3 className="text-lg sm:text-2xl font-bold text-amber-100 font-serif">
@@ -114,8 +123,7 @@ export default function PromotionPopup() {
                             </h3>
                         </div>
 
-                        {/* Mobile Switcher Tabs */}
-                        <div className="flex md:hidden items-center justify-center gap-2 p-2 bg-neutral-950/60 border-b border-white/5">
+                        <div className="flex md:hidden items-center justify-center gap-1.5 p-2 bg-neutral-950/60 border-b border-white/5 overflow-x-auto">
                             {PROMOTIONS.map((promo, idx) => {
                                 const Icon = promo.icon
                                 const isActive = activeIndex === idx
@@ -123,45 +131,44 @@ export default function PromotionPopup() {
                                     <button
                                         key={promo.id}
                                         onClick={() => setActiveIndex(idx)}
-                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
                                             isActive
                                                 ? 'bg-[#B89146] text-white shadow-md'
                                                 : 'bg-neutral-800/80 text-neutral-300 hover:bg-neutral-800'
                                         }`}
                                     >
-                                        <Icon size={14} />
+                                        <Icon size={13} />
                                         <span>{promo.badge}</span>
                                     </button>
                                 )
                             })}
                         </div>
 
-                        {/* Content Area */}
-                        <div className="p-3 sm:p-4 sm:pb-5 overflow-y-auto max-h-[calc(92vh-160px)]">
-                            {/* Desktop View: Side-by-Side (2 Columns) */}
-                            <div className="hidden md:grid grid-cols-2 gap-4 lg:gap-6">
+                        <div className="p-3 sm:p-4 overflow-y-auto max-h-[calc(94vh-155px)]">
+                            <div className="hidden md:grid md:grid-cols-3 gap-3.5 lg:gap-4">
                                 {PROMOTIONS.map((promo, idx) => (
                                     <div
                                         key={promo.id}
                                         onClick={() => handlePromoClick(idx)}
+                                        onMouseEnter={() => setActiveIndex(idx)}
                                         className="group relative flex flex-col bg-neutral-800/50 rounded-xl sm:rounded-2xl overflow-hidden border border-amber-500/20 hover:border-[#B89146] transition-all duration-300 hover:shadow-xl hover:shadow-[#B89146]/10 cursor-pointer"
                                     >
-                                        <div className="relative w-full aspect-[1/1] overflow-hidden bg-neutral-950">
+                                        <div className="relative w-full aspect-[4/5] sm:aspect-square overflow-hidden bg-neutral-950/80 flex items-center justify-center">
                                             <Image
                                                 src={promo.image}
                                                 alt={promo.alt}
                                                 fill
-                                                sizes="(max-width: 768px) 100vw, 50vw"
-                                                className="object-contain group-hover:scale-[1.03] transition-transform duration-500"
+                                                sizes="(max-width: 1024px) 33vw, 380px"
+                                                className="object-contain group-hover:scale-[1.03] transition-transform duration-500 p-1"
                                                 priority
                                             />
                                         </div>
-                                        <div className="p-3.5 bg-neutral-900/90 border-t border-white/5 flex items-center justify-between gap-2">
-                                            <div>
-                                                <h4 className="text-sm font-semibold text-white group-hover:text-[#D4AF37] transition-colors">
+                                        <div className="p-3 bg-neutral-900/95 border-t border-white/5 flex items-center justify-between gap-2 mt-auto">
+                                            <div className="min-w-0 flex-1">
+                                                <h4 className="text-xs lg:text-sm font-semibold text-white group-hover:text-[#D4AF37] transition-colors truncate">
                                                     {promo.title}
                                                 </h4>
-                                                <p className="text-xs text-amber-200/80 font-medium">
+                                                <p className="text-[11px] lg:text-xs text-amber-200/80 font-medium truncate">
                                                     {promo.price}
                                                 </p>
                                             </div>
@@ -170,7 +177,7 @@ export default function PromotionPopup() {
                                                     e.stopPropagation()
                                                     handlePromoClick(idx)
                                                 }}
-                                                className="px-3 py-1.5 bg-[#B89146] hover:bg-[#A37F3D] text-white text-xs font-semibold rounded-lg transition-colors shadow flex items-center gap-1 shrink-0"
+                                                className="px-2.5 py-1.5 bg-[#B89146] hover:bg-[#A37F3D] text-white text-[11px] lg:text-xs font-semibold rounded-lg transition-colors shadow flex items-center gap-1 shrink-0"
                                             >
                                                 <span>Book Now</span>
                                             </button>
@@ -179,40 +186,43 @@ export default function PromotionPopup() {
                                 ))}
                             </div>
 
-                            {/* Mobile View: Single Active Card with Navigation Controls */}
                             <div className="block md:hidden">
                                 <div className="relative w-full rounded-xl overflow-hidden bg-neutral-950 border border-amber-500/20 shadow-lg">
                                     <div 
                                         onClick={() => handlePromoClick(activeIndex)}
-                                        className="relative w-full aspect-[1/1] cursor-pointer"
+                                        className="relative w-full aspect-[4/5] cursor-pointer"
                                     >
                                         <Image
                                             src={PROMOTIONS[activeIndex].image}
                                             alt={PROMOTIONS[activeIndex].alt}
                                             fill
                                             sizes="95vw"
-                                            className="object-contain"
+                                            className="object-contain p-1"
                                             priority
                                         />
                                     </div>
 
-                                    {/* Navigation Arrows on Mobile */}
                                     <button
-                                        onClick={prevPromo}
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            prevPromo()
+                                        }}
                                         className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors backdrop-blur-sm border border-white/10 shadow-lg"
                                         aria-label="Previous promotion"
                                     >
                                         <ChevronLeft size={20} />
                                     </button>
                                     <button
-                                        onClick={nextPromo}
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            nextPromo()
+                                        }}
                                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition-colors backdrop-blur-sm border border-white/10 shadow-lg"
                                         aria-label="Next promotion"
                                     >
                                         <ChevronRight size={20} />
                                     </button>
 
-                                    {/* Bottom indicator dots on Mobile */}
                                     <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
                                         {PROMOTIONS.map((_, idx) => (
                                             <span
@@ -224,14 +234,30 @@ export default function PromotionPopup() {
                                         ))}
                                     </div>
                                 </div>
+
+                                <div className="mt-2.5 p-3 bg-neutral-900/90 rounded-xl border border-white/10 flex items-center justify-between">
+                                    <div className="min-w-0 flex-1 pr-2">
+                                        <h4 className="text-sm font-semibold text-white truncate">
+                                            {PROMOTIONS[activeIndex].title}
+                                        </h4>
+                                        <p className="text-xs text-amber-200/80 font-medium truncate">
+                                            {PROMOTIONS[activeIndex].price}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => handlePromoClick(activeIndex)}
+                                        className="px-3.5 py-1.5 bg-[#B89146] hover:bg-[#A37F3D] text-white text-xs font-semibold rounded-lg transition-colors shadow flex items-center gap-1 shrink-0"
+                                    >
+                                        <span>Book Now</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Bottom Main WhatsApp CTA */}
-                        <div className="p-3 sm:p-4 bg-neutral-950 border-t border-white/10">
+                        <div className="p-3 sm:p-3.5 bg-neutral-950 border-t border-white/10">
                             <button
                                 onClick={() => handlePromoClick(activeIndex)}
-                                className="w-full py-3 sm:py-3.5 bg-[#B89146] hover:bg-[#A37F3D] active:scale-[0.99] text-white font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 group text-sm sm:text-base"
+                                className="w-full py-2.5 sm:py-3 bg-[#B89146] hover:bg-[#A37F3D] active:scale-[0.99] text-white font-bold rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 group text-sm sm:text-base"
                             >
                                 <span>Chat with us on WhatsApp</span>
                                 <svg
